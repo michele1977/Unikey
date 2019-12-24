@@ -1,0 +1,26 @@
+﻿@model MasterDetail.Models.BookPartialModel
+
+@if (Model.Books.Count > 0)
+{
+    foreach (var book in Model.Books)
+    {
+        <div class="row" style="width: 450px;padding: 10px">
+            <div class="col-4">
+                @book.Title
+            </div>
+            <div class="col-4">
+                @book.Year
+            </div>
+            <div class="col-2">
+                @*@Html.ActionLink("Book", "ViewBooksDetail", "Auth", new { authorId = @author.Id }, new { @class = "btn btn-info" })*@
+            </div>
+            <div class="col-2">
+            </div>
+        </div>
+    }
+}
+
+
+
+
+

@@ -1,0 +1,16 @@
+﻿@model MasterDetail.Models.DTO.AuthorDTO
+
+<div class="row" style="width: 450px;padding: 10px">
+    <div class="col-4">
+         @Model.Name
+    </div>
+    <div class="col-4">
+        @Model.LastName
+    </div>
+    <div class="col-2">
+        <button class="btn btn-info" onclick="hadleClickApi(@Model.Id)">Book</button>
+        @*@Html.ActionLink("Book", "ViewBooksDetail", "Auth", new {authorId = @Model.Id}, new {@class = "btn btn-info"})*@
+    </div>
+    <div class="col-2">
+    </div>
+</div>

@@ -1,0 +1,56 @@
+﻿@using MasterDetail.Models
+@model MasterDetail.Models.AuthIndexModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    function functioOk(resp) {
+        let mydiv = document.getElementById("myrenderbody");
+        mydiv.innerHTML = resp;
+    }
+    function functioOkApi(resp) {
+        console.log(JSON.stringify(resp));
+        //let mydiv = document.getElementById("myrenderbody");
+        //mydiv.innerHTML = resp;
+    }
+    function functioKo(err) {
+        console.log('ERRORE : ' + err);
+    }
+    function functioKoApi(err) {
+        console.log('ERRORE : ' + err);
+    }
+    function hadleClick(id) {
+        $.ajax({ url: "Auth\\ViewBooksDetail?authorId=" + id, method: "GET" }).then(functioOk, functioKo);
+    }
+
+    function hadleClickApi(id) {
+        $.ajax({ url: "http://localhost:56673/api/Book?authorId=" + id, method: "GET" }).then(functioOkApi, functioKoApi);
+    }
+</script>
+<h2>Index Auth</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            @foreach (var author in Model.Authors)
+            {
+                Html.RenderPartial("AuthPartial",author);
+            }
+        </div>
+    <div class="col-6" id="myrenderbody">
+        <div class="row" style="width: 450px;padding: 10px">
+            <div class="col-4">
+                <label id="title1">{{nome}}</label>
+            </div>
+            <div class="col-4">
+                <label id="year1"></label>
+            </div>
+            <div class="col-2">
+                @*@Html.ActionLink("Book", "ViewBooksDetail", "Auth", new { authorId = @author.Id }, new { @class = "btn btn-info" })*@
+            </div>
+            <div class="col-2">
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
