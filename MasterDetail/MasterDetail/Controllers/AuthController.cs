@@ -19,6 +19,17 @@ namespace MasterDetail.Controllers
         }
 
         [HttpGet]
+        public ActionResult IndexLorenzo()
+        {
+            var myModel = new AuthIndexModel
+            {
+                Authors = _authorService.GetAllAuthors()
+                    .Select(x => new AuthorDTO(x)).ToList()
+            };
+            return View(myModel);
+        }
+
+        [HttpGet]
         public ActionResult ViewBooksDetail2(int authorId)
         {
             var myModel = new AuthIndexModel
