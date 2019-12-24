@@ -18,17 +18,17 @@ namespace MasterDetail.Controllers
             return View(myModel);
         }
 
-        //[HttpGet]
-        //public ActionResult ViewBooksDetail(int authorId)
-        //{
-        //    var myModel = new AuthIndexModel
-        //    {
-        //        Authors = _authorService.GetAllAuthors().Select(x => new AuthorDTO(x)).ToList(),
-        //        SelectedBooks = _authorService.GetAllBooksOfAuthor(authorId)
-        //            .Select(x => new BookDTO(x)).ToList()
-        //    };
-        //    return View("Index", myModel);
-        //}
+        [HttpGet]
+        public ActionResult ViewBooksDetail2(int authorId)
+        {
+            var myModel = new AuthIndexModel
+            {
+                Authors = _authorService.GetAllAuthors().Select(x => new AuthorDTO(x)).ToList(),
+                SelectedBooks = _authorService.GetAllBooksOfAuthor(authorId)
+                    .Select(x => new BookDTO(x)).ToList()
+            };
+            return View("Index", myModel);
+        }
         [HttpGet]
         public ActionResult ViewBooksDetail(int authorId)
         {
