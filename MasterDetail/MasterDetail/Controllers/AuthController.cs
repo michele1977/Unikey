@@ -19,7 +19,11 @@ namespace MasterDetail.Controllers
         }
 
         [HttpGet]
+<<<<<<< HEAD
         public ActionResult ViewBooksDetail3(int authorId)
+=======
+        public ActionResult ViewBooksDetail5(int authorId)
+>>>>>>> 570770b4f5b0c52c3b1f75427fdf128c80acbaf7
         {
             var myModel = new AuthIndexModel
             {
