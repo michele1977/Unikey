@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,21 @@ namespace UnikeyFactoryTest.Repository
 {
     public class QuestionRepository : IQuestionRepository
     {
-        public void AddAnswers(List<Answer> answers)
+        private readonly TestPlatformDBEntities _ctx;
+
+        public QuestionRepository()
         {
-            throw new NotImplementedException();
+            _ctx = new TestPlatformDBEntities();
+        }
+
+        public void AddAnswers(Question question, List<Answer> answers)
+        {
+            question.Answers = answers;
+        }
+
+        public void SaveQuestions(List<Question> questions)
+        {
+            _ctx.Questions.AddRange(questions);
         }
     }
 }

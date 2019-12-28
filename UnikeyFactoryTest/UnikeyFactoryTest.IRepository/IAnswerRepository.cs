@@ -7,9 +7,8 @@ using UnikeyFactoryTest.Context;
 
 namespace UnikeyFactoryTest.IRepository
 {
-    public interface IQuestionRepository
+    public interface IAnswerRepository
     {
-        void AddAnswers(Question question, List<Answer> answers);
-        void SaveQuestions(List<Question> questions);
+        void SaveAnswers(List<Answer> answers);
     }
 }
