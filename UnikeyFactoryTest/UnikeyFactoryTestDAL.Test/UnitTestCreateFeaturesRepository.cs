@@ -46,16 +46,6 @@ namespace UnikeyFactoryTestDAL.Test
                 Score = 11,
                 Text = "Answer Test2"
             };
-            List<Answer> answers = new List<Answer>
-            {
-                answer,
-                answer2
-            };
-            List<Question> questions = new List<Question>
-            {
-                question,
-                question2
-            };
 
             AnswerRepository answerRepository = new AnswerRepository();
             QuestionRepository questionRepository = new QuestionRepository();
@@ -64,8 +54,10 @@ namespace UnikeyFactoryTestDAL.Test
             try
             {
                 testRepository.SaveTest(test);
-                questionRepository.SaveQuestions(questions);
-                answerRepository.SaveAnswers(answers);
+                questionRepository.SaveQuestions(question);
+                questionRepository.SaveQuestions(question2);
+                answerRepository.SaveAnswers(answer);
+                answerRepository.SaveAnswers(answer2);
             }
             catch (Exception ex)
             {

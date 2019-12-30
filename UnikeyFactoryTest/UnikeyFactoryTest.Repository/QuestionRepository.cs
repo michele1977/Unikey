@@ -18,12 +18,9 @@ namespace UnikeyFactoryTest.Repository
             _ctx = new TestPlatformDBEntities();
         }
 
-        public void SaveQuestions(List<Question> questions)
+        public void SaveQuestions(Question question)
         {
-            foreach (var question in questions)
-            {
-                _ctx.Questions.Add(question);
-            }
+            _ctx.Questions.Add(question);
             _ctx.SaveChanges();
         }
     }

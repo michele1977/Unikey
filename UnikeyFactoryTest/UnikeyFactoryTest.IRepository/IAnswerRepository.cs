@@ -9,6 +9,6 @@ namespace UnikeyFactoryTest.IRepository
 {
     public interface IAnswerRepository
     {
-        void SaveAnswers(List<Answer> answers);
+        void SaveAnswers(Answer answer);
     }
 }
