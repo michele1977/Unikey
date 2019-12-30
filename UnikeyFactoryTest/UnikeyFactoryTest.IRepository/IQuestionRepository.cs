@@ -9,7 +9,6 @@ namespace UnikeyFactoryTest.IRepository
 {
     public interface IQuestionRepository
     {
-        void AddAnswers(Question question, List<Answer> answers);
         void SaveQuestions(List<Question> questions);
     }
 }
