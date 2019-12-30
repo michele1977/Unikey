@@ -8,9 +8,9 @@ namespace UnikeyFactoryTest.Context
     {
         public int Id { get; set; }
         public string Text { get; set; }
-        public Nullable<bool> IsCorrect { get; set; }
+        public bool? IsCorrect { get; set; }
         public int QuestionId { get; set; }
-        public Nullable<decimal> Score { get; set; }
+        public decimal? Score { get; set; }
     
         public virtual Question Question { get; set; }
     }

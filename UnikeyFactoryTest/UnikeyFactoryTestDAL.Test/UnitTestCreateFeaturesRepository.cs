@@ -47,6 +47,12 @@ namespace UnikeyFactoryTestDAL.Test
                 Text = "Answer Test2"
             };
 
+            List<Answer> answers = new List<Answer>()
+            {
+                answer,
+                answer2
+            };
+
             AnswerRepository answerRepository = new AnswerRepository();
             QuestionRepository questionRepository = new QuestionRepository();
             TestRepository testRepository = new TestRepository();
@@ -54,10 +60,9 @@ namespace UnikeyFactoryTestDAL.Test
             try
             {
                 testRepository.SaveTest(test);
-                questionRepository.SaveQuestions(question);
-                questionRepository.SaveQuestions(question2);
-                answerRepository.SaveAnswers(answer);
-                answerRepository.SaveAnswers(answer2);
+                questionRepository.SaveQuestion(question);
+                questionRepository.SaveQuestion(question2);
+                answerRepository.SaveAnswers(answers);
             }
             catch (Exception ex)
             {
