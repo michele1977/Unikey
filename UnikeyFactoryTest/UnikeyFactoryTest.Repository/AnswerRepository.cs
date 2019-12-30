@@ -18,8 +18,13 @@ namespace UnikeyFactoryTest.Repository
         }
         
         public void SaveAnswers(List<Answer> answers)
-        {
-            _ctx.Answers.AddRange(answers);
+        { 
+            foreach (var answer in answers)
+            {
+                _ctx.Answers.Add(answer);
+            }
+
+            _ctx.SaveChanges();
         }
     }
 }

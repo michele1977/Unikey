@@ -25,7 +25,11 @@ namespace UnikeyFactoryTest.Repository
 
         public void SaveQuestions(List<Question> questions)
         {
-            _ctx.Questions.AddRange(questions);
+            foreach (var question in questions)
+            {
+                _ctx.Questions.Add(question);
+            }
+            _ctx.SaveChanges();
         }
     }
 }

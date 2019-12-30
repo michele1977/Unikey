@@ -25,6 +25,7 @@ namespace UnikeyFactoryTest.Repository
         public void SaveTest(Test test)
         {
             _ctx.Tests.Add(test);
+            _ctx.SaveChanges();
         }
     }
 }
