@@ -8,10 +8,6 @@ namespace UnikeyFactoryTest.Domain
 {
     public class AdministratedTest
     {
-        public AdministratedTest()
-        {
-            this.AdministratedQuestions = new HashSet<AdministratedQuestion>();
-        }
         public int Id { get; set; }
         public string URL { get; set; }
         public string Text { get; set; }
@@ -20,6 +16,6 @@ namespace UnikeyFactoryTest.Domain
         public string TestSubject { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public virtual ICollection<AdministratedQuestion> AdministratedQuestions { get; set; }
-        public virtual Test Test { get; set; }
+        public virtual Test Test{get;set;}
     }
 }

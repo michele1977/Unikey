@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E2F1E71E-9900-4CEF-A8AB-0BC152698A47}</ProjectGuid>
+    <ProjectGuid>{9C165A02-6E60-4FE7-A254-E9144D37BACB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UnikeyFactoryTest.Domain</RootNamespace>
-    <AssemblyName>UnikeyFactoryTest.Domain</AssemblyName>
+    <RootNamespace>UnikeyFactoryTest.Mapper</RootNamespace>
+    <AssemblyName>UnikeyFactoryTest.Mapper</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,16 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdministratedAnswer.cs" />
-    <Compile Include="AdministratedQuestion.cs" />
-    <Compile Include="AdministratedTest.cs" />
+    <Compile Include="AdministratedAnswerMapper.cs" />
+    <Compile Include="AdministratedQuestionMapper.cs" />
+    <Compile Include="AdministratedTestMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UnikeyFactoryTest.Context\UnikeyFactoryTest.Context.csproj">
-      <Project>{858F3FB2-AB75-4685-BE3B-B83B9983F51B}</Project>
+      <Project>{858f3fb2-ab75-4685-be3b-b83b9983f51b}</Project>
       <Name>UnikeyFactoryTest.Context</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.Domain\UnikeyFactoryTest.Domain.csproj">
+      <Project>{E2F1E71E-9900-4CEF-A8AB-0BC152698A47}</Project>
+      <Name>UnikeyFactoryTest.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
