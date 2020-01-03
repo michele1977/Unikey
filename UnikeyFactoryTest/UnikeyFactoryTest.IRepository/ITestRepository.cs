@@ -12,5 +12,6 @@ namespace UnikeyFactoryTest.IRepository
         void SaveTest(Test test);
         void SaveQuestion(Question question);
         void SaveAnswers(List<Answer> answers);
+        Domain.Test GetTestByURL(string URL);
     } 
 }

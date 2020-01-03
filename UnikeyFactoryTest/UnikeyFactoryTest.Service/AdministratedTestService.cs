@@ -32,20 +32,30 @@ namespace UnikeyFactoryTest.Service
                 {
                     Text = q.Text,
                     AdministratedTestId = q.TestId,
-                    AdministratedAnswers = q.Answers.Select(a=> new AdministratedAnswer(){Text = a.Text, Score = a.Score, AdministratedQuestionId = a.QuestionId}).ToList()
+                    AdministratedAnswers = q.Answers.Select(a=> new AdministratedAnswer(){Text = a.Text, Score = a.Score, AdministratedQuestionId = a.QuestionId, isCorrect = a.IsCorrect, isSelected = false}).ToList()
                 });
             }
 
             return newAdTest;
         }
 
-        public void Save(Domain.AdministratedTest adTest)
+        public void Add(Domain.AdministratedTest adTest)
         {
             repo.Add(adTest);
         }
 
         public void Update_Save(Domain.AdministratedTest adTest)
         {
+            decimal score = 0;
+
+            foreach (var q in adTest.AdministratedQuestions)
+            {
+                if ((q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true)) != null)
+                    score = score + q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true).Score??0;
+            }
+
+            adTest.TotalScore = Decimal.ToInt32(score);
+
             repo.Update_Save(adTest);
         }
 

@@ -10,10 +10,10 @@ namespace UnikeyFactoryTest.Domain
     {
         public int Id { get; set; }
         public string URL { get; set; }
-        public Nullable<int> TotalScore { get; set; }
+        public int? TotalScore { get; set; }
         public int TestId { get; set; }
         public string TestSubject { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
+        public DateTime? Date { get; set; }
         public virtual ICollection<AdministratedQuestion> AdministratedQuestions { get; set; }
         public virtual Test Test{get;set;}
     }

@@ -18,5 +18,12 @@ namespace UnikeyFactoryTest.Service
                 _repo.SaveTest(test);
             }
         }
+        public Domain.Test GetTestById(string URL)
+        {
+            using (TestRepository _repo = new TestRepository())
+            {
+                return _repo.GetTestByURL(URL);
+            }
+        }
     }
 }
