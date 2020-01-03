@@ -52,8 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdministratedTestRepository.cs" />
-    <Compile Include="AnswerRepository.cs" />
-    <Compile Include="QuestionRepository.cs" />
     <Compile Include="TestRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
