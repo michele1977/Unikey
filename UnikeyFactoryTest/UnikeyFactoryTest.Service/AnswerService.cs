@@ -12,14 +12,14 @@ namespace UnikeyFactoryTest.Service
     {
         public void AddNewAnswers(List<Answer> answers)
         {
-            using (AnswerRepository _repo = new AnswerRepository())
-            {
-                foreach (var answer in answers)
-                {
-                    if(string.IsNullOrWhiteSpace(answer.Text)) throw new Exception("Answers not saved");
-                }
-                _repo.SaveAnswers(answers);
-            }
+            //using (AnswerRepository _repo = new AnswerRepository())
+            //{
+            //    foreach (var answer in answers)
+            //    {
+            //        if(string.IsNullOrWhiteSpace(answer.Text)) throw new Exception("Answers not saved");
+            //    }
+            //    _repo.SaveAnswers(answers);
+            //}
         }
     }
 }
