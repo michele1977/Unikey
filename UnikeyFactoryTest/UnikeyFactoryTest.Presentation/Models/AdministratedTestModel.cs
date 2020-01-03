@@ -8,6 +8,8 @@ namespace UnikeyFactoryTest.Presentation.Models
 {
     public class AdministratedTestModel
     {
+        public Dictionary<int,int> QuestionAnswerDictionary { get; set; }
+
         public AdministratedTest Test { get; set; }
         public string URL { get; set; }
         public string Name { get; set; }

@@ -27,5 +27,14 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             model.Test = service.AdministratedTest_Builder(test, subject);
             return View("Test", model);
         }
+
+        public ActionResult SaveTest(AdministratedTestModel model, FormCollection form)
+        {
+            foreach (var key in form.AllKeys)
+            {
+                model.QuestionAnswerDictionary[int.Parse(key)] = int.Parse(form[key]);
+            }
+            return View("TestStart");
+        }
     }
 }

@@ -1,35 +1,74 @@
-﻿@model UnikeyFactoryTest.Presentation.Models.AdministratedTestModel
+﻿@using UnikeyFactoryTest.Presentation.Controllers
+@model UnikeyFactoryTest.Presentation.Models.AdministratedTestModel
 <div class="container">
+    @*@using (Html.BeginForm("SaveTest", "AdministratedTest", FormMethod.Post))
+        {
+            <label>Domanda a caso</label>
+            <br />
+            <label>Risposta 1</label>
+            @Html.RadioButton("1", "Riposta 1")
+            <br />
+            <label>Risposta 2</label>
+            @Html.RadioButton("1", "Riposta 2")
+            <br />
+            <label>Risposta 3</label>
+            @Html.RadioButton("1", "Riposta 3")
+            <br />
+            <label>Risposta 4</label>
+            @Html.RadioButton("1", "Riposta 4")
+            <br/>
+            <br/>
+            <label>Come mi chiamo?</label>
+            <br />
+            <label>Camillo</label>
+            @Html.RadioButton("2", "Camillo")
+            <br />
+            <label>Paolo</label>
+            @Html.RadioButton("2", "Paolo")
+            <br />
+            <label>Giovanni</label>
+            @Html.RadioButton("2", "Giovanni")
+            <br />
+            <label>dfsdf</label>
+            @Html.RadioButton("2", "dfsdf")
+            <button type="submit">Save</button>
+        }*@
+
+
     @{
+
         if (Model.Test != null)
         {
             if (Model.Test.AdministratedQuestions != null)
             {
-                foreach (var question in Model.Test.AdministratedQuestions)
+                using (Html.BeginForm("SaveTest", "AdministratedTest"))
                 {
-                    <div class="QuestionContainer">
-                        @{
-                            if (String.IsNullOrEmpty(question.Text) != true)
-                            {
-                                <label id="Question">
-                                    @question.Text
-                                </label>
-                            }
-                            <div class="AnswerContainer">
-                                @{
-                                    foreach (var answer in question.AdministratedAnswers)
-                                    {
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" id="AnswerRadio" value="@answer.Text">
-                                            <label class="form-check-label">
-                                                @answer.Text
-                                            </label>
-                                        </div>
-                                    }
+                    foreach (var question in Model.Test.AdministratedQuestions)
+                    {
+                        <div class="QuestionContainer">
+                            @{
+                                if (String.IsNullOrEmpty(question.Text) != true)
+                                {
+                                    <label id="Question">
+                                        @question.Text
+                                    </label>
                                 }
-                            </div>
-                        }
-                    </div>
+                                <div class="AnswerContainer">
+
+                                    @{
+                                        foreach (var answer in question.AdministratedAnswers)
+                                        {
+                                            <div class="form-check">
+                                                <label>@answer.Text</label>
+                                                @Html.RadioButton(question.Id.ToString(),answer.Id)
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
+                    <button type="submit" class="btn btn-success">Save Test</button>
                 }
             }
         }
