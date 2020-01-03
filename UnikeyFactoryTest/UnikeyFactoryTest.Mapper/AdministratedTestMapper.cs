@@ -15,7 +15,6 @@ namespace UnikeyFactoryTest.Mapper
             {
                 Id = dao.Id,
                 URL = dao.URL,
-                Text = dao.Text,
                 TotalScore = dao.TotalScore,
                 TestId = dao.TestId,
                 TestSubject = dao.TestSubject,
@@ -42,7 +41,6 @@ namespace UnikeyFactoryTest.Mapper
             {
                 Id = domain.Id,
                 URL = domain.URL,
-                Text = domain.Text,
                 TotalScore = domain.TotalScore,
                 TestId = domain.TestId,
                 TestSubject = domain.TestSubject,

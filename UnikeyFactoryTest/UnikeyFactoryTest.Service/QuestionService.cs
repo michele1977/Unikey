@@ -12,11 +12,11 @@ namespace UnikeyFactoryTest.Service
     {
         public void AddNewQuestions(Question question)
         {
-            using (QuestionRepository _repo = new QuestionRepository())
-            {
-                if(string.IsNullOrWhiteSpace(question.Text)) throw new Exception("Question not saved");
-                _repo.SaveQuestion(question);
-            }
+            //using (QuestionRepository _repo = new QuestionRepository())
+            //{
+            //    if(string.IsNullOrWhiteSpace(question.Text)) throw new Exception("Question not saved");
+            //    _repo.SaveQuestion(question);
+            //}
         }
     }
 }
