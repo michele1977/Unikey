@@ -41,8 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IAnswerRepository.cs" />
-    <Compile Include="IQuestionRepository.cs" />
+    <Compile Include="IAdministratedTestRepository.cs" />
     <Compile Include="ITestRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -50,6 +49,10 @@
     <ProjectReference Include="..\UnikeyFactoryTest.Context\UnikeyFactoryTest.Context.csproj">
       <Project>{858F3FB2-AB75-4685-BE3B-B83B9983F51B}</Project>
       <Name>UnikeyFactoryTest.Context</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.Domain\UnikeyFactoryTest.Domain.csproj">
+      <Project>{E2F1E71E-9900-4CEF-A8AB-0BC152698A47}</Project>
+      <Name>UnikeyFactoryTest.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

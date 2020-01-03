@@ -51,8 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnswerRepository.cs" />
-    <Compile Include="QuestionRepository.cs" />
+    <Compile Include="AdministratedTestRepository.cs" />
     <Compile Include="TestRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -60,6 +59,10 @@
     <ProjectReference Include="..\UnikeyFactoryTest.Context\UnikeyFactoryTest.Context.csproj">
       <Project>{858F3FB2-AB75-4685-BE3B-B83B9983F51B}</Project>
       <Name>UnikeyFactoryTest.Context</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.Domain\UnikeyFactoryTest.Domain.csproj">
+      <Project>{E2F1E71E-9900-4CEF-A8AB-0BC152698A47}</Project>
+      <Name>UnikeyFactoryTest.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\UnikeyFactoryTest.IRepository\UnikeyFactoryTest.IRepository.csproj">
       <Project>{06E5E146-DF6E-4BC6-9339-1D68BEA1B996}</Project>
