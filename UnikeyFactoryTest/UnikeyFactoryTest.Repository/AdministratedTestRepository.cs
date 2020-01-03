@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.IRepository;
+using UnikeyFactoryTest.Mapper;
 
 namespace UnikeyFactoryTest.Repository
 {
@@ -23,7 +24,7 @@ namespace UnikeyFactoryTest.Repository
         {
             try
             {
-                var newAdTestDB = /*Mapper*/;
+                var newAdTestDB = AdministratedTestMapper.MapDomainToDao(adTest);
                 _ctx.AdministratedTests.Add(newAdTestDB);
                 _ctx.SaveChanges();
             }
@@ -43,7 +44,7 @@ namespace UnikeyFactoryTest.Repository
             }
             else
             {
-                return /*Mapper (adTest)*/;
+                return AdministratedTestMapper.MapDaoToDomain(adTestDB);
             }
         }
 
@@ -51,7 +52,7 @@ namespace UnikeyFactoryTest.Repository
         {
             try
             {
-                var upTestDB =  /*Mapper su adTest*/;
+                var upTestDB =  AdministratedTestMapper.MapDomainToDao(adTest);
                 _ctx.AdministratedTests.Attach(upTestDB);
                 _ctx.Entry(upTestDB).State = System.Data.Entity.EntityState.Modified;
                 _ctx.SaveChanges();
