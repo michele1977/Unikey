@@ -13,11 +13,13 @@ namespace UnikeyFactoryTest.Presentation.Controllers
     {
         private AdministratedTestService service = new AdministratedTestService();
         // GET: AdministratedTest
+        
         public ActionResult TestStart()
         {
             var model = new AdministratedTestModel();
             return View("TestStart", model);
         }
+
         [HttpPost]
         public ActionResult BeginTest(AdministratedTestModel model)
         {
