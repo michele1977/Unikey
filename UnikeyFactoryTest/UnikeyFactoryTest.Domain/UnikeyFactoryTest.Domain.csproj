@@ -44,8 +44,11 @@
     <Compile Include="AdministratedAnswer.cs" />
     <Compile Include="AdministratedQuestion.cs" />
     <Compile Include="AdministratedTest.cs" />
+    <Compile Include="Answer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Question.cs" />
     <Compile Include="Test.cs" />
+    <Compile Include="User.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
