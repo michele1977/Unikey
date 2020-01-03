@@ -15,8 +15,23 @@ namespace UnikeyFactoryTest.Mapper
             {
                 Id = dao.Id,
                 Text = dao.Text,
-                AdministratedTestId = dao.AdministratedTestId
+                AdministratedTestId = dao.AdministratedTestId,
+                AdministratedTest = AdministratedTestMapper.MapDaoToDomain(dao.AdministratedTest),
+                AdministratedAnswers = new List<AdministratedAnswer>()
             };
+
+            foreach(var aa in dao.AdministratedAnswers)
+            {
+                returned.AdministratedAnswers.Add(new AdministratedAnswer
+                {
+                    Id = aa.Id,
+                    Text = aa.Text,
+                    isCorrect = aa.isCorrect,
+                    isSelected = aa.isSelected,
+                    Score = aa.Score,
+                    AdministratedQuestionId = aa.AdministratedQuestionId
+                });
+            }
 
             return returned;
         }
@@ -27,8 +42,23 @@ namespace UnikeyFactoryTest.Mapper
             {
                 Id = domain.Id,
                 Text = domain.Text,
-                AdministratedTestId = domain.AdministratedTestId
+                AdministratedTestId = domain.AdministratedTestId,
+                AdministratedTest = AdministratedTestMapper.MapDomainToDao(domain.AdministratedTest),
+                AdministratedAnswers = new List<Context.AdministratedAnswer>()
             };
+
+            foreach(var aa in domain.AdministratedAnswers)
+            {
+                returned.AdministratedAnswers.Add(new Context.AdministratedAnswer
+                {
+                    Id = aa.Id,
+                    Text = aa.Text,
+                    isCorrect = aa.isCorrect,
+                    isSelected = aa.isSelected,
+                    Score = aa.Score,
+                    AdministratedQuestionId = aa.AdministratedQuestionId
+                });
+            }
 
             return returned;
         }
