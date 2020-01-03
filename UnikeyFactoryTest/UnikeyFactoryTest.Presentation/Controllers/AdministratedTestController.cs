@@ -11,7 +11,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 {
     public class AdministratedTestController : Controller
     {
-        private AdministratedTestService service;
+        private AdministratedTestService service = new AdministratedTestService();
         // GET: AdministratedTest
         public ActionResult TestStart()
         {
