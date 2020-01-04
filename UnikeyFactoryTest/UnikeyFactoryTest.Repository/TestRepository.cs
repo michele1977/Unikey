@@ -8,7 +8,7 @@ using UnikeyFactoryTest.IRepository;
 
 namespace UnikeyFactoryTest.Repository
 {
-    public class TestRepository : ITestRepository
+    public class TestRepository : ITestRepository, IDisposable
     {
         private readonly TestPlatformDBEntities _ctx;
 
@@ -17,14 +17,15 @@ namespace UnikeyFactoryTest.Repository
             _ctx = new TestPlatformDBEntities();
         }
 
-        public void AddQuestions(Test test, List<Question> questions)
-        {
-            test.Questions = questions;
-        }
-
         public void SaveTest(Test test)
         {
             _ctx.Tests.Add(test);
+            _ctx.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            _ctx.Dispose();
         }
     }
 }

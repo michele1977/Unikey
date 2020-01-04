@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnswerService.cs" />
     <Compile Include="QuestionService.cs" />
     <Compile Include="TestService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -50,6 +51,20 @@
     <ProjectReference Include="..\UnikeyFactoryTest.Context\UnikeyFactoryTest.Context.csproj">
       <Project>{858F3FB2-AB75-4685-BE3B-B83B9983F51B}</Project>
       <Name>UnikeyFactoryTest.Context</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.Repository\UnikeyFactoryTest.Repository.csproj">
+      <Project>{1AE6EE8E-E465-41C5-A17A-EF35DA1ED082}</Project>
+      <Name>UnikeyFactoryTest.Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UnikeyFactoryTest.Context\UnikeyFactoryTest.Context.csproj">
+      <Project>{858F3FB2-AB75-4685-BE3B-B83B9983F51B}</Project>
+      <Name>UnikeyFactoryTest.Context</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.IRepository\UnikeyFactoryTest.IRepository.csproj">
+      <Project>{06E5E146-DF6E-4BC6-9339-1D68BEA1B996}</Project>
+      <Name>UnikeyFactoryTest.IRepository</Name>
     </ProjectReference>
     <ProjectReference Include="..\UnikeyFactoryTest.Repository\UnikeyFactoryTest.Repository.csproj">
       <Project>{1AE6EE8E-E465-41C5-A17A-EF35DA1ED082}</Project>

@@ -44,6 +44,7 @@
     <Compile Include="IAnswerRepository.cs" />
     <Compile Include="IQuestionRepository.cs" />
     <Compile Include="ITestRepository.cs" />
+    <Compile Include="IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

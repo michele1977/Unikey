@@ -10,11 +10,13 @@ namespace UnikeyFactoryTest.Service
 {
     public class UserService
     {
-        UserRepository repository = new UserRepository();
-
         public bool IsUser(User user)
         {
-            return repository.FindUser(user);
+            using (UserRepository repo = new UserRepository())
+            {
+                return repo.FindUser(user);
+            }
         }
+
     }
 }

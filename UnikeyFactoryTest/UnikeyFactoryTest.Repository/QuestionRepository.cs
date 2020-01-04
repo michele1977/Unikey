@@ -9,7 +9,7 @@ using UnikeyFactoryTest.IRepository;
 
 namespace UnikeyFactoryTest.Repository
 {
-    public class QuestionRepository : IQuestionRepository
+    public class QuestionRepository : IQuestionRepository, IDisposable
     {
         private readonly TestPlatformDBEntities _ctx;
 
@@ -18,14 +18,15 @@ namespace UnikeyFactoryTest.Repository
             _ctx = new TestPlatformDBEntities();
         }
 
-        public void AddAnswers(Question question, List<Answer> answers)
+        public void SaveQuestion(Question question)
         {
-            question.Answers = answers;
+            _ctx.Questions.Add(question);
+            _ctx.SaveChanges();
         }
 
-        public void SaveQuestions(List<Question> questions)
+        public void Dispose()
         {
-            _ctx.Questions.AddRange(questions);
+            _ctx.Dispose();
         }
     }
 }

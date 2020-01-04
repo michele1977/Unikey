@@ -7,8 +7,8 @@ using UnikeyFactoryTest.Context;
 
 namespace UnikeyFactoryTest.IRepository
 {
-    public interface ITestRepository
+    public interface IUserRepository
     {
-        void SaveTest(Test test);
+        bool FindUser(User user);
     }
 }
