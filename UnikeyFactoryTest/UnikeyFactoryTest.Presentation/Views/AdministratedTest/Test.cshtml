@@ -36,13 +36,22 @@
 
 
     @{
+        //visto che non c'è nessun test mi sono creato una form che compare anche se il test è null
+        using (Html.BeginForm("SaveTest", "AdministratedTest"))
+        {
+            <input type="hidden" name="Name" value="@Model.Name"/>
+            <input type="hidden" name="Surname" value="@Model.Surname"/>
+            <input type="hidden" name="Test" value="@Model.Test"/>
+            <button class="btn btn-success">Save Test</button>
 
+        }
         if (Model.Test != null)
         {
             if (Model.Test.AdministratedQuestions != null)
             {
                 using (Html.BeginForm("SaveTest", "AdministratedTest"))
                 {
+                    <input type="hidden" value="@Model.URL"/>
                     foreach (var question in Model.Test.AdministratedQuestions)
                     {
                         <div class="QuestionContainer">
@@ -71,6 +80,7 @@
                     <button type="submit" class="btn btn-success">Save Test</button>
                 }
             }
+            
         }
     }
 </div>
