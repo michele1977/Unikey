@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Context;
 
 namespace UnikeyFactoryTest.Mapper
 {
     public class AdministratedAnswerMapper
     {
-        public static AdministratedAnswer MapDaoToDomain(Context.AdministratedAnswer dao)
+        public static AdministratedAnswerBusiness MapDaoToDomain(AdministratedAnswer dao)
         {
-            var returned = new AdministratedAnswer
+            var returned = new AdministratedAnswerBusiness
             {
                 Id = dao.Id,
                 Text = dao.Text,
@@ -24,9 +25,9 @@ namespace UnikeyFactoryTest.Mapper
             return returned;
         }
 
-        public static Context.AdministratedAnswer MapDomainToDao(AdministratedAnswer domain)
+        public static AdministratedAnswer MapDomainToDao(AdministratedAnswerBusiness domain)
         {
-            var returned = new Context.AdministratedAnswer
+            var returned = new AdministratedAnswer
             {
                 Id = domain.Id,
                 Text = domain.Text,

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UnikeyFactoryTest.Domain
 {
-    public class AdministratedTest
+    public class AdministratedTestBusiness
     {
         public int Id { get; set; }
         public string URL { get; set; }
@@ -14,7 +14,6 @@ namespace UnikeyFactoryTest.Domain
         public int TestId { get; set; }
         public string TestSubject { get; set; }
         public DateTime? Date { get; set; }
-        public virtual ICollection<AdministratedQuestion> AdministratedQuestions { get; set; }
-        public virtual Test Test{get;set;}
+        public virtual ICollection<AdministratedQuestionBusiness> AdministratedQuestions { get; set; }
     }
 }

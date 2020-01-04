@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 
 namespace UnikeyFactoryTest.Mapper
 {
     public class AdministratedQuestionMapper
     {
-        public static AdministratedQuestion MapDaoToDomain(Context.AdministratedQuestion dao)
+        public static AdministratedQuestionBusiness MapDaoToDomain(AdministratedQuestion dao)
         {
-            var returned = new AdministratedQuestion
+            var returned = new AdministratedQuestionBusiness
             {
                 Id = dao.Id,
                 Text = dao.Text,
@@ -23,9 +24,9 @@ namespace UnikeyFactoryTest.Mapper
             return returned;
         }
 
-        public static Context.AdministratedQuestion MapDomainToDao(AdministratedQuestion domain)
+        public static AdministratedQuestion MapDomainToDao(AdministratedQuestionBusiness domain)
         {
-            var returned = new Context.AdministratedQuestion
+            var returned = new AdministratedQuestion
             {
                 Id = domain.Id,
                 Text = domain.Text,

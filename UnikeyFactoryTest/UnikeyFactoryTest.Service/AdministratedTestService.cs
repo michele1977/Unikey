@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Repository;
 
 namespace UnikeyFactoryTest.Service
@@ -18,9 +19,9 @@ namespace UnikeyFactoryTest.Service
             repo = new AdministratedTestRepository();
         }
 
-        public Domain.AdministratedTest AdministratedTest_Builder(Domain.Test test, string subject )
+        public AdministratedTestBusiness AdministratedTest_Builder(Test test, string subject )
         {
-            var newAdTest = new AdministratedTest();
+            var newAdTest = new AdministratedTestBusiness();
 
             newAdTest.Date = DateTime.Today;
             newAdTest.URL = test.URL;
@@ -28,23 +29,23 @@ namespace UnikeyFactoryTest.Service
             newAdTest.TestSubject = subject;
             foreach (var q in test.Questions)
             {
-                newAdTest.AdministratedQuestions.Add(new AdministratedQuestion()
+                newAdTest.AdministratedQuestions.Add(new AdministratedQuestionBusiness()
                 {
                     Text = q.Text,
                     AdministratedTestId = q.TestId,
-                    AdministratedAnswers = q.Answers.Select(a=> new AdministratedAnswer(){Text = a.Text, Score = a.Score, AdministratedQuestionId = a.QuestionId, isCorrect = a.IsCorrect, isSelected = false}).ToList()
+                    AdministratedAnswers = q.Answers.Select(a=> new AdministratedAnswerBusiness(){Text = a.Text, Score = a.Score, AdministratedQuestionId = a.QuestionId, isCorrect = a.IsCorrect, isSelected = false}).ToList()
                 });
             }
 
             return newAdTest;
         }
 
-        public void Add(Domain.AdministratedTest adTest)
+        public void Add(AdministratedTestBusiness adTest)
         {
-            repo.Add(adTest);
+            repo.Add(AdministratedTestMapper.MapDomainToDao(adTest));
         }
 
-        public void Update_Save(Domain.AdministratedTest adTest)
+        public void Update_Save(AdministratedTestBusiness adTest)
         {
             decimal score = 0;
 
@@ -56,12 +57,12 @@ namespace UnikeyFactoryTest.Service
 
             adTest.TotalScore = Decimal.ToInt32(score);
 
-            repo.Update_Save(adTest);
+            //repo.Update_Save(adTest);
         }
 
-        public Domain.AdministratedTest GetAdministratedTestById (int adTestId)
+        public AdministratedTestBusiness GetAdministratedTestById (int adTestId)
         {
-           return repo.GetAdministratedTestById(adTestId);
+           return AdministratedTestMapper.MapDaoToDomain(repo.GetAdministratedTestById(adTestId));
         }
     }
 }

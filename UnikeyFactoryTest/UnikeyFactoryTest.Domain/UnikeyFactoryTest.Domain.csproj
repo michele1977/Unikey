@@ -41,14 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdministratedAnswer.cs" />
-    <Compile Include="AdministratedQuestion.cs" />
-    <Compile Include="AdministratedTest.cs" />
-    <Compile Include="Answer.cs" />
+    <Compile Include="AdministratedAnswerBusiness.cs" />
+    <Compile Include="AdministratedQuestionBusiness.cs" />
+    <Compile Include="AdministratedTestBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Question.cs" />
-    <Compile Include="Test.cs" />
-    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UnikeyFactoryTest.Context\UnikeyFactoryTest.Context.csproj">
