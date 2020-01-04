@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 
-namespace UnikeyFactoryTest.Mappers
+namespace UnikeyFactoryTest.Mapper
 {
     public static class AnswerMapper
     {
-        public static AnswerBusiness MapDalToBiz(AnswerBusiness answer)
+        public static AnswerBusiness MapDalToBiz(Answer answer)
         {
             var returned = new AnswerBusiness()
             {
