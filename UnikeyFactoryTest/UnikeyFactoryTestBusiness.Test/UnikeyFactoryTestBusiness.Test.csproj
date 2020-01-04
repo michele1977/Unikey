@@ -69,6 +69,14 @@
       <Project>{858F3FB2-AB75-4685-BE3B-B83B9983F51B}</Project>
       <Name>UnikeyFactoryTest.Context</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.Domain\UnikeyFactoryTest.Domain.csproj">
+      <Project>{E2F1E71E-9900-4CEF-A8AB-0BC152698A47}</Project>
+      <Name>UnikeyFactoryTest.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.Mapper\UnikeyFactoryTest.Mapper.csproj">
+      <Project>{451F7D74-9682-4D70-AEDA-9506F898ECFA}</Project>
+      <Name>UnikeyFactoryTest.Mapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UnikeyFactoryTest.Service\UnikeyFactoryTest.Service.csproj">
       <Project>{694C09A8-9DC2-408A-B91F-9383B02E93F0}</Project>
       <Name>UnikeyFactoryTest.Service</Name>

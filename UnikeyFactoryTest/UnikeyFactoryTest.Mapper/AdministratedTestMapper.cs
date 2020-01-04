@@ -41,6 +41,5 @@ namespace UnikeyFactoryTest.Mapper
 
             return returned;
         }
-
     }
 }

@@ -61,7 +61,7 @@
       <Name>UnikeyFactoryTest.IRepository</Name>
     </ProjectReference>
     <ProjectReference Include="..\UnikeyFactoryTest.Mapper\UnikeyFactoryTest.Mapper.csproj">
-      <Project>{9C165A02-6E60-4FE7-A254-E9144D37BACB}</Project>
+      <Project>{451F7D74-9682-4D70-AEDA-9506F898ECFA}</Project>
       <Name>UnikeyFactoryTest.Mapper</Name>
     </ProjectReference>
     <ProjectReference Include="..\UnikeyFactoryTest.Repository\UnikeyFactoryTest.Repository.csproj">

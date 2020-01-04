@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Context;
+using UnikeyFactoryTest.Domain;
 
 namespace UnikeyFactoryTest.IRepository
 {
@@ -12,6 +13,6 @@ namespace UnikeyFactoryTest.IRepository
         void SaveTest(Test test);
         void SaveQuestion(Question question);
         void SaveAnswers(List<Answer> answers);
-        Domain.Test GetTestByURL(string URL);
+        TestBusiness GetTestByURL(string URL);
     } 
 }
