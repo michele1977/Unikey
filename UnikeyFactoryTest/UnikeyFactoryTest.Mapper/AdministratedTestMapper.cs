@@ -19,18 +19,8 @@ namespace UnikeyFactoryTest.Mapper
                 TestId = dao.TestId,
                 TestSubject = dao.TestSubject,
                 Date = dao.Date,
-                AdministratedQuestions = new List<AdministratedQuestion>()
+                AdministratedQuestions = dao.AdministratedQuestions.Select(AdministratedQuestionMapper.MapDaoToDomain).ToList()
             };
-
-            foreach(var aq in dao.AdministratedQuestions)
-            {
-                returned.AdministratedQuestions.Add(new AdministratedQuestion
-                {
-                    Id = aq.Id,
-                    Text = aq.Text,
-                    AdministratedTestId = returned.Id
-                });
-            }
 
             return returned;
         }
@@ -45,18 +35,8 @@ namespace UnikeyFactoryTest.Mapper
                 TestId = domain.TestId,
                 TestSubject = domain.TestSubject,
                 Date = domain.Date,
-                AdministratedQuestions = new List<Context.AdministratedQuestion>()
+                AdministratedQuestions = domain.AdministratedQuestions.Select(AdministratedQuestionMapper.MapDomainToDao).ToList()
             };
-
-            foreach(var aq in domain.AdministratedQuestions)
-            {
-                returned.AdministratedQuestions.Add(new Context.AdministratedQuestion
-                {
-                    Id = aq.Id,
-                    Text = aq.Text,
-                    AdministratedTestId = returned.Id
-                });
-            }
 
             return returned;
         }

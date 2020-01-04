@@ -19,7 +19,6 @@ namespace UnikeyFactoryTest.Mapper
                 isSelected = dao.isSelected,
                 Score = dao.Score,
                 AdministratedQuestionId = dao.AdministratedQuestionId,
-                AdministratedQuestion = AdministratedQuestionMapper.MapDaoToDomain(dao.AdministratedQuestion)
             };
 
             return returned;
@@ -35,7 +34,6 @@ namespace UnikeyFactoryTest.Mapper
                 isSelected = domain.isSelected,
                 Score = domain.Score,
                 AdministratedQuestionId = domain.AdministratedQuestionId,
-                AdministratedQuestion = AdministratedQuestionMapper.MapDomainToDao(domain.AdministratedQuestion)
             };
 
             return returned;
