@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Repository;
@@ -12,14 +13,14 @@ namespace UnikeyFactoryTest.Service
 {
     public class AdministratedTestService
     {
-        private readonly AdministratedTestRepository repo;
+        private readonly IAdministratedTestRepository repo;
 
         public AdministratedTestService()
         {
             repo = new AdministratedTestRepository();
         }
 
-        public AdministratedTestBusiness AdministratedTest_Builder(Test test, string subject )
+        public AdministratedTestBusiness AdministratedTest_Builder(TestBusiness test, string subject )
         {
             var newAdTest = new AdministratedTestBusiness();
 

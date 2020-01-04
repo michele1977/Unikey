@@ -9,9 +9,9 @@ namespace UnikeyFactoryTest.IRepository
 {
     public interface IAdministratedTestRepository
     {
-        void Update_Save(AdministratedTest adTest);
-        void Add(AdministratedTest adTest);
-        AdministratedTest GetAdministratedTestById(int adTestId);
+        void Update_Save(AdministratedTestBusiness adTest);
+        void Add(AdministratedTestBusiness adTest);
+        AdministratedTestBusiness GetAdministratedTestById(int adTestId);
 
     }
 }

@@ -20,7 +20,7 @@ namespace UnikeyFactoryTest.Repository
             _ctx = new TestPlatformDBEntities();
         }
 
-        public void Add(AdministratedTest adTest)
+        public void Add(AdministratedTestBusiness adTest)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace UnikeyFactoryTest.Repository
 
         }
 
-        public AdministratedTest GetAdministratedTestById(int adTestId)
+        public AdministratedTestBusiness GetAdministratedTestById(int adTestId)
         {
             var adTestDB = _ctx.AdministratedTests.FirstOrDefault(x => x.Id.Equals(adTestId));
             if (adTestDB == null)
@@ -48,7 +48,7 @@ namespace UnikeyFactoryTest.Repository
             }
         }
 
-        public void Update_Save(AdministratedTest adTest)
+        public void Update_Save(AdministratedTestBusiness adTest)
         {
             try
             {
