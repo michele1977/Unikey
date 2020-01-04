@@ -20,12 +20,13 @@ namespace UnikeyFactoryTest.Service
                 _repo.SaveTest(TestMapper.MapBizToDal(test));
             }
         }
-        public TestBusiness GetTestById(string URL)
+        public TestBusiness GetTestByURL(string URL)
         {
             using (TestRepository _repo = new TestRepository())
             {
                 return _repo.GetTestByURL(URL);
             }
         }
+
     }
 }

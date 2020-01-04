@@ -43,10 +43,9 @@ namespace UnikeyFactoryTest.Repository
 
         public TestBusiness GetTestByURL(string URL)
         {
-            throw new NotImplementedException();
-            //var result = _ctx.Tests.FirstOrDefault(x => x.URL.Equals(URL));
-            //if (result == null) throw new Exception("Not valid URL");
-            //else return /*mapping*/ result;
+            var result = _ctx.Tests.FirstOrDefault(x => x.URL.Equals(URL));
+            if (result == null) throw new Exception("Not valid URL");
+            else return TestMapper.MapDalToBiz(result);
         }
 
         public void Dispose()
