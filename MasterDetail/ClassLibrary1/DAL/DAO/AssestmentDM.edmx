@@ -1,0 +1,487 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MikeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ExTest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExecutionDate" Type="datetime" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="TestId" Type="int" />
+          <Property Name="State" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ExTest_Question">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionId" Type="int" />
+          <Property Name="ExTestId" Type="int" Nullable="false" />
+          <Property Name="Position" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pa_ExQuestion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PossibleAnswerId" Type="int" />
+          <Property Name="IsSelected" Type="bit" Nullable="false" />
+          <Property Name="QuestionExId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PossibleAnswer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Text" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="IsCorrect" Type="tinyint" Nullable="false" />
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionText" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="State" Type="tinyint" Nullable="false" />
+          <Property Name="Type" Type="tinyint" Nullable="false" />
+          <Property Name="TestId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="State" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ExTest_Question_ExTest">
+          <End Role="ExTest" Type="Self.ExTest" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ExTest_Question" Type="Self.ExTest_Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExTest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExTest_Question">
+              <PropertyRef Name="ExTestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExTest_Question_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="0..1" />
+          <End Role="ExTest_Question" Type="Self.ExTest_Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExTest_Question">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExTest_Test">
+          <End Role="Test" Type="Self.Test" Multiplicity="0..1" />
+          <End Role="ExTest" Type="Self.ExTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExTest">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pa_ExQuestion_ExTest_Question">
+          <End Role="ExTest_Question" Type="Self.ExTest_Question" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Pa_ExQuestion" Type="Self.Pa_ExQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExTest_Question">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pa_ExQuestion">
+              <PropertyRef Name="QuestionExId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pa_ExQuestion_PossibleAnswer">
+          <End Role="PossibleAnswer" Type="Self.PossibleAnswer" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Pa_ExQuestion" Type="Self.Pa_ExQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PossibleAnswer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pa_ExQuestion">
+              <PropertyRef Name="PossibleAnswerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PossibleAnswer_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PossibleAnswer" Type="Self.PossibleAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PossibleAnswer">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_Test">
+          <End Role="Test" Type="Self.Test" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MikeModelStoreContainer">
+          <EntitySet Name="ExTest" EntityType="Self.ExTest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExTest_Question" EntityType="Self.ExTest_Question" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pa_ExQuestion" EntityType="Self.Pa_ExQuestion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PossibleAnswer" EntityType="Self.PossibleAnswer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Test" EntityType="Self.Test" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ExTest_Question_ExTest" Association="Self.FK_ExTest_Question_ExTest">
+            <End Role="ExTest" EntitySet="ExTest" />
+            <End Role="ExTest_Question" EntitySet="ExTest_Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExTest_Question_Question" Association="Self.FK_ExTest_Question_Question">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="ExTest_Question" EntitySet="ExTest_Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExTest_Test" Association="Self.FK_ExTest_Test">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="ExTest" EntitySet="ExTest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pa_ExQuestion_ExTest_Question" Association="Self.FK_Pa_ExQuestion_ExTest_Question">
+            <End Role="ExTest_Question" EntitySet="ExTest_Question" />
+            <End Role="Pa_ExQuestion" EntitySet="Pa_ExQuestion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pa_ExQuestion_PossibleAnswer" Association="Self.FK_Pa_ExQuestion_PossibleAnswer">
+            <End Role="PossibleAnswer" EntitySet="PossibleAnswer" />
+            <End Role="Pa_ExQuestion" EntitySet="Pa_ExQuestion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PossibleAnswer_Question" Association="Self.FK_PossibleAnswer_Question">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="PossibleAnswer" EntitySet="PossibleAnswer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_Test" Association="Self.FK_Question_Test">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MikeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AssestmentContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ExTests" EntityType="MikeModel.ExTest" />
+          <EntitySet Name="ExTest_Question" EntityType="MikeModel.ExTest_Question" />
+          <EntitySet Name="Pa_ExQuestion" EntityType="MikeModel.Pa_ExQuestion" />
+          <EntitySet Name="PossibleAnswers" EntityType="MikeModel.PossibleAnswer" />
+          <EntitySet Name="Questions" EntityType="MikeModel.Question" />
+          <EntitySet Name="Tests" EntityType="MikeModel.Test" />
+          <AssociationSet Name="FK_ExTest_Question_ExTest" Association="MikeModel.FK_ExTest_Question_ExTest">
+            <End Role="ExTest" EntitySet="ExTests" />
+            <End Role="ExTest_Question" EntitySet="ExTest_Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExTest_Test" Association="MikeModel.FK_ExTest_Test">
+            <End Role="Test" EntitySet="Tests" />
+            <End Role="ExTest" EntitySet="ExTests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExTest_Question_Question" Association="MikeModel.FK_ExTest_Question_Question">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="ExTest_Question" EntitySet="ExTest_Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pa_ExQuestion_ExTest_Question" Association="MikeModel.FK_Pa_ExQuestion_ExTest_Question">
+            <End Role="ExTest_Question" EntitySet="ExTest_Question" />
+            <End Role="Pa_ExQuestion" EntitySet="Pa_ExQuestion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pa_ExQuestion_PossibleAnswer" Association="MikeModel.FK_Pa_ExQuestion_PossibleAnswer">
+            <End Role="PossibleAnswer" EntitySet="PossibleAnswers" />
+            <End Role="Pa_ExQuestion" EntitySet="Pa_ExQuestion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PossibleAnswer_Question" Association="MikeModel.FK_PossibleAnswer_Question">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="PossibleAnswer" EntitySet="PossibleAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_Test" Association="MikeModel.FK_Question_Test">
+            <End Role="Test" EntitySet="Tests" />
+            <End Role="Question" EntitySet="Questions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ExTest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExecutionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TestId" Type="Int32" />
+          <Property Name="State" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="ExTest_Question" Relationship="MikeModel.FK_ExTest_Question_ExTest" FromRole="ExTest" ToRole="ExTest_Question" />
+          <NavigationProperty Name="Test" Relationship="MikeModel.FK_ExTest_Test" FromRole="ExTest" ToRole="Test" />
+        </EntityType>
+        <EntityType Name="ExTest_Question">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionId" Type="Int32" />
+          <Property Name="ExTestId" Type="Int32" Nullable="false" />
+          <Property Name="Position" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ExTest" Relationship="MikeModel.FK_ExTest_Question_ExTest" FromRole="ExTest_Question" ToRole="ExTest" />
+          <NavigationProperty Name="Question" Relationship="MikeModel.FK_ExTest_Question_Question" FromRole="ExTest_Question" ToRole="Question" />
+          <NavigationProperty Name="Pa_ExQuestion" Relationship="MikeModel.FK_Pa_ExQuestion_ExTest_Question" FromRole="ExTest_Question" ToRole="Pa_ExQuestion" />
+        </EntityType>
+        <EntityType Name="Pa_ExQuestion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PossibleAnswerId" Type="Int32" />
+          <Property Name="QuestionExId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ExTest_Question" Relationship="MikeModel.FK_Pa_ExQuestion_ExTest_Question" FromRole="Pa_ExQuestion" ToRole="ExTest_Question" />
+          <NavigationProperty Name="PossibleAnswer" Relationship="MikeModel.FK_Pa_ExQuestion_PossibleAnswer" FromRole="Pa_ExQuestion" ToRole="PossibleAnswer" />
+          <Property Name="IsSelected" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PossibleAnswer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="IsCorrect" Type="Byte" Nullable="false" />
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pa_ExQuestion" Relationship="MikeModel.FK_Pa_ExQuestion_PossibleAnswer" FromRole="PossibleAnswer" ToRole="Pa_ExQuestion" />
+          <NavigationProperty Name="Question" Relationship="MikeModel.FK_PossibleAnswer_Question" FromRole="PossibleAnswer" ToRole="Question" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionText" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="Byte" Nullable="false" />
+          <Property Name="Type" Type="Byte" Nullable="false" />
+          <Property Name="TestId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ExTest_Question" Relationship="MikeModel.FK_ExTest_Question_Question" FromRole="Question" ToRole="ExTest_Question" />
+          <NavigationProperty Name="PossibleAnswers" Relationship="MikeModel.FK_PossibleAnswer_Question" FromRole="Question" ToRole="PossibleAnswer" />
+          <NavigationProperty Name="Test" Relationship="MikeModel.FK_Question_Test" FromRole="Question" ToRole="Test" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="State" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="ExTests" Relationship="MikeModel.FK_ExTest_Test" FromRole="Test" ToRole="ExTest" />
+          <NavigationProperty Name="Questions" Relationship="MikeModel.FK_Question_Test" FromRole="Test" ToRole="Question" />
+        </EntityType>
+        <Association Name="FK_ExTest_Question_ExTest">
+          <End Type="MikeModel.ExTest" Role="ExTest" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MikeModel.ExTest_Question" Role="ExTest_Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExTest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExTest_Question">
+              <PropertyRef Name="ExTestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExTest_Test">
+          <End Type="MikeModel.Test" Role="Test" Multiplicity="0..1" />
+          <End Type="MikeModel.ExTest" Role="ExTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExTest">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExTest_Question_Question">
+          <End Type="MikeModel.Question" Role="Question" Multiplicity="0..1" />
+          <End Type="MikeModel.ExTest_Question" Role="ExTest_Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExTest_Question">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pa_ExQuestion_ExTest_Question">
+          <End Type="MikeModel.ExTest_Question" Role="ExTest_Question" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MikeModel.Pa_ExQuestion" Role="Pa_ExQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExTest_Question">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pa_ExQuestion">
+              <PropertyRef Name="QuestionExId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pa_ExQuestion_PossibleAnswer">
+          <End Type="MikeModel.PossibleAnswer" Role="PossibleAnswer" Multiplicity="0..1" />
+          <End Type="MikeModel.Pa_ExQuestion" Role="Pa_ExQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PossibleAnswer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pa_ExQuestion">
+              <PropertyRef Name="PossibleAnswerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PossibleAnswer_Question">
+          <End Type="MikeModel.Question" Role="Question" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MikeModel.PossibleAnswer" Role="PossibleAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PossibleAnswer">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_Test">
+          <End Type="MikeModel.Test" Role="Test" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MikeModel.Question" Role="Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MikeModelStoreContainer" CdmEntityContainer="AssestmentContext">
+          <EntitySetMapping Name="ExTests">
+            <EntityTypeMapping TypeName="MikeModel.ExTest">
+              <MappingFragment StoreEntitySet="ExTest">
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ExecutionDate" ColumnName="ExecutionDate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExTest_Question">
+            <EntityTypeMapping TypeName="MikeModel.ExTest_Question">
+              <MappingFragment StoreEntitySet="ExTest_Question">
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="ExTestId" ColumnName="ExTestId" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pa_ExQuestion">
+            <EntityTypeMapping TypeName="MikeModel.Pa_ExQuestion">
+              <MappingFragment StoreEntitySet="Pa_ExQuestion">
+                <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
+                <ScalarProperty Name="QuestionExId" ColumnName="QuestionExId" />
+                <ScalarProperty Name="PossibleAnswerId" ColumnName="PossibleAnswerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PossibleAnswers">
+            <EntityTypeMapping TypeName="MikeModel.PossibleAnswer">
+              <MappingFragment StoreEntitySet="PossibleAnswer">
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="MikeModel.Question">
+              <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="QuestionText" ColumnName="QuestionText" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tests">
+            <EntityTypeMapping TypeName="MikeModel.Test">
+              <MappingFragment StoreEntitySet="Test">
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

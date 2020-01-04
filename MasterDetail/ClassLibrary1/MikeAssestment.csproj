@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1AE6EE8E-E465-41C5-A17A-EF35DA1ED082}</ProjectGuid>
+    <ProjectGuid>{59A00367-F9B3-4703-8912-5D3C6CB4709D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UnikeyFactoryTest.Repository</RootNamespace>
-    <AssemblyName>UnikeyFactoryTest.Repository</AssemblyName>
+    <RootNamespace>ClassLibrary1</RootNamespace>
+    <AssemblyName>ClassLibrary1</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -43,6 +43,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,28 +53,83 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdministratedTestRepository.cs" />
-    <Compile Include="TestRepository.cs" />
+    <Compile Include="Business\TestExFactory.cs" />
+    <Compile Include="DAL\DAO\AssestmentDM.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssestmentDM.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\DAO\AssestmentDM.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssestmentDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\DAO\AssestmentDM.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssestmentDM.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\DAO\DaoExtension.cs" />
+    <Compile Include="DAL\DAO\ExTest.cs">
+      <DependentUpon>AssestmentDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\DAO\ExTest_Question.cs">
+      <DependentUpon>AssestmentDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\DAO\Pa_ExQuestion.cs">
+      <DependentUpon>AssestmentDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\DAO\PossibleAnswer.cs">
+      <DependentUpon>AssestmentDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\DAO\Question.cs">
+      <DependentUpon>AssestmentDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\DAO\Test.cs">
+      <DependentUpon>AssestmentDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Repositories\TestRepository.cs" />
+    <Compile Include="DAL\Repositories\TestExRepository.cs" />
+    <Compile Include="DAL\DAO\SingletonContext.cs" />
+    <Compile Include="Business\Entities\ExPossibleAnswer.cs" />
+    <Compile Include="Business\Entities\ExQuestion.cs" />
+    <Compile Include="Business\Entities\ExTest.cs" />
+    <Compile Include="Business\Entities\Test.cs" />
+    <Compile Include="Business\Entities\Question.cs" />
+    <Compile Include="Business\Entities\PossibleAnswer.cs" />
+    <Compile Include="DAL\Mapper\ExQuestionMapper.cs" />
+    <Compile Include="DAL\Mapper\PossibleAnswerMapper.cs" />
+    <Compile Include="DAL\Mapper\QuestionMapper.cs" />
+    <Compile Include="DAL\Mapper\TestExMapper.cs" />
+    <Compile Include="DAL\Mapper\TestMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UnikeyFactoryTest.Context\UnikeyFactoryTest.Context.csproj">
-      <Project>{858F3FB2-AB75-4685-BE3B-B83B9983F51B}</Project>
-      <Name>UnikeyFactoryTest.Context</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\UnikeyFactoryTest.Domain\UnikeyFactoryTest.Domain.csproj">
-      <Project>{E2F1E71E-9900-4CEF-A8AB-0BC152698A47}</Project>
-      <Name>UnikeyFactoryTest.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\UnikeyFactoryTest.IRepository\UnikeyFactoryTest.IRepository.csproj">
-      <Project>{06E5E146-DF6E-4BC6-9339-1D68BEA1B996}</Project>
-      <Name>UnikeyFactoryTest.IRepository</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.Config" />
+    <EntityDeploy Include="DAL\DAO\AssestmentDM.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AssestmentDM.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DAL\DAO\AssestmentDM.edmx.diagram">
+      <DependentUpon>AssestmentDM.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DAL\DAO\AssestmentDM.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AssestmentDM.edmx</DependentUpon>
+      <LastGenOutput>AssestmentDM.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DAL\DAO\AssestmentDM.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AssestmentDM.edmx</DependentUpon>
+      <LastGenOutput>AssestmentDM.cs</LastGenOutput>
+    </Content>
+    <Content Include="SQLScriptDB.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

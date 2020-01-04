@@ -7,19 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UnikeyFactoryTest.Context
+namespace ClassLibrary1.DAL.DAO
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Answer
+    public partial class Pa_ExQuestion
     {
         public int Id { get; set; }
-        public string Text { get; set; }
-        public Nullable<bool> IsCorrect { get; set; }
-        public int QuestionId { get; set; }
-        public Nullable<decimal> Score { get; set; }
+        public Nullable<int> PossibleAnswerId { get; set; }
+        public int QuestionExId { get; set; }
+        public bool IsSelected { get; set; }
     
-        public virtual Question Question { get; set; }
+        public virtual ExTest_Question ExTest_Question { get; set; }
+        public virtual PossibleAnswer PossibleAnswer { get; set; }
     }
 }

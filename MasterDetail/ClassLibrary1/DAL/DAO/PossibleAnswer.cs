@@ -7,28 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UnikeyFactoryTest.Context
+namespace ClassLibrary1.DAL.DAO
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class AdministratedTest
+    public partial class PossibleAnswer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AdministratedTest()
+        public PossibleAnswer()
         {
-            this.AdministratedQuestions = new HashSet<AdministratedQuestion>();
+            this.Pa_ExQuestion = new HashSet<Pa_ExQuestion>();
         }
     
         public int Id { get; set; }
-        public string URL { get; set; }
-        public Nullable<int> TotalScore { get; set; }
-        public int TestId { get; set; }
-        public string TestSubject { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
+        public string Text { get; set; }
+        public byte IsCorrect { get; set; }
+        public int QuestionId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AdministratedQuestion> AdministratedQuestions { get; set; }
-        public virtual Test Test { get; set; }
+        public virtual ICollection<Pa_ExQuestion> Pa_ExQuestion { get; set; }
+        public virtual Question Question { get; set; }
     }
 }

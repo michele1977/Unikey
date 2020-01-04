@@ -23,6 +23,22 @@ namespace UnikeyFactoryTest.Repository
             _ctx.SaveChanges();
         }
 
+        public void SaveQuestion(Question question)
+        {
+            _ctx.Questions.Add(question);
+            _ctx.SaveChanges();
+        }
+
+        public void SaveAnswers(List<Answer> answers)
+        {
+            foreach (var answer in answers)
+            {
+                _ctx.Answers.Add(answer);
+            }
+
+            _ctx.SaveChanges();
+        }
+
         public void Dispose()
         {
             _ctx.Dispose();
