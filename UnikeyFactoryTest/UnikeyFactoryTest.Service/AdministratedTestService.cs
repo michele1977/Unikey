@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
-using UnikeyFactoryTest.IRepository;
+using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Repository;
 
 namespace UnikeyFactoryTest.Service
@@ -22,7 +22,7 @@ namespace UnikeyFactoryTest.Service
 
         public AdministratedTestBusiness AdministratedTest_Builder(TestBusiness test, string subject )
         {
-            var newAdTest = new AdministratedTest();
+            var newAdTest = new AdministratedTestBusiness();
 
             newAdTest.Date = DateTime.Today;
             newAdTest.URL = test.URL;
@@ -34,26 +34,36 @@ namespace UnikeyFactoryTest.Service
                 {
                     Text = q.Text,
                     AdministratedTestId = q.TestId,
-                    AdministratedAnswers = q.Answers.Select(a=> new AdministratedAnswerBusiness(){Text = a.Text, Score = a.Score, AdministratedQuestionId = a.QuestionId}).ToList()
+                    AdministratedAnswers = q.Answers.Select(a=> new AdministratedAnswerBusiness(){Text = a.Text, Score = a.Score, AdministratedQuestionId = a.QuestionId, isCorrect = a.IsCorrect, isSelected = false}).ToList()
                 });
             }
 
             return newAdTest;
         }
 
-        public void Save(AdministratedTestBusiness adTest)
+        public void Add(AdministratedTestBusiness adTest)
         {
-            repo.Add(adTest);
+            repo.Add(AdministratedTestMapper.MapDomainToDao(adTest));
         }
 
         public void Update_Save(AdministratedTestBusiness adTest)
         {
-            repo.Update_Save(adTest);
+            decimal score = 0;
+
+            foreach (var q in adTest.AdministratedQuestions)
+            {
+                if ((q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true)) != null)
+                    score = score + q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true).Score??0;
+            }
+
+            adTest.TotalScore = Decimal.ToInt32(score);
+
+            //repo.Update_Save(adTest);
         }
 
         public AdministratedTestBusiness GetAdministratedTestById (int adTestId)
         {
-           return repo.GetAdministratedTestById(adTestId);
+           return AdministratedTestMapper.MapDaoToDomain(repo.GetAdministratedTestById(adTestId));
         }
     }
 }

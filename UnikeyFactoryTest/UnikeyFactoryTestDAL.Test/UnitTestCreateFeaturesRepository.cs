@@ -53,16 +53,16 @@ namespace UnikeyFactoryTestDAL.Test
                 answer2
             };
 
-            AnswerRepository answerRepository = new AnswerRepository();
-            QuestionRepository questionRepository = new QuestionRepository();
+            //AnswerRepository answerRepository = new AnswerRepository();
+            //QuestionRepository questionRepository = new QuestionRepository();
             TestRepository testRepository = new TestRepository();
 
             try
             {
                 testRepository.SaveTest(test);
-                questionRepository.SaveQuestion(question);
-                questionRepository.SaveQuestion(question2);
-                answerRepository.SaveAnswers(answers);
+                //questionRepository.SaveQuestion(question);
+                //questionRepository.SaveQuestion(question2);
+                //answerRepository.SaveAnswers(answers);
             }
             catch (Exception ex)
             {

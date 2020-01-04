@@ -41,8 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdministratedAnswerBusiness.cs" />
+    <Compile Include="AdministratedQuestionBusiness.cs" />
+    <Compile Include="AdministratedTestBusiness.cs" />
     <Compile Include="AnswerBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UnikeyFactoryTest.Context\UnikeyFactoryTest.Context.csproj">
+      <Project>{858F3FB2-AB75-4685-BE3B-B83B9983F51B}</Project>
+      <Name>UnikeyFactoryTest.Context</Name>
+    </ProjectReference>
     <Compile Include="QuestionBusiness.cs" />
     <Compile Include="TestBusiness.cs" />
     <Compile Include="UserBusiness.cs" />
