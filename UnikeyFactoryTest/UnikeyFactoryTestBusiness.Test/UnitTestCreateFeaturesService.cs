@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnikeyFactoryTest.Context;
+using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Service;
 
 namespace UnikeyFactoryTestBusiness.Test
@@ -49,7 +50,7 @@ namespace UnikeyFactoryTestBusiness.Test
 
             try
             {
-                testService.AddNewTest(test);
+                testService.AddNewTest(TestMapper.MapDalToBiz(test));
             }
             catch(Exception ex)
             {

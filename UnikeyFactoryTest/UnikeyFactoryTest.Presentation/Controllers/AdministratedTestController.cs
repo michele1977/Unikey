@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Presentation.Models;
 using UnikeyFactoryTest.Service;
 
@@ -27,8 +29,8 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var subject = model.Name + " " + model.Surname;
             //creo un test temporaneo da sostire con quello repertio dalla URL
             //var test = testService.GetTestById(model.URL);
-            var test = new Test();
-            model.Test = service.AdministratedTest_Builder(test, subject);
+            var test = new TestBusiness();
+            model.Test = AdministratedTestMapper.MapDomainToDao(service.AdministratedTest_Builder(test, subject));
             return View("Test", model);
         }
 

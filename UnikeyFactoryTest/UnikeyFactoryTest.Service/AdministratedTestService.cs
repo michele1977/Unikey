@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Repository;
 
@@ -43,7 +44,7 @@ namespace UnikeyFactoryTest.Service
 
         public void Add(AdministratedTestBusiness adTest)
         {
-            repo.Add(AdministratedTestMapper.MapDomainToDao(adTest));
+            repo.Add(adTest);
         }
 
         public void Update_Save(AdministratedTestBusiness adTest)
@@ -56,14 +57,14 @@ namespace UnikeyFactoryTest.Service
                     score = score + q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true).Score??0;
             }
 
-            adTest.TotalScore = Decimal.ToInt32(score);
+            adTest.TotalScore = decimal.ToInt32(score);
 
-            //repo.Update_Save(adTest);
+            repo.Update_Save(adTest);
         }
 
         public AdministratedTestBusiness GetAdministratedTestById (int adTestId)
         {
-           return AdministratedTestMapper.MapDaoToDomain(repo.GetAdministratedTestById(adTestId));
+           return repo.GetAdministratedTestById(adTestId);
         }
     }
 }

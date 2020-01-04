@@ -1,6 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using UnikeyFactoryTest.Context;
 
 namespace UnikeyFactoryTestDAL.Test
 {
@@ -10,7 +11,7 @@ namespace UnikeyFactoryTestDAL.Test
         [TestMethod]
         public void AutoMapperConfigTest_OK()
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<UnikeyFactoryTest.Context.AdministratedTest, UnikeyFactoryTest.Domain.AdministratedTest>());
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<AdministratedTest, AdministratedTest>());
             config.AssertConfigurationIsValid();
         }
     }

@@ -15,7 +15,7 @@ namespace UnikeyFactoryTest.Mapper
                 URL = test.URL,
                 Date = test.Date,
                 UserId = test.UserId,
-                AdministratedTests = test.AdministratedTests.Select(AdministratedTestMapper.MapDalToBiz),
+                AdministratedTests = test.AdministratedTests.Select(AdministratedTestMapper.MapDaoToDomain),
                 Questions = test.Questions.Select(QuestionMapper.MapDalToBiz).ToList(),
         };
             return returned;
@@ -29,7 +29,7 @@ namespace UnikeyFactoryTest.Mapper
                 URL = test.URL,
                 Date = test.Date,
                 UserId = test.UserId,
-                AdministratedTests = test.AdministratedTests.Select(AdministratedTestMapper.MapBizToDal).ToList(),
+                AdministratedTests = test.AdministratedTests.Select(AdministratedTestMapper.MapDomainToDao).ToList(),
                 Questions = test.Questions.Select(QuestionMapper.MapBizToDal).ToList(),
             };
             return returned;

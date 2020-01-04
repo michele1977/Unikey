@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Context;
+using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
 
 namespace UnikeyFactoryTest.Repository
@@ -17,19 +18,19 @@ namespace UnikeyFactoryTest.Repository
             _ctx = new TestPlatformDBEntities();
         }
 
-        public void SaveTest(Context.Test test)
+        public void SaveTest(Test test)
         {
             _ctx.Tests.Add(test);
             _ctx.SaveChanges();
         }
 
-        public void SaveQuestion(Context.Question question)
+        public void SaveQuestion(Question question)
         {
             _ctx.Questions.Add(question);
             _ctx.SaveChanges();
         }
 
-        public void SaveAnswers(List<Context.Answer> answers)
+        public void SaveAnswers(List<Answer> answers)
         {
             foreach (var answer in answers)
             {
@@ -39,7 +40,7 @@ namespace UnikeyFactoryTest.Repository
             _ctx.SaveChanges();
         }
 
-        public Domain.Test GetTestByURL(string URL)
+        public TestBusiness GetTestByURL(string URL)
         {
             throw new NotImplementedException();
             //var result = _ctx.Tests.FirstOrDefault(x => x.URL.Equals(URL));

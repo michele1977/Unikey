@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdministratedAnswerMapper.cs" />
+    <Compile Include="AdministratedQuestionMapper.cs" />
+    <Compile Include="AdministratedTestMapper.cs" />
     <Compile Include="AnswerMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuestionMapper.cs" />
