@@ -18,5 +18,13 @@ namespace UnikeyFactoryTest.Service
                 _repo.SaveTest(test);
             }
         }
+
+        public string GenerateUrl()
+        {
+            using (TestRepository _repo = new TestRepository())
+            {
+                return _repo.GenerateUrl();
+            }
+        }
     }
 }

@@ -23,6 +23,11 @@ namespace UnikeyFactoryTest.Repository
             _ctx.SaveChanges();
         }
 
+        public string GenerateUrl()
+        {
+            Guid url = Guid.NewGuid();
+            return url.ToString();
+        }
 
         public void Dispose()
         {

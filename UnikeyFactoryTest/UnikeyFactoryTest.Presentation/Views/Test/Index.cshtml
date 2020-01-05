@@ -1,0 +1,100 @@
+﻿@model UnikeyFactoryTest.Presentation.Models.TestModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<script>
+    function enable(idtxt, idbtn, idbtn2) {
+
+        document.getElementById(idtxt).disabled = false
+        document.getElementById(idtxt).required = true
+        document.getElementById(idbtn).disabled = false
+        document.getElementById(idbtn2).disabled = false
+    }
+
+
+    function mydisabled(idtxt, idbtn, idbtn2) {
+
+        document.getElementById(idtxt).disabled = true
+        document.getElementById(idtxt).required = false
+        document.getElementById(idbtn).disabled = true
+        document.getElementById(idbtn2).disabled = true
+    }</script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-9">
+            @using (Html.BeginForm("AddQuestion", "Test", FormMethod.Post))
+            {
+                <h1> Create new test</h1>
+                @Html.Label("Write the question here")
+                <br />
+                @Html.TextAreaFor(m => m.QuestionText, new { @class = "required", @rows = 4, @cols = 400 })
+                <br />
+                @Html.Label("Write correct answer here")
+                <br />
+                <div class="input-group mb-3">
+                    @Html.TextBoxFor(m => m.CorrectAnswerText, new { @class = "form-control", style = "width: 100px;border-color:limegreen;", required = "true" })
+
+                    <div class="input-group-append" style="margin-left: 10px">
+                        <label>Its score is:</label>
+                        @Html.TextBoxFor(m => m.AnswerScore, new { @class = "form-control", style = "width: 100px;margin-left:10px", required = "true", @type = "number", @min = "0", @step = "0.50", @value = 0 })
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group">
+                    @Html.Label("Write wrong answers here")
+
+                    <br />
+                    <div class="input-group mb-3">
+                        @Html.TextBoxFor(m => m.WrongAnswers, new { @class = "form-control", style = "width: max;border-color:red;", required = "true" })
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" id="btn1" onclick="enable('txt2', 'btn2', 'btn6')">+</button>
+
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        @Html.TextBoxFor(m => m.WrongAnswers, new { id = "txt2", @class = "form-control", style = "width: max;border-color:red;", disabled = "true" })
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" id="btn2" disabled onclick="enable('txt3', 'btn3', 'btn7')">+</button>
+                            <button class="btn btn-outline-secondary" id="btn6" disabled onclick="mydisabled('txt2', 'btn2', 'btn6')">-</button>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        @Html.TextBoxFor(m => m.WrongAnswers, new { id = "txt3", @class = "form-control", style = "width: max;border-color:red;", disabled = "true" })
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" id="btn3" disabled onclick="enable('txt4', 'btn8')">+</button>
+                            <button class="btn btn-outline-secondary" disabled id="btn7" onclick="mydisabled('txt3', 'btn3', 'btn7')">-</button>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        @Html.TextBoxFor(m => m.WrongAnswers, new { id = "txt4", @class = "form-control", style = "width: max;border-color:red;", disabled = "true" })
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" id="btn8" disabled onclick="mydisabled('txt4', 'btn8', 'btn8')">-</button>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <br />
+                @Html.Label("If you want to save and add another question click here")
+                <button class="btn btn-primary" style="text-align: right">+</button>
+
+                <br />
+            }
+            @using (Html.BeginForm("AddTest", "Test", FormMethod.Post))
+            {
+                <button class="btn btn-info" style="text-align: right">SaveTest</button>
+            }
+        </div>
+    </div>
+</div>
+
