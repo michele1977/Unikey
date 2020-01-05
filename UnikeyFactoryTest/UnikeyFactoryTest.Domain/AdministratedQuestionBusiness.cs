@@ -14,6 +14,5 @@ namespace UnikeyFactoryTest.Domain
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AdministratedAnswerBusiness> AdministratedAnswers { get; set; }
-        public virtual AdministratedTestBusiness AdministratedTest { get; set; }
     }
 }
