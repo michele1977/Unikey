@@ -42,7 +42,6 @@ namespace UnikeyFactoryTest.Service
             {
                 newAdTest.AdministratedQuestions.Add(new AdministratedQuestionBusiness()
                 {
-                    Id = q.Id,
                     Text = q.Text,
                     AdministratedTestId = q.TestId,
                     AdministratedAnswers = q.Answers.Select(a => new AdministratedAnswerBusiness() { Text = a.Text, Score = a.Score, AdministratedQuestionId = a.QuestionId, isCorrect = a.IsCorrect, isSelected = false }).ToList()

@@ -30,10 +30,8 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public ActionResult BeginTest(AdministratedTestModel model)
         {
             var subject = model.Name + " " + model.Surname;
-            //creo un test temporaneo da sostire con quello repertio dalla URL
             var test = testService.GetTestByURL(model.URL);
             model.Test = service.AdministratedTest_Builder(test, subject);
-            //dopo aver creato l'administrated test lo vado a salvare nel DB
             service.Add(model.Test);
             model.admnistratedTestId = model.Test.Id;
             return View("Test", model);
@@ -42,10 +40,16 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public ActionResult SaveTest(AdministratedTestModel model, FormCollection form)
         {
             var AdminstratedTest = service.GetAdministratedTestById(model.admnistratedTestId);
+            model.QuestionAnswerDictionary = new Dictionary<int, int>();
             //popolo il dictionary con domanda e relativa risposta
             foreach (var key in form.AllKeys)
             {
-                model.QuestionAnswerDictionary[int.Parse(key)] = int.Parse(form[key]);
+                if (key != "URL" && key != "admnistratedTestId")
+                {
+                    var value = Request.Form[key];
+                    model.QuestionAnswerDictionary[System.Convert.ToInt32(key)] = System.Convert.ToInt32(Request.Form[key]);
+                }
+                
             }
             foreach (var question in model.QuestionAnswerDictionary)
             {

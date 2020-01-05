@@ -63,11 +63,14 @@ namespace UnikeyFactoryTest.Repository
             try
             {
                 var upTestDB =  AdministratedTestMapper.MapDomainToDao(adTest);
-                _ctx.AdministratedTests.Attach(upTestDB);
-                _ctx.Entry(upTestDB).State = System.Data.Entity.EntityState.Modified;
+                
+                //_ctx.AdministratedTests.Attach(upTestDB);
+                //_ctx.Entry(upTestDB).State = System.Data.Entity.EntityState.Modified;
+                var Test = _ctx.AdministratedTests.SingleOrDefault(x => x.Id == adTest.Id);
+                Test = upTestDB;
                 _ctx.SaveChanges();
             }
-            catch
+            catch (Exception ex)
             {
                 throw  new Exception("Update failed");
             }
