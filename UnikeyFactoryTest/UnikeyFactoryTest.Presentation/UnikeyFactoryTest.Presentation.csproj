@@ -127,10 +127,19 @@
     <Compile Include="App_Start\RouteConfig2.cs" />
     <Compile Include="Controllers\AdministratedTestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AdministratedTestModel.cs" />
+    <Compile Include="Models\DTO\AdministratedAnswerDto.cs" />
+    <Compile Include="Models\DTO\AdministratedQuestionDto.cs" />
+    <Compile Include="Models\DTO\AdministratedTestDto.cs" />
+    <Compile Include="Models\DTO\AnswerDto.cs" />
+    <Compile Include="Models\DTO\QuestionDto.cs" />
+    <Compile Include="Models\DTO\TestDto.cs" />
+    <Compile Include="Models\DTO\UserDto.cs" />
+    <Compile Include="Models\TestsListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -278,6 +287,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
+    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

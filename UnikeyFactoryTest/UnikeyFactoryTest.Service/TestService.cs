@@ -29,12 +29,33 @@ namespace UnikeyFactoryTest.Service
             }
         }
 
-        public TestBusiness GetTestById(string URL)
+        public TestBusiness GetTestById(int testId)
         {
-            using (TestRepository _repo = new TestRepository())
+            Repo = new TestRepository();
+
+            Test test = null;
+
+            try
             {
-                return _repo.GetTestByURL(URL);
+                test = Repo.GetTest(testId);
             }
+            catch (NullReferenceException ex)
+            {
+                throw;
+            }
+            catch (InvalidOperationException ex)
+            {
+                //TODO
+            }
+            catch (Exception ex)
+            {
+                //TODO
+            }
+
+            TestBusiness testBusiness = TestMapper.MapDalToBiz(test);
+
+            return testBusiness;
+
         }
 
         public IEnumerable<TestBusiness> GetTests()
