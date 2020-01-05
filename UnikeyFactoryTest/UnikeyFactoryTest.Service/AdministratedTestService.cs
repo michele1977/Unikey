@@ -14,14 +14,19 @@ namespace UnikeyFactoryTest.Service
 {
     public class AdministratedTestService
     {
-        private readonly IAdministratedTestRepository repo;
+        private readonly IAdministratedTestRepository _repo;
 
-        public AdministratedTestService()
+        public AdministratedTestService(){}
+
+        public AdministratedTestService(AdministratedTestRepository repo)
         {
-            repo = new AdministratedTestRepository();
+            if(repo is null)
+                _repo = new AdministratedTestRepository();
+            else
+                _repo = repo;
         }
 
-        public AdministratedTestBusiness AdministratedTest_Builder(TestBusiness test, string subject )
+        public AdministratedTestBusiness AdministratedTest_Builder(TestBusiness test, string subject)
         {
             var newAdTest = new AdministratedTestBusiness();
 
@@ -29,6 +34,7 @@ namespace UnikeyFactoryTest.Service
             newAdTest.URL = test.URL;
             newAdTest.TestId = test.Id;
             newAdTest.TestSubject = subject;
+            newAdTest.AdministratedQuestions = new List<AdministratedQuestionBusiness>();
             foreach (var q in test.Questions)
             {
                 newAdTest.AdministratedQuestions.Add(new AdministratedQuestionBusiness()
@@ -44,7 +50,7 @@ namespace UnikeyFactoryTest.Service
 
         public void Add(AdministratedTestBusiness adTest)
         {
-            repo.Add(adTest);
+            _repo.Add(adTest);
         }
 
         public void Update_Save(AdministratedTestBusiness adTest)
@@ -59,12 +65,12 @@ namespace UnikeyFactoryTest.Service
 
             adTest.TotalScore = decimal.ToInt32(score);
 
-            repo.Update_Save(adTest);
+            _repo.Update_Save(adTest);
         }
 
         public AdministratedTestBusiness GetAdministratedTestById (int adTestId)
         {
-           return repo.GetAdministratedTestById(adTestId);
+           return _repo.GetAdministratedTestById(adTestId);
         }
     }
 }

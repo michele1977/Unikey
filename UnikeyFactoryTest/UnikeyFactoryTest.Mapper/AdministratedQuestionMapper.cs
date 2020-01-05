@@ -8,7 +8,7 @@ using UnikeyFactoryTest.Domain;
 
 namespace UnikeyFactoryTest.Mapper
 {
-    public class AdministratedQuestionMapper
+    public static class AdministratedQuestionMapper
     {
         public static AdministratedQuestionBusiness MapDaoToDomain(AdministratedQuestion dao)
         {

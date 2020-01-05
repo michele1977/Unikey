@@ -20,7 +20,7 @@ namespace UnikeyFactoryTest.Mapper
                 UserId = test.UserId,
                 AdministratedTests = test.AdministratedTests.Select(AdministratedTestMapper.MapDaoToDomain),
                 Questions = test.Questions.Select(QuestionMapper.MapDalToBiz).ToList(),
-        };
+            };
             return returned;
         }
 

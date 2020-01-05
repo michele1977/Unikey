@@ -16,6 +16,11 @@ namespace UnikeyFactoryTest.Repository
             _ctx = new TestPlatformDBEntities();
         }
 
+        public AdministratedTestRepository(TestPlatformDBEntities ctx)
+        {
+            _ctx = ctx;
+        }
+
         public void Add(AdministratedTestBusiness adTest)
         {
             try

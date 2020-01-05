@@ -28,8 +28,8 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         {
             var subject = model.Name + " " + model.Surname;
             //creo un test temporaneo da sostire con quello repertio dalla URL
-            var test = testService.GetTestById(model.URL);
-            //var test = new Test();
+            //var test = testService.GetTestById(model.URL);
+            var test = new Test();
             model.Test = AdministratedTestMapper.MapDomainToDao(service.AdministratedTest_Builder(test, subject));
             return View("Test", model);
         }
