@@ -33,9 +33,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             //creo un test temporaneo da sostire con quello repertio dalla URL
             var test = testService.GetTestByURL(model.URL);
             model.Test = service.AdministratedTest_Builder(test, subject);
-            model.admnistratedTestId = model.Test.Id;
             //dopo aver creato l'administrated test lo vado a salvare nel DB
             service.Add(model.Test);
+            model.admnistratedTestId = model.Test.Id;
             return View("Test", model);
         }
 
@@ -57,7 +57,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             }
             service.Update_Save(AdminstratedTest);
-            return View("TestStart");
+            return View("TestEnded");
         }
     }
 }

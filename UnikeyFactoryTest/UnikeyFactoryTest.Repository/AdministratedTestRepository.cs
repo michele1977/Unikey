@@ -30,6 +30,8 @@ namespace UnikeyFactoryTest.Repository
                     var newAdTestDB = AdministratedTestMapper.MapDomainToDao(adTest);
                     _ctx.AdministratedTests.Add(newAdTestDB);
                     _ctx.SaveChanges();
+
+                    adTest.Id = newAdTestDB.Id;
                 }
                 catch(Exception ex)
                 {

@@ -45,7 +45,7 @@
         {
             if (Model.Test.AdministratedQuestions != null)
             {
-                using (Html.BeginForm("SaveTest", "AdministratedTest"))
+                using (Html.BeginForm("SaveTest", "ExTest"))
                 {
                     <input type="hidden" value="@Model.URL" name="URL" />
                     <input type="hidden" name="admnistratedTestId" value="@Model.admnistratedTestId" />
