@@ -26,12 +26,6 @@ namespace UnikeyFactoryTestDAL.Test
                 Text = "Question Test"
 
             };
-            Question question2 = new Question()
-            {
-                TestId = 1,
-                Text = "Question Test"
-
-            };
             Answer answer = new Answer()
             {
                 IsCorrect = true,
@@ -39,30 +33,14 @@ namespace UnikeyFactoryTestDAL.Test
                 Score = 10,
                 Text = "Answer Test"
             };
-            Answer answer2 = new Answer()
-            {
-                IsCorrect = true,
-                QuestionId = 2,
-                Score = 11,
-                Text = "Answer Test2"
-            };
 
-            List<Answer> answers = new List<Answer>()
-            {
-                answer,
-                answer2
-            };
-
-            AnswerRepository answerRepository = new AnswerRepository();
-            QuestionRepository questionRepository = new QuestionRepository();
             TestRepository testRepository = new TestRepository();
 
             try
             {
+                question.Answers.Add(answer);
+                test.Questions.Add(question);
                 testRepository.SaveTest(test);
-                questionRepository.SaveQuestion(question);
-                questionRepository.SaveQuestion(question2);
-                answerRepository.SaveAnswers(answers);
             }
             catch (Exception ex)
             {
@@ -71,8 +49,7 @@ namespace UnikeyFactoryTestDAL.Test
 
             TestPlatformDBEntities _ctx = new TestPlatformDBEntities();
             Assert.AreEqual(1, _ctx.Tests.Count());
-            Assert.AreEqual(2, _ctx.Questions.Count());
-            Assert.AreEqual(2, _ctx.Answers.Count());
+
             int g = 0;
         }
     }

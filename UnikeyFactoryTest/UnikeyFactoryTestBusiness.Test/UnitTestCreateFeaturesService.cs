@@ -29,45 +29,16 @@ namespace UnikeyFactoryTestBusiness.Test
                 Score = 10,
 
             };
-            Answer answer2 = new Answer()
-            {
-                IsCorrect = true,
-                QuestionId = 2,
-                Score = 11,
-                Text = "Answer Test"
-            };
-
-            List<Answer> answers = new List<Answer>()
-            {
-                answer,
-                answer2
-            };
 
             TestService testService = new TestService();
-            QuestionService questionService = new QuestionService();
-            AnswerService answerService = new AnswerService();
 
             try
             {
+                question.Answers.Add(answer);
+                test.Questions.Add(question);
                 testService.AddNewTest(test);
             }
             catch(Exception ex)
-            {
-                int g = 0;
-            }
-            try
-            {
-                questionService.AddNewQuestions(question);
-            }
-            catch (Exception ex)
-            {
-                int g = 0;
-            }
-            try
-            {
-                answerService.AddNewAnswers(answers);
-            }
-            catch (Exception ex)
             {
                 int g = 0;
             }
