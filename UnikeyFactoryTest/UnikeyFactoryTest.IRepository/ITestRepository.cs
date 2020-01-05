@@ -10,7 +10,6 @@ namespace UnikeyFactoryTest.IRepository
     public interface ITestRepository
     {
         void SaveTest(Test test);
-        void SaveQuestion(Question question);
-        void SaveAnswers(List<Answer> answers);
+ 
     } 
 }
