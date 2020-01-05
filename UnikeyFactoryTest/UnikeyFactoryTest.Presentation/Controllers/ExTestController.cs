@@ -35,7 +35,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             model.Test = service.AdministratedTest_Builder(test, subject);
             model.admnistratedTestId = model.Test.Id;
             //dopo aver creato l'administrated test lo vado a salvare nel DB
-            service.Update_Save(model.Test);
+            service.Add(model.Test);
             return View("Test", model);
         }
 

@@ -16,7 +16,10 @@ namespace UnikeyFactoryTest.Service
     {
         private readonly IAdministratedTestRepository _repo;
 
-        public AdministratedTestService(){}
+        public AdministratedTestService()
+        {
+            _repo = new AdministratedTestRepository();
+        }
 
         public AdministratedTestService(AdministratedTestRepository repo)
         {
@@ -39,6 +42,7 @@ namespace UnikeyFactoryTest.Service
             {
                 newAdTest.AdministratedQuestions.Add(new AdministratedQuestionBusiness()
                 {
+                    Id = q.Id,
                     Text = q.Text,
                     AdministratedTestId = q.TestId,
                     AdministratedAnswers = q.Answers.Select(a => new AdministratedAnswerBusiness() { Text = a.Text, Score = a.Score, AdministratedQuestionId = a.QuestionId, isCorrect = a.IsCorrect, isSelected = false }).ToList()
