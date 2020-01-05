@@ -1,51 +1,55 @@
 ﻿@using UnikeyFactoryTest.Presentation.Controllers
 @model UnikeyFactoryTest.Presentation.Models.AdministratedTestModel
 <div class="container">
-    @*@using (Html.BeginForm("SaveTest", "AdministratedTest", FormMethod.Post))
-        {
-            <label>Domanda a caso</label>
-            <br />
-            <label>Risposta 1</label>
-            @Html.RadioButton("1", "Riposta 1")
-            <br />
-            <label>Risposta 2</label>
-            @Html.RadioButton("1", "Riposta 2")
-            <br />
-            <label>Risposta 3</label>
-            @Html.RadioButton("1", "Riposta 3")
-            <br />
-            <label>Risposta 4</label>
-            @Html.RadioButton("1", "Riposta 4")
-            <br/>
-            <br/>
+    @using (Html.BeginForm("SaveTest", "AdministratedTest", FormMethod.Post))
+    {
+        <div class="QuestionContainer">
+            <label>Quanto fa 2 + 2</label>
+            <div class="AnswerContainer">
+                <label>2</label>
+                @Html.RadioButton("1", "Riposta 1")
+                <br />
+                <label>8</label>
+                @Html.RadioButton("1", "Riposta 2")
+                <br />
+                <label>4</label>
+                @Html.RadioButton("1", "Riposta 3")
+                <br />
+                <label>6</label>
+                @Html.RadioButton("1", "Riposta 4")
+            </div>
+        </div>
+        <div class="QuestionContainer">
             <label>Come mi chiamo?</label>
-            <br />
-            <label>Camillo</label>
-            @Html.RadioButton("2", "Camillo")
-            <br />
-            <label>Paolo</label>
-            @Html.RadioButton("2", "Paolo")
-            <br />
-            <label>Giovanni</label>
-            @Html.RadioButton("2", "Giovanni")
-            <br />
-            <label>dfsdf</label>
-            @Html.RadioButton("2", "dfsdf")
-            <button type="submit">Save</button>
-        }*@
+            <div class="AnswerContainer">
+                <label>Camillo</label>
+                @Html.RadioButton("1", "Riposta 1")
+                <br />
+                <label>Filippo</label>
+                @Html.RadioButton("1", "Riposta 2")
+                <br />
+                <label>Paolo</label>
+                @Html.RadioButton("1", "Riposta 3")
+                <br />
+                <label>Matteo</label>
+                @Html.RadioButton("1", "Riposta 4")
+            </div>
+        </div>
+        <button type="submit">Save</button>
+    }
 
 
     @{
-        
+
         if (Model.Test != null)
         {
             if (Model.Test.AdministratedQuestions != null)
             {
                 using (Html.BeginForm("SaveTest", "AdministratedTest"))
                 {
-                    <input type="hidden" value="@Model.URL" name="URL"/>
-                    <input type="hidden" name="admnistratedTestId" value="@Model.admnistratedTestId"/>
-                    <input type="hidden" name="URL" value="@Model.URL"/>
+                    <input type="hidden" value="@Model.URL" name="URL" />
+                    <input type="hidden" name="admnistratedTestId" value="@Model.admnistratedTestId" />
+                    <input type="hidden" name="URL" value="@Model.URL" />
                     foreach (var question in Model.Test.AdministratedQuestions)
                     {
                         <div class="QuestionContainer">
@@ -63,7 +67,7 @@
                                         {
                                             <div class="form-check">
                                                 <label>@answer.Text</label>
-                                                @Html.RadioButton(question.Id.ToString(),answer.Id.ToString())
+                                                @Html.RadioButton(question.Id.ToString(), answer.Id.ToString())
                                             </div>
                                         }
                                     }
@@ -74,7 +78,7 @@
                     <button type="submit" class="btn btn-success">Save Test</button>
                 }
             }
-            
+
         }
     }
 </div>

@@ -29,13 +29,14 @@ namespace UnikeyFactoryTest.Service
             newAdTest.URL = test.URL;
             newAdTest.TestId = test.Id;
             newAdTest.TestSubject = subject;
+            newAdTest.AdministratedQuestions = new List<AdministratedQuestionBusiness>();
             foreach (var q in test.Questions)
             {
                 newAdTest.AdministratedQuestions.Add(new AdministratedQuestionBusiness()
                 {
                     Text = q.Text,
                     AdministratedTestId = q.TestId,
-                    AdministratedAnswers = q.Answers.Select(a=> new AdministratedAnswerBusiness(){Text = a.Text, Score = a.Score, AdministratedQuestionId = a.QuestionId, isCorrect = a.IsCorrect, isSelected = false}).ToList()
+                    AdministratedAnswers = q.Answers.Select(a => new AdministratedAnswerBusiness() { Text = a.Text, Score = a.Score, AdministratedQuestionId = a.QuestionId, isCorrect = a.IsCorrect, isSelected = false }).ToList()
                 });
             }
 

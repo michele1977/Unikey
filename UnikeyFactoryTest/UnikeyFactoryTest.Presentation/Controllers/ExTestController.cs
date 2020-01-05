@@ -10,7 +10,7 @@ using UnikeyFactoryTest.Service;
 
 namespace UnikeyFactoryTest.Presentation.Controllers
 {
-    public class AdministratedTestController : Controller
+    public class ExTestController : Controller
     {
         private AdministratedTestService service = new AdministratedTestService();
         private TestService testService = new TestService();
