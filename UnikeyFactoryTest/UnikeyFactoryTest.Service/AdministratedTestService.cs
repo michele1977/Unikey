@@ -51,9 +51,9 @@ namespace UnikeyFactoryTest.Service
             return newAdTest;
         }
 
-        public void Add(AdministratedTestBusiness adTest)
+        public AdministratedTestBusiness Add(AdministratedTestBusiness adTest)
         {
-            _repo.Add(adTest);
+           return _repo.Add(adTest);
         }
 
         public void Update_Save(AdministratedTestBusiness adTest)

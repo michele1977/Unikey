@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
@@ -21,7 +23,7 @@ namespace UnikeyFactoryTest.Repository
             _ctx = ctx;
         }
 
-        public void Add(AdministratedTestBusiness adTest)
+        public AdministratedTestBusiness Add(AdministratedTestBusiness adTest)
         {
             using (_ctx)
             {
@@ -30,8 +32,8 @@ namespace UnikeyFactoryTest.Repository
                     var newAdTestDB = AdministratedTestMapper.MapDomainToDao(adTest);
                     _ctx.AdministratedTests.Add(newAdTestDB);
                     _ctx.SaveChanges();
-
-                    adTest.Id = newAdTestDB.Id;
+                    adTest = AdministratedTestMapper.MapDaoToDomain(newAdTestDB);
+                    return adTest;
                 }
                 catch(Exception ex)
                 {
@@ -63,11 +65,11 @@ namespace UnikeyFactoryTest.Repository
             try
             {
                 var upTestDB =  AdministratedTestMapper.MapDomainToDao(adTest);
+
+                _ctx.AdministratedTests.Attach(upTestDB);
+                _ctx.Entry(upTestDB).State = System.Data.Entity.EntityState.Modified;
                 
-                //_ctx.AdministratedTests.Attach(upTestDB);
-                //_ctx.Entry(upTestDB).State = System.Data.Entity.EntityState.Modified;
-                var Test = _ctx.AdministratedTests.SingleOrDefault(x => x.Id == adTest.Id);
-                Test = upTestDB;
+                //_ctx.AdministratedTests.AddOrUpdate(upTestDB);
                 _ctx.SaveChanges();
             }
             catch (Exception ex)

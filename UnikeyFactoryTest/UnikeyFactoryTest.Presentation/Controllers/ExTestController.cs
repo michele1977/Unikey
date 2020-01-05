@@ -32,8 +32,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var subject = model.Name + " " + model.Surname;
             var test = testService.GetTestByURL(model.URL);
             model.Test = service.AdministratedTest_Builder(test, subject);
-            service.Add(model.Test);
-            model.admnistratedTestId = model.Test.Id;
+            var savedTest = service.Add(model.Test);
+            model.admnistratedTestId = savedTest.Id;
+            model.Test = savedTest;
             return View("Test", model);
         }
 
@@ -47,16 +48,17 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 if (key != "URL" && key != "admnistratedTestId")
                 {
                     var value = Request.Form[key];
-                    model.QuestionAnswerDictionary[System.Convert.ToInt32(key)] = System.Convert.ToInt32(Request.Form[key]);
+                    model.QuestionAnswerDictionary[System.Convert.ToInt32(key)] = System.Convert.ToInt32(value);
                 }
                 
             }
             foreach (var question in model.QuestionAnswerDictionary)
             {
-                var takenQuestion = AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key);
+               
                 if (question.Value != 0)
                 {
-                    takenQuestion.AdministratedAnswers.FirstOrDefault(a => a.Id == question.Value).isSelected = true;
+                    AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key)
+                        .AdministratedAnswers.FirstOrDefault(a => a.Id == question.Value).isSelected = true;
                 }
 
             }
