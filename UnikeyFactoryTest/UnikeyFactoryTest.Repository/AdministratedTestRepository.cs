@@ -12,7 +12,7 @@ using UnikeyFactoryTest.Mapper;
 
 namespace UnikeyFactoryTest.Repository
 {
-    public class AdministratedTestRepository : IAdministratedTestRepository, IDisposable
+    public class AdministratedTestRepository : IAdministratedTestRepository
     {
         private readonly TestPlatformDBEntities _ctx;
 
@@ -62,7 +62,25 @@ namespace UnikeyFactoryTest.Repository
             {
                 throw  new Exception("Update failed");
             }
+        }
 
+        public IEnumerable<AdministratedTest> GetAdministratedTests()
+        {
+            return _ctx.AdministratedTests;
+        }
+
+        public void DeleteAdministratedTest(int administratedTestId)
+        {
+            AdministratedTest administratedTest = _ctx.AdministratedTests
+                .FirstOrDefault(t => t.Id == administratedTestId);
+
+            if (administratedTest == null)
+            {
+                throw new NullReferenceException("AdministratedTest not found at specified id");
+            }
+
+            _ctx.AdministratedTests.Remove(administratedTest);
+            _ctx.SaveChanges();
         }
 
         public void Dispose()

@@ -14,11 +14,11 @@ namespace UnikeyFactoryTest.Service
 {
     public class AdministratedTestService
     {
-        private readonly IAdministratedTestRepository repo;
+        public IAdministratedTestRepository Repo { get; set; }
 
         public AdministratedTestService()
         {
-            repo = new AdministratedTestRepository();
+            Repo = new AdministratedTestRepository();
         }
 
         public AdministratedTestBusiness AdministratedTest_Builder(TestBusiness test, string subject )
@@ -44,7 +44,7 @@ namespace UnikeyFactoryTest.Service
 
         public void Add(AdministratedTestBusiness adTest)
         {
-            repo.Add(adTest);
+            Repo.Add(adTest);
         }
 
         public void Update_Save(AdministratedTestBusiness adTest)
@@ -59,12 +59,73 @@ namespace UnikeyFactoryTest.Service
 
             adTest.TotalScore = decimal.ToInt32(score);
 
-            repo.Update_Save(adTest);
+            Repo.Update_Save(adTest);
         }
 
         public AdministratedTestBusiness GetAdministratedTestById (int adTestId)
         {
-           return repo.GetAdministratedTestById(adTestId);
+           return Repo.GetAdministratedTestById(adTestId);
+        }
+
+        public AdministratedTestBusiness GetAdministratedTest(int administratedTestId)
+        {
+            Repo = new AdministratedTestRepository();
+
+            AdministratedTestBusiness administratedTest = null;
+
+            try
+            {
+                administratedTest = Repo.GetAdministratedTestById(administratedTestId);
+            }
+            catch (NullReferenceException ex)
+            {
+                //TODO
+            }
+            catch (ArgumentNullException ex)
+            {
+                //TODO
+            }
+            catch (Exception ex)
+            {
+                //TODO
+            }
+
+            return administratedTest;
+        }
+
+        public IEnumerable<AdministratedTestBusiness> GetAdministratedTests()
+        {
+            Repo = new AdministratedTestRepository();
+            var administratedTests = Repo.GetAdministratedTests().Select(AdministratedTestMapper.MapDaoToDomain);
+            return administratedTests;
+        }
+
+
+        public void DeleteAdministratedTest(int administratedTestId)
+        {
+            using (Repo = new AdministratedTestRepository())
+            {
+                try
+                {
+                    Repo.DeleteAdministratedTest(administratedTestId);
+                }
+                catch (NotSupportedException ex)
+                {
+
+                }
+                catch (ObjectDisposedException ex)
+                {
+
+                }
+                catch (InvalidOperationException ex)
+                {
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
         }
     }
 }

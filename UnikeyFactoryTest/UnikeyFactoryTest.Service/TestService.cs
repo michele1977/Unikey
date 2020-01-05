@@ -5,13 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Repository;
 
 namespace UnikeyFactoryTest.Service
 {
-    public class TestService
+    public class TestService 
     {
+        public ITestRepository Repo { get; set; }
+
+        public TestService()
+        {
+            Repo = new TestRepository();
+        }
+
         public void AddNewTest(TestBusiness test)
         {
             using (TestRepository _repo = new TestRepository())
@@ -20,11 +28,50 @@ namespace UnikeyFactoryTest.Service
                 _repo.SaveTest(TestMapper.MapBizToDal(test));
             }
         }
+
         public TestBusiness GetTestById(string URL)
         {
             using (TestRepository _repo = new TestRepository())
             {
                 return _repo.GetTestByURL(URL);
+            }
+        }
+
+        public IEnumerable<TestBusiness> GetTests()
+        {
+            Repo = new TestRepository();
+            var tests = Repo.GetTests().Select(TestMapper.MapDalToBiz);
+            return tests;
+        }
+
+        public void DeleteTest(int testId)
+        {
+            using (Repo = new TestRepository())
+            {
+                try
+                {
+                    Repo.DeleteTest(testId);
+                }
+                catch (NullReferenceException ex)
+                {
+                    throw;
+                }
+                catch (NotSupportedException ex)
+                {
+
+                }
+                catch (ObjectDisposedException ex)
+                {
+
+                }
+                catch (InvalidOperationException ex)
+                {
+
+                }
+                catch (Exception ex)
+                {
+
+                }
             }
         }
     }
