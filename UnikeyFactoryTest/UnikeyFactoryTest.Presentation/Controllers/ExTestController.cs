@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using UnikeyFactoryTest.Domain;
-using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Presentation.Models;
 using UnikeyFactoryTest.Service;
 
@@ -61,6 +57,8 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                         .AdministratedAnswers.FirstOrDefault(a => a.Id == question.Value).isSelected = true;
                 }
 
+                AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key).Text =
+                    AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key).Text + " ";
             }
             service.Update_Save(AdminstratedTest);
             return View("TestEnded");

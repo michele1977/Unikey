@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
-using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Repository;
 
 namespace UnikeyFactoryTest.Service
@@ -58,16 +53,6 @@ namespace UnikeyFactoryTest.Service
 
         public void Update_Save(AdministratedTestBusiness adTest)
         {
-            decimal score = 0;
-
-            foreach (var q in adTest.AdministratedQuestions)
-            {
-                if ((q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true)) != null)
-                    score = score + q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true).Score??0;
-            }
-
-            adTest.TotalScore = decimal.ToInt32(score);
-
             _repo.Update_Save(adTest);
         }
 

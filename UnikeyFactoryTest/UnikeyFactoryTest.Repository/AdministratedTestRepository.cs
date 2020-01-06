@@ -50,6 +50,7 @@ namespace UnikeyFactoryTest.Repository
         public AdministratedTestBusiness GetAdministratedTestById(int adTestId)
         {
             var adTestDB = _ctx.AdministratedTests.FirstOrDefault(x => x.Id.Equals(adTestId));
+
             if (adTestDB == null)
             {
                 throw new Exception("Not valid id");
@@ -62,14 +63,32 @@ namespace UnikeyFactoryTest.Repository
 
         public void Update_Save(AdministratedTestBusiness adTest)
         {
+            var newTest = Mapper.AdministratedTestMapper.MapDomainToDao(adTest);
+           
             try
             {
-                var upTestDB =  AdministratedTestMapper.MapDomainToDao(adTest);
+                foreach (var q in newTest.AdministratedQuestions)
+                {
+                    foreach (var a in q.AdministratedAnswers)
+                    {
+                        if (a.isSelected == true)
+                        {
+                            _ctx.AdministratedAnswers.FirstOrDefault(x => x.Id == a.Id).isSelected = true;
+                        }
+                    }
+                }
 
-                _ctx.AdministratedTests.Attach(upTestDB);
-                _ctx.Entry(upTestDB).State = System.Data.Entity.EntityState.Modified;
-                
-                //_ctx.AdministratedTests.AddOrUpdate(upTestDB);
+                decimal score = 0;
+
+                foreach (var q in newTest.AdministratedQuestions)
+                {
+                    if ((q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true)) != null)
+                        score = score + q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true).Score ?? 0;
+                }
+
+                _ctx.AdministratedTests.FirstOrDefault(x => x.Id == newTest.Id).TotalScore = decimal.ToInt32(score);
+                _ctx.AdministratedTests.FirstOrDefault(x => x.Id == newTest.Id).Date = DateTime.Today;
+
                 _ctx.SaveChanges();
             }
             catch (Exception ex)
