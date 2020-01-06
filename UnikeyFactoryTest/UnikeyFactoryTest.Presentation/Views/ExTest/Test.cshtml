@@ -1,51 +1,52 @@
 ﻿@using UnikeyFactoryTest.Presentation.Controllers
 @model UnikeyFactoryTest.Presentation.Models.AdministratedTestModel
 <div class="container">
-    @using (Html.BeginForm("SaveTest", "AdministratedTest", FormMethod.Post))
-    {
-        <div class="QuestionContainer">
-            <label>Quanto fa 2 + 2</label>
-            <div class="AnswerContainer">
-                <label>2</label>
-                @Html.RadioButton("1", "Riposta 1")
-                <br />
-                <label>8</label>
-                @Html.RadioButton("1", "Riposta 2")
-                <br />
-                <label>4</label>
-                @Html.RadioButton("1", "Riposta 3")
-                <br />
-                <label>6</label>
-                @Html.RadioButton("1", "Riposta 4")
+    @*@using (Html.BeginForm("SaveTest", "AdministratedTest", FormMethod.Post))
+        {
+            <div class="QuestionContainer">
+                <label>Quanto fa 2 + 2</label>
+                <div class="AnswerContainer">
+                    <label>2</label>
+                    @Html.RadioButton("1", "Riposta 1")
+                    <br />
+                    <label>8</label>
+                    @Html.RadioButton("1", "Riposta 2")
+                    <br />
+                    <label>4</label>
+                    @Html.RadioButton("1", "Riposta 3")
+                    <br />
+                    <label>6</label>
+                    @Html.RadioButton("1", "Riposta 4")
+                </div>
             </div>
-        </div>
-        <div class="QuestionContainer">
-            <label>Come mi chiamo?</label>
-            <div class="AnswerContainer">
-                <label>Camillo</label>
-                @Html.RadioButton("1", "Riposta 1")
-                <br />
-                <label>Filippo</label>
-                @Html.RadioButton("1", "Riposta 2")
-                <br />
-                <label>Paolo</label>
-                @Html.RadioButton("1", "Riposta 3")
-                <br />
-                <label>Matteo</label>
-                @Html.RadioButton("1", "Riposta 4")
+            <div class="QuestionContainer">
+                <label>Come mi chiamo?</label>
+                <div class="AnswerContainer">
+                    <label>Camillo</label>
+                    @Html.RadioButton("1", "Riposta 1")
+                    <br />
+                    <label>Filippo</label>
+                    @Html.RadioButton("1", "Riposta 2")
+                    <br />
+                    <label>Paolo</label>
+                    @Html.RadioButton("1", "Riposta 3")
+                    <br />
+                    <label>Matteo</label>
+                    @Html.RadioButton("1", "Riposta 4")
+                </div>
             </div>
-        </div>
-        <button type="submit">Save</button>
-    }
+            <button type="submit">Save</button>
+        }*@
 
 
     @{
 
         if (Model.Test != null)
         {
+            <h2 class="Title">Assessment of @Model.Name @Model.Surname</h2>
             if (Model.Test.AdministratedQuestions != null)
             {
-                using (Html.BeginForm("SaveTest", "AdministratedTest"))
+                using (Html.BeginForm("SaveTest", "ExTest"))
                 {
                     <input type="hidden" value="@Model.URL" name="URL" />
                     <input type="hidden" name="admnistratedTestId" value="@Model.admnistratedTestId" />
@@ -59,6 +60,7 @@
                                     <label id="Question">
                                         @question.Text
                                     </label>
+                                    <hr />
                                 }
                                 <div class="AnswerContainer">
 
@@ -66,8 +68,11 @@
                                         foreach (var answer in question.AdministratedAnswers)
                                         {
                                             <div class="form-check">
-                                                <label>@answer.Text</label>
-                                                @Html.RadioButton(question.Id.ToString(), answer.Id.ToString())
+                                                <label class="AnswerLabel">@answer.Text</label>
+                                                <span class="RadioInput">
+                                                    @Html.RadioButton(question.Id.ToString(), answer.Id.ToString())
+                                                </span>
+                                                <hr class="AnswerHr"/>
                                             </div>
                                         }
                                     }
@@ -75,7 +80,7 @@
                             }
                         </div>
                     }
-                    <button type="submit" class="btn btn-success">Save Test</button>
+                    <center><button type="submit" class="btn btn-success SaveButton">Save Test</button></center>
                 }
             }
 
