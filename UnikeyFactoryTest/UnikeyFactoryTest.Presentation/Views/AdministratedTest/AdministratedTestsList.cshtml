@@ -1,17 +1,17 @@
-﻿@using UnikeyFactoryTest.Presentation.Models.Dto
-@model  UnikeyFactoryTest.Presentation.Models.TestsListModel
+﻿@using UnikeyFactoryTest.Presentation.Models.DTO
+@model  UnikeyFactoryTest.Presentation.Models.AdministratedTestsListModel
 
 @{
     ViewBag.Title = "TestsList";
 }
 
 
-<h2>Tests List</h2>
+<h2>AdministratedTests List</h2>
 
 <hr />
 
 <div>
-    <form action="@Url.Action("TextSearch", "Test")" method="post">
+    <form action="@Url.Action("TextSearch", "AdministratedTest")" method="post">
         <input id="textSearch" type="text" placeholder="@Model.TextFilter" name="textFilter" />
         <input type="submit" value="Filter" class="btn btn-info" />
     </form>
@@ -19,7 +19,7 @@
 
 <div id="pageSizeDropDownList">
     @Html.Label("Elements per page")
-    <select name="PageSizeSelection" onchange="resizePage(this.value, @Model.PageNumber, '/Test/TestsList?PageSize=');">
+    <select name="PageSizeSelection" onchange="resizePage(this.value, @Model.PageNumber, '/AdministratedTest/AdministratedTestsList?PageSize=');">
         <option value="@Model.PageSize" selected="selected">@Model.PageSize</option>
         @for (int i = 10; i <= 161; i *= 2)
         {
@@ -34,37 +34,32 @@
 
 <table class="table">
     <tr>
-        @*<th>Title</th>*@
-        <th>Id</th>
+        <th>Full Name</th>
+        @*<th>Test title</th>*@
         <th>Date</th>
-        <th>URL</th>
-        <th>Max Score</th>
+        <th>Total Score/Max Score</th>
         <th>Actions</th>
     </tr>
 
-    @foreach (TestDto item in Model.Tests)
+    @foreach (AdministratedTestDto item in Model.Tests)
     {
         <tr>
             <td>
-                @item.Id
+                @item.TestSubject
             </td>
             <td>
                 @item.Date
             </td>
             <td>
-                @item.URL
-            </td>
-            <td>
-                @item.CalculateScore()
+                @item.CalculateResultScore()/@item.CalculateMaxScore()
             </td>
             <td>
                 @Html.ActionLink(
-                    "Content",
-                    "TestContent",
-                    "Test",
+                    "See test",
+                    "AdministratedTestContent",
+                    "AdministratedTest",
                     new { @item.Id, @Model.PageNumber, @Model.PageSize },
-                    new { @class = "btn btn-info" }) |
-                <button class="btn btn-info" onclick="deleteConfirmation(@item.Id, @Model.PageNumber, @Model.PageSize)">Delete</button>
+                    new { @class = "btn btn-info" })
             </td>
         </tr>
     }
@@ -76,8 +71,8 @@
     {
         @Html.ActionLink(
             "Previous",
-            "TestsList",
-            "Test",
+            "AdministratedTestsList",
+            "AdministratedTest",
             new { PageNumber = Model.PageNumber - 1, Model.PageSize },
             new { @class = "btn btn-info" })
     }
@@ -86,8 +81,8 @@
     {
         @Html.ActionLink(
             "Next",
-            "TestsList",
-            "Test",
+            "AdministratedTestsList",
+            "AdministratedTest",
             new { PageNumber = Model.PageNumber + 1, Model.PageSize },
             new { @class = "btn btn-info" })
     }

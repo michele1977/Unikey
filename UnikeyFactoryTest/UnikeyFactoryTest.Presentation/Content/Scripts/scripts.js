@@ -14,8 +14,8 @@
     }
 }
 
-function resizePage(size, pageNumber) {
+function resizePage(size, pageNumber, url) {
 
-    window.location.href = "/Test/TestsList?PageSize=" + size + "&PageNumber=" + pageNumber;
+    window.location.href = url + size + "&PageNumber=" + pageNumber;
 
 }

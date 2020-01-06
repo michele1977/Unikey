@@ -139,6 +139,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AdministratedTestModel.cs" />
+    <Compile Include="Models\AdministratedTestsListModel.cs" />
     <Compile Include="Models\DTO\AdministratedAnswerDto.cs" />
     <Compile Include="Models\DTO\AdministratedQuestionDto.cs" />
     <Compile Include="Models\DTO\AdministratedTestDto.cs" />
@@ -158,6 +159,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Css\styles.css" />
     <Content Include="Content\Icons\createIcon.png" />
+    <Content Include="Content\Icons\editIcon.png" />
+    <Content Include="Content\Icons\goBackIcon.png" />
     <Content Include="Content\Icons\logout.png" />
     <Content Include="Content\Icons\manageIcon.png" />
     <Content Include="Content\Icons\results.png" />
@@ -300,6 +303,9 @@
     <Content Include="Views\Test\TestsList.cshtml" />
     <Content Include="Views\Test\TestContent.cshtml" />
     <Content Include="Views\Test\AnswerPartial.cshtml" />
+    <Content Include="Views\AdministratedTest\AdministratedTestsList.cshtml" />
+    <Content Include="Views\AdministratedTest\AdministratedTestContent.cshtml" />
+    <Content Include="Views\AdministratedTest\AdministratedAnswerPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

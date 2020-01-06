@@ -1,0 +1,44 @@
+﻿@using UnikeyFactoryTest.Presentation.Models.DTO
+@model  AdministratedTestDto
+
+@{
+    ViewBag.Title = "AdministratedTestContent";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>@Model.TestSubject</h1>
+<h2>Test @Model.Id</h2>
+<a title="Go Back" href='@Url.Action("AdministratedTestsList", "AdministratedTest", new {PageNumber=@Model.PageNumber, PageSize=@Model.PageSize})'><img id="backIcon" src="~/Content/ICONS/goBackIcon.png" alt="goBack"></a>
+@*<h2>@Model.Title</h2>*@
+<hr />
+<br />
+
+<div class="container col-8">
+
+    @{
+        int i = 1;
+
+        foreach (AdministratedQuestionDto question in Model.AdministratedQuestions)
+        {
+            <div class="row testContentRow">
+                <div>
+                    <div>
+                        <strong>Domanda @i</strong>
+                    </div>
+                    <hr />
+                    <p>@question.Text</p>
+                </div>
+            </div>
+            <br>
+            <form>
+                @foreach (AdministratedAnswerDto answer in question.AdministratedAnswers)
+                {
+                    {
+                        Html.RenderPartial("AdministratedAnswerPartial", answer);
+                    }
+                }
+            </form>
+            <br>
+            ++@i;
+        }
+    }
+</div>

@@ -7,6 +7,8 @@ using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Presentation.Models;
+using UnikeyFactoryTest.Presentation.Models.Dto;
+using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service;
 
 namespace UnikeyFactoryTest.Presentation.Controllers
@@ -57,6 +59,37 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             }
             
             return View("TestStart");
+        }
+
+        [HttpGet]
+        public ActionResult AdministratedTestsList(AdministratedTestsListModel testsListModel)
+        {
+            testsListModel = testsListModel ?? new AdministratedTestsListModel();
+
+            AdministratedTestService service = new AdministratedTestService();
+
+            testsListModel.Tests = testsListModel.Paginate(service.GetAdministratedTests().ToList());
+
+            if (testsListModel.IsAjaxCall)
+            {
+                return Json(new
+                {
+                    redirectUrl = Url.Action("AdministratedTestsList",
+                        new { PageNumber = testsListModel.PageNumber, PageSize = testsListModel.PageSize })
+                });
+            }
+
+            return View(testsListModel);
+        }
+
+        [HttpGet]
+        public ActionResult AdministratedTestContent(AdministratedTestDto test)
+        {
+            AdministratedTestService service = new AdministratedTestService();
+            AdministratedTestDto testToPass = new AdministratedTestDto(service.GetAdministratedTestById(test.Id));
+            testToPass.PageNumber = test.PageNumber;
+            testToPass.PageSize = test.PageSize;
+            return View(testToPass);
         }
     }
 }

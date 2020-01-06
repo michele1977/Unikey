@@ -51,6 +51,8 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         {
             TestService service = new TestService();
             TestDto testToPass = new TestDto(service.GetTestById(test.Id));
+            testToPass.PageNumber = test.PageNumber;
+            testToPass.PageSize = test.PageSize;
             return View(testToPass);
         }
 

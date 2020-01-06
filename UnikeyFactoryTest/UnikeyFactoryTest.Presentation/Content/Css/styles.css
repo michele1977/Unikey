@@ -73,3 +73,15 @@
 #pageSizeDropDownList {
     float: right;
 }
+
+#backIcon {
+    max-width: 5%;
+    height: auto;
+    float: right;
+}
+
+#editIcon {
+    float: right;
+    max-width: 3%;
+    height: auto;
+}

@@ -2,12 +2,12 @@
 
 <div class="radio testContentRadio">
 
-    @Html.RadioButton("optRadio", null, new { @checked = (bool)Model.IsCorrect })
-    @Html.Label(Model.Text,
+    @Html.RadioButton("optRadio", @Model.Text)
+    @Html.Label(@Model.Text, @Model.Text,
         new
         {
             style = ((bool)Model.IsCorrect)
-                ? "background-color: #70db70" : "background-color: #70d000"
+                ? "background-color: #70db70" : ""
         })
 
 </div>

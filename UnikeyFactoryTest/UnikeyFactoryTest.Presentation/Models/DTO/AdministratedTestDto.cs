@@ -32,6 +32,41 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public string TestSubject { get; set; }
         public DateTime? Date { get; set; }
 
+        public int PageNumber { get; set; } = 1;
+        public int PageSize { get; set; } = 10;
+
+        public decimal? CalculateMaxScore()
+        {
+            try
+            {
+                return AdministratedQuestions.SelectMany(q => q.AdministratedAnswers).Sum(a => a.Score);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return null;
+            }
+            catch (OverflowException ex)
+            {
+                return null;
+            }
+        }
+
+        public decimal? CalculateResultScore()
+        {
+            try
+            {
+                return AdministratedQuestions.SelectMany(q => q.AdministratedAnswers).Where(a => (bool) a.IsCorrect && (bool)a.IsSelected).Sum(a => a.Score);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return null;
+            }
+            catch (OverflowException ex)
+            {
+                return null;
+            }
+        }
+
         public IEnumerable<AdministratedQuestionDto> AdministratedQuestions { get; set; }
     }
 }
