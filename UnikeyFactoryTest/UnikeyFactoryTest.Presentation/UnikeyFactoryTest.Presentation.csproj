@@ -127,14 +127,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\BundleConfig2.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\FilterConfig2.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\RouteConfig2.cs" />
+    <Compile Include="Controllers\AdministratedTestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdministratedTestModel.cs" />
+    <Compile Include="Models\AdministratedTestsListModel.cs" />
+    <Compile Include="Models\DTO\AdministratedAnswerDto.cs" />
+    <Compile Include="Models\DTO\AdministratedQuestionDto.cs" />
+    <Compile Include="Models\DTO\AdministratedTestDto.cs" />
+    <Compile Include="Models\DTO\AnswerDto.cs" />
+    <Compile Include="Models\DTO\QuestionDto.cs" />
+    <Compile Include="Models\DTO\TestDto.cs" />
+    <Compile Include="Models\DTO\UserDto.cs" />
+    <Compile Include="Models\TestsListModel.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -146,6 +161,15 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Css\styles.css" />
+    <Content Include="Content\Icons\createIcon.png" />
+    <Content Include="Content\Icons\editIcon.png" />
+    <Content Include="Content\Icons\goBackIcon.png" />
+    <Content Include="Content\Icons\logout.png" />
+    <Content Include="Content\Icons\manageIcon.png" />
+    <Content Include="Content\Icons\results.png" />
+    <Content Include="Content\Icons\unikeyLogo.png" />
+    <Content Include="Content\Scripts\scripts.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -268,6 +292,24 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\AdministratedTest\TestStart.cshtml" />
+    <Content Include="Views\AdministratedTest\Test.cshtml" />
+    <Content Include="Scripts\umd\popper.min.js.map" />
+    <Content Include="Scripts\umd\popper.js.map" />
+    <Content Include="Scripts\umd\popper.js.flow" />
+    <Content Include="Scripts\umd\popper-utils.min.js.map" />
+    <Content Include="Scripts\umd\popper-utils.js.map" />
+    <Content Include="Scripts\README.md" />
+    <Content Include="Scripts\popper.min.js.map" />
+    <Content Include="Scripts\popper.js.map" />
+    <Content Include="Scripts\popper-utils.min.js.map" />
+    <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Test\TestsList.cshtml" />
+    <Content Include="Views\Test\TestContent.cshtml" />
+    <Content Include="Views\Test\AnswerPartial.cshtml" />
+    <Content Include="Views\AdministratedTest\AdministratedTestsList.cshtml" />
+    <Content Include="Views\AdministratedTest\AdministratedTestContent.cshtml" />
+    <Content Include="Views\AdministratedTest\AdministratedAnswerPartial.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.js.flow" />
@@ -284,11 +326,39 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UnikeyFactoryTest.Context\UnikeyFactoryTest.Context.csproj">
+      <Project>{858F3FB2-AB75-4685-BE3B-B83B9983F51B}</Project>
+      <Name>UnikeyFactoryTest.Context</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.Domain\UnikeyFactoryTest.Domain.csproj">
+      <Project>{e2f1e71e-9900-4cef-a8ab-0bc152698a47}</Project>
+      <Name>UnikeyFactoryTest.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.Mapper\UnikeyFactoryTest.Mapper.csproj">
+      <Project>{d9fa8193-e2c4-4e4d-a41d-7493ba8818a6}</Project>
+      <Name>UnikeyFactoryTest.Mapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.Service\UnikeyFactoryTest.Service.csproj">
+      <Project>{694c09a8-9dc2-408a-b91f-9383b02e93f0}</Project>
+      <Name>UnikeyFactoryTest.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

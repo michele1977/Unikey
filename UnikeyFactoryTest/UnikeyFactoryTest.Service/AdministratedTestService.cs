@@ -4,23 +4,26 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.IRepository;
+using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Repository;
 
 namespace UnikeyFactoryTest.Service
 {
     public class AdministratedTestService
     {
-        private readonly AdministratedTestRepository repo;
+        public IAdministratedTestRepository Repo { get; set; }
 
         public AdministratedTestService()
         {
-            repo = new AdministratedTestRepository();
+            Repo = new AdministratedTestRepository();
         }
 
-        public Domain.AdministratedTest AdministratedTest_Builder(Domain.Test test, string subject )
+        public AdministratedTestBusiness AdministratedTest_Builder(TestBusiness test, string subject )
         {
-            var newAdTest = new AdministratedTest();
+            var newAdTest = new AdministratedTestBusiness();
 
             newAdTest.Date = DateTime.Today;
             newAdTest.URL = test.URL;
@@ -28,30 +31,101 @@ namespace UnikeyFactoryTest.Service
             newAdTest.TestSubject = subject;
             foreach (var q in test.Questions)
             {
-                newAdTest.AdministratedQuestions.Add(new AdministratedQuestion()
+                newAdTest.AdministratedQuestions.Add(new AdministratedQuestionBusiness()
                 {
                     Text = q.Text,
                     AdministratedTestId = q.TestId,
-                    AdministratedAnswers = q.Answers.Select(a=> new AdministratedAnswer(){Text = a.Text, Score = a.Score, AdministratedQuestionId = a.QuestionId}).ToList()
+                    AdministratedAnswers = q.Answers.Select(a=> new AdministratedAnswerBusiness(){Text = a.Text, Score = a.Score, AdministratedQuestionId = a.QuestionId, isCorrect = a.IsCorrect, isSelected = false}).ToList()
                 });
             }
 
             return newAdTest;
         }
 
-        public void Save(Domain.AdministratedTest adTest)
+        public void Add(AdministratedTestBusiness adTest)
         {
-            repo.Add(adTest);
+            Repo.Add(adTest);
         }
 
-        public void Update_Save(Domain.AdministratedTest adTest)
+        public void Update_Save(AdministratedTestBusiness adTest)
         {
-            repo.Update_Save(adTest);
+            decimal score = 0;
+
+            foreach (var q in adTest.AdministratedQuestions)
+            {
+                if ((q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true)) != null)
+                    score = score + q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true).Score??0;
+            }
+
+            adTest.TotalScore = decimal.ToInt32(score);
+
+            Repo.Update_Save(adTest);
         }
 
-        public Domain.AdministratedTest GetAdministratedTestById (int adTestId)
+        public AdministratedTestBusiness GetAdministratedTestById (int adTestId)
         {
-           return repo.GetAdministratedTestById(adTestId);
+           return Repo.GetAdministratedTestById(adTestId);
+        }
+
+        public AdministratedTestBusiness GetAdministratedTest(int administratedTestId)
+        {
+            Repo = new AdministratedTestRepository();
+
+            AdministratedTestBusiness administratedTest = null;
+
+            try
+            {
+                administratedTest = Repo.GetAdministratedTestById(administratedTestId);
+            }
+            catch (NullReferenceException ex)
+            {
+                //TODO
+            }
+            catch (ArgumentNullException ex)
+            {
+                //TODO
+            }
+            catch (Exception ex)
+            {
+                //TODO
+            }
+
+            return administratedTest;
+        }
+
+        public IEnumerable<AdministratedTestBusiness> GetAdministratedTests()
+        {
+            Repo = new AdministratedTestRepository();
+            var administratedTests = Repo.GetAdministratedTests().Select(AdministratedTestMapper.MapDaoToDomain);
+            return administratedTests;
+        }
+
+
+        public void DeleteAdministratedTest(int administratedTestId)
+        {
+            using (Repo = new AdministratedTestRepository())
+            {
+                try
+                {
+                    Repo.DeleteAdministratedTest(administratedTestId);
+                }
+                catch (NotSupportedException ex)
+                {
+
+                }
+                catch (ObjectDisposedException ex)
+                {
+
+                }
+                catch (InvalidOperationException ex)
+                {
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
         }
     }
 }

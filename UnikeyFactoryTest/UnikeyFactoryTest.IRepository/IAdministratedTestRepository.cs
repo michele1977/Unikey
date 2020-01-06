@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnikeyFactoryTest.Context;
+using UnikeyFactoryTest.Domain;
 
 namespace UnikeyFactoryTest.IRepository
 {
-    public interface IAdministratedTestRepository
+    public interface IAdministratedTestRepository : IDisposable
     {
-        void Update_Save(Domain.AdministratedTest adTest);
-        void Add(Domain.AdministratedTest adTest);
-        Domain.AdministratedTest GetAdministratedTestById(int adTestId);
-
+        void Update_Save(AdministratedTestBusiness adTest);
+        void Add(AdministratedTestBusiness adTest);
+        AdministratedTestBusiness GetAdministratedTestById(int adTestId);
+        IEnumerable<AdministratedTest> GetAdministratedTests();
+        void DeleteAdministratedTest(int administratedTestId);
     }
 }

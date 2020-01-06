@@ -1,0 +1,90 @@
+﻿@using UnikeyFactoryTest.Presentation.Models.DTO
+@model  UnikeyFactoryTest.Presentation.Models.AdministratedTestsListModel
+
+@{
+    ViewBag.Title = "TestsList";
+}
+
+
+<h2>AdministratedTests List</h2>
+
+<hr />
+
+<div>
+    <form action="@Url.Action("TextSearch", "AdministratedTest")" method="post">
+        <input id="textSearch" type="text" placeholder="@Model.TextFilter" name="textFilter" />
+        <input type="submit" value="Filter" class="btn btn-info" />
+    </form>
+</div>
+
+<div id="pageSizeDropDownList">
+    @Html.Label("Elements per page")
+    <select name="PageSizeSelection" onchange="resizePage(this.value, @Model.PageNumber, '/AdministratedTest/AdministratedTestsList?PageSize=');">
+        <option value="@Model.PageSize" selected="selected">@Model.PageSize</option>
+        @for (int i = 10; i <= 161; i *= 2)
+        {
+            if (Model.PageSize != i)
+            {
+                <option value="@i">@i</option>
+            }
+
+        }
+    </select>
+</div>
+
+<table class="table">
+    <tr>
+        <th>Full Name</th>
+        @*<th>Test title</th>*@
+        <th>Date</th>
+        <th>Total Score/Max Score</th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (AdministratedTestDto item in Model.Tests)
+    {
+        <tr>
+            <td>
+                @item.TestSubject
+            </td>
+            <td>
+                @item.Date
+            </td>
+            <td>
+                @item.CalculateResultScore()/@item.CalculateMaxScore()
+            </td>
+            <td>
+                @Html.ActionLink(
+                    "See test",
+                    "AdministratedTestContent",
+                    "AdministratedTest",
+                    new { @item.Id, @Model.PageNumber, @Model.PageSize },
+                    new { @class = "btn btn-info" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div>
+    @if (Model.PageNumber > 1)
+    {
+        @Html.ActionLink(
+            "Previous",
+            "AdministratedTestsList",
+            "AdministratedTest",
+            new { PageNumber = Model.PageNumber - 1, Model.PageSize },
+            new { @class = "btn btn-info" })
+    }
+    <label>@Model.PageNumber</label>
+    @if (!@Model.LastPage)
+    {
+        @Html.ActionLink(
+            "Next",
+            "AdministratedTestsList",
+            "AdministratedTest",
+            new { PageNumber = Model.PageNumber + 1, Model.PageSize },
+            new { @class = "btn btn-info" })
+    }
+</div>
+

@@ -6,17 +6,12 @@ using System.Threading.Tasks;
 
 namespace UnikeyFactoryTest.Domain
 {
-    public class User
+    public class UserBusiness
     {
-        public User()
-        {
-            this.Tests = new HashSet<Test>();
-        }
-
         public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
 
-        public virtual ICollection<Test> Tests { get; set; }
+        public IEnumerable<TestBusiness> Tests { get; set; }
     }
 }

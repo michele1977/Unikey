@@ -1,0 +1,24 @@
+﻿@model UnikeyFactoryTest.Presentation.Models.DTO.AdministratedAnswerDto
+
+    <div class="radio testContentRadio">
+
+        @Html.RadioButton("optRadio", @Model.Text, new { @checked = (bool)Model.IsSelected, disabled = "disabled" })
+        @Html.Label(@Model.Text, @Model.Text,
+            new
+            {
+                style = ((bool)Model.IsCorrect)
+                    ? "background-color: #70db70" 
+                    : ((bool)Model.IsSelected && (bool)!Model.IsCorrect) 
+                        ? "background-color: #ff6666" : ""
+            })
+
+        @*@Html.RadioButton("optRadio", null, new { @checked = (bool)Model.IsSelected, disabled = "disabled" })
+        @Html.Label(Model.Text,
+            new
+            {
+                style = ((bool)Model.IsSelected && (bool)Model.IsCorrect)
+                    ? "background-color: #70db70" : ((bool)Model.IsSelected && (bool)!Model.IsCorrect)
+                        ? "background-color: #ff6666" : ""
+            })*@
+
+    </div>

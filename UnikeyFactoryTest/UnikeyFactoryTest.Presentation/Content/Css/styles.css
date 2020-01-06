@@ -1,0 +1,87 @@
+﻿.testContentRadio {
+    background-color: white;
+}
+
+.testContentRow {
+    border-radius: 25px;
+    border: 2px solid grey;
+    background-color: #ffff99;
+    padding: 25px;
+}
+
+.sidenav {
+    height: 100%;
+    width: 5%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #2F00FC;
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.sidenav a {
+    padding: 5% 8% 50% 32%;
+    position: relative;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+#unikeyLogo {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 30%;
+}
+
+#logOut {
+    max-width: 65%;
+    height: auto;
+}
+
+#manage {
+    max-width: 65%;
+    height: auto;
+}
+
+#create {
+    max-width: 70%;
+    height: auto;
+}
+
+#results {
+    max-width: 90%;
+    height: auto;
+}
+
+.sidebarIcon {
+    color: #818181;
+    filter: brightness(48%);
+    transition: 0.3s;
+}
+
+.sidebarIcon:hover {
+    filter: brightness(100%);
+}
+
+#pageSizeDropDownList {
+    float: right;
+}
+
+#backIcon {
+    max-width: 5%;
+    height: auto;
+    float: right;
+}
+
+#editIcon {
+    float: right;
+    max-width: 3%;
+    height: auto;
+}

@@ -6,11 +6,13 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Context;
+using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
+using UnikeyFactoryTest.Mapper;
 
 namespace UnikeyFactoryTest.Repository
 {
-    public class AdministratedTestRepository : IAdministratedTestRepository, IDisposable
+    public class AdministratedTestRepository : IAdministratedTestRepository
     {
         private readonly TestPlatformDBEntities _ctx;
 
@@ -19,11 +21,11 @@ namespace UnikeyFactoryTest.Repository
             _ctx = new TestPlatformDBEntities();
         }
 
-        public void Add(Domain.AdministratedTest adTest)
+        public void Add(AdministratedTestBusiness adTest)
         {
             try
             {
-                var newAdTestDB = /*Mapper*/;
+                var newAdTestDB = AdministratedTestMapper.MapDomainToDao(adTest);
                 _ctx.AdministratedTests.Add(newAdTestDB);
                 _ctx.SaveChanges();
             }
@@ -34,7 +36,7 @@ namespace UnikeyFactoryTest.Repository
 
         }
 
-        public Domain.AdministratedTest GetAdministratedTestById(int adTestId)
+        public AdministratedTestBusiness GetAdministratedTestById(int adTestId)
         {
             var adTestDB = _ctx.AdministratedTests.FirstOrDefault(x => x.Id.Equals(adTestId));
             if (adTestDB == null)
@@ -43,15 +45,15 @@ namespace UnikeyFactoryTest.Repository
             }
             else
             {
-                return /*Mapper (adTest)*/;
+                return AdministratedTestMapper.MapDaoToDomain(adTestDB);
             }
         }
 
-        public void Update_Save(Domain.AdministratedTest adTest)
+        public void Update_Save(AdministratedTestBusiness adTest)
         {
             try
             {
-                var upTestDB =  /*Mapper su adTest*/;
+                var upTestDB =  AdministratedTestMapper.MapDomainToDao(adTest);
                 _ctx.AdministratedTests.Attach(upTestDB);
                 _ctx.Entry(upTestDB).State = System.Data.Entity.EntityState.Modified;
                 _ctx.SaveChanges();
@@ -60,7 +62,25 @@ namespace UnikeyFactoryTest.Repository
             {
                 throw  new Exception("Update failed");
             }
+        }
 
+        public IEnumerable<AdministratedTest> GetAdministratedTests()
+        {
+            return _ctx.AdministratedTests;
+        }
+
+        public void DeleteAdministratedTest(int administratedTestId)
+        {
+            AdministratedTest administratedTest = _ctx.AdministratedTests
+                .FirstOrDefault(t => t.Id == administratedTestId);
+
+            if (administratedTest == null)
+            {
+                throw new NullReferenceException("AdministratedTest not found at specified id");
+            }
+
+            _ctx.AdministratedTests.Remove(administratedTest);
+            _ctx.SaveChanges();
         }
 
         public void Dispose()
