@@ -32,6 +32,22 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
 
+        public decimal? CalculateScore()
+        {
+            try
+            {
+                return Questions.SelectMany(q => q.Answers).Sum(a => a.Score);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return null;
+            }
+            catch (OverflowException ex)
+            {
+                return null;
+            }
+        }
+
         public ICollection<AdministratedTestDto> AdministratedTests { get; set; }
         public ICollection<QuestionDto> Questions { get; set; }
     }

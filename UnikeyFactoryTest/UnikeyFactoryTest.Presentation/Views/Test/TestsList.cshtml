@@ -1,0 +1,100 @@
+﻿@using UnikeyFactoryTest.Presentation.Models.Dto
+@model  UnikeyFactoryTest.Presentation.Models.TestsListModel
+
+@{
+    ViewBag.Title = "TestsList";
+}
+
+<h2>Tests List</h2>
+
+<hr />
+
+<div>
+    <form action="@Url.Action("TextSearch", "Test")" method="post">
+        <input id="textSearch" type="text" placeholder="@Model.TextFilter" name="textFilter" />
+        <input type="submit" value="Filter" class="btn btn-info" />
+    </form>
+</div>
+
+<div id="pageSizeDropDownList">
+    @Html.Label("Elements per page")
+    <select name="PageSizeSelection" onchange="resizePage(this.value, @Model.PageNumber);">
+        <option value="@Model.PageSize" selected="selected">@Model.PageSize</option>
+        @for (int i = 10; i <= 161; i *= 2)
+        {
+            if (Model.PageSize != i)
+            {
+                <option value="@i">@i</option>
+            }
+
+        }
+    </select>
+</div>
+
+<table class="table">
+    <tr>
+        @*<th>Title</th>*@
+        <th>Id</th>
+        <th>Date</th>
+        <th>URL</th>
+        <th>Max Score</th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (TestDto item in Model.Tests)
+    {
+        <tr>
+            <td>
+                @item.Id
+            </td>
+            <td>
+                @item.Date
+            </td>
+            <td>
+                @item.URL
+            </td>
+            <td>
+                @item.CalculateScore()
+            </td>
+            <td>
+                @Html.ActionLink(
+                    "Content",
+                    "TestContent",
+                    "Test",
+                    new { @item.Id },
+                    new { @class = "btn btn-info" }) |
+                @Html.ActionLink(
+                    "Results",
+                    "AdministratedTestsList",
+                    "AdministratedTest",
+                    new { @item.Id },
+                    new { @class = "btn btn-info" }) |
+                <button class="btn btn-info" onclick="deleteConfirmation(@item.Id, @Model.PageNumber, @Model.PageSize)">Delete</button>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div>
+    @if (Model.PageNumber > 1)
+    {
+        @Html.ActionLink(
+            "Previous",
+            "TestsList",
+            "Test",
+            new { PageNumber = Model.PageNumber - 1, Model.PageSize },
+            new { @class = "btn btn-info" })
+    }
+    <label>@Model.PageNumber</label>
+    @if (!@Model.LastPage)
+    {
+        @Html.ActionLink(
+            "Next",
+            "TestsList",
+            "Test",
+            new { PageNumber = Model.PageNumber + 1, Model.PageSize },
+            new { @class = "btn btn-info" })
+    }
+</div>
+
