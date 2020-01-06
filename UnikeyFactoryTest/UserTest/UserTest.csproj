@@ -57,9 +57,12 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MapperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnikeyFactoryTest_Repository_Test.cs" />
     <Compile Include="UnikeyFactoryTest_Service_Test.cs" />
+    <Compile Include="UnitTestCreateFeaturesRepository.cs" />
+    <Compile Include="UnitTestCreateFeaturesService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
