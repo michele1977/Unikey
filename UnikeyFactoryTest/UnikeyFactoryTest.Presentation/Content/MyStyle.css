@@ -7,6 +7,54 @@
     text-align: center;
 }
 
+.QuestionContainer {
+    background-color:darkcyan;
+    border-radius: 8px;
+    width: 500px;
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+#Question {
+    font-size: 20px;
+    color: white;
+}
+
+.AnswerLabel {
+
+    width: 100px;
+}
+
+.SaveButton {
+    margin-bottom: 20px;
+}
+
+
+.Title {
+    margin: auto;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.RadioInput {
+}
+
+hr {
+    margin-top: 2px;
+}
+
+.AnswerHr {
+    margin: 0px;
+}
+
+.AnswerContainer {
+    background-color:cyan;
+    width: 300px;
+    margin: auto;
+}
+
 .myButton {
     box-shadow: black 1px 1px 10px;
 }
