@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 using UnikeyFactoryTest.Context;
+using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Presentation.Models;
 using UnikeyFactoryTest.Presentation.Models.Dto;
 using UnikeyFactoryTest.Service;
@@ -62,7 +63,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         {
             test.URL = _service.GenerateUrl();
             test.Date = DateTime.Now;
-            _service.AddNewTest(test);
+            _service.AddNewTest(TestMapper.MapDalToBiz(test));
             return View("Index");
         }
 
@@ -125,5 +126,4 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             return RedirectToAction("TestsList");
         }
     }
-}
 }
