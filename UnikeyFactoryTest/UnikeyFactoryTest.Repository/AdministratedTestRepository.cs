@@ -70,7 +70,13 @@ namespace UnikeyFactoryTest.Repository
 
                 var AdminisratedTest = _ctx.AdministratedTests.FirstOrDefault(t => t.Id == adTest.Id);
 
-                
+                AdminisratedTest.Test = upTestDB.Test;
+                AdminisratedTest.AdministratedQuestions = upTestDB.AdministratedQuestions;
+                AdminisratedTest.URL = upTestDB.URL;
+                AdminisratedTest.TestSubject = upTestDB.TestSubject;
+                AdminisratedTest.TestId = upTestDB.TestId;
+                AdminisratedTest.Date = upTestDB.Date;
+                AdminisratedTest.TotalScore = upTestDB.TotalScore;
                 
                 //_ctx.AdministratedTests.AddOrUpdate(upTestDB);
                 _ctx.SaveChanges();
