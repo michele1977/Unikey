@@ -95,5 +95,13 @@ namespace UnikeyFactoryTest.Service
                 }
             }
         }
+
+        public string GenerateUrl()
+        {
+            using (TestRepository _repo = new TestRepository())
+            {
+                return _repo.GenerateUrl();
+            }
+        }
     }
 }

@@ -135,6 +135,8 @@
     <Compile Include="Controllers\AdministratedTestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -148,6 +150,8 @@
     <Compile Include="Models\DTO\TestDto.cs" />
     <Compile Include="Models\DTO\UserDto.cs" />
     <Compile Include="Models\TestsListModel.cs" />
+    <Compile Include="Models\TestModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -306,6 +310,19 @@
     <Content Include="Views\AdministratedTest\AdministratedTestsList.cshtml" />
     <Content Include="Views\AdministratedTest\AdministratedTestContent.cshtml" />
     <Content Include="Views\AdministratedTest\AdministratedAnswerPartial.cshtml" />
+    <Content Include="Scripts\umd\popper.min.js.map" />
+    <Content Include="Scripts\umd\popper.js.map" />
+    <Content Include="Scripts\umd\popper.js.flow" />
+    <Content Include="Scripts\umd\popper-utils.min.js.map" />
+    <Content Include="Scripts\umd\popper-utils.js.map" />
+    <Content Include="Scripts\README.md" />
+    <Content Include="Scripts\popper.min.js.map" />
+    <Content Include="Scripts\popper.js.map" />
+    <Content Include="Scripts\popper-utils.min.js.map" />
+    <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Yes.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -342,6 +359,22 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UnikeyFactoryTest.Context\UnikeyFactoryTest.Context.csproj">
+      <Project>{858F3FB2-AB75-4685-BE3B-B83B9983F51B}</Project>
+      <Name>UnikeyFactoryTest.Context</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.Service\UnikeyFactoryTest.Service.csproj">
+      <Project>{694C09A8-9DC2-408A-B91F-9383B02E93F0}</Project>
+      <Name>UnikeyFactoryTest.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
