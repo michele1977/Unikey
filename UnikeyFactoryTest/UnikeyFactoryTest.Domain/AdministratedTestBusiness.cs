@@ -12,6 +12,5 @@ namespace UnikeyFactoryTest.Domain
         public string TestSubject { get; set; }
         public DateTime? Date { get; set; }
         public virtual ICollection<AdministratedQuestionBusiness> AdministratedQuestions { get; set; }
-        public virtual TestBusiness Test { get; set; }
     }
 }

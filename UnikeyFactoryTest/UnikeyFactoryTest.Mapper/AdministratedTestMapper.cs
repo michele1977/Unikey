@@ -36,8 +36,7 @@ namespace UnikeyFactoryTest.Mapper
                 TestId = domain.TestId,
                 TestSubject = domain.TestSubject,
                 Date = domain.Date,
-                AdministratedQuestions = domain.AdministratedQuestions.Select(AdministratedQuestionMapper.MapDomainToDao).ToList(),
-                Test = TestMapper.MapBizToDal(domain.Test)
+                AdministratedQuestions = domain.AdministratedQuestions.Select(AdministratedQuestionMapper.MapDomainToDao).ToList()
             };
 
             return returned;
