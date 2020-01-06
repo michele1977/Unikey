@@ -1,0 +1,13 @@
+﻿@model UnikeyFactoryTest.Presentation.Models.DTO.AnswerDto
+
+<div class="radio testContentRadio">
+
+    @Html.RadioButton("optRadio", null, new { @checked = (bool)Model.IsCorrect })
+    @Html.Label(Model.Text,
+        new
+        {
+            style = ((bool)Model.IsCorrect)
+                ? "background-color: #70db70" : "background-color: #70d000"
+        })
+
+</div>

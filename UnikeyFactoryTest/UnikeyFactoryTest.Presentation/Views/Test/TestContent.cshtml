@@ -1,0 +1,29 @@
+﻿@using UnikeyFactoryTest.Domain
+@using UnikeyFactoryTest.Presentation.Models.DTO
+@model  UnikeyFactoryTest.Presentation.Models.Dto.TestDto
+
+@{
+    ViewBag.Title = "AdministratedTestContent";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Test Content</h2>
+
+<div class="container col-8">
+    @foreach (QuestionDto question in Model.Questions)
+    {
+        <div class="row testContentRow">
+            <div>
+                <p>@question.Text</p>
+            </div>
+        </div>
+        <br>
+        <form>
+            @foreach (AnswerDto answer in question.Answers)
+            {
+                { Html.RenderPartial("AnswerPartial", answer); }
+            }
+        </form>
+        <br>
+    }
+</div>

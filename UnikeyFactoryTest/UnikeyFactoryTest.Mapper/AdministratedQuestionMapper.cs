@@ -17,7 +17,6 @@ namespace UnikeyFactoryTest.Mapper
                 Id = dao.Id,
                 Text = dao.Text,
                 AdministratedTestId = dao.AdministratedTestId,
-                AdministratedTest = AdministratedTestMapper.MapDaoToDomain(dao.AdministratedTest),
                 AdministratedAnswers = dao.AdministratedAnswers.Select(AdministratedAnswerMapper.MapDaoToDomain).ToList()
             };
 
@@ -31,7 +30,6 @@ namespace UnikeyFactoryTest.Mapper
                 Id = domain.Id,
                 Text = domain.Text,
                 AdministratedTestId = domain.AdministratedTestId,
-                AdministratedTest = AdministratedTestMapper.MapDomainToDao(domain.AdministratedTest),
                 AdministratedAnswers = domain.AdministratedAnswers.Select(AdministratedAnswerMapper.MapDomainToDao).ToList()
             };
 
