@@ -11,8 +11,6 @@ namespace UnikeyFactoryTest.IRepository
     public interface ITestRepository : IDisposable
     {
         void SaveTest(Test test);
-        void SaveQuestion(Question question);
-        void SaveAnswers(List<Answer> answers);
         TestBusiness GetTestByURL(string URL);
         Test GetTest(int testId);
         IEnumerable<Test> GetTests();
