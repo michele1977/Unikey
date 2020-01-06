@@ -62,23 +62,31 @@ namespace UnikeyFactoryTest.Repository
 
         public void Update_Save(AdministratedTestBusiness adTest)
         {
+            var newTest = Mapper.AdministratedTestMapper.MapDomainToDao(adTest);
             try
             {
-                var upTestDB =  AdministratedTestMapper.MapDomainToDao(adTest);
-                _ctx.AdministratedTests.Attach(upTestDB);
-                _ctx.Entry(upTestDB).State = System.Data.Entity.EntityState.Modified;
+                foreach (var q in newTest.AdministratedQuestions)
+                {
+                    foreach (var a in q.AdministratedAnswers)
+                    {
+                        if (a.isSelected == true)
+                        {
+                            _ctx.AdministratedAnswers.FirstOrDefault(x => x.Id == a.Id).isSelected = true;
+                        }   
+                    }
+                }
 
-                var AdminisratedTest = _ctx.AdministratedTests.FirstOrDefault(t => t.Id == adTest.Id);
+                decimal score = 0;
 
-                AdminisratedTest.Test = upTestDB.Test;
-                AdminisratedTest.AdministratedQuestions = upTestDB.AdministratedQuestions;
-                AdminisratedTest.URL = upTestDB.URL;
-                AdminisratedTest.TestSubject = upTestDB.TestSubject;
-                AdminisratedTest.TestId = upTestDB.TestId;
-                AdminisratedTest.Date = upTestDB.Date;
-                AdminisratedTest.TotalScore = upTestDB.TotalScore;
-                
-                //_ctx.AdministratedTests.AddOrUpdate(upTestDB);
+                foreach (var q in newTest.AdministratedQuestions)
+                {
+                    if ((q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true)) != null)
+                        score = score + q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true).Score ??0;
+                }
+
+                _ctx.AdministratedTests.FirstOrDefault(x => x.Id == newTest.Id).TotalScore = decimal.ToInt32(score);
+                _ctx.AdministratedTests.FirstOrDefault(x => x.Id == newTest.Id).Date = DateTime.Today;
+
                 _ctx.SaveChanges();
             }
             catch (Exception ex)
