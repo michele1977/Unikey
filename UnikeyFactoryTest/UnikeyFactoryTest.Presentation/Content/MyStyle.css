@@ -11,14 +11,14 @@
     border-radius: 5px;
     margin-bottom: 30px;
     padding: 10px;
-    margin-left: 42%;
+    margin-left: 43%;
     text-align: center;
     width: 170px;
     height: 100px;
 }
 
 .QuestionContainer {
-    background-color:darkcyan;
+    background-color: darkcyan;
     border-radius: 8px;
     border: black 1.5px solid;
     width: 500px;
@@ -36,7 +36,6 @@
 }
 
 .AnswerLabel {
-
     width: 100px;
 }
 
@@ -63,25 +62,21 @@ hr {
 }
 
 .AnswerContainer {
-    background-color:cyan;
+    background-color: cyan;
     width: 300px;
     margin: auto;
 }
 
 .myButton {
-    /*box-shadow: black 1px 1px 10px;*/
-    /*background-color: transparent;*/
-    /*border: transparent;*/
     color: black;
 }
+
     .myButton:hover {
-        /*box-shadow: black 1px 1px 10px;*/
-        /*background-color: rgba(89,100,117, 1);
-        border: transparent;
-        color: black;*/
+        box-shadow: black 1px 1px 20px;
         height: 45px;
         width: 80px;
     }
+
 .myLabel {
     width: 100px;
     text-align: right;
