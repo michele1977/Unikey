@@ -23,22 +23,15 @@ namespace UnikeyFactoryTest.Repository
 
         public void Add(AdministratedTestBusiness adTest)
         {
-            using (_ctx)
+            try
             {
-                try
-                {
-                    var newAdTestDB = AdministratedTestMapper.MapDomainToDao(adTest);
-                    _ctx.AdministratedTests.Add(newAdTestDB);
-                    _ctx.SaveChanges();
-                }
-                catch(Exception ex)
-                {
-                    throw new Exception("Save Failed");
-                }
-                finally
-                {
-                    _ctx.AdministratedTests.Find(1);
-                }
+                var newAdTestDB = AdministratedTestMapper.MapDomainToDao(adTest);
+                _ctx.AdministratedTests.Add(newAdTestDB);
+                _ctx.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Save Failed");
             }
 
         }

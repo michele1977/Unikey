@@ -16,7 +16,10 @@ namespace UnikeyFactoryTest.Service
     {
         private readonly IAdministratedTestRepository _repo;
 
-        public AdministratedTestService(){}
+        public AdministratedTestService()
+        {
+            _repo = new AdministratedTestRepository();
+        }
 
         public AdministratedTestService(AdministratedTestRepository repo)
         {
