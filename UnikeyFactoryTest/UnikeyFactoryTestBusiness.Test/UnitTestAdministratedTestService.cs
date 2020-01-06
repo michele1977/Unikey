@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnikeyFactoryTest.Context;
@@ -21,6 +22,7 @@ namespace UnikeyFactoryTestBusiness.Test
             Id = 1,
             URL = "localhost:1234/boh",
             Date = DateTime.Now,
+            UserId = 0,
             AdministratedTests = new List<AdministratedTestBusiness>(),
             Questions = new List<QuestionBusiness>()
             {
@@ -90,12 +92,20 @@ namespace UnikeyFactoryTestBusiness.Test
         {
             Ctx = new TestPlatformDBEntities();
             Ctx.Tests.Add(TestMapper.MapBizToDal(_test));
+
+            Ctx.Users.Add(new User
+            {
+                Id = 0,
+                Username = "pippo",
+                Password = "pluto"
+            });
+
             AdministratedTestRepository repo = new AdministratedTestRepository(Ctx);
             AdministratedTestService administratedTestService = new AdministratedTestService(repo);
             var adTest = administratedTestService.AdministratedTest_Builder(TestMapper.MapDalToBiz(Ctx.Tests.Find(1)), "Daniele Tulli");
 
             administratedTestService.Add(adTest);
-
+            
             var ad = repo.GetAdministratedTestById(1);
 
             ad.Should()
@@ -112,6 +122,16 @@ namespace UnikeyFactoryTestBusiness.Test
         [TestMethod]
         public void GetAdministratedTestById_OK()
         {
+            Ctx = new TestPlatformDBEntities();
+            Ctx.Tests.Add(TestMapper.MapBizToDal(_test));
+
+            AdministratedTestRepository repo = new AdministratedTestRepository(Ctx);
+            AdministratedTestService administratedTestService = new AdministratedTestService(repo);
+            var adTest = administratedTestService.AdministratedTest_Builder(TestMapper.MapDalToBiz(Ctx.Tests.Find(1)), "Daniele Tulli");
+            
+            var result = administratedTestService.GetAdministratedTestById(0);
+
+            Assert.AreEqual(result.Id, adTest.Id);
         }
     }
 }

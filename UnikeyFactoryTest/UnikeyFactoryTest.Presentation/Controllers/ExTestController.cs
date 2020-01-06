@@ -28,6 +28,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var subject = model.Name + " " + model.Surname;
             var test = testService.GetTestByURL(model.URL);
             model.Test = service.AdministratedTest_Builder(test, subject);
+            model.Test.Test = testService.GetTestByURL(model.URL);
             var savedTest = service.Add(model.Test);
             model.admnistratedTestId = savedTest.Id;
             model.Test = savedTest;
