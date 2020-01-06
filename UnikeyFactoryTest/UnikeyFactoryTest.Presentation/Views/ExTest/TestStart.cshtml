@@ -1,4 +1,5 @@
 ﻿@model UnikeyFactoryTest.Presentation.Models.AdministratedTestModel
+<img src="~/Logos/UnikeyLogo.png" class="logo" />
 <div class="container startContainer">
     <div class="myForm">
         <h3>Assessment</h3>
@@ -6,10 +7,10 @@
         <form action="/ExTest/BeginTest" method="post">
             <input type="hidden" name="URL" value="@Model.URL" />
             <label class="myLabel">Name: </label>
-            <input type="text" name="Name" class="myInput" placeholder="Your name..." />
+            <input type="text" name="Name" class="myInput" placeholder="Your name..." required/>
             <br />
             <label class="myLabel">Surname:</label>
-            <input type="text" name="Surname" class="myInput" placeholder="Your surname..." />
+            <input type="text" name="Surname" class="myInput" placeholder="Your surname..." required />
             <hr />
             <div class="buttonDiv">
                 <button class="btn btn-success myButton">Begin</button>

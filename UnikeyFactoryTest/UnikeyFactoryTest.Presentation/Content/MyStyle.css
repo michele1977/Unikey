@@ -7,9 +7,20 @@
     text-align: center;
 }
 
+.logo {
+    border-radius: 5px;
+    margin-bottom: 30px;
+    padding: 10px;
+    margin-left: 42%;
+    text-align: center;
+    width: 170px;
+    height: 100px;
+}
+
 .QuestionContainer {
     background-color:darkcyan;
     border-radius: 8px;
+    border: black 1.5px solid;
     width: 500px;
     text-align: center;
     margin: auto;
@@ -17,6 +28,8 @@
     padding-bottom: 20px;
     margin-bottom: 20px;
 }
+
+
 #Question {
     font-size: 20px;
     color: white;
@@ -56,9 +69,19 @@ hr {
 }
 
 .myButton {
-    box-shadow: black 1px 1px 10px;
+    /*box-shadow: black 1px 1px 10px;*/
+    /*background-color: transparent;*/
+    /*border: transparent;*/
+    color: black;
 }
-
+    .myButton:hover {
+        /*box-shadow: black 1px 1px 10px;*/
+        /*background-color: rgba(89,100,117, 1);
+        border: transparent;
+        color: black;*/
+        height: 45px;
+        width: 80px;
+    }
 .myLabel {
     width: 100px;
     text-align: right;
