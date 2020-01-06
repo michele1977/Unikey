@@ -67,6 +67,10 @@ namespace UnikeyFactoryTest.Repository
                 var upTestDB =  AdministratedTestMapper.MapDomainToDao(adTest);
                 _ctx.AdministratedTests.Attach(upTestDB);
                 _ctx.Entry(upTestDB).State = System.Data.Entity.EntityState.Modified;
+
+                var AdminisratedTest = _ctx.AdministratedTests.FirstOrDefault(t => t.Id == adTest.Id);
+
+                
                 
                 //_ctx.AdministratedTests.AddOrUpdate(upTestDB);
                 _ctx.SaveChanges();
