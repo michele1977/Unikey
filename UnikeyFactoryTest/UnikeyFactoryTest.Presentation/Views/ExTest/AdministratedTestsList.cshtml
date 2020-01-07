@@ -11,7 +11,7 @@
 <hr />
 
 <div>
-    <form action="@Url.Action("TextSearch", "AdministratedTest")" method="post">
+    <form action="@Url.Action("TextSearch", "ExTest")" method="post">
         <input id="textSearch" type="text" placeholder="@Model.TextFilter" name="textFilter" />
         <input type="submit" value="Filter" class="btn btn-info" />
     </form>
@@ -57,7 +57,7 @@
                 @Html.ActionLink(
                     "See test",
                     "AdministratedTestContent",
-                    "AdministratedTest",
+                    "ExTest",
                     new { @item.Id, @Model.PageNumber, @Model.PageSize },
                     new { @class = "btn btn-info" })
             </td>
@@ -72,7 +72,7 @@
         @Html.ActionLink(
             "Previous",
             "AdministratedTestsList",
-            "AdministratedTest",
+            "ExTest",
             new { PageNumber = Model.PageNumber - 1, Model.PageSize },
             new { @class = "btn btn-info" })
     }
@@ -82,7 +82,7 @@
         @Html.ActionLink(
             "Next",
             "AdministratedTestsList",
-            "AdministratedTest",
+            "ExTest",
             new { PageNumber = Model.PageNumber + 1, Model.PageSize },
             new { @class = "btn btn-info" })
     }
