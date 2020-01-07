@@ -1,0 +1,170 @@
+﻿USE [TestPlatformDB]
+GO
+/****** Object:  Table [dbo].[AdministratedAnswer]    Script Date: 07/01/2020 11:26:34 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AdministratedAnswer](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Text] [nvarchar](max) NULL,
+	[isCorrect] [bit] NULL,
+	[isSelected] [bit] NULL,
+	[AdministratedQuestionId] [int] NOT NULL,
+	[Score] [decimal](10, 2) NULL,
+ CONSTRAINT [PK_AdministratedAnswer] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AdministratedQuestion]    Script Date: 07/01/2020 11:26:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AdministratedQuestion](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Text] [nvarchar](max) NULL,
+	[AdministratedTestId] [int] NOT NULL,
+ CONSTRAINT [PK_AdministratedQuestion] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AdministratedTest]    Script Date: 07/01/2020 11:26:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AdministratedTest](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[URL] [varchar](50) NULL,
+	[Text] [varchar](50) NULL,
+	[TotalScore] [int] NULL,
+	[TestId] [int] NULL,
+	[TestSubject] [varchar](50) NULL,
+	[Date] [datetime] NULL,
+ CONSTRAINT [PK_AdministratedTest] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Answer]    Script Date: 07/01/2020 11:26:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Answer](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Text] [varchar](50) NULL,
+	[IsCorrect] [bit] NULL,
+	[QuestionId] [int] NOT NULL,
+	[Score] [decimal](10, 2) NULL,
+ CONSTRAINT [PK_Table1] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Question]    Script Date: 07/01/2020 11:26:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Question](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Text] [varchar](max) NULL,
+	[TestId] [int] NOT NULL,
+ CONSTRAINT [PK_Question] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Test]    Script Date: 07/01/2020 11:26:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Test](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[URL] [varchar](50) NULL,
+	[Date] [datetime] NULL,
+	[UserId] [int] NOT NULL,
+	[Title] [nvarchar](max) NULL,
+ CONSTRAINT [PK_Test] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[User]    Script Date: 07/01/2020 11:26:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[User](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Username] [varchar](50) NOT NULL,
+	[Password] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[AdministratedAnswer]  WITH CHECK ADD  CONSTRAINT [FK_administratedanswer_administratedquestion] FOREIGN KEY([AdministratedQuestionId])
+REFERENCES [dbo].[AdministratedQuestion] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AdministratedAnswer] CHECK CONSTRAINT [FK_administratedanswer_administratedquestion]
+GO
+ALTER TABLE [dbo].[AdministratedQuestion]  WITH CHECK ADD  CONSTRAINT [FK_administratedquestion_administratedtest] FOREIGN KEY([AdministratedTestId])
+REFERENCES [dbo].[AdministratedTest] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AdministratedQuestion] CHECK CONSTRAINT [FK_administratedquestion_administratedtest]
+GO
+ALTER TABLE [dbo].[AdministratedTest]  WITH CHECK ADD  CONSTRAINT [FK_AdministratedTest_test] FOREIGN KEY([TestId])
+REFERENCES [dbo].[Test] ([Id])
+GO
+ALTER TABLE [dbo].[AdministratedTest] CHECK CONSTRAINT [FK_AdministratedTest_test]
+GO
+ALTER TABLE [dbo].[Answer]  WITH CHECK ADD  CONSTRAINT [FK_answer_question] FOREIGN KEY([QuestionId])
+REFERENCES [dbo].[Question] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Answer] CHECK CONSTRAINT [FK_answer_question]
+GO
+ALTER TABLE [dbo].[Question]  WITH CHECK ADD  CONSTRAINT [FK_question_test] FOREIGN KEY([TestId])
+REFERENCES [dbo].[Test] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Question] CHECK CONSTRAINT [FK_question_test]
+GO
+ALTER TABLE [dbo].[Test]  WITH CHECK ADD  CONSTRAINT [FK_test_user] FOREIGN KEY([UserId])
+REFERENCES [dbo].[User] ([Id])
+GO
+ALTER TABLE [dbo].[Test] CHECK CONSTRAINT [FK_test_user]
+GO
+
+
+CREATE TRIGGER onTestDelete
+ON Test
+INSTEAD OF DELETE
+AS
+BEGIN
+
+DECLARE @IdTest INT; 
+	SET @IdTest = (SELECT Id FROM deleted);
+
+UPDATE AdministratedTest 
+SET AdministratedTest.TestId = null
+WHERE AdministratedTest.TestId = @IdTest
+
+DELETE FROM Test WHERE (Test.Id = @IdTest)
+
+END;
