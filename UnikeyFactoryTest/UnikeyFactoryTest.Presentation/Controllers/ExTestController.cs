@@ -17,7 +17,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         {
             var model = new AdministratedTestModel();
 
-            model.URL = Request.Url.AbsoluteUri;
+            model.URL = guid;
 
 
             return View("TestStart", model);
