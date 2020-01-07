@@ -19,7 +19,7 @@
 
 <div id="pageSizeDropDownList">
     @Html.Label("Elements per page")
-    <select name="PageSizeSelection" onchange="resizePage(this.value, @Model.PageNumber, '/AdministratedTest/AdministratedTestsList?PageSize=');">
+    <select name="PageSizeSelection" onchange="resizePage(this.value, @Model.PageNumber, '/ExTest/AdministratedTestsList?PageSize=');">
         <option value="@Model.PageSize" selected="selected">@Model.PageSize</option>
         @for (int i = 10; i <= 161; i *= 2)
         {
