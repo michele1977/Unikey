@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.Mapper;
@@ -14,14 +10,22 @@ namespace UnikeyFactoryTest.Service
 {
     public class AdministratedTestService
     {
-        public IAdministratedTestRepository Repo { get; set; }
+        private  IAdministratedTestRepository _repo;
 
         public AdministratedTestService()
         {
-            Repo = new AdministratedTestRepository();
+            _repo = new AdministratedTestRepository();
         }
 
-        public AdministratedTestBusiness AdministratedTest_Builder(TestBusiness test, string subject )
+        public AdministratedTestService(AdministratedTestRepository repo)
+        {
+            if(repo is null)
+                _repo = new AdministratedTestRepository();
+            else
+                _repo = repo;
+        }
+
+        public AdministratedTestBusiness AdministratedTest_Builder(TestBusiness test, string subject)
         {
             var newAdTest = new AdministratedTestBusiness();
 
@@ -29,53 +33,44 @@ namespace UnikeyFactoryTest.Service
             newAdTest.URL = test.URL;
             newAdTest.TestId = test.Id;
             newAdTest.TestSubject = subject;
+            newAdTest.AdministratedQuestions = new List<AdministratedQuestionBusiness>();
             foreach (var q in test.Questions)
             {
                 newAdTest.AdministratedQuestions.Add(new AdministratedQuestionBusiness()
                 {
                     Text = q.Text,
                     AdministratedTestId = q.TestId,
-                    AdministratedAnswers = q.Answers.Select(a=> new AdministratedAnswerBusiness(){Text = a.Text, Score = a.Score, AdministratedQuestionId = a.QuestionId, isCorrect = a.IsCorrect, isSelected = false}).ToList()
+                    AdministratedAnswers = q.Answers.Select(a => new AdministratedAnswerBusiness() { Text = a.Text, Score = a.Score, AdministratedQuestionId = a.QuestionId, isCorrect = a.IsCorrect, isSelected = false }).ToList()
                 });
             }
 
             return newAdTest;
         }
 
-        public void Add(AdministratedTestBusiness adTest)
+        public AdministratedTestBusiness Add(AdministratedTestBusiness adTest)
         {
-            Repo.Add(adTest);
+           return _repo.Add(adTest);
         }
 
         public void Update_Save(AdministratedTestBusiness adTest)
         {
-            decimal score = 0;
-
-            foreach (var q in adTest.AdministratedQuestions)
-            {
-                if ((q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true)) != null)
-                    score = score + q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true).Score??0;
-            }
-
-            adTest.TotalScore = decimal.ToInt32(score);
-
-            Repo.Update_Save(adTest);
+            _repo.Update_Save(adTest);
         }
 
         public AdministratedTestBusiness GetAdministratedTestById (int adTestId)
         {
-           return Repo.GetAdministratedTestById(adTestId);
+           return _repo.GetAdministratedTestById(adTestId);
         }
 
         public AdministratedTestBusiness GetAdministratedTest(int administratedTestId)
         {
-            Repo = new AdministratedTestRepository();
+            _repo = new AdministratedTestRepository();
 
             AdministratedTestBusiness administratedTest = null;
 
             try
             {
-                administratedTest = Repo.GetAdministratedTestById(administratedTestId);
+                administratedTest = _repo.GetAdministratedTestById(administratedTestId);
             }
             catch (NullReferenceException ex)
             {
@@ -95,19 +90,19 @@ namespace UnikeyFactoryTest.Service
 
         public IEnumerable<AdministratedTestBusiness> GetAdministratedTests()
         {
-            Repo = new AdministratedTestRepository();
-            var administratedTests = Repo.GetAdministratedTests().Select(AdministratedTestMapper.MapDaoToDomain);
+            _repo = new AdministratedTestRepository();
+            var administratedTests = _repo.GetAdministratedTests().Select(AdministratedTestMapper.MapDaoToDomain);
             return administratedTests;
         }
 
 
         public void DeleteAdministratedTest(int administratedTestId)
         {
-            using (Repo = new AdministratedTestRepository())
+            using (_repo = new AdministratedTestRepository())
             {
                 try
                 {
-                    Repo.DeleteAdministratedTest(administratedTestId);
+                    _repo.DeleteAdministratedTest(administratedTestId);
                 }
                 catch (NotSupportedException ex)
                 {
@@ -127,5 +122,7 @@ namespace UnikeyFactoryTest.Service
                 }
             }
         }
+
+
     }
 }

@@ -66,7 +66,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public ActionResult AddTest(TestModel model)
         {
             test.UserId = UserId;
-            test.URL = _service.GenerateUrl();
+            test.URL = _service.GenerateGuid();
             test.Date = DateTime.Now;
             _service.AddNewTest(TestMapper.MapDalToBiz(test));
             return View("Index");

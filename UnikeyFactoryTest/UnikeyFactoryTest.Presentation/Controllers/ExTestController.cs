@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using UnikeyFactoryTest.Context;
-using UnikeyFactoryTest.Domain;
-using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Presentation.Models;
-using UnikeyFactoryTest.Presentation.Models.Dto;
 using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service;
 
@@ -19,7 +13,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         private TestService testService = new TestService();
         // GET: AdministratedTest
 
-        public ActionResult TestStart()
+        public ActionResult TestStart(string guid)
         {
             var model = new AdministratedTestModel();
 
@@ -53,11 +47,11 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                     var value = Request.Form[key];
                     model.QuestionAnswerDictionary[System.Convert.ToInt32(key)] = System.Convert.ToInt32(value);
                 }
-
+                
             }
             foreach (var question in model.QuestionAnswerDictionary)
             {
-
+               
                 if (question.Value != 0)
                 {
                     AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key)
@@ -69,6 +63,38 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             }
             service.Update_Save(AdminstratedTest);
             return View("TestEnded");
+        }
+
+
+        [HttpGet]
+        public ActionResult AdministratedTestsList(AdministratedTestsListModel testsListModel)
+        {
+            testsListModel = testsListModel ?? new AdministratedTestsListModel();
+
+            AdministratedTestService service = new AdministratedTestService();
+
+            testsListModel.Tests = testsListModel.Paginate(service.GetAdministratedTests().ToList());
+
+            if (testsListModel.IsAjaxCall)
+            {
+                return Json(new
+                {
+                    redirectUrl = Url.Action("AdministratedTestsList",
+                        new { PageNumber = testsListModel.PageNumber, PageSize = testsListModel.PageSize })
+                });
+            }
+
+            return View(testsListModel);
+        }
+
+        [HttpGet]
+        public ActionResult AdministratedTestContent(AdministratedTestDto test)
+        {
+            AdministratedTestService service = new AdministratedTestService();
+            AdministratedTestDto testToPass = new AdministratedTestDto(service.GetAdministratedTestById(test.Id));
+            testToPass.PageNumber = test.PageNumber;
+            testToPass.PageSize = test.PageSize;
+            return View(testToPass);
         }
     }
 }

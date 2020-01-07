@@ -5,11 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
-using UnikeyFactoryTest.Mapper;
 
-namespace UnikeyFactoryTest.Mappers
+namespace UnikeyFactoryTest.Mapper
 {
-    public static class QuestionMapper
+    public class QuestionMapper
     {
         public static QuestionBusiness MapDalToBiz(Question question)
         {
@@ -18,7 +17,7 @@ namespace UnikeyFactoryTest.Mappers
                 Id = question.Id,
                 Text = question.Text,
                 TestId = question.TestId,
-                Answers = question.Answers.Select(AnswerMapper.MapDalToBiz)
+                Answers = question.Answers.Select(AnswerMapper.MapDalToBiz).ToList(),
             };
 
             return returned;

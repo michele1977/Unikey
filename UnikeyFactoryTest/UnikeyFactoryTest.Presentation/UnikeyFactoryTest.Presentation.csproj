@@ -132,7 +132,7 @@
     <Compile Include="App_Start\FilterConfig2.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\RouteConfig2.cs" />
-    <Compile Include="Controllers\AdministratedTestController.cs" />
+    <Compile Include="Controllers\ExTestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -291,8 +291,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\AdministratedTest\TestStart.cshtml" />
-    <Content Include="Views\AdministratedTest\Test.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.js.flow" />
@@ -306,9 +304,9 @@
     <Content Include="Views\Test\TestsList.cshtml" />
     <Content Include="Views\Test\TestContent.cshtml" />
     <Content Include="Views\Test\AnswerPartial.cshtml" />
-    <Content Include="Views\AdministratedTest\AdministratedTestsList.cshtml" />
-    <Content Include="Views\AdministratedTest\AdministratedTestContent.cshtml" />
-    <Content Include="Views\AdministratedTest\AdministratedAnswerPartial.cshtml" />
+    <Content Include="Views\ExTest\AdministratedTestsList.cshtml" />
+    <Content Include="Views\ExTest\AdministratedTestContent.cshtml" />
+    <Content Include="Views\ExTest\AdministratedAnswerPartial.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.js.flow" />
@@ -323,6 +321,11 @@
     <Content Include="Views\User\Yes.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Test\EditQuestion.cshtml" />
+    <Content Include="Views\Test\TestEnded.cshtml" />
+    <Content Include="Views\Test\TestStart.cshtml" />
+    <Content Include="Views\ExTest\Test.cshtml" />
+    <Content Include="Views\ExTest\TestEnded.cshtml" />
+    <Content Include="Views\ExTest\TestStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -391,16 +394,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>55048</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:55041/</IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

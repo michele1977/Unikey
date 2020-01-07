@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -105,11 +106,25 @@ namespace UnikeyFactoryTest.Service
             }
         }
 
-        public string GenerateUrl()
+
+        public string GenerateGuid()
+        {
+            return Guid.NewGuid().ToString();
+        }
+
+        public string GenerateUrl(string guid)
+        {
+            var baseUrl = ConfigurationManager.AppSettings["baseUrl"];
+            return $"{baseUrl}ExTest\\TestStart?guid={guid.ToString()}";
+
+        }
+
+
+        public TestBusiness GetTestByURL(string modelUrl)
         {
             using (TestRepository _repo = new TestRepository())
             {
-                return _repo.GenerateUrl();
+                return _repo.GetTestByURL(modelUrl);
             }
         }
     }

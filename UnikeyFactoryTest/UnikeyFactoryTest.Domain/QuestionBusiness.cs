@@ -12,6 +12,6 @@ namespace UnikeyFactoryTest.Domain
         public string Text { get; set; }
         public int TestId { get; set; }
 
-        public IEnumerable<AnswerBusiness> Answers { get; set; }
+        public List<AnswerBusiness> Answers { get; set; }
     }
 }

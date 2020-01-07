@@ -1,11 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
-using UnikeyFactoryTest.Mappers;
 
 namespace UnikeyFactoryTest.Mapper
 {
-    public static class TestMapper
+    public class TestMapper
     {
         public static TestBusiness MapDalToBiz(Test test)
         {
@@ -15,9 +18,9 @@ namespace UnikeyFactoryTest.Mapper
                 URL = test.URL,
                 Date = test.Date,
                 UserId = test.UserId,
-                AdministratedTests = test.AdministratedTests.Select(AdministratedTestMapper.MapDaoToDomain),
+                AdministratedTests = test.AdministratedTests.Select(AdministratedTestMapper.MapDaoToDomain).ToList(),
                 Questions = test.Questions.Select(QuestionMapper.MapDalToBiz).ToList(),
-        };
+            };
             return returned;
         }
 

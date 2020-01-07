@@ -1,0 +1,96 @@
+﻿.startContainer {
+    border-radius: 5px;
+    border: black 1px solid;
+    padding: 20px;
+    background-color: cornflowerblue;
+    width: 400px;
+    text-align: center;
+}
+
+.logo {
+    border-radius: 5px;
+    margin-bottom: 30px;
+    padding: 10px;
+    margin-left: 43%;
+    text-align: center;
+    width: 170px;
+    height: 100px;
+}
+
+.QuestionContainer {
+    background-color: darkcyan;
+    border-radius: 8px;
+    border: black 1.5px solid;
+    width: 500px;
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+
+#Question {
+    font-size: 20px;
+    color: white;
+}
+
+.AnswerLabel {
+    width: 100px;
+}
+
+.SaveButton {
+    margin-bottom: 20px;
+}
+
+
+.Title {
+    margin: auto;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.RadioInput {
+}
+
+hr {
+    margin-top: 2px;
+}
+
+.AnswerHr {
+    margin: 0px;
+}
+
+.AnswerContainer {
+    background-color: cyan;
+    width: 300px;
+    margin: auto;
+}
+
+.myButton {
+    color: black;
+}
+
+    .myButton:hover {
+        box-shadow: black 1px 1px 20px;
+        height: 45px;
+        width: 80px;
+    }
+
+.myLabel {
+    width: 100px;
+    text-align: right;
+}
+
+.myForm {
+    text-align: center;
+}
+
+.myInput {
+    border: black 1px solid;
+    border-radius: 5px;
+}
+
+.buttonDiv {
+    text-align: center;
+}

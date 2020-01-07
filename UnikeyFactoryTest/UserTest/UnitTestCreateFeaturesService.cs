@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using UnikeyFactoryTest.Context;
+using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Service;
 
-namespace UnikeyFactoryTestBusiness.Test
+namespace UserTest
 {
     [TestClass]
     public class UnitTestCreateFeaturesService
@@ -12,17 +11,17 @@ namespace UnikeyFactoryTestBusiness.Test
         [TestMethod]
         public void TestMethodSaveChangesDB_ERR()
         {
-            UnikeyFactoryTest.Context.Test test = new UnikeyFactoryTest.Context.Test()
+            TestBusiness test = new TestBusiness()
             {
                 Date = DateTime.Now,
                 UserId = 1
             };
-            Question question = new Question()
+            QuestionBusiness question = new QuestionBusiness()
             {
                 TestId = 1,
 
             };
-            Answer answer = new Answer()
+            AnswerBusiness answer = new AnswerBusiness()
             {
                 IsCorrect = true,
                 QuestionId = 1,
@@ -36,6 +35,7 @@ namespace UnikeyFactoryTestBusiness.Test
             {
                 question.Answers.Add(answer);
                 test.Questions.Add(question);
+
                 testService.AddNewTest(test);
             }
             catch(Exception ex)

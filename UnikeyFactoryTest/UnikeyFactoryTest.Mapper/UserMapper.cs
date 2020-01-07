@@ -8,7 +8,7 @@ using UnikeyFactoryTest.Domain;
 
 namespace UnikeyFactoryTest.Mapper
 {
-    public static class UserMapper
+    public class UserMapper
     {
         public static UserBusiness MapDalToBiz(User user)
         {

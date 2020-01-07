@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,16 +28,16 @@ namespace UnikeyFactoryTest.Repository
 
         public string GenerateUrl()
         {
-            Guid url = Guid.NewGuid();
-            return url.ToString();
+            var myGuid = Guid.NewGuid();
+            var baseUrl = ConfigurationManager.AppSettings["baseUrl"];
+            return $"{baseUrl}ExTest\\TestStart?guid={myGuid.ToString()}";
         }
 
         public TestBusiness GetTestByURL(string URL)
         {
-            throw new NotImplementedException();
-            //var result = _ctx.Tests.FirstOrDefault(x => x.URL.Equals(URL));
-            //if (result == null) throw new Exception("Not valid URL");
-            //else return /*mapping*/ result;
+            var result = _ctx.Tests.FirstOrDefault(x => x.URL.Equals(URL));
+            if (result == null) throw new Exception("Not valid URL");
+            else return TestMapper.MapDalToBiz(result);
         }
 
         public Test GetTest(int testId)
