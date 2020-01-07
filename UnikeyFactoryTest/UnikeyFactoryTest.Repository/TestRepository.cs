@@ -82,6 +82,8 @@ namespace UnikeyFactoryTest.Repository
             testToUpdate.UserId = mappedTest.UserId;
             testToUpdate.AdministratedTests = mappedTest.AdministratedTests;
             testToUpdate.Questions = mappedTest.Questions;
+
+            _ctx.SaveChanges();
         }
 
         public void Dispose()

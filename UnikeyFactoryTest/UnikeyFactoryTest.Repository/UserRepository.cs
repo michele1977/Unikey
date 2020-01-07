@@ -26,5 +26,10 @@ namespace UnikeyFactoryTest.Repository
         {
             _context.Dispose();
         }
+
+        public int GetUserIdByUsername(User user)
+        {
+            return _context.Users.First(u => u.Username.Equals(user.Username)).Id;
+        }
     }
 }

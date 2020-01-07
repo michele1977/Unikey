@@ -5,22 +5,26 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 using UnikeyFactoryTest.Context;
+using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Presentation.Models;
 using UnikeyFactoryTest.Presentation.Models.Dto;
+using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service;
 
 namespace UnikeyFactoryTest.Presentation.Controllers
 {
     public class TestController : Controller
-    {        
+    {
+        private static int UserId { get; set; }
         private static readonly Test test = new Test();
         private readonly TestService _service = new TestService();
 
         // GET: Test
-        public ActionResult Index()
+        public ActionResult Index(TestModel model)
         {
-            TestModel model = new TestModel();
+            if(UserId == 0)
+                UserId = model.UserId;
             ModelState.Clear();
             return View(model);
         }
@@ -61,6 +65,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpPost]
         public ActionResult AddTest(TestModel model)
         {
+            test.UserId = UserId;
             test.URL = _service.GenerateUrl();
             test.Date = DateTime.Now;
             _service.AddNewTest(TestMapper.MapDalToBiz(test));
@@ -124,6 +129,30 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             }
 
             return RedirectToAction("TestsList");
+        }
+
+        [HttpGet]
+        [ActionName("EditQuestion")]
+        public ActionResult EditQuestion_Get(QuestionDto question)
+        {
+            TestBusiness questionRelatedTest = _service.GetTestById(question.TestId);
+
+            QuestionDto questionToEdit = new QuestionDto(questionRelatedTest.Questions.FirstOrDefault(q => q.Id == question.Id));
+
+            questionToEdit.CorrectAnswerScore = question.CorrectAnswerScore;
+
+            TestModel questionToUpdate = new TestModel(questionToEdit);
+
+            return View(questionToUpdate);
+        }
+
+        [HttpPost]
+        [ActionName("EditQuestion")]
+        public ActionResult EditQuestion_Post(TestModel question)
+        {
+            // TODO
+            
+            return RedirectToAction("TestContent", "Test", new {Id = question.Test.Id});
         }
     }
 }

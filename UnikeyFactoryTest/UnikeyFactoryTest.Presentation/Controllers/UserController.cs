@@ -30,7 +30,10 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             bool result = service.IsUser(user);
 
             if (result == true)
-                return View("Yes");
+            {
+                user.Id = service.GetUserIdByUsername(user);
+                return RedirectToAction("Index", "Test", new {UserId = user.Id});
+            }
             else
             {
                 model.IsUser = "IsNotAUser";

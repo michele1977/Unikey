@@ -96,6 +96,15 @@ namespace UnikeyFactoryTest.Service
             }
         }
 
+        public void UpdateTest(TestBusiness test)
+        {
+            using (TestRepository _repo = new TestRepository())
+            {
+                if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
+                _repo.UpdateTest(test);
+            }
+        }
+
         public string GenerateUrl()
         {
             using (TestRepository _repo = new TestRepository())

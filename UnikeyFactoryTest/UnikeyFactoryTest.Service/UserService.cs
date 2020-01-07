@@ -18,5 +18,13 @@ namespace UnikeyFactoryTest.Service
             }
         }
 
+        public int GetUserIdByUsername(User user)
+        {
+            using (UserRepository repo = new UserRepository())
+            {
+                return repo.GetUserIdByUsername(user);
+            }
+        }
+
     }
 }
