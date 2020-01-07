@@ -48,8 +48,6 @@ namespace UnikeyFactoryTest.Repository
 
         }
 
-
-
         public AdministratedTestBusiness GetAdministratedTestById(int adTestId)
         {
             var adTestDB = _ctx.AdministratedTests.FirstOrDefault(x => x.Id.Equals(adTestId));
@@ -65,12 +63,21 @@ namespace UnikeyFactoryTest.Repository
 
         public IEnumerable<AdministratedTest> GetAdministratedTests()
         {
-            throw new NotImplementedException();
+            return _ctx.AdministratedTests;
         }
 
         public void DeleteAdministratedTest(int administratedTestId)
         {
-            throw new NotImplementedException();
+            AdministratedTest administratedTest = _ctx.AdministratedTests
+                .FirstOrDefault(t => t.Id == administratedTestId);
+
+            if (administratedTest == null)
+            {
+                throw new NullReferenceException("AdministratedTest not found at specified id");
+            }
+
+            _ctx.AdministratedTests.Remove(administratedTest);
+            _ctx.SaveChanges();
         }
 
         public void Update_Save(AdministratedTestBusiness adTest)
