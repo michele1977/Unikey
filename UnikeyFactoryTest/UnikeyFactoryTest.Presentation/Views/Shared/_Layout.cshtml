@@ -10,9 +10,10 @@
 </head>
 <body>
 <div id="mySidenav" class="sidenav">
+
     <img id="unikeyLogo" src="~/Content/ICONS/unikeyLogo.png" alt="UnikeyLogo">
     <a title="Create Test" href='@Url.Action("Index", "Test")'><img id="create" class="sidebarIcon" src="~/Content/ICONS/createIcon.png" alt="create"></a>
-    <a title="Manage tests" href='@Url.Action("TestsList", "Test", new {PageNumber=1, PageSize=10})'><img id="manage" class="sidebarIcon" src="~/Content/ICONS/manageIcon.png" alt="manage"></a>
+    <a title="Manage tests" href='@Url.Action("TestsList", "Test", new {PageNumber = 1, PageSize = 10})'><img id="manage" class="sidebarIcon" src="~/Content/ICONS/manageIcon.png" alt="manage"></a>
     <a title="Tests results" href='@Url.Action("AdministratedTestsList", "ExTest")'><img id="results" class="sidebarIcon" src="~/Content/ICONS/results.png" alt="results"></a>
     <a title="Log out" href='@Url.Action("Logout", "User")'><img id="logOut" class="sidebarIcon" src="~/Content/ICONS/logOut.png" alt="logOut"></a>
 </div>
