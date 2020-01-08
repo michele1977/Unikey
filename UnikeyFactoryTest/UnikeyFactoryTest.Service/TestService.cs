@@ -59,10 +59,10 @@ namespace UnikeyFactoryTest.Service
 
         }
 
-        public IEnumerable<TestBusiness> GetTests()
+        public List<TestBusiness> GetTests()
         {
             Repo = new TestRepository();
-            var tests = Repo.GetTests().Select(TestMapper.MapDalToBiz);
+            var tests = Repo.GetTests();
             return tests;
         }
 

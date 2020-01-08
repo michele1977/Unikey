@@ -79,7 +79,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             TestService service = new TestService();
 
-            testsListModel.Tests = testsListModel.Paginate(service.GetTests().ToList());
+            testsListModel.Tests = testsListModel.Paginate(service.GetTests());
 
             if (testsListModel.IsAjaxCall)
             {

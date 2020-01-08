@@ -20,8 +20,8 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
             URL = test.URL;
             Date = test.Date;
             UserId = test.UserId;
-            Questions = test.Questions.Select(q => new QuestionDto(q)).ToList();
-            AdministratedTests = test.AdministratedTests.Select(t => new AdministratedTestDto(t)).ToList();
+            Questions = test.Questions?.Select(q => new QuestionDto(q)).ToList();
+            AdministratedTests = test.AdministratedTests?.Select(t => new AdministratedTestDto(t)).ToList();
         }
 
         public int Id { get; set; }
