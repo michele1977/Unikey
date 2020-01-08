@@ -55,9 +55,23 @@ namespace UnikeyFactoryTest.Repository
             return test;
         }
 
-        public IEnumerable<Test> GetTests()
+        public List<TestBusiness> GetTests()
         {
-            return _ctx.Tests;
+            var returned =  _ctx.Tests.ToList();
+            //var returned1 =  returned.Select(x => TestMapper.MapDalToBizLigth(x)).ToList();
+            return returned.Select(TestMapper.MapDalToBizLigth).ToList();
+        }
+
+        private  TestBusiness MapDalToBizLigth2(TestBusiness test)
+        {
+            var returned = new TestBusiness
+            {
+                Id = test.Id,
+                URL = test.URL,
+                Date = test.Date,
+                UserId = test.UserId,
+            };
+            return returned;
         }
 
         public void DeleteTest(int testId)
