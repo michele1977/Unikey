@@ -21,10 +21,19 @@ namespace UnikeyFactoryTest.Mapper
                 AdministratedTests = test.AdministratedTests.Select(AdministratedTestMapper.MapDaoToDomain).ToList(),
                 Questions = test.Questions.Select(QuestionMapper.MapDalToBiz).ToList(),
             };
-            var i = 0;
             return returned;
         }
-
+        public static TestBusiness MapDalToBizLigth(Test test)
+        {
+            var returned = new TestBusiness
+            {
+                Id = test.Id,
+                URL = test.URL,
+                Date = test.Date,
+                UserId = test.UserId,
+            };
+            return returned;
+        }
         public static Test MapBizToDal(TestBusiness test)
         {
             var returned = new Test
