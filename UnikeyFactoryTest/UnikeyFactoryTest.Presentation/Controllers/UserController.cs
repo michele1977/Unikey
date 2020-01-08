@@ -41,7 +41,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult Logout()
         {
             UserModel model = new UserModel();

@@ -1,4 +1,5 @@
 ﻿@using UnikeyFactoryTest.Presentation.Models.Dto
+@using UnikeyFactoryTest.Service
 @model  UnikeyFactoryTest.Presentation.Models.TestsListModel
 
 @{
@@ -41,6 +42,9 @@
         <th>Max Score</th>
         <th>Actions</th>
     </tr>
+    @{
+        TestService service = new TestService();
+    }
 
     @foreach (TestDto item in Model.Tests)
     {
@@ -52,7 +56,7 @@
                 @item.Date
             </td>
             <td>
-                @item.URL
+                @service.GenerateUrl(item.URL)
             </td>
             <td>
                 @item.CalculateScore()
