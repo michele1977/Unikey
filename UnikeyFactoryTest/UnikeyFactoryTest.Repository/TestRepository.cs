@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -30,13 +31,6 @@ namespace UnikeyFactoryTest.Repository
         }
 
 
-        public string GenerateUrl()
-        {
-            var myGuid = Guid.NewGuid();
-            var baseUrl = ConfigurationManager.AppSettings["baseUrl"];
-            return $"{baseUrl}ExTest\\TestStart?guid={myGuid.ToString()}";
-        }
-
         public TestBusiness GetTestByURL(string URL)
         {
             var result = _ctx.Tests.FirstOrDefault(x => x.URL.Equals(URL));
@@ -58,7 +52,13 @@ namespace UnikeyFactoryTest.Repository
         public List<TestBusiness> GetTests()
         {
             var returned =  _ctx.Tests.ToList();
+            var res = from test in _ctx.Tests
+                join quest in _ctx.Questions
+                    on test.Id equals quest.TestId
+                    group test by new {Id = test.Id,Url = test.URL, Date = test.Date}  into temp
+                select new { Id = temp.Key.Id, Url = temp.Key.Url, Date = temp.Key.Date, NumQuestion = temp.Count()};
             //var returned1 =  returned.Select(x => TestMapper.MapDalToBizLigth(x)).ToList();
+            var returned2 = res.ToList();
             return returned.Select(TestMapper.MapDalToBizLigth).ToList();
         }
 
