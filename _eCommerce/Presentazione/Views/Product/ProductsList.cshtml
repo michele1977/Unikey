@@ -1,0 +1,131 @@
+﻿@model Presentazione.Models.ProductsListModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<h2>Products</h2>
+
+<hr />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <table class="table">
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        Brand
+                    </th>
+                    <th></th>
+                </tr>
+                @{ int i = 1; }
+                @foreach (var item in Model.Brands)
+                {
+                    <tr>
+                        <td>
+                            @i
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelitem => item.Description)
+                        </td>
+                        <td>
+                            @using (Html.BeginForm("BrandDetails", "Product", FormMethod.Post))
+                            {
+                                <input type="hidden" name="IdBrand" value=@item.ID />
+                                <button class="btn btn-primary"><i class="fa fa-bars"></i></button>
+                            }
+                        </td>
+                    </tr>
+                    { i++; }
+                }
+            </table>
+        </div>
+        <div class="col-md-4">
+            @if (Model.ProductsForBrand != null)
+            {
+                <table class="table">
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            Product
+                        </th>
+                        <th></th>
+                        <th>
+                            <button class="btn btn-success" onclick="location.href='Registration'"><i class="fa fa-plus"></i></button>
+                        </th>
+                    </tr>
+                    @{ int j = 1; }
+                    @foreach (var item in Model.ProductsForBrand)
+                    {
+                        <tr>
+                            <td>
+                                @j
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelitem => item.Description)
+                            </td>
+                            <td>
+                                @using (Html.BeginForm("ProductDetails", "Product", FormMethod.Post))
+                                {
+                                    <input type="hidden" name="IdBrand" value="@Model.IdBrand" />
+                                    <input type="hidden" name="IdProduct" value=@item.ID />
+                                    <button class="btn btn-primary"><i class="fa fa-bars"></i></button>
+                                }
+                            </td>
+                            <td>
+                                @using (Html.BeginForm("DeleteProduct", "Product", FormMethod.Post))
+                                {
+                                    <input type="hidden" name="IdBrand" value="@Model.IdBrand" />
+                                    <input type="hidden" name="IdProduct" value=@item.ID />
+                                    <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                }
+                            </td>
+                        </tr>
+                        { j++; }
+                    }
+                </table>
+            }
+        </div>
+        <div class="col-md-4">
+            <br />
+            <br />
+            @if (Model.Product != null)
+            {
+                using (Html.BeginForm("UpdateProduct", "Product", FormMethod.Post))
+                {
+                    <div class="text-center">
+                        <div class="form-group">
+                            <h4><strong>Brand:</strong> @Html.DisplayFor(model => Model.Brand.Description, new { @class = "form-control" })</h4>
+                        </div>
+                        <div class="form-group">
+                            <h4><strong>Description:</strong> @Html.EditorFor(model => Model.Product.Description, new { @class = "form-control" })</h4>
+                        </div>
+                        <div class="form-group">
+                            <h4><strong>Price$:</strong> @Html.EditorFor(model => Model.Product.Price, new { @class = "form-control" })</h4>
+                        </div>
+                        <div class="form-group">
+                            <h4><strong>Color:</strong> @Html.EditorFor(model => Model.Product.Color, new { @class = "form-control" })</h4>
+                        </div>
+                        <div class="form-group">
+                            <h4><strong>Weigth:</strong> @Html.EditorFor(model => Model.Product.Weigth, new { @class = "form-control" })</h4>
+                        </div>
+                        <div class="invisible">
+                            @Html.EditorFor(model => Model.Product.ID)
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <input type="hidden" name="IdBrand" value="@Model.IdBrand" />
+                        <input type="hidden" name="IdProduct" value=@Model.IdProduct />
+                        <button class="btn btn-success"><i class="fa fa-folder"></i></button>
+                    </div>
+                }
+            }
+        </div>
+    </div>

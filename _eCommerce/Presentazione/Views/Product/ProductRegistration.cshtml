@@ -1,0 +1,57 @@
+﻿@model Presentazione.Models.ProductRegistrationModel
+
+@{
+    ViewBag.Title = "Registration";
+}
+
+<h2>New Product</h2>
+
+<hr />
+
+@using (Html.BeginForm("Save", "Product", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.Label("Description")
+        <br />
+        @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Brand")
+        <br />
+        @Html.DropDownListFor(m => m.IdBrand, Model.SelectListItems, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Price")
+        <br />
+        @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Color")
+        <br />
+        @Html.TextBoxFor(m => m.Color, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Weigth")
+        <br />
+        @Html.TextBoxFor(m => m.Weigth, new { @class = "form-control" })
+    </div>
+    <br />
+    <div class="text-right">
+        <input type="submit" value="Save Product" class="btn btn-primary" />
+    </div>
+}
+
+<br />
+
+@if (Model.Check == BLL.ErrorState.Yes)
+{
+    <div class="alert alert-success" role="alert">
+        Registration done!
+    </div>
+}
+else if (Model.Check == BLL.ErrorState.No)
+{
+    <div class="alert alert-danger" role="alert">
+        Registration failure!
+    </div>
+}
