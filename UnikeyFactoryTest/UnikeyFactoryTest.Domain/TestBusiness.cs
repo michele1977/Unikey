@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,6 +19,7 @@ namespace UnikeyFactoryTest.Domain
         public string URL { get; set; }
         public DateTime? Date { get; set; }
         public int UserId { get; set; }
+        public int NumQuestions { get; set; }
 
         public List<AdministratedTestBusiness> AdministratedTests { get; set; }
         public List<QuestionBusiness> Questions { get; set; }

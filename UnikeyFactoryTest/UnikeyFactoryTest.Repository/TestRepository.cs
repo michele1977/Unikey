@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -30,21 +31,14 @@ namespace UnikeyFactoryTest.Repository
         }
 
 
-        public string GenerateUrl()
-        {
-            var myGuid = Guid.NewGuid();
-            var baseUrl = ConfigurationManager.AppSettings["baseUrl"];
-            return $"{baseUrl}ExTest\\TestStart?guid={myGuid.ToString()}";
-        }
-
         public TestBusiness GetTestByURL(string URL)
         {
             var result = _ctx.Tests.FirstOrDefault(x => x.URL.Equals(URL));
             if (result == null) throw new Exception("Not valid URL");
-            else return TestMapper.MapDalToBiz(result);
+            else return TestMapper.MapDalToBizLight(result);
         }
 
-        public Test GetTest(int testId)
+        public TestBusiness GetTest(int testId)
         {
             Test test = _ctx.Tests.FirstOrDefault(t => t.Id == testId);
 
@@ -52,26 +46,38 @@ namespace UnikeyFactoryTest.Repository
             {
                 throw new NullReferenceException("Test not found at specified id");
             }
-            return test;
+            return TestMapper.MapDalToBizHeavy(test);
         }
 
         public List<TestBusiness> GetTests()
         {
-            var returned =  _ctx.Tests.ToList();
-            //var returned1 =  returned.Select(x => TestMapper.MapDalToBizLigth(x)).ToList();
-            return returned.Select(TestMapper.MapDalToBizLigth).ToList();
-        }
+            var returned = _ctx.Tests.ToList();
+            var res = from test in _ctx.Tests
+                      join quest in _ctx.Questions
+                          on test.Id equals quest.TestId
+                      group test by new
+                      {
+                          Id = test.Id, 
+                          Url = test.URL, 
+                          Date = test.Date, 
+                          NumQuestions = _ctx.Questions.Count(q => q.TestId == test.Id)
+                      } into temp
+                      select new { Id = temp.Key.Id, URL = temp.Key.Url, Date = temp.Key.Date, NumQuestions = temp.Key.NumQuestions };
 
-        private  TestBusiness MapDalToBizLigth2(TestBusiness test)
-        {
-            var returned = new TestBusiness
+            List<Test> returned1 = new List<Test>();
+
+            foreach (var test in res)
             {
-                Id = test.Id,
-                URL = test.URL,
-                Date = test.Date,
-                UserId = test.UserId,
-            };
-            return returned;
+                returned1.Add(new Test()
+                {
+                    Id = test.Id,
+                    URL = test.URL,
+                    Date = test.Date,
+                    NumQuestions = test.NumQuestions,
+                });
+            }
+            
+            return returned1.Select(TestMapper.MapDalToBizLight).ToList();
         }
 
         public void DeleteTest(int testId)

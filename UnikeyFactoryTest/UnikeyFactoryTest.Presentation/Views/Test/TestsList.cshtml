@@ -39,7 +39,7 @@
         <th>Id</th>
         <th>Date</th>
         <th>URL</th>
-        <th>Max Score</th>
+        <th>Questions No</th>
         <th>Actions</th>
     </tr>
     @{
@@ -59,7 +59,7 @@
                 @service.GenerateUrl(item.URL)
             </td>
             <td>
-                @item.CalculateScore()
+                @item.NumQuestions
             </td>
             <td>
                 @Html.ActionLink(

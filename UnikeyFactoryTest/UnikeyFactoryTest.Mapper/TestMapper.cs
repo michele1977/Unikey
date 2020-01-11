@@ -10,7 +10,7 @@ namespace UnikeyFactoryTest.Mapper
 {
     public class TestMapper
     {
-        public static TestBusiness MapDalToBiz(Test test)
+        public static TestBusiness MapDalToBizLight(Test test)
         {
             var returned = new TestBusiness
             {
@@ -18,12 +18,13 @@ namespace UnikeyFactoryTest.Mapper
                 URL = test.URL,
                 Date = test.Date,
                 UserId = test.UserId,
-                AdministratedTests = test.AdministratedTests.Select(AdministratedTestMapper.MapDaoToDomain).ToList(),
-                Questions = test.Questions.Select(QuestionMapper.MapDalToBiz).ToList(),
+                NumQuestions = test.NumQuestions,
+                //AdministratedTests = test.AdministratedTests.Select(AdministratedTestMapper.MapDaoToDomain).ToList(),
+                //Questions = test.Questions.Select(QuestionMapper.MapDalToBiz).ToList(),
             };
             return returned;
         }
-        public static TestBusiness MapDalToBizLigth(Test test)
+        public static TestBusiness MapDalToBizHeavy(Test test)
         {
             var returned = new TestBusiness
             {
@@ -31,6 +32,7 @@ namespace UnikeyFactoryTest.Mapper
                 URL = test.URL,
                 Date = test.Date,
                 UserId = test.UserId,
+                Questions = test.Questions.Select(QuestionMapper.MapDalToBiz).ToList(),
             };
             return returned;
         }
@@ -42,7 +44,7 @@ namespace UnikeyFactoryTest.Mapper
                 URL = test.URL,
                 Date = test.Date,
                 UserId = test.UserId,
-                AdministratedTests = test.AdministratedTests.Select(AdministratedTestMapper.MapDomainToDao).ToList(),
+                //AdministratedTests = test.AdministratedTests.Select(AdministratedTestMapper.MapDomainToDao).ToList(),
                 Questions = test.Questions.Select(QuestionMapper.MapBizToDal).ToList(),
             };
             return returned;

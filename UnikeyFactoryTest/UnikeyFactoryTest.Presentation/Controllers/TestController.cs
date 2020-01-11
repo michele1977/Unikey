@@ -68,7 +68,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             test.UserId = UserId;
             test.URL = _service.GenerateGuid();
             test.Date = DateTime.Now;
-            _service.AddNewTest(TestMapper.MapDalToBiz(test));
+            _service.AddNewTest(TestMapper.MapDalToBizLight(test));
             return View("Index");
         }
 
