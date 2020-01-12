@@ -20,6 +20,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
             Answers = question.Answers.Select(a => new AnswerDto(a));
             TestId = question.TestId;
             Text = question.Text;
+            CorrectAnswerScore = question.Answers.Where(a => (bool) a.IsCorrect).Sum(a => a.Score);
         }
 
         public int Id { get; set; }
@@ -27,7 +28,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public int TestId { get; set; }
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
-        public decimal CorrectAnswerScore { get; set; }
+        public decimal? CorrectAnswerScore { get; set; }
 
         public IEnumerable<AnswerDto> Answers { get; set; }
     }

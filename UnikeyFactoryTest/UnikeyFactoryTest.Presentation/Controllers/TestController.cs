@@ -81,7 +81,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             testsListModel.Tests = testsListModel.Paginate(service.GetTests());
 
-            if (testsListModel.IsAjaxCall)
+            if (testsListModel.IsJsCall)
             {
                 return Json(new
                 {

@@ -34,6 +34,12 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
         public int PageSize { get; set; } = 10;
         public int NumQuestions { get; set; }
 
+        public decimal? MaxScore
+        {
+            get =>
+                Questions.Sum(q => q.CorrectAnswerScore);
+        }
+
         //public decimal? CalculateScore()
         //{
         //    try

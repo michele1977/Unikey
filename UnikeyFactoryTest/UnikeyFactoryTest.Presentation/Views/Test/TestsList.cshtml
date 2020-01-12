@@ -60,8 +60,8 @@
             new { PageNumber = Model.PageNumber - 1, Model.PageSize },
             new { @class = "btn btn-info" })
     }
-    <label>@Model.PageNumber</label>
-    @if (!@Model.LastPage)
+    <label>@Model.PageNumber of @Model.LastPage</label>
+    @if (@Model.PageNumber != @Model.LastPage)
     {
         @Html.ActionLink(
             "Next",
