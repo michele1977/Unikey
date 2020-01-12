@@ -11,7 +11,7 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
     {
         public TestDto()
         {
-
+            Questions = new List<QuestionDto>();
         }
 
         public TestDto(TestBusiness test)
@@ -21,7 +21,7 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
             Date = test.Date;
             UserId = test.UserId;
             Questions = test.Questions?.Select(q => new QuestionDto(q)).ToList();
-            AdministratedTests = test.AdministratedTests?.Select(t => new AdministratedTestDto(t)).ToList();
+            //AdministratedTests = test.AdministratedTests?.Select(t => new AdministratedTestDto(t)).ToList();
             NumQuestions = test.NumQuestions;
         }
 
@@ -50,7 +50,7 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
         //    }
         //}
 
-        public ICollection<AdministratedTestDto> AdministratedTests { get; set; }
+        //public ICollection<AdministratedTestDto> AdministratedTests { get; set; }
         public ICollection<QuestionDto> Questions { get; set; }
     }
 }

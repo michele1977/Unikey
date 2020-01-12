@@ -42,35 +42,10 @@
         <th>Questions No</th>
         <th>Actions</th>
     </tr>
-    @{
-        TestService service = new TestService();
-    }
 
-    @foreach (TestDto item in Model.Tests)
+    @foreach (TestDto test in Model.Tests)
     {
-        <tr>
-            <td>
-                @item.Id
-            </td>
-            <td>
-                @item.Date
-            </td>
-            <td>
-                @service.GenerateUrl(item.URL)
-            </td>
-            <td>
-                @item.NumQuestions
-            </td>
-            <td>
-                @Html.ActionLink(
-                    "Content",
-                    "TestContent",
-                    "Test",
-                    new { @item.Id, @Model.PageNumber, @Model.PageSize },
-                    new { @class = "btn btn-info" }) |
-                <button class="btn btn-info" onclick="deleteConfirmation(@item.Id, @Model.PageNumber, @Model.PageSize)">Delete</button>
-            </td>
-        </tr>
+        Html.RenderPartial("TestsTablePartial", test);
     }
 
 </table>

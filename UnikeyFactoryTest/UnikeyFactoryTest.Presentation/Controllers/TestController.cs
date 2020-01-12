@@ -113,23 +113,24 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             TestDto testToPass = new TestDto(service.GetTestById(test.Id));
             testToPass.PageNumber = test.PageNumber;
             testToPass.PageSize = test.PageSize;
+            testToPass.URL = service.GenerateUrl(testToPass.URL);
             return View(testToPass);
         }
 
-        [HttpPost]
-        public ActionResult TextSearch(TestsListModel testsListModel)
-        {
-            if (!testsListModel.TextFilter.IsNullOrWhiteSpace())
-            {
-                TestService service = new TestService();
+        //[HttpPost]
+        //public ActionResult TextSearch(TestsListModel testsListModel)
+        //{
+        //    if (!testsListModel.TextFilter.IsNullOrWhiteSpace())
+        //    {
+        //        TestService service = new TestService();
 
-                testsListModel.Tests = service.GetTests()
-                    .Where(t => t.User.Username.Contains(testsListModel.TextFilter))
-                    .Select(t => new TestDto(t)).ToList();
-            }
+        //        testsListModel.Tests = service.GetTests()
+        //            .Where(t => t.User.Username.Contains(testsListModel.TextFilter))
+        //            .Select(t => new TestDto(t)).ToList();
+        //    }
 
-            return RedirectToAction("TestsList");
-        }
+        //    return RedirectToAction("TestsList");
+        //}
 
         [HttpGet]
         [ActionName("EditQuestion")]

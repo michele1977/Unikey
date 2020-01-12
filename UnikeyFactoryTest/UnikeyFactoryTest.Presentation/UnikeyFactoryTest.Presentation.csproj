@@ -326,6 +326,7 @@
     <Content Include="Views\ExTest\Test.cshtml" />
     <Content Include="Views\ExTest\TestEnded.cshtml" />
     <Content Include="Views\ExTest\TestStart.cshtml" />
+    <Content Include="Views\Test\TestsTablePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

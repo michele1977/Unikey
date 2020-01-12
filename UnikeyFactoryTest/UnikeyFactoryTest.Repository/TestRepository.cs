@@ -46,6 +46,7 @@ namespace UnikeyFactoryTest.Repository
             {
                 throw new NullReferenceException("Test not found at specified id");
             }
+
             return TestMapper.MapDalToBizHeavy(test);
         }
 
