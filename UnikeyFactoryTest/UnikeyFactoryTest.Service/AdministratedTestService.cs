@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.Mapper;
@@ -47,9 +48,9 @@ namespace UnikeyFactoryTest.Service
             return newAdTest;
         }
 
-        public AdministratedTestBusiness Add(AdministratedTestBusiness adTest)
+        public async Task<AdministratedTestBusiness> Add(AdministratedTestBusiness adTest)
         {
-           return _repo.Add(adTest);
+           return await _repo.Add(adTest);
         }
 
         public void Update_Save(AdministratedTestBusiness adTest)
@@ -96,13 +97,13 @@ namespace UnikeyFactoryTest.Service
         }
 
 
-        public void DeleteAdministratedTest(int administratedTestId)
+        public async Task DeleteAdministratedTest(int administratedTestId)
         {
             using (_repo = new AdministratedTestRepository())
             {
                 try
                 {
-                    _repo.DeleteAdministratedTest(administratedTestId);
+                    await _repo.DeleteAdministratedTest(administratedTestId);
                 }
                 catch (NotSupportedException ex)
                 {
