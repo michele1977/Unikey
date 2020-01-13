@@ -81,19 +81,6 @@ namespace UnikeyFactoryTest.Repository
             return tests;
         }
 
-            foreach (var test in res)
-            {
-                returned1.Add(new Test()
-                {
-                    Id = test.Id,
-                    URL = test.URL,
-                    Date = test.Date,
-                    NumQuestions = test.NumQuestions,
-                });
-            }
-            
-            return returned1.Select(TestMapper.MapDalToBizLight).ToList();
-        }
         public async Task DeleteTest(int testId)
         {
             var task = await Task.Run(() =>

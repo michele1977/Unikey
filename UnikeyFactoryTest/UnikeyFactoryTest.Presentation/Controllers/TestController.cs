@@ -69,11 +69,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             test.UserId = UserId;
             test.URL = _service.GenerateGuid();
             test.Date = DateTime.Now;
-<<<<<<< HEAD
-            _service.AddNewTest(TestMapper.MapDalToBizLight(test));
-=======
-            await _service.AddNewTest(TestMapper.MapDalToBiz(test));
->>>>>>> feature/CreationTeam
+            await _service.AddNewTest(TestMapper.MapDalToBizLight(test));
             return View("Index");
         }
 
@@ -137,28 +133,28 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         //    return RedirectToAction("TestsList");
         //}
 
-        [HttpGet]
-        [ActionName("EditQuestion")]
-        public ActionResult EditQuestion_Get(QuestionDto question)
-        {
-            TestBusiness questionRelatedTest = _service.GetTestById(question.TestId);
+        //[HttpGet]
+        //[ActionName("EditQuestion")]
+        //public ActionResult EditQuestion_Get(QuestionDto question)
+        //{
+        //    TestBusiness questionRelatedTest = _service.GetTestById(question.TestId);
 
-            QuestionDto questionToEdit = new QuestionDto(questionRelatedTest.Questions.FirstOrDefault(q => q.Id == question.Id));
+        //    QuestionDto questionToEdit = new QuestionDto(questionRelatedTest.Questions.FirstOrDefault(q => q.Id == question.Id));
 
-            questionToEdit.CorrectAnswerScore = question.CorrectAnswerScore;
+        //    questionToEdit.CorrectAnswerScore = question.CorrectAnswerScore;
 
-            TestModel questionToUpdate = new TestModel(questionToEdit);
+        //    TestModel questionToUpdate = new TestModel(questionToEdit);
 
-            return View(questionToUpdate);
-        }
+        //    return View(questionToUpdate);
+        //}
 
-        [HttpPost]
-        [ActionName("EditQuestion")]
-        public ActionResult EditQuestion_Post(TestModel question)
-        {
-            // TODO
+        //[HttpPost]
+        //[ActionName("EditQuestion")]
+        //public ActionResult EditQuestion_Post(TestModel question)
+        //{
+        //    // TODO
             
-            return RedirectToAction("TestContent", "Test", new {Id = question.Test.Id});
-        }
+        //    return RedirectToAction("TestContent", "Test", new {Id = question.Test.Id});
+        //}
     }
 }
