@@ -11,9 +11,9 @@ namespace UnikeyFactoryTest.IRepository
     public interface IAdministratedTestRepository : IDisposable
     {
         void Update_Save(AdministratedTestBusiness adTest);
-        AdministratedTestBusiness Add(AdministratedTestBusiness adTest);
+        Task<AdministratedTestBusiness> Add(AdministratedTestBusiness adTest);
         Task<AdministratedTestBusiness> GetAdministratedTestById(int adTestId);
         IEnumerable<AdministratedTest> GetAdministratedTests();
-        void DeleteAdministratedTest(int administratedTestId);
+        Task DeleteAdministratedTest(int administratedTestId);
     }
 }

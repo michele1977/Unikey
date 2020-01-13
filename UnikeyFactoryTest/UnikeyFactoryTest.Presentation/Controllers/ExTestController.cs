@@ -25,12 +25,12 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
         // test
         [HttpPost]
-        public ActionResult BeginTest(AdministratedTestModel model)
+        public async Task<ActionResult> BeginTest(AdministratedTestModel model)
         {
             var subject = model.Name + " " + model.Surname;
             var test = testService.GetTestByURL(model.URL);
             model.Test = service.AdministratedTest_Builder(test, subject);
-            var savedTest = service.Add(model.Test);
+            var savedTest = await service.Add(model.Test);
             model.admnistratedTestId = savedTest.Id;
             model.Test = savedTest;
             return View("Test", model);
