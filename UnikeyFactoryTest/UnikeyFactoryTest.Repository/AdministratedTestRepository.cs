@@ -65,9 +65,10 @@ namespace UnikeyFactoryTest.Repository
             }
         }
 
-        public IEnumerable<AdministratedTest> GetAdministratedTests()
+        public async Task<DbSet<AdministratedTest>> GetAdministratedTests()
         {
-            return _ctx.AdministratedTests;
+            var myTask = Task.Run(() => _ctx.AdministratedTests);
+            return await myTask;
         }
 
         public async Task DeleteAdministratedTest(int administratedTestId)

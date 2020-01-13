@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace UnikeyFactoryTest.IRepository
         void Update_Save(AdministratedTestBusiness adTest);
         Task<AdministratedTestBusiness> Add(AdministratedTestBusiness adTest);
         AdministratedTestBusiness GetAdministratedTestById(int adTestId);
-        IEnumerable<AdministratedTest> GetAdministratedTests();
+        Task<DbSet<AdministratedTest>> GetAdministratedTests();
         Task DeleteAdministratedTest(int administratedTestId);
     }
 }
