@@ -21,12 +21,12 @@ namespace UnikeyFactoryTest.Service
             Repo = new TestRepository();
         }
 
-        public void AddNewTest(TestBusiness test)
+        public async Task AddNewTest(TestBusiness test)
         {
             using (TestRepository _repo = new TestRepository())
             {
                 if(string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
-                _repo.SaveTest(TestMapper.MapBizToDal(test));
+                await _repo.SaveTest(TestMapper.MapBizToDal(test));
             }
         }
 

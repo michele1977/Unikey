@@ -9,6 +9,6 @@ namespace UnikeyFactoryTest.IRepository
 {
     public interface IUserRepository
     {
-        bool FindUser(User user);
+        Task<bool> FindUser(User user);
     }
 }

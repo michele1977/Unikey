@@ -10,19 +10,19 @@ namespace UnikeyFactoryTest.Service
 {
     public class UserService
     {
-        public bool IsUser(User user)
+        public async Task<bool> IsUser(User user)
         {
             using (UserRepository repo = new UserRepository())
             {
-                return repo.FindUser(user);
+                return await repo.FindUser(user);
             }
         }
 
-        public int GetUserIdByUsername(User user)
+        public async Task<int> GetUserIdByUsername(User user)
         {
             using (UserRepository repo = new UserRepository())
             {
-                return repo.GetUserIdByUsername(user);
+                return await repo.GetUserIdByUsername(user);
             }
         }
 

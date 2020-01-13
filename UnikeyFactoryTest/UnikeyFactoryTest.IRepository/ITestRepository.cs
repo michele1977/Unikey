@@ -10,7 +10,7 @@ namespace UnikeyFactoryTest.IRepository
 {
     public interface ITestRepository : IDisposable
     {
-        void SaveTest(Test test);
+        Task SaveTest(Test test);
         TestBusiness GetTestByURL(string URL);
         TestBusiness GetTest(int testId);
         List<TestBusiness> GetTests();
