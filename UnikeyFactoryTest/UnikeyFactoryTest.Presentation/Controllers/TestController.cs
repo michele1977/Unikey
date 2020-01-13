@@ -98,7 +98,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public async Task<JsonResult> DeleteTest(TestDto test)
         {
             TestService service = new TestService();
-            service.DeleteTest(test.Id);
+            await service.DeleteTest(test.Id);
 
             return Json(new
             {
