@@ -47,24 +47,24 @@ namespace UserTest
 
             var adTest = new AdministratedTestBusiness
             {
-                Id = 0,
-                TestId = 0,
+                Id = 986,
+                TestId = 1,
                 TestSubject = "",
                 URL = "",
                 AdministratedQuestions = new List<AdministratedQuestionBusiness>
                 {
                     new AdministratedQuestionBusiness
                     {
-                        Id = 0,
+                        Id = 987,
                         Text = "",
-                        AdministratedTestId = 0,
+                        AdministratedTestId = 986,
                         AdministratedAnswers = new List<AdministratedAnswerBusiness>
                         {
                             new AdministratedAnswerBusiness
                             {
-                                Id = 0,
+                                Id = 988,
                                 Text = "",
-                                AdministratedQuestionId = 0
+                                AdministratedQuestionId = 987
                             }
                         }
                     }
@@ -81,11 +81,11 @@ namespace UserTest
                 {
                     throw new Exception();
                 }
+                
             }
-
+            
             var test = myCtx.AdministratedTests.Local[myCtx.AdministratedTests.ToList().Count];
-            Assert.IsNotNull(test);
-
+            Assert.AreEqual(986, test.Id);
         }
 
         [TestMethod]
