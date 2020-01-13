@@ -41,34 +41,45 @@ namespace UnikeyFactoryTest.Repository
             else return TestMapper.MapDalToBizLight(result);
         }
 
-        public TestBusiness GetTest(int testId)
+        public async Task<Test> GetTest(int testId)
         {
-            Test test = _ctx.Tests.FirstOrDefault(t => t.Id == testId);
+            var myTask = await Task.Run(() => _ctx.Tests.FirstOrDefault(t => t.Id == testId));
 
-            if (test == null)
+
+            if (myTask == null)
             {
                 throw new NullReferenceException("Test not found at specified id");
             }
-
-            return TestMapper.MapDalToBizHeavy(test);
+            return myTask;
         }
 
-        public List<TestBusiness> GetTests()
+        public async Task<List<TestBusiness>> GetTests()
         {
-            var returned = _ctx.Tests.ToList();
-            var res = from test in _ctx.Tests
-                      join quest in _ctx.Questions
-                          on test.Id equals quest.TestId
-                      group test by new
-                      {
-                          Id = test.Id, 
-                          Url = test.URL, 
-                          Date = test.Date, 
-                          NumQuestions = _ctx.Questions.Count(q => q.TestId == test.Id)
-                      } into temp
-                      select new { Id = temp.Key.Id, URL = temp.Key.Url, Date = temp.Key.Date, NumQuestions = temp.Key.NumQuestions };
+            var returned =  _ctx.Tests.ToList();
+            
+            var myTask = await Task.Run(() => from test in _ctx.Tests
+                join quest in _ctx.Questions
+                    on test.Id equals quest.TestId
+                group test by new {Id = test.Id, Url = test.URL, Date = test.Date}
+                into temp
+                select new {Id = temp.Key.Id, Url = temp.Key.Url, Date = temp.Key.Date, NumQuestion = temp.Count()});
 
-            List<Test> returned1 = new List<Test>();
+            List<TestBusiness> tests = new List<TestBusiness>();
+
+            foreach (var test in myTask)
+            {
+                tests.Add(new TestBusiness()
+                {
+                    Id = test.Id,
+                    URL = test.Url,
+                    Date = test.Date
+                });
+            }
+
+            //var returned1 =  returned.Select(x => TestMapper.MapDalToBizLigth(x)).ToList();
+
+            return tests;
+        }
 
             foreach (var test in res)
             {
@@ -83,18 +94,19 @@ namespace UnikeyFactoryTest.Repository
             
             return returned1.Select(TestMapper.MapDalToBizLight).ToList();
         }
-
-        public void DeleteTest(int testId)
+        public async Task DeleteTest(int testId)
         {
-            Test test = _ctx.Tests.FirstOrDefault(t => t.Id == testId);
-            if (test == null)
+            var task = await Task.Run(() =>
+            {
+                return _ctx.Tests.FirstOrDefault(t => t.Id == testId);
+            });
+            if (task == null)
             {
                 throw new NullReferenceException("Test not found at specified id");
             }
-            _ctx.Tests.Remove(test);
+            _ctx.Tests.Remove(task);
             _ctx.SaveChanges();
         }
-
         public void UpdateTest(TestBusiness test)
         {
             if (test == null)
