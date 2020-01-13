@@ -62,7 +62,7 @@ namespace UnikeyFactoryTest.Repository
                     on test.Id equals quest.TestId
                 group test by new {Id = test.Id, Url = test.URL, Date = test.Date}
                 into temp
-                select new {Id = temp.Key.Id, Url = temp.Key.Url, Date = temp.Key.Date, NumQuestion = temp.Count()});
+                select new {Id = temp.Key.Id, Url = temp.Key.Url, Date = temp.Key.Date, NumQuestion = temp.Count() });
 
             List<TestBusiness> tests = new List<TestBusiness>();
 
