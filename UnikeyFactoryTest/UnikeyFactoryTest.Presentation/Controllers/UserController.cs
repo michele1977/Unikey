@@ -15,29 +15,35 @@ namespace UnikeyFactoryTest.Presentation.Controllers
     {
         public ActionResult Index()
         {
-            UserModel model = new UserModel();
-            model.IsUser = "WaitingForLogin";
+            var model = new UserModel {IsUser = "WaitingForLogin"};
             return View(model);
         }
 
         [HttpPost]
         public async Task<ActionResult> CheckData(UserModel model)
         {
-            User user = new User();
-            user.Username = model.Username;
-            user.Password = model.Password;
-
-            UserService service = new UserService();
-            bool result = await service.IsUser(user);
-
-            if (result == true)
+            if (ModelState.IsValid)
             {
-                user.Id = await service.GetUserIdByUsername(user);
-                return RedirectToAction("Index", "Test", new {UserId = user.Id});
+                var user = new User {Username = model.Username, Password = model.Password};
+                var service = new UserService();
+
+                var result = await service.IsUser(user);
+
+                if (result == true)
+                {
+                    user.Id = await service.GetUserIdByUsername(user);
+                    return RedirectToAction("Index", "Test", new {UserId = user.Id});
+                }
+                else
+                {
+                    model.IsUser = "IsNotAUser";
+                    return View("Index", model);
+                }
             }
             else
             {
-                model.IsUser = "IsNotAUser";
+                model.IsUser = "";
+                //ModelState.AddModelError("", "Unable to rr");
                 return View("Index", model);
             }
         }
@@ -45,7 +51,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpGet]
         public ActionResult Logout()
         {
-            UserModel model = new UserModel();
+            var model = new UserModel();
             model.IsUser = "WaitingForLogin";
             return View("Index", model);
         }
