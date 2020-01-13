@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
@@ -63,12 +64,12 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddTest(TestModel model)
+        public async Task<ActionResult> AddTest(TestModel model)
         {
             test.UserId = UserId;
             test.URL = _service.GenerateGuid();
             test.Date = DateTime.Now;
-            _service.AddNewTest(TestMapper.MapDalToBiz(test));
+            await _service.AddNewTest(TestMapper.MapDalToBiz(test));
             return View("Index");
         }
 
