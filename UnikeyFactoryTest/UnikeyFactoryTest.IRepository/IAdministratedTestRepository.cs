@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,10 +11,10 @@ namespace UnikeyFactoryTest.IRepository
 {
     public interface IAdministratedTestRepository : IDisposable
     {
-        void Update_Save(AdministratedTestBusiness adTest);
-        AdministratedTestBusiness Add(AdministratedTestBusiness adTest);
-        AdministratedTestBusiness GetAdministratedTestById(int adTestId);
-        IEnumerable<AdministratedTest> GetAdministratedTests();
-        void DeleteAdministratedTest(int administratedTestId);
+        Task Update_Save(AdministratedTestBusiness adTest);
+        Task<AdministratedTestBusiness> Add(AdministratedTestBusiness adTest);
+        Task<AdministratedTestBusiness> GetAdministratedTestById(int adTestId);
+        Task<List<AdministratedTest>> GetAdministratedTests();
+        Task DeleteAdministratedTest(int administratedTestId);
     }
 }

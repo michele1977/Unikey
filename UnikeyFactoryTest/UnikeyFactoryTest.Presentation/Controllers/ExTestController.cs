@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using UnikeyFactoryTest.Presentation.Models;
 using UnikeyFactoryTest.Presentation.Models.DTO;
@@ -24,20 +25,20 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
         // test
         [HttpPost]
-        public ActionResult BeginTest(AdministratedTestModel model)
+        public async Task<ActionResult> BeginTest(AdministratedTestModel model)
         {
             var subject = model.Name + " " + model.Surname;
             var test = testService.GetTestByURL(model.URL);
             model.Test = service.AdministratedTest_Builder(test, subject);
-            var savedTest = service.Add(model.Test);
+            var savedTest = await service.Add(model.Test);
             model.admnistratedTestId = savedTest.Id;
             model.Test = savedTest;
             return View("Test", model);
         }
 
-        public ActionResult SaveTest(AdministratedTestModel model, FormCollection form)
+        public async Task<ActionResult> SaveTest(AdministratedTestModel model, FormCollection form)
         {
-            var AdminstratedTest = service.GetAdministratedTestById(model.admnistratedTestId);
+            var AdminstratedTest = await service.GetAdministratedTestById(model.admnistratedTestId);
             model.QuestionAnswerDictionary = new Dictionary<int, int>();
             //popolo il dictionary con domanda e relativa risposta
             foreach (var key in form.AllKeys)
@@ -67,13 +68,16 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
 
         [HttpGet]
-        public ActionResult AdministratedTestsList(AdministratedTestsListModel testsListModel)
+        public async Task<ActionResult> AdministratedTestsList(AdministratedTestsListModel testsListModel)
         {
             testsListModel = testsListModel ?? new AdministratedTestsListModel();
 
             AdministratedTestService service = new AdministratedTestService();
 
-            testsListModel.Tests = testsListModel.Paginate(service.GetAdministratedTests().ToList());
+            var tests = await service.GetAdministratedTests();
+
+            testsListModel.Tests = testsListModel.Paginate(tests.ToList());
+            
 
             if (testsListModel.IsAjaxCall)
             {
@@ -88,10 +92,10 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpGet]
-        public ActionResult AdministratedTestContent(AdministratedTestDto test)
+        public async Task<ActionResult> AdministratedTestContent(AdministratedTestDto test)
         {
             AdministratedTestService service = new AdministratedTestService();
-            AdministratedTestDto testToPass = new AdministratedTestDto(service.GetAdministratedTestById(test.Id));
+            var testToPass = new AdministratedTestDto(await service.GetAdministratedTestById(test.Id));
             testToPass.PageNumber = test.PageNumber;
             testToPass.PageSize = test.PageSize;
             return View(testToPass);

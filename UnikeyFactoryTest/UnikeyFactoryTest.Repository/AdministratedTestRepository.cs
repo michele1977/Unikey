@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Threading.Tasks;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
+
 using UnikeyFactoryTest.Mapper;
 
 namespace UnikeyFactoryTest.Repository
@@ -24,49 +26,60 @@ namespace UnikeyFactoryTest.Repository
             _ctx = ctx;
         }
 
-        public AdministratedTestBusiness Add(AdministratedTestBusiness adTest)
+        public async Task<AdministratedTestBusiness> Add(AdministratedTestBusiness adTest)
         {
-            using (_ctx)
+            var addTask = Task.Run(() =>
             {
-                try
+                using (_ctx)
                 {
-                    var newAdTestDB = AdministratedTestMapper.MapDomainToDao(adTest);
-                    _ctx.AdministratedTests.Add(newAdTestDB);
-                    _ctx.SaveChanges();
-                    adTest = AdministratedTestMapper.MapDaoToDomain(newAdTestDB);
-                    return adTest;
+                    try
+                    {
+                        var newAdTestDB = AdministratedTestMapper.MapDomainToDao(adTest);
+                        _ctx.AdministratedTests.Add(newAdTestDB);
+                        _ctx.SaveChanges();
+                        adTest = AdministratedTestMapper.MapDaoToDomain(newAdTestDB);
+                        return adTest;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("Save Failed");
+                    }
+                    finally
+                    {
+                        _ctx.AdministratedTests.Find(1);
+                    }
                 }
-                catch(Exception ex)
-                {
-                    throw new Exception("Save Failed");
-                }
-                finally
-                {
-                    _ctx.AdministratedTests.Find(1);
-                }
-            }
-
+            });
+            return await addTask;
         }
 
-        public AdministratedTestBusiness GetAdministratedTestById(int adTestId)
+        public async Task<AdministratedTestBusiness> GetAdministratedTestById(int adTestId)
         {
-            var adTestDB = _ctx.AdministratedTests.FirstOrDefault(x => x.Id.Equals(adTestId));
-            if (adTestDB == null)
+            var _task = Task.Run(() =>
             {
-                throw new Exception("Not valid id");
-            }
-            else
-            {
-                return AdministratedTestMapper.MapDaoToDomain(adTestDB);
-            }
+                var adTestDB = _ctx.AdministratedTests.FirstOrDefault(x => x.Id.Equals(adTestId));
+
+                if (adTestDB == null)
+                {
+                    throw new Exception("Not valid id");
+                }
+                else
+                {
+                    return AdministratedTestMapper.MapDaoToDomain(adTestDB);
+                }
+
+            });
+
+            return await _task;
         }
 
-        public IEnumerable<AdministratedTest> GetAdministratedTests()
+        public async Task<List<AdministratedTest>> GetAdministratedTests()
         {
-            return _ctx.AdministratedTests;
+            var myTask = Task.Run(() => _ctx.AdministratedTests.ToListAsync());
+            return await myTask;
         }
 
-        public void DeleteAdministratedTest(int administratedTestId)
+        public async Task DeleteAdministratedTest(int administratedTestId)
         {
             AdministratedTest administratedTest = _ctx.AdministratedTests
                 .FirstOrDefault(t => t.Id == administratedTestId);
@@ -76,42 +89,56 @@ namespace UnikeyFactoryTest.Repository
                 throw new NullReferenceException("AdministratedTest not found at specified id");
             }
 
-            _ctx.AdministratedTests.Remove(administratedTest);
-            _ctx.SaveChanges();
+            var myTask = Task.Run(() =>
+            {
+                _ctx.AdministratedTests.Remove(administratedTest);
+                _ctx.SaveChanges();
+            });
+
+            await myTask;
         }
 
-        public void Update_Save(AdministratedTestBusiness adTest)
+        public async Task Update_Save(AdministratedTestBusiness adTest)
         {
-            var newTest = Mapper.AdministratedTestMapper.MapDomainToDao(adTest);
+            var newTest = AdministratedTestMapper.MapDomainToDao(adTest);
             try
             {
                 foreach (var q in newTest.AdministratedQuestions)
                 {
                     foreach (var a in q.AdministratedAnswers)
                     {
-                        if (a.isSelected == true)
+                        var myTask2 = Task.Run(() =>
                         {
-                            _ctx.AdministratedAnswers.FirstOrDefault(x => x.Id == a.Id).isSelected = true;
-                        }   
+                            if (a.isSelected == true)
+                            {
+                                _ctx.AdministratedAnswers.FirstOrDefault(x => x.Id == a.Id).isSelected = true;
+                            }
+                        });
+                        await myTask2;
                     }
                 }
 
                 decimal score = 0;
 
-                foreach (var q in newTest.AdministratedQuestions)
+                var myTask3 = Task.Run(() =>
                 {
-                    if ((q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true)) != null)
-                        score = score + q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true).Score ??0;
-                }
+                    foreach (var q in newTest.AdministratedQuestions)
+                    {
+                        if ((q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true)) != null)
+                            score = score + q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true).Score ?? 0;
+                    }
 
-                _ctx.AdministratedTests.FirstOrDefault(x => x.Id == newTest.Id).TotalScore = decimal.ToInt32(score);
-                _ctx.AdministratedTests.FirstOrDefault(x => x.Id == newTest.Id).Date = DateTime.Today;
+                    _ctx.AdministratedTests.FirstOrDefault(x => x.Id == newTest.Id).TotalScore = decimal.ToInt32(score);
+                    _ctx.AdministratedTests.FirstOrDefault(x => x.Id == newTest.Id).Date = DateTime.Today;
+                });
+                await myTask3;
 
                 _ctx.SaveChanges();
+                
             }
             catch (Exception ex)
             {
-                throw  new Exception("Update failed");
+                throw new Exception("Update failed");
             }
 
         }
