@@ -12,9 +12,9 @@ namespace UnikeyFactoryTest.IRepository
     {
         Task SaveTest(Test test);
         TestBusiness GetTestByURL(string URL);
-        TestBusiness GetTest(int testId);
-        List<TestBusiness> GetTests();
+        Task <Test> GetTest(int testId);
+        Task<List<TestBusiness>> GetTests();
         void UpdateTest(TestBusiness test);
-        void DeleteTest(int testId);
+        Task DeleteTest(int testId);
     } 
 }

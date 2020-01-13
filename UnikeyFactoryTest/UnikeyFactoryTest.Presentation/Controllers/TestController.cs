@@ -78,13 +78,13 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpGet]
-        public ActionResult TestsList(TestsListModel testsListModel)
+        public async Task<ActionResult> TestsList(TestsListModel testsListModel)
         {
             testsListModel = testsListModel ?? new TestsListModel();
 
             TestService service = new TestService();
 
-            testsListModel.Tests = testsListModel.Paginate(service.GetTests());
+            testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
 
             if (testsListModel.IsJsCall)
             {
@@ -99,10 +99,10 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpPost]
-        public JsonResult DeleteTest(TestDto test)
+        public async Task<JsonResult> DeleteTest(TestDto test)
         {
             TestService service = new TestService();
-            service.DeleteTest(test.Id);
+            await service.DeleteTest(test.Id);
 
             return Json(new
             {
@@ -112,10 +112,10 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpGet]
-        public ActionResult TestContent(TestDto test)
+        public async Task<ActionResult> TestContent(TestDto test)
         {
             TestService service = new TestService();
-            TestDto testToPass = new TestDto(service.GetTestById(test.Id));
+            TestDto testToPass = new TestDto(await service.GetTestById(test.Id));
             testToPass.PageNumber = test.PageNumber;
             testToPass.PageSize = test.PageSize;
             testToPass.URL = service.GenerateUrl(testToPass.URL);
