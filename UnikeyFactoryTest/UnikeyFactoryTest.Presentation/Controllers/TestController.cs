@@ -69,7 +69,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             test.UserId = UserId;
             test.URL = _service.GenerateGuid();
             test.Date = DateTime.Now;
-            await _service.AddNewTest(TestMapper.MapDalToBizLight(test));
+            await _service.AddNewTest(TestMapper.MapDalToBizHeavy(test));
             return View("Index");
         }
 
@@ -82,17 +82,25 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
 
-            if (testsListModel.IsJsCall)
-            {
-                return Json(new
-                {
-                    redirectUrl = Url.Action("TestsList",
-                        new { PageNumber = testsListModel.PageNumber, PageSize = testsListModel.PageSize })
-                });
-            }
-
             return View(testsListModel);
         }
+
+        //[HttpGet]
+        //public async Task<ActionResult> TestsListJson(TestsListModel testsListModel)
+        //{
+        //    testsListModel = testsListModel ?? new TestsListModel();
+
+        //    TestService service = new TestService();
+
+        //    testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
+
+        //    return Json(new
+        //    {
+        //        redirectUrl = Url.Action("TestsList",
+        //            new { PageNumber = testsListModel.PageNumber, PageSize = testsListModel.PageSize })
+        //    }, JsonRequestBehavior.AllowGet);
+
+        //}
 
         [HttpPost]
         public async Task<JsonResult> DeleteTest(TestDto test)
