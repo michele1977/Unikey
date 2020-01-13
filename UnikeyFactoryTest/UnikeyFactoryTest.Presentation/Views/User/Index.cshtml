@@ -15,11 +15,11 @@
 </head>
 
 <body>
-    <div class="container col-6">
-        <h1>Welcome User</h1>
-    </div>
+<div style="width: 100%;text-align: center">
+    <h1>Welcome User</h1>
+</div>
 
-    <div class="container col-6">
+    <div class="container col-6" style="padding: 15px; max-width: 500px; border: 1px solid black; border-radius: 10px; background-color: lightblue">
         <form action="/User/CheckData" method="post">
             <div class="form-group">
                 <label for="lbUsername">Username</label>
@@ -30,7 +30,9 @@
                 <label for="lbPassword">Password</label>
                 <input type="password" class="form-control" id="lbPassword" name="Password">
             </div>
-            <button type="submit" class="btn btn-primary">Log In</button>
+            <div style="width: 100%;text-align: right">
+                <button type="submit" class="btn btn-primary">Log In</button>
+            </div>
         </form>
     </div>
     <br />
