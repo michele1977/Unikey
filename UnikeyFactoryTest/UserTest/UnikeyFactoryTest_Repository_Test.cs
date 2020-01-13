@@ -47,7 +47,6 @@ namespace UserTest
 
             var adTest = new AdministratedTestBusiness
             {
-                Id = 986,
                 TestId = 1,
                 TestSubject = "",
                 URL = "",
@@ -55,14 +54,12 @@ namespace UserTest
                 {
                     new AdministratedQuestionBusiness
                     {
-                        Id = 987,
                         Text = "",
                         AdministratedTestId = 986,
                         AdministratedAnswers = new List<AdministratedAnswerBusiness>
                         {
                             new AdministratedAnswerBusiness
                             {
-                                Id = 988,
                                 Text = "",
                                 AdministratedQuestionId = 987
                             }
@@ -83,9 +80,21 @@ namespace UserTest
                 }
                 
             }
+
+            var g = 0;
+            try
+            {
+                var test = myCtx.AdministratedTests.FirstOrDefault(t => t.Id == 994);
+
+                if(test is null)
+                    throw new Exception();
+            }
+            catch
+            {
+                g = 1;
+            }
             
-            var test = myCtx.AdministratedTests.Local[myCtx.AdministratedTests.ToList().Count];
-            Assert.AreEqual(986, test.Id);
+            Assert.AreEqual(0, g);
         }
 
         [TestMethod]
