@@ -30,7 +30,7 @@ namespace UnikeyFactoryTest.Service
             }
         }
 
-        public TestBusiness GetTestById(int testId)
+        public async Task <TestBusiness> GetTestById(int testId)
         {
             Repo = new TestRepository();
 
@@ -38,7 +38,7 @@ namespace UnikeyFactoryTest.Service
 
             try
             {
-                test = Repo.GetTest(testId);
+                test = await Repo.GetTest(testId);
             }
             catch (NullReferenceException ex)
             {

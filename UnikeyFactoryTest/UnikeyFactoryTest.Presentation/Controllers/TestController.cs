@@ -108,10 +108,10 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpGet]
-        public ActionResult TestContent(TestDto test)
+        public async Task<ActionResult> TestContent(TestDto test)
         {
             TestService service = new TestService();
-            TestDto testToPass = new TestDto(service.GetTestById(test.Id));
+            TestDto testToPass = new TestDto(await service.GetTestById(test.Id));
             testToPass.PageNumber = test.PageNumber;
             testToPass.PageSize = test.PageSize;
             return View(testToPass);
