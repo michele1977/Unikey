@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
@@ -73,7 +74,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpGet]
-        public ActionResult TestsList(TestsListModel testsListModel)
+        public async Task<ActionResult> TestsList(TestsListModel testsListModel)
         {
             testsListModel = testsListModel ?? new TestsListModel();
 

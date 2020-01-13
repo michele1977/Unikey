@@ -59,7 +59,7 @@ namespace UnikeyFactoryTest.Service
 
         }
 
-        public List<TestBusiness> GetTests()
+        public async Task<List<TestBusiness>> GetTests()
         {
             Repo = new TestRepository();
             var tests = Repo.GetTests();

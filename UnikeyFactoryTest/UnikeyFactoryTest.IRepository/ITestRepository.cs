@@ -13,7 +13,7 @@ namespace UnikeyFactoryTest.IRepository
         void SaveTest(Test test);
         TestBusiness GetTestByURL(string URL);
         Test GetTest(int testId);
-        List<TestBusiness> GetTests();
+        Task<List<TestBusiness>> GetTests();
         void UpdateTest(TestBusiness test);
         void DeleteTest(int testId);
     } 

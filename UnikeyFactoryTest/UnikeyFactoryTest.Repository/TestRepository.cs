@@ -49,17 +49,32 @@ namespace UnikeyFactoryTest.Repository
             return test;
         }
 
-        public List<TestBusiness> GetTests()
+        public async Task<List<TestBusiness>> GetTests()
         {
             var returned =  _ctx.Tests.ToList();
-            var res = from test in _ctx.Tests
+            
+            var myTask = await Task.Run(() => from test in _ctx.Tests
                 join quest in _ctx.Questions
                     on test.Id equals quest.TestId
-                    group test by new {Id = test.Id,Url = test.URL, Date = test.Date}  into temp
-                select new { Id = temp.Key.Id, Url = temp.Key.Url, Date = temp.Key.Date, NumQuestion = temp.Count()};
+                group test by new {Id = test.Id, Url = test.URL, Date = test.Date}
+                into temp
+                select new {Id = temp.Key.Id, Url = temp.Key.Url, Date = temp.Key.Date, NumQuestion = temp.Count()});
+
+            List<TestBusiness> tests = new List<TestBusiness>();
+
+            foreach (var test in myTask)
+            {
+                tests.Add(new TestBusiness()
+                {
+                    Id = test.Id,
+                    URL = test.Url,
+                    Date = test.Date
+                });
+            }
+
             //var returned1 =  returned.Select(x => TestMapper.MapDalToBizLigth(x)).ToList();
-            var returned2 = res.ToList();
-            return returned.Select(TestMapper.MapDalToBizLigth).ToList();
+
+            return tests;
         }
 
         private  TestBusiness MapDalToBizLigth2(TestBusiness test)
