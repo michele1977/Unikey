@@ -15,7 +15,7 @@ namespace UnikeyFactoryTest.Mapper
             var returned = new UserBusiness()
             {
                 Id = user.Id,
-                Tests = user.Tests.Select(TestMapper.MapDalToBiz),
+                Tests = user.Tests.Select(TestMapper.MapDalToBizLight),
                 Password = user.Password,
                 Username = user.Username
             };

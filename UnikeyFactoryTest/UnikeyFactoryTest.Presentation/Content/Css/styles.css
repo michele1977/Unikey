@@ -182,3 +182,8 @@ hr {
 .buttonDiv {
     text-align: center;
 }
+
+#testContentStats {
+    margin: auto;
+    text-align: center;
+}

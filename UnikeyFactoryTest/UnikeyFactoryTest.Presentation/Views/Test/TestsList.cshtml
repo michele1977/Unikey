@@ -39,38 +39,13 @@
         <th>Id</th>
         <th>Date</th>
         <th>URL</th>
-        <th>Max Score</th>
+        <th>Questions No</th>
         <th>Actions</th>
     </tr>
-    @{
-        TestService service = new TestService();
-    }
 
-    @foreach (TestDto item in Model.Tests)
+    @foreach (TestDto test in Model.Tests)
     {
-        <tr>
-            <td>
-                @item.Id
-            </td>
-            <td>
-                @item.Date
-            </td>
-            <td>
-                @service.GenerateUrl(item.URL)
-            </td>
-            <td>
-                @item.CalculateScore()
-            </td>
-            <td>
-                @Html.ActionLink(
-                    "Content",
-                    "TestContent",
-                    "Test",
-                    new { @item.Id, @Model.PageNumber, @Model.PageSize },
-                    new { @class = "btn btn-info" }) |
-                <button class="btn btn-info" onclick="deleteConfirmation(@item.Id, @Model.PageNumber, @Model.PageSize)">Delete</button>
-            </td>
-        </tr>
+        Html.RenderPartial("TestsTablePartial", test);
     }
 
 </table>
@@ -85,8 +60,8 @@
             new { PageNumber = Model.PageNumber - 1, Model.PageSize },
             new { @class = "btn btn-info" })
     }
-    <label>@Model.PageNumber</label>
-    @if (!@Model.LastPage)
+    <label>@Model.PageNumber of @Model.LastPage</label>
+    @if (@Model.PageNumber != @Model.LastPage)
     {
         @Html.ActionLink(
             "Next",

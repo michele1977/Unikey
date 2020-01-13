@@ -68,7 +68,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             test.UserId = UserId;
             test.URL = _service.GenerateGuid();
             test.Date = DateTime.Now;
-            _service.AddNewTest(TestMapper.MapDalToBiz(test));
+            _service.AddNewTest(TestMapper.MapDalToBizLight(test));
             return View("Index");
         }
 
@@ -81,7 +81,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             testsListModel.Tests = testsListModel.Paginate(service.GetTests());
 
-            if (testsListModel.IsAjaxCall)
+            if (testsListModel.IsJsCall)
             {
                 return Json(new
                 {
@@ -113,23 +113,24 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             TestDto testToPass = new TestDto(service.GetTestById(test.Id));
             testToPass.PageNumber = test.PageNumber;
             testToPass.PageSize = test.PageSize;
+            testToPass.URL = service.GenerateUrl(testToPass.URL);
             return View(testToPass);
         }
 
-        [HttpPost]
-        public ActionResult TextSearch(TestsListModel testsListModel)
-        {
-            if (!testsListModel.TextFilter.IsNullOrWhiteSpace())
-            {
-                TestService service = new TestService();
+        //[HttpPost]
+        //public ActionResult TextSearch(TestsListModel testsListModel)
+        //{
+        //    if (!testsListModel.TextFilter.IsNullOrWhiteSpace())
+        //    {
+        //        TestService service = new TestService();
 
-                testsListModel.Tests = service.GetTests()
-                    .Where(t => t.User.Username.Contains(testsListModel.TextFilter))
-                    .Select(t => new TestDto(t)).ToList();
-            }
+        //        testsListModel.Tests = service.GetTests()
+        //            .Where(t => t.User.Username.Contains(testsListModel.TextFilter))
+        //            .Select(t => new TestDto(t)).ToList();
+        //    }
 
-            return RedirectToAction("TestsList");
-        }
+        //    return RedirectToAction("TestsList");
+        //}
 
         [HttpGet]
         [ActionName("EditQuestion")]

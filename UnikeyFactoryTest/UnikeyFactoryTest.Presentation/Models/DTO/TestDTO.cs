@@ -11,7 +11,7 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
     {
         public TestDto()
         {
-
+            Questions = new List<QuestionDto>();
         }
 
         public TestDto(TestBusiness test)
@@ -21,7 +21,8 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
             Date = test.Date;
             UserId = test.UserId;
             Questions = test.Questions?.Select(q => new QuestionDto(q)).ToList();
-            AdministratedTests = test.AdministratedTests?.Select(t => new AdministratedTestDto(t)).ToList();
+            //AdministratedTests = test.AdministratedTests?.Select(t => new AdministratedTestDto(t)).ToList();
+            NumQuestions = test.NumQuestions;
         }
 
         public int Id { get; set; }
@@ -31,24 +32,31 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
 
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
+        public int NumQuestions { get; set; }
 
-        public decimal? CalculateScore()
+        public decimal? MaxScore
         {
-            try
-            {
-                return Questions.SelectMany(q => q.Answers).Sum(a => a.Score);
-            }
-            catch (ArgumentNullException ex)
-            {
-                return null;
-            }
-            catch (OverflowException ex)
-            {
-                return null;
-            }
+            get =>
+                Questions.Sum(q => q.CorrectAnswerScore);
         }
 
-        public ICollection<AdministratedTestDto> AdministratedTests { get; set; }
+        //public decimal? CalculateScore()
+        //{
+        //    try
+        //    {
+        //        return Questions.SelectMany(q => q.Answers).Sum(a => a.Score);
+        //    }
+        //    catch (ArgumentNullException ex)
+        //    {
+        //        return null;
+        //    }
+        //    catch (OverflowException ex)
+        //    {
+        //        return null;
+        //    }
+        //}
+
+        //public ICollection<AdministratedTestDto> AdministratedTests { get; set; }
         public ICollection<QuestionDto> Questions { get; set; }
     }
 }

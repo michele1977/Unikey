@@ -34,7 +34,7 @@ namespace UnikeyFactoryTest.Service
         {
             Repo = new TestRepository();
 
-            Test test = null;
+            TestBusiness test = null;
 
             try
             {
@@ -53,10 +53,7 @@ namespace UnikeyFactoryTest.Service
                 //TODO
             }
 
-            TestBusiness testBusiness = TestMapper.MapDalToBiz(test);
-
-            return testBusiness;
-
+            return test;
         }
 
         public List<TestBusiness> GetTests()
