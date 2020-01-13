@@ -80,7 +80,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             TestService service = new TestService();
 
-            testsListModel.Tests = testsListModel.Paginate(service.GetTests());
+            testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
 
             if (testsListModel.IsAjaxCall)
             {
@@ -95,7 +95,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpPost]
-        public JsonResult DeleteTest(TestDto test)
+        public async Task<JsonResult> DeleteTest(TestDto test)
         {
             TestService service = new TestService();
             service.DeleteTest(test.Id);
@@ -117,20 +117,20 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             return View(testToPass);
         }
 
-        [HttpPost]
-        public ActionResult TextSearch(TestsListModel testsListModel)
-        {
-            if (!testsListModel.TextFilter.IsNullOrWhiteSpace())
-            {
-                TestService service = new TestService();
+        //[HttpPost]
+        //public ActionResult TextSearch(TestsListModel testsListModel)
+        //{
+        //    if (!testsListModel.TextFilter.IsNullOrWhiteSpace())
+        //    {
+        //        TestService service = new TestService();
 
-                testsListModel.Tests = service.GetTests()
-                    .Where(t => t.User.Username.Contains(testsListModel.TextFilter))
-                    .Select(t => new TestDto(t)).ToList();
-            }
+        //        testsListModel.Tests = service.GetTests()
+        //            .Where(t => t.User.Username.Contains(testsListModel.TextFilter))
+        //            .Select(t => new TestDto(t)).ToList();
+        //    }
 
-            return RedirectToAction("TestsList");
-        }
+        //    return RedirectToAction("TestsList");
+        //}
 
         [HttpGet]
         [ActionName("EditQuestion")]
