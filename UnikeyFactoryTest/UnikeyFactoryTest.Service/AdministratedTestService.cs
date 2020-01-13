@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.Mapper;
@@ -57,36 +59,33 @@ namespace UnikeyFactoryTest.Service
             _repo.Update_Save(adTest);
         }
 
-        public AdministratedTestBusiness GetAdministratedTestById (int adTestId)
+        public async Task<AdministratedTestBusiness> GetAdministratedTestById (int adTestId)
         {
-           return _repo.GetAdministratedTestById(adTestId);
+            return await _repo.GetAdministratedTestById(adTestId);
         }
 
-        public AdministratedTestBusiness GetAdministratedTest(int administratedTestId)
-        {
-            _repo = new AdministratedTestRepository();
+        //public async Task<AdministratedTestBusiness> GetAdministratedTest(int administratedTestId)
+        //{
+        //    _repo = new AdministratedTestRepository();
 
-            AdministratedTestBusiness administratedTest = null;
+        //    try
+        //    {
+        //        return await _repo.GetAdministratedTestById(administratedTestId);
+        //    }
+        //    catch (NullReferenceException ex)
+        //    {
+        //        //TODO
+        //    }
+        //    catch (ArgumentNullException ex)
+        //    {
+        //        //TODO
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //TODO
+        //    }
 
-            try
-            {
-                administratedTest = _repo.GetAdministratedTestById(administratedTestId);
-            }
-            catch (NullReferenceException ex)
-            {
-                //TODO
-            }
-            catch (ArgumentNullException ex)
-            {
-                //TODO
-            }
-            catch (Exception ex)
-            {
-                //TODO
-            }
-
-            return administratedTest;
-        }
+        //}
 
         public IEnumerable<AdministratedTestBusiness> GetAdministratedTests()
         {

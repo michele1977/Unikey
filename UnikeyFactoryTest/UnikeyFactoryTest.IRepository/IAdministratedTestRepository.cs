@@ -12,7 +12,7 @@ namespace UnikeyFactoryTest.IRepository
     {
         void Update_Save(AdministratedTestBusiness adTest);
         AdministratedTestBusiness Add(AdministratedTestBusiness adTest);
-        AdministratedTestBusiness GetAdministratedTestById(int adTestId);
+        Task<AdministratedTestBusiness> GetAdministratedTestById(int adTestId);
         IEnumerable<AdministratedTest> GetAdministratedTests();
         void DeleteAdministratedTest(int administratedTestId);
     }
