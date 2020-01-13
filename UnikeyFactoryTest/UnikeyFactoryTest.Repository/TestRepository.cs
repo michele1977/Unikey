@@ -39,7 +39,7 @@ namespace UnikeyFactoryTest.Repository
         {
             var result = _ctx.Tests.FirstOrDefault(x => x.URL.Equals(URL));
             if (result == null) throw new Exception("Not valid URL");
-            else return TestMapper.MapDalToBizLight(result);
+            else return TestMapper.MapDalToBizHeavy(result);
         }
 
         public async Task<TestBusiness> GetTest(int testId)
