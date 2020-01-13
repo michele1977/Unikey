@@ -9,27 +9,27 @@ namespace UserTest
     public class UnikeyFactoryTest_Service_Test
     {
         [TestMethod]
-        public void UserService_IsUser_OK()
+        public async void UserService_IsUser_OK()
         {
             User user = new User();
             user.Username = "Mike";
             user.Password = "1234";
 
             UserService service = new UserService();
-            bool result = service.IsUser(user);
+            bool result = await service.IsUser(user);
 
             Assert.AreEqual(true, result);
         }
 
         [TestMethod]
-        public void UserService_IsUser_KO()
+        public async void UserService_IsUser_KO()
         {
             User user = new User();
             user.Username = "Mike";
             user.Password = "1234";
 
             UserService service = new UserService();
-            bool result = service.IsUser(user);
+            bool result = await service.IsUser(user);
 
             Assert.AreEqual(false, result);
         }
