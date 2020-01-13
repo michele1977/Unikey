@@ -54,9 +54,9 @@ namespace UnikeyFactoryTest.Service
            return await _repo.Add(adTest);
         }
 
-        public void Update_Save(AdministratedTestBusiness adTest)
+        public async Task Update_Save(AdministratedTestBusiness adTest)
         {
-            _repo.Update_Save(adTest);
+            await _repo.Update_Save(adTest);
         }
 
         public async Task<AdministratedTestBusiness> GetAdministratedTestById (int adTestId)
@@ -87,11 +87,12 @@ namespace UnikeyFactoryTest.Service
 
         //}
 
-        public IEnumerable<AdministratedTestBusiness> GetAdministratedTests()
+        public async Task<IEnumerable<AdministratedTestBusiness>> GetAdministratedTests()
         {
             _repo = new AdministratedTestRepository();
-            var administratedTests = _repo.GetAdministratedTests().Select(AdministratedTestMapper.MapDaoToDomain);
-            return administratedTests;
+            var administratedTests = await _repo.GetAdministratedTests();
+            
+            return administratedTests.Select(AdministratedTestMapper.MapDaoToDomain);
         }
 
 

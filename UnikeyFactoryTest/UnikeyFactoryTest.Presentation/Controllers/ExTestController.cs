@@ -68,13 +68,16 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
 
         [HttpGet]
-        public ActionResult AdministratedTestsList(AdministratedTestsListModel testsListModel)
+        public async Task<ActionResult> AdministratedTestsList(AdministratedTestsListModel testsListModel)
         {
             testsListModel = testsListModel ?? new AdministratedTestsListModel();
 
             AdministratedTestService service = new AdministratedTestService();
 
-            testsListModel.Tests = testsListModel.Paginate(service.GetAdministratedTests().ToList());
+            var tests = await service.GetAdministratedTests();
+
+            testsListModel.Tests = testsListModel.Paginate(tests.ToList());
+            
 
             if (testsListModel.IsAjaxCall)
             {

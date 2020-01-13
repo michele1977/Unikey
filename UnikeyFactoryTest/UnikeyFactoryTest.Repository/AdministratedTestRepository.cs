@@ -98,7 +98,7 @@ namespace UnikeyFactoryTest.Repository
             await myTask;
         }
 
-        public async void Update_Save(AdministratedTestBusiness adTest)
+        public async Task Update_Save(AdministratedTestBusiness adTest)
         {
             var newTest = AdministratedTestMapper.MapDomainToDao(adTest);
             try
