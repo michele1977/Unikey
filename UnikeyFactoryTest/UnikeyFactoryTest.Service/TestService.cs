@@ -63,10 +63,10 @@ namespace UnikeyFactoryTest.Service
         {
             Repo = new TestRepository();
             var tests = Repo.GetTests();
-            return tests;
+            return await tests;
         }
 
-        public void DeleteTest(int testId)
+        public async void DeleteTest(int testId)
         {
             using (Repo = new TestRepository())
             {
