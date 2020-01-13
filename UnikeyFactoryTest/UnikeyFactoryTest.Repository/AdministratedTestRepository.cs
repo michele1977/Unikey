@@ -25,28 +25,31 @@ namespace UnikeyFactoryTest.Repository
             _ctx = ctx;
         }
 
-        public AdministratedTestBusiness Add(AdministratedTestBusiness adTest)
+        public async Task<AdministratedTestBusiness> Add(AdministratedTestBusiness adTest)
         {
-            using (_ctx)
+            var addTask = Task.Run(() =>
             {
-                try
+                using (_ctx)
                 {
-                    var newAdTestDB = AdministratedTestMapper.MapDomainToDao(adTest);
-                    _ctx.AdministratedTests.Add(newAdTestDB);
-                    _ctx.SaveChanges();
-                    adTest = AdministratedTestMapper.MapDaoToDomain(newAdTestDB);
-                    return adTest;
+                    try
+                    {
+                        var newAdTestDB = AdministratedTestMapper.MapDomainToDao(adTest);
+                        _ctx.AdministratedTests.Add(newAdTestDB);
+                        _ctx.SaveChanges();
+                        adTest = AdministratedTestMapper.MapDaoToDomain(newAdTestDB);
+                        return adTest;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("Save Failed");
+                    }
+                    finally
+                    {
+                        _ctx.AdministratedTests.Find(1);
+                    }
                 }
-                catch(Exception ex)
-                {
-                    throw new Exception("Save Failed");
-                }
-                finally
-                {
-                    _ctx.AdministratedTests.Find(1);
-                }
-            }
-
+            });
+            return await addTask;
         }
 
         public AdministratedTestBusiness GetAdministratedTestById(int adTestId)
@@ -67,7 +70,7 @@ namespace UnikeyFactoryTest.Repository
             return _ctx.AdministratedTests;
         }
 
-        public void DeleteAdministratedTest(int administratedTestId)
+        public async Task DeleteAdministratedTest(int administratedTestId)
         {
             AdministratedTest administratedTest = _ctx.AdministratedTests
                 .FirstOrDefault(t => t.Id == administratedTestId);
@@ -77,8 +80,13 @@ namespace UnikeyFactoryTest.Repository
                 throw new NullReferenceException("AdministratedTest not found at specified id");
             }
 
-            _ctx.AdministratedTests.Remove(administratedTest);
-            _ctx.SaveChanges();
+            var myTask = Task.Run(() =>
+            {
+                _ctx.AdministratedTests.Remove(administratedTest);
+                _ctx.SaveChanges();
+            });
+
+            await myTask;
         }
 
         public async void Update_Save(AdministratedTestBusiness adTest)
