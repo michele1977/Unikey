@@ -88,18 +88,17 @@ namespace UnikeyFactoryTest.Repository
             };
             return returned;
         }
-        public async void DeleteTest(int testId)
+        public async Task DeleteTest(int testId)
         {
-            Test test = new Test();
-            var task = Task.Run(() =>
+            var task = await Task.Run(() =>
             {
-                test = _ctx.Tests.FirstOrDefault(t => t.Id == testId);
+                return _ctx.Tests.FirstOrDefault(t => t.Id == testId);
             });
-            if (test == null)
+            if (task == null)
             {
                 throw new NullReferenceException("Test not found at specified id");
             }
-            _ctx.Tests.Remove(test);
+            _ctx.Tests.Remove(task);
             _ctx.SaveChanges();
         }
         public void UpdateTest(TestBusiness test)

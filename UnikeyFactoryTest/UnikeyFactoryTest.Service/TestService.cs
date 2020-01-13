@@ -66,13 +66,13 @@ namespace UnikeyFactoryTest.Service
             return await tests;
         }
 
-        public async void DeleteTest(int testId)
+        public async Task DeleteTest(int testId)
         {
             using (Repo = new TestRepository())
             {
                 try
                 {
-                    Repo.DeleteTest(testId);
+                    await Repo.DeleteTest(testId);
                 }
                 catch (NullReferenceException ex)
                 {
