@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Threading.Tasks;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
@@ -80,38 +81,47 @@ namespace UnikeyFactoryTest.Repository
             _ctx.SaveChanges();
         }
 
-        public void Update_Save(AdministratedTestBusiness adTest)
+        public async void Update_Save(AdministratedTestBusiness adTest)
         {
-            var newTest = Mapper.AdministratedTestMapper.MapDomainToDao(adTest);
+            var newTest = AdministratedTestMapper.MapDomainToDao(adTest);
             try
             {
                 foreach (var q in newTest.AdministratedQuestions)
                 {
                     foreach (var a in q.AdministratedAnswers)
                     {
-                        if (a.isSelected == true)
+                        var myTask2 = Task.Run(() =>
                         {
-                            _ctx.AdministratedAnswers.FirstOrDefault(x => x.Id == a.Id).isSelected = true;
-                        }   
+                            if (a.isSelected == true)
+                            {
+                                _ctx.AdministratedAnswers.FirstOrDefault(x => x.Id == a.Id).isSelected = true;
+                            }
+                        });
+                        await myTask2;
                     }
                 }
 
                 decimal score = 0;
 
-                foreach (var q in newTest.AdministratedQuestions)
+                var myTask3 = Task.Run(() =>
                 {
-                    if ((q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true)) != null)
-                        score = score + q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true).Score ??0;
-                }
+                    foreach (var q in newTest.AdministratedQuestions)
+                    {
+                        if ((q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true)) != null)
+                            score = score + q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true).Score ?? 0;
+                    }
 
-                _ctx.AdministratedTests.FirstOrDefault(x => x.Id == newTest.Id).TotalScore = decimal.ToInt32(score);
-                _ctx.AdministratedTests.FirstOrDefault(x => x.Id == newTest.Id).Date = DateTime.Today;
+                    _ctx.AdministratedTests.FirstOrDefault(x => x.Id == newTest.Id).TotalScore = decimal.ToInt32(score);
+                    _ctx.AdministratedTests.FirstOrDefault(x => x.Id == newTest.Id).Date = DateTime.Today;
+                });
+                await myTask3;
 
                 _ctx.SaveChanges();
+                
             }
             catch (Exception ex)
             {
-                throw  new Exception("Update failed");
+                throw new Exception("Update failed");
             }
 
         }

@@ -77,6 +77,10 @@
       <Project>{E2F1E71E-9900-4CEF-A8AB-0BC152698A47}</Project>
       <Name>UnikeyFactoryTest.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.Mapper\UnikeyFactoryTest.Mapper.csproj">
+      <Project>{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6}</Project>
+      <Name>UnikeyFactoryTest.Mapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UnikeyFactoryTest.Repository\UnikeyFactoryTest.Repository.csproj">
       <Project>{1AE6EE8E-E465-41C5-A17A-EF35DA1ED082}</Project>
       <Name>UnikeyFactoryTest.Repository</Name>
