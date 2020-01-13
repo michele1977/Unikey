@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
@@ -56,7 +57,7 @@ namespace UnikeyFactoryTest.Service
         public async Task<List<TestBusiness>> GetTests()
         {
             Repo = new TestRepository();
-            var tests = Repo.GetTests();
+            var tests =  Repo.GetTests();
             return await tests;
         }
 

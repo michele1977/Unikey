@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Presentation.Models.DTO;
+using UnikeyFactoryTest.Service;
 
 namespace UnikeyFactoryTest.Presentation.Models.Dto
 {
@@ -16,8 +17,10 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
 
         public TestDto(TestBusiness test)
         {
+            TestService service = new TestService();
+
             Id = test.Id;
-            URL = test.URL;
+            URL = service.GenerateUrl(test.URL);
             Date = test.Date;
             UserId = test.UserId;
             Questions = test.Questions?.Select(q => new QuestionDto(q)).ToList();

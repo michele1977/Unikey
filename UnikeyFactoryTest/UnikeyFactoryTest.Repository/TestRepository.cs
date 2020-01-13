@@ -2,6 +2,7 @@
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity.Core.Common.CommandTrees;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,7 +61,7 @@ namespace UnikeyFactoryTest.Repository
             var myTask = await Task.Run(() => from test in _ctx.Tests
                 join quest in _ctx.Questions
                     on test.Id equals quest.TestId
-                group test by new {Id = test.Id, Url = test.URL, Date = test.Date}
+                group test by new { Id = test.Id, Url = test.URL, Date = test.Date }
                 into temp
                 select new {Id = temp.Key.Id, Url = temp.Key.Url, Date = temp.Key.Date, NumQuestion = temp.Count() });
 
