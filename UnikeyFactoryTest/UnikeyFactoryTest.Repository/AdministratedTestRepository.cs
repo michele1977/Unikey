@@ -73,9 +73,9 @@ namespace UnikeyFactoryTest.Repository
             return await _task;
         }
 
-        public async Task<DbSet<AdministratedTest>> GetAdministratedTests()
+        public async Task<List<AdministratedTest>> GetAdministratedTests()
         {
-            var myTask = Task.Run(() => _ctx.AdministratedTests);
+            var myTask = Task.Run(() => _ctx.AdministratedTests.ToListAsync());
             return await myTask;
         }
 

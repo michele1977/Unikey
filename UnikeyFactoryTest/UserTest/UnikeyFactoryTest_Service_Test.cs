@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnikeyFactoryTest.Context;
+using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Repository;
 using UnikeyFactoryTest.Service;
 
 namespace UserTest
@@ -32,6 +35,30 @@ namespace UserTest
             bool result = service.IsUser(user);
 
             Assert.AreEqual(false, result);
+        }
+
+        [TestMethod]
+        public async void AdministratedTestService_GetAdministratedTests_OK()
+        {
+            var myCtx = new TestPlatformDBEntities();
+            var myRepo = new AdministratedTestRepository(myCtx);
+            int count = 0;
+
+            using (myCtx.Database.BeginTransaction())
+            {
+                try
+                {
+                    var tests = await myRepo.GetAdministratedTests();
+                    count = tests.Count;
+                }
+                catch
+                {
+                    throw new Exception();
+                }
+            }
+
+            Assert.AreEqual(1, count);
+
         }
     }
 }
