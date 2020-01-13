@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using UnikeyFactoryTest.Context;
@@ -20,18 +21,18 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpPost]
-        public ActionResult CheckData(UserModel model)
+        public async Task<ActionResult> CheckData(UserModel model)
         {
             User user = new User();
             user.Username = model.Username;
             user.Password = model.Password;
 
             UserService service = new UserService();
-            bool result = service.IsUser(user);
+            bool result = await service.IsUser(user);
 
             if (result == true)
             {
-                user.Id = service.GetUserIdByUsername(user);
+                user.Id = await service.GetUserIdByUsername(user);
                 return RedirectToAction("Index", "Test", new {UserId = user.Id});
             }
             else

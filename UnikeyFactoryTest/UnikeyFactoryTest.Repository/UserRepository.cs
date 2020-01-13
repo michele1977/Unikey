@@ -17,9 +17,10 @@ namespace UnikeyFactoryTest.Repository
             _context = new TestPlatformDBEntities();
         }
 
-        public bool FindUser(User user)
+        public async Task<bool> FindUser(User user)
         {
-            return _context.Users.ToList().Exists(x => x.Username == user.Username && x.Password == user.Password);
+            var myTask = Task.Run(() => _context.Users.ToList().Exists(x => x.Username == user.Username && x.Password == user.Password));
+            return await myTask;
         }
 
         public void Dispose()
@@ -27,9 +28,10 @@ namespace UnikeyFactoryTest.Repository
             _context.Dispose();
         }
 
-        public int GetUserIdByUsername(User user)
+        public async Task<int> GetUserIdByUsername(User user)
         {
-            return _context.Users.First(u => u.Username.Equals(user.Username)).Id;
+            var myTask = Task.Run(() => _context.Users.First(u => u.Username.Equals(user.Username)).Id);
+            return await myTask;
         }
     }
 }
