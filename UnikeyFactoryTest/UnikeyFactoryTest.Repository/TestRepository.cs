@@ -41,7 +41,7 @@ namespace UnikeyFactoryTest.Repository
             else return TestMapper.MapDalToBizLight(result);
         }
 
-        public async Task<Test> GetTest(int testId)
+        public async Task<TestBusiness> GetTest(int testId)
         {
             var myTask = await Task.Run(() => _ctx.Tests.FirstOrDefault(t => t.Id == testId));
 
@@ -50,7 +50,7 @@ namespace UnikeyFactoryTest.Repository
             {
                 throw new NullReferenceException("Test not found at specified id");
             }
-            return myTask;
+            return TestMapper.MapDalToBizHeavy(myTask);
         }
 
         public async Task<List<TestBusiness>> GetTests()

@@ -16,21 +16,21 @@ namespace UnikeyFactoryTest.Presentation.Models
 
         }
 
-        public TestModel(QuestionDto question)
-        {
-            TestService service = new TestService();
-            Test = new TestDto(service.GetTestById(question.TestId));
-            QuestionText = question.Text;
+        //public TestModel(QuestionDto question)
+        //{
+        //    TestService service = new TestService();
+        //    Test = new TestDto(service.GetTestById(question.TestId));
+        //    QuestionText = question.Text;
 
-            AnswerDto correctAnswer = question.Answers.FirstOrDefault(a => (bool) a.IsCorrect);
-            CorrectAnswerText = correctAnswer.Text;
-            AnswerScore = correctAnswer.Score.ToString();
-            WrongAnswers = question.Answers.Where(a => !(bool)a.IsCorrect).Select(a => a.Text).ToList();
+        //    AnswerDto correctAnswer = question.Answers.FirstOrDefault(a => (bool) a.IsCorrect);
+        //    CorrectAnswerText = correctAnswer.Text;
+        //    AnswerScore = correctAnswer.Score.ToString();
+        //    WrongAnswers = question.Answers.Where(a => !(bool)a.IsCorrect).Select(a => a.Text).ToList();
 
-            PageNumber = question.PageNumber;
-            PageSize = question.PageSize;
-            AnswerScore = question.CorrectAnswerScore.ToString();
-        }
+        //    PageNumber = question.PageNumber;
+        //    PageSize = question.PageSize;
+        //    AnswerScore = question.CorrectAnswerScore.ToString();
+        //}
 
         public TestDto Test { get; set; }
         public int QuestionId { get; set; }
