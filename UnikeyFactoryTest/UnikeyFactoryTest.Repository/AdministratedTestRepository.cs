@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
+
 using UnikeyFactoryTest.Mapper;
 
 namespace UnikeyFactoryTest.Repository
@@ -52,17 +53,24 @@ namespace UnikeyFactoryTest.Repository
             return await addTask;
         }
 
-        public AdministratedTestBusiness GetAdministratedTestById(int adTestId)
+        public async Task<AdministratedTestBusiness> GetAdministratedTestById(int adTestId)
         {
-            var adTestDB = _ctx.AdministratedTests.FirstOrDefault(x => x.Id.Equals(adTestId));
-            if (adTestDB == null)
+            var _task = Task.Run(() =>
             {
-                throw new Exception("Not valid id");
-            }
-            else
-            {
-                return AdministratedTestMapper.MapDaoToDomain(adTestDB);
-            }
+                var adTestDB = _ctx.AdministratedTests.FirstOrDefault(x => x.Id.Equals(adTestId));
+
+                if (adTestDB == null)
+                {
+                    throw new Exception("Not valid id");
+                }
+                else
+                {
+                    return AdministratedTestMapper.MapDaoToDomain(adTestDB);
+                }
+
+            });
+
+            return await _task;
         }
 
         public async Task<DbSet<AdministratedTest>> GetAdministratedTests()

@@ -36,9 +36,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             return View("Test", model);
         }
 
-        public ActionResult SaveTest(AdministratedTestModel model, FormCollection form)
+        public async Task<ActionResult> SaveTest(AdministratedTestModel model, FormCollection form)
         {
-            var AdminstratedTest = service.GetAdministratedTestById(model.admnistratedTestId);
+            var AdminstratedTest = await service.GetAdministratedTestById(model.admnistratedTestId);
             model.QuestionAnswerDictionary = new Dictionary<int, int>();
             //popolo il dictionary con domanda e relativa risposta
             foreach (var key in form.AllKeys)
@@ -89,10 +89,10 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpGet]
-        public ActionResult AdministratedTestContent(AdministratedTestDto test)
+        public async Task<ActionResult> AdministratedTestContent(AdministratedTestDto test)
         {
             AdministratedTestService service = new AdministratedTestService();
-            AdministratedTestDto testToPass = new AdministratedTestDto(service.GetAdministratedTestById(test.Id));
+            var testToPass = new AdministratedTestDto(await service.GetAdministratedTestById(test.Id));
             testToPass.PageNumber = test.PageNumber;
             testToPass.PageSize = test.PageSize;
             return View(testToPass);
