@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Repository;
-  
+
 namespace UnikeyFactoryTest.Service
 {
     public class TestService 
