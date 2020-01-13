@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
@@ -12,7 +14,7 @@ namespace UserTest
     public class UnikeyFactoryTest_Repository_Test
     {
         [TestMethod]
-        public async void UserRepository_FindUser_OK()
+        public async Task UserRepository_FindUser_OK()
         {
             User user = new User();
             user.Username = "Mike";
@@ -25,7 +27,7 @@ namespace UserTest
         }
 
         [TestMethod]
-        public async void UserRepository_FindUser_KO()
+        public async Task UserRepository_FindUser_KO()
         {
             User user = new User();
             user.Username = "Mike";
@@ -38,45 +40,20 @@ namespace UserTest
         }
 
         [TestMethod]
-        public void AdministratedTestRepository_UpdateSave_OK()
+        public async Task AdministratedTestRepository_UpdateSave_OK()
         {
-            var myAdTest = new AdministratedTestBusiness
-            {
-                Id = 0,
-                URL = "",
-                TestSubject = "",
-                TestId = 0,
-                AdministratedQuestions = new List<AdministratedQuestionBusiness>
-                {
-                    new AdministratedQuestionBusiness
-                    {
-                        Id = 0,
-                        Text = "",
-                        AdministratedTestId = 0,
-                        AdministratedAnswers = new List<AdministratedAnswerBusiness>
-                        {
-                            new AdministratedAnswerBusiness
-                            {
-                                Id = 0,
-                                Text = "",
-                                AdministratedQuestionId = 0
-                            }
-                        }
-                    }
-                }
-            };
-
-
             var myCtx = new TestPlatformDBEntities();
             var myRepo = new AdministratedTestRepository(myCtx);
-            int g = 0;
+            
+            var myAdTest = myRepo.GetAdministratedTests().GetAwaiter().GetResult()[0];
+
+            myAdTest.AdministratedQuestions.ToList()[0].AdministratedAnswers.ToList()[0].isSelected = true;
 
             using (myCtx.Database.BeginTransaction())
             {
                 try
                 {
-                    myRepo.Update_Save(myAdTest);
-                    g = 1;
+                    await myRepo.Update_Save(AdministratedTestMapper.MapDaoToDomain(myAdTest));
                 }
                 catch
                 {
@@ -84,7 +61,9 @@ namespace UserTest
                 }
             }
 
-            Assert.AreEqual(1, g);
+            var test = myCtx.AdministratedTests.ToList()[0].AdministratedQuestions.Where(q => q.Id == 16).ToList()[0].AdministratedAnswers.ToList()[0].isSelected;
+            
+            Assert.IsTrue((bool)test);
         }
     }
 }

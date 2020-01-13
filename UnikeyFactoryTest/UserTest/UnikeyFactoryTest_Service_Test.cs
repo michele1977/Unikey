@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
@@ -12,7 +13,7 @@ namespace UserTest
     public class UnikeyFactoryTest_Service_Test
     {
         [TestMethod]
-        public async void UserService_IsUser_OK()
+        public async Task UserService_IsUser_OK()
         {
             User user = new User();
             user.Username = "Mike";
@@ -25,7 +26,7 @@ namespace UserTest
         }
 
         [TestMethod]
-        public async void UserService_IsUser_KO()
+        public async Task UserService_IsUser_KO()
         {
             User user = new User();
             user.Username = "Mike";
@@ -38,7 +39,7 @@ namespace UserTest
         }
 
         [TestMethod]
-        public async void AdministratedTestService_GetAdministratedTests_OK()
+        public async Task AdministratedTestService_GetAdministratedTests_OK()
         {
             var myCtx = new TestPlatformDBEntities();
             var myRepo = new AdministratedTestRepository(myCtx);
@@ -57,7 +58,7 @@ namespace UserTest
                 }
             }
 
-            Assert.AreEqual(1, count);
+            Assert.AreEqual(372, count);
 
         }
     }
