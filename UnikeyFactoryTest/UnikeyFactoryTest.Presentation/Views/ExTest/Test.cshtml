@@ -1,65 +1,66 @@
 ﻿@using UnikeyFactoryTest.Presentation.Controllers
 @model UnikeyFactoryTest.Presentation.Models.AdministratedTestModel
-<img src="~/Logos/UnikeyLogo.png" class="logo" />
-    <div class="container">
 
-        
+@{
+    Layout = "~/Views/Shared/_FruitionLayout.cshtml";
+}
+<div class="container">
 
-        @{
+    @{
 
-            if (Model.Test != null)
+        if (Model.Test != null)
+        {
+            <h2 class="Title">Assessment of @Model.Name @Model.Surname</h2>
+            if (Model.Test.AdministratedQuestions != null)
             {
-                <h2 class="Title">Assessment of @Model.Name @Model.Surname</h2>
-                if (Model.Test.AdministratedQuestions != null)
+                using (Html.BeginForm("SaveTest", "ExTest"))
                 {
-                    using (Html.BeginForm("SaveTest", "ExTest"))
+                    <input type="hidden" value="@Model.URL" name="URL" />
+                    <input type="hidden" name="admnistratedTestId" value="@Model.admnistratedTestId" />
+                    <input type="hidden" name="URL" value="@Model.URL" />
+                    foreach (var question in Model.Test.AdministratedQuestions)
                     {
-                        <input type="hidden" value="@Model.URL" name="URL" />
-                        <input type="hidden" name="admnistratedTestId" value="@Model.admnistratedTestId" />
-                        <input type="hidden" name="URL" value="@Model.URL" />
-                        foreach (var question in Model.Test.AdministratedQuestions)
-                        {
-                            <div class="QuestionContainer">
-                                @{
-                                    if (String.IsNullOrEmpty(question.Text) != true)
-                                    {
-                                        <label id="Question">
-                                            @question.Text
-                                        </label>
-                                        <hr />
-                                    }
-                                    <div class="AnswerContainer">
-
-                                        @{
-                                            foreach (var answer in question.AdministratedAnswers)
-                                            {
-                                                <div class="form-check">
-                                                    <label class="AnswerLabel">@answer.Text</label>
-                                                    <span class="RadioInput">
-                                                        @Html.RadioButton(question.Id.ToString(), answer.Id.ToString())
-                                                    </span>
-                                                    <hr class="AnswerHr" />
-                                                </div>
-                                            }
-                                        }
-                                    </div>
+                        <div class="QuestionContainer">
+                            @{
+                                if (String.IsNullOrEmpty(question.Text) != true)
+                                {
+                                    <label id="Question">
+                                        @question.Text
+                                    </label>
+                                    <hr />
                                 }
-                            </div>
-                        }
-                        <div style="text-align: center;" ><button type="submit" class="btn btn-success SaveButton">Save Test</button></div>
+                                <div class="AnswerContainer">
+
+                                    @{
+                                        foreach (var answer in question.AdministratedAnswers)
+                                        {
+                                            <div class="form-check">
+                                                <label class="AnswerLabel">@answer.Text</label>
+                                                <span class="RadioInput">
+                                                    @Html.RadioButton(question.Id.ToString(), answer.Id.ToString())
+                                                </span>
+                                                <hr class="AnswerHr" />
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            }
+                        </div>
                     }
+                    <div style="text-align: center;"><button type="submit" class="btn btn-success SaveButton">Save Test</button></div>
                 }
-
             }
+
         }
-        <script type="text/javascript">
-            window.addEventListener('beforeunload', function (e) {
-                e.preventDefault();
-                e.returnValue = '';
-            });
-        </script>
-        
+    }
+    <script type="text/javascript">
+        window.addEventListener('beforeunload', function (e) {
+            e.preventDefault();
+            e.returnValue = '';
+        });
+    </script>
 
 
-    </div>
+
+</div>
 
