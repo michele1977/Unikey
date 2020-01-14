@@ -24,11 +24,16 @@
             <div class="form-group">
                 <label for="lbUsername">Username</label>
                 <input type="text" class="form-control" id="lbUsername" name="Username">
-                @Html.ValidationMessageFor(x => x.Username,null, new { @class = "text-danger" })
+                @Html.ValidationMessageFor(x => x.Username, null, new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 <label for="lbPassword">Password</label>
                 <input type="password" class="form-control" id="lbPassword" name="Password">
+            </div>
+            <div class="form-group">
+                <label for="lbRetypedPassword">Retype password</label>
+                <input type="password" class="form-control" id="lbRetypedPassword" name="RetypedPassword">
+                @Html.ValidationMessageFor(x => x.RetypedPassword, null, new { @class = "text-danger" })
             </div>
             <div style="width: 100%;text-align: right">
                 <button type="submit" class="btn btn-primary">Log In</button>
@@ -41,13 +46,13 @@
         Username or password invalid
     </div>
 
-    @*@if (Model.IsUser.Equals("IsNotAUser"))
+    @if (Model.IsUser.Equals("IsNotAUser"))
     {
         <script>
             let myDiv = document.getElementById("myDiv");
             myDiv.style.display = "block";
         </script>
-    }*@
+    }
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
