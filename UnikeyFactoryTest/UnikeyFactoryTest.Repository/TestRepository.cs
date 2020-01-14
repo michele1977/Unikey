@@ -57,29 +57,16 @@ namespace UnikeyFactoryTest.Repository
         public async Task<List<TestBusiness>> GetTests()
         {
             var returned =  _ctx.Tests.ToList();
-            
-            var myTask = await Task.Run(() => from test in _ctx.Tests
-                join quest in _ctx.Questions
-                    on test.Id equals quest.TestId
-                group test by new { Id = test.Id, Url = test.URL, Date = test.Date }
-                into temp
-                select new {Id = temp.Key.Id, Url = temp.Key.Url, Date = temp.Key.Date, NumQuestion = temp.Count() });
 
-            List<TestBusiness> tests = new List<TestBusiness>();
-
-            foreach (var test in myTask)
+            var  testListTask = await Task.Run(() => _ctx.Tests.Select(t => new TestBusiness()
             {
-                tests.Add(new TestBusiness()
-                {
-                    Id = test.Id,
-                    URL = test.Url,
-                    Date = test.Date
-                });
-            }
+                Id = t.Id,
+                URL = t.URL,
+                Date = t.Date,
+                NumQuestions = t.Questions.Count
+            }).ToList());
 
-            //var returned1 =  returned.Select(x => TestMapper.MapDalToBizLigth(x)).ToList();
-
-            return tests;
+            return testListTask;
         }
 
         public async Task DeleteTest(int testId)
@@ -95,16 +82,17 @@ namespace UnikeyFactoryTest.Repository
             _ctx.Tests.Remove(task);
             _ctx.SaveChanges();
         }
-        public void UpdateTest(TestBusiness test)
+        public async void UpdateTest(TestBusiness test)
         {
             if (test == null)
             {
                 throw new NullReferenceException("No test to update");
             }
 
-            Test mappedTest = TestMapper.MapBizToDal(test);
+            var mappedTest = await Task.Run(() => TestMapper.MapBizToDal(test));
 
-            Test testToUpdate = _ctx.Tests.FirstOrDefault(t => t.Id == test.Id);
+            var testToUpdate = await Task.Run(() => _ctx.Tests.FirstOrDefault(t => t.Id == test.Id));
+
             testToUpdate.URL = mappedTest.URL;
             testToUpdate.User = mappedTest.User;
             testToUpdate.Date = mappedTest.Date;
