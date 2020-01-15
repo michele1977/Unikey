@@ -86,6 +86,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             foreach (var dto in testsListModel.Tests)
             {
                 await dto.FillAdministratedTests(adTestService);
+                
             }
 
             return View(testsListModel);
