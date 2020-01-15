@@ -26,6 +26,8 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
             Date = test.Date;
             UserId = test.UserId;
             Questions = test.Questions?.Select(q => new QuestionDto(q)).ToList();
+            //AdministratedTests = new List<AdministratedTestDto>();
+            //AdministratedTestsOpened = new List<AdministratedTestDto>();
             FillAdministratedTests(business);
             FillAdministratedTestsOpened(business);
             NumQuestions = test.NumQuestions;
@@ -46,7 +48,7 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
 
         private async Task FillAdministratedTestsOpened(AdministratedTestService business)
         {
-            var dtoList = new List<AdministratedTestDto>();
+            var dtoList =  new List<AdministratedTestDto>();
 
 
             AdministratedTestsOpened = dtoList;

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Presentation.Models.Dto;
+using UnikeyFactoryTest.Presentation.Models.DTO;
 
 namespace UnikeyFactoryTest.Presentation.Models
 {
@@ -19,6 +21,12 @@ namespace UnikeyFactoryTest.Presentation.Models
         {
             Tests = new List<TestDto>();
 
+            //foreach (var dto in Tests)
+            //{
+            //    dto.AdministratedTests = FillAdministratedTests();
+            //    dto.AdministratedTestsOpened = new List<AdministratedTestDto>();
+            //}
+
         }
         public List<TestDto> Tests { get; set; }
 
@@ -31,12 +39,19 @@ namespace UnikeyFactoryTest.Presentation.Models
                 PageNumber = LastPage;
             }
 
-            List<TestDto> filteredList = tests.Select(t => new TestDto(t))
+            var filteredList = tests.Select(t => new TestDto(t))
                 .Skip((PageNumber - 1) * PageSize)
                 .Take(PageSize).ToList();
 
 
             return filteredList;
         }
+
+        //public List<AdministratedTestDto> FillAdministratedTests()
+        //{
+        //    var adTests = new List<AdministratedTestDto>();
+        //    adTests.Add(new AdministratedTestDto());
+        //    return adTests;
+        //}
     }
 }
