@@ -35,8 +35,8 @@ namespace UnikeyFactoryTest.Service
                 URL = test.URL,
                 TestId = test.Id,
                 TestSubject = subject,
-                AdministratedQuestions = new List<AdministratedQuestionBusiness>()
-                // State = new State{ StateEnum = 1 };
+                AdministratedQuestions = new List<AdministratedQuestionBusiness>(),
+                StateEnum = (State)1
             };
 
             foreach (var q in test.Questions)

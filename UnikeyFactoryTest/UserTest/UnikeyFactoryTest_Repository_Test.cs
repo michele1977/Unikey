@@ -39,89 +39,89 @@ namespace UserTest
             Assert.AreEqual(false, result);
         }
 
-        [TestMethod]
-        public async Task AdministratedTestRepository_Add_OK()
-        {
-            var myCtx = new TestPlatformDBEntities();
-            var myRepo = new AdministratedTestRepository(myCtx);
+        //    [TestMethod]
+        //    public async Task AdministratedTestRepository_Add_OK()
+        //    {
+        //        var myCtx = new TestPlatformDBEntities();
+        //        var myRepo = new UnikeyFactoryTest_AdministratedTestRepository(myCtx);
 
-            var adTest = new AdministratedTestBusiness
-            {
-                TestId = 1,
-                TestSubject = "",
-                URL = "",
-                AdministratedQuestions = new List<AdministratedQuestionBusiness>
-                {
-                    new AdministratedQuestionBusiness
-                    {
-                        Text = "",
-                        AdministratedTestId = 986,
-                        AdministratedAnswers = new List<AdministratedAnswerBusiness>
-                        {
-                            new AdministratedAnswerBusiness
-                            {
-                                Text = "",
-                                AdministratedQuestionId = 987
-                            }
-                        }
-                    }
-                }
-            };
+        //        var adTest = new AdministratedTestBusiness
+        //        {
+        //            TestId = 1,
+        //            TestSubject = "",
+        //            URL = "",
+        //            AdministratedQuestions = new List<AdministratedQuestionBusiness>
+        //            {
+        //                new AdministratedQuestionBusiness
+        //                {
+        //                    Text = "",
+        //                    AdministratedTestId = 986,
+        //                    AdministratedAnswers = new List<AdministratedAnswerBusiness>
+        //                    {
+        //                        new AdministratedAnswerBusiness
+        //                        {
+        //                            Text = "",
+        //                            AdministratedQuestionId = 987
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        };
 
-            using (myCtx.Database.BeginTransaction())
-            {
-                try
-                {
-                    await myRepo.Add(adTest);
-                }
-                catch
-                {
-                    throw new Exception();
-                }
-                
-            }
+        //        using (myCtx.Database.BeginTransaction())
+        //        {
+        //            try
+        //            {
+        //                await myRepo.Add(adTest);
+        //            }
+        //            catch
+        //            {
+        //                throw new Exception();
+        //            }
 
-            var g = 0;
-            try
-            {
-                var test = myCtx.AdministratedTests.FirstOrDefault(t => t.Id == 994);
+        //        }
 
-                if(test is null)
-                    throw new Exception();
-            }
-            catch
-            {
-                g = 1;
-            }
-            
-            Assert.AreEqual(0, g);
-        }
+        //        var g = 0;
+        //        try
+        //        {
+        //            var test = myCtx.AdministratedTests.FirstOrDefault(t => t.Id == 994);
 
-        [TestMethod]
-        public async Task AdministratedTestRepository_UpdateSave_OK()
-        {
-            var myCtx = new TestPlatformDBEntities();
-            var myRepo = new AdministratedTestRepository(myCtx);
-            
-            var myAdTest = myRepo.GetAdministratedTests().GetAwaiter().GetResult()[0];
+        //            if(test is null)
+        //                throw new Exception();
+        //        }
+        //        catch
+        //        {
+        //            g = 1;
+        //        }
 
-            myAdTest.AdministratedQuestions.ToList()[0].AdministratedAnswers.ToList()[0].isSelected = true;
+        //        Assert.AreEqual(0, g);
+        //    }
 
-            using (myCtx.Database.BeginTransaction())
-            {
-                try
-                {
-                    await myRepo.Update_Save(AdministratedTestMapper.MapDaoToDomain(myAdTest));
-                }
-                catch
-                {
-                    throw new Exception();
-                }
-            }
+        //    [TestMethod]
+        //    public async Task AdministratedTestRepository_UpdateSave_OK()
+        //    {
+        //        var myCtx = new TestPlatformDBEntities();
+        //        var myRepo = new UnikeyFactoryTest_AdministratedTestRepository(myCtx);
 
-            var test = myCtx.AdministratedTests.ToList()[0].AdministratedQuestions.Where(q => q.Id == 16).ToList()[0].AdministratedAnswers.ToList()[0].isSelected;
-            
-            Assert.IsTrue((bool)test);
-        }
+        //        var myAdTest = myRepo.GetAdministratedTests().GetAwaiter().GetResult()[0];
+
+        //        myAdTest.AdministratedQuestions.ToList()[0].AdministratedAnswers.ToList()[0].isSelected = true;
+
+        //        using (myCtx.Database.BeginTransaction())
+        //        {
+        //            try
+        //            {
+        //                await myRepo.Update_Save(AdministratedTestMapper.MapDaoToDomain(myAdTest));
+        //            }
+        //            catch
+        //            {
+        //                throw new Exception();
+        //            }
+        //        }
+
+        //        var test = myCtx.AdministratedTests.ToList()[0].AdministratedQuestions.Where(q => q.Id == 16).ToList()[0].AdministratedAnswers.ToList()[0].isSelected;
+
+        //        Assert.IsTrue((bool)test);
+        //    }
     }
 }

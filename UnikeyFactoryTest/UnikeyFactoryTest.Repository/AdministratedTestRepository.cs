@@ -80,6 +80,17 @@ namespace UnikeyFactoryTest.Repository
             return filteredList2;
         }
 
+        public async Task<int> GetState(int AdministratedTestId)
+        {
+            var myTask = Task.Run(() =>
+            {
+                var FilteredState = _ctx.AdministratedTests.FirstOrDefault(x => x.Id.Equals(AdministratedTestId))
+                    .StateEnum;
+                return FilteredState;
+            });
+            var State = await myTask;
+            return (int) State;
+        }
         #region DeleteAdministratedTest
         public async Task DeleteAdministratedTest(int administratedTestId)
         {
