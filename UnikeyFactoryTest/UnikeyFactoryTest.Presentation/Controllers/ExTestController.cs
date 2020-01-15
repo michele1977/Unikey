@@ -33,7 +33,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var savedTest = await service.Add(model.Test);
             model.AdmnistratedTestId = savedTest.Id;
             model.Test = savedTest;
-            model.QuestionPosition = service.QuestionPosition;
+            model.Question = savedTest.AdministratedQuestions.ElementAt(0);
             return View("Test", model);
         }
 
@@ -95,7 +95,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult> Next(AdministratedTestModel model)
         {
-            model.QuestionPosition = service.Next(model.Test.AdministratedQuestions);
+            model.Question = service.Next(model.Test);
             model.Test = await service.GetAdministratedTestById(model.AdmnistratedTestId);
             return View("Test", model);
         }

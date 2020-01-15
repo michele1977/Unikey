@@ -16,6 +16,6 @@ namespace UnikeyFactoryTest.Presentation.Models
         public string URL { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public int? QuestionPosition { get; set; }
+        public AdministratedQuestionBusiness Question { get; set; }
     }
 }

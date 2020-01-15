@@ -125,12 +125,12 @@ namespace UnikeyFactoryTest.Service
             }
         }
 
-        public int? Next(ICollection<AdministratedQuestionBusiness> questionList)
+        public AdministratedQuestionBusiness Next(AdministratedTestBusiness administratedTest)
         {
-            if (QuestionPosition != questionList.Count)
+            if (QuestionPosition != administratedTest.AdministratedQuestions.Count)
             {
                 QuestionPosition++;
-                return QuestionPosition;
+                return administratedTest.AdministratedQuestions.ElementAt(QuestionPosition);
             }
             else
             {
