@@ -31,14 +31,15 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var test = testService.GetTestByURL(model.URL);
             model.Test = service.AdministratedTest_Builder(test, subject);
             var savedTest = await service.Add(model.Test);
-            model.admnistratedTestId = savedTest.Id;
+            model.AdmnistratedTestId = savedTest.Id;
             model.Test = savedTest;
+            model.QuestionPosition = service.QuestionPosition;
             return View("Test", model);
         }
 
         public async Task<ActionResult> SaveTest(AdministratedTestModel model, FormCollection form)
         {
-            var AdminstratedTest = await service.GetAdministratedTestById(model.admnistratedTestId);
+            var AdminstratedTest = await service.GetAdministratedTestById(model.AdmnistratedTestId);
             model.QuestionAnswerDictionary = new Dictionary<int, int>();
             //popolo il dictionary con domanda e relativa risposta
             foreach (var key in form.AllKeys)
@@ -89,6 +90,14 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             testToPass.PageNumber = test.PageNumber;
             testToPass.PageSize = test.PageSize;
             return View(testToPass);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Next(AdministratedTestModel model)
+        {
+            model.QuestionPosition = service.Next(model.Test.AdministratedQuestions);
+            model.Test = await service.GetAdministratedTestById(model.AdmnistratedTestId);
+            return View("Test", model);
         }
     }
 }

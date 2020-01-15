@@ -14,7 +14,7 @@ namespace UnikeyFactoryTest.Service
     {
         private  IAdministratedTestRepository _repo;
 
-        private readonly int QuestionPosition = 0;
+        public int QuestionPosition = 0;
 
         public AdministratedTestService()
         {
@@ -125,6 +125,17 @@ namespace UnikeyFactoryTest.Service
             }
         }
 
-
+        public int? Next(ICollection<AdministratedQuestionBusiness> questionList)
+        {
+            if (QuestionPosition != questionList.Count)
+            {
+                QuestionPosition++;
+                return QuestionPosition;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

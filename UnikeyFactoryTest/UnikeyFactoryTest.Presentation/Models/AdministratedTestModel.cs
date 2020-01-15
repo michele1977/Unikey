@@ -12,10 +12,10 @@ namespace UnikeyFactoryTest.Presentation.Models
         public Dictionary<int,int> QuestionAnswerDictionary { get; set; }
 
         public AdministratedTestBusiness Test { get; set; }
-        public int admnistratedTestId { get; set; }
+        public int AdmnistratedTestId { get; set; }
         public string URL { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public int QuestionPosition { get; set; }
+        public int? QuestionPosition { get; set; }
     }
 }
