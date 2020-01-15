@@ -25,15 +25,14 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
         // test
         [HttpPost]
-        public async Task<ActionResult> BeginTest(AdministratedTestModel model)
+        public async Task<ActionResult> BeginTest(AdministratedTestModel2 model)
         {
             var subject = model.Name + " " + model.Surname;
-            var test = testService.GetTestByURL(model.URL);
-            model.Test = service.AdministratedTest_Builder(test, subject);
-            var savedTest = await service.Add(model.Test);
-            model.AdmnistratedTestId = savedTest.Id;
-            model.Test = savedTest;
-            model.Question = savedTest.AdministratedQuestions.ElementAt(0);
+            var test = testService.GetTestByURL(model.Url);
+            var newExecutionTest = service.AdministratedTest_Builder(test, subject);
+            var savedTest = await service.Add(newExecutionTest);
+            model.NumQuestion = test.Questions.Count;
+            model.ActualQuestion = savedTest.AdministratedQuestions.FirstOrDefault(x => x.Position==0);
             return View("Test", model);
         }
 
@@ -93,12 +92,10 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Next(AdministratedTestModel model)
+        public async Task<ActionResult> Next(AdministratedTestModel2 model)
         {
-            await service.Update_Save_Question(model.Question);
-            model.Question = service.Next(model.Test);
-            model.IsLast = service.IsLast;
-            model.Test = await service.GetAdministratedTestById(model.AdmnistratedTestId);
+            await service.Update_Save_Question(model.ActualQuestion);
+            model.ActualQuestion = service.Next(model.ActualQuestion.AdministratedTestId,model.ActualQuestion.Position+1);
             return View("Test", model);
         }
     }

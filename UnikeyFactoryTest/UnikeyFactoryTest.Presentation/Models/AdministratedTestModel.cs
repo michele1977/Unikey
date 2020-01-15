@@ -19,4 +19,14 @@ namespace UnikeyFactoryTest.Presentation.Models
         public AdministratedQuestionBusiness Question { get; set; }
         public bool IsLast { get; set; }
     }
+
+    public class AdministratedTestModel2
+    {
+        public int NumQuestion { get; set; }
+
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Url { get; set; }
+        public AdministratedQuestionBusiness ActualQuestion { get; set; }
+    }
 }

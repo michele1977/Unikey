@@ -127,7 +127,7 @@ namespace UnikeyFactoryTest.Service
             }
         }
 
-        public AdministratedQuestionBusiness Next(AdministratedTestBusiness administratedTest)
+        public AdministratedQuestionBusiness Next(int AdministratedTestId, int position)
         {
             if (QuestionPosition != administratedTest.AdministratedQuestions.Count - 1)
             {
