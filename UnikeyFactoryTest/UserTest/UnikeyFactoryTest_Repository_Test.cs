@@ -111,7 +111,7 @@ namespace UserTest
             {
                 try
                 {
-                    await myRepo.Update_Save(AdministratedTestMapper.MapDaoToDomain(myAdTest));
+                    await myRepo.Update_Save(myAdTest);
                 }
                 catch
                 {

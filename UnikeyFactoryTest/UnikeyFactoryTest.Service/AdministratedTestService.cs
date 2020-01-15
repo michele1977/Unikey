@@ -92,7 +92,7 @@ namespace UnikeyFactoryTest.Service
             _repo = new AdministratedTestRepository();
             var administratedTests = await _repo.GetAdministratedTests();
             
-            return administratedTests.Select(AdministratedTestMapper.MapDaoToDomain);
+            return administratedTests;
         }
 
 

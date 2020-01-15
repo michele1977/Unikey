@@ -17,12 +17,13 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         {
             Id = administratedTest.Id;
             URL = administratedTest.URL;
-            TotalScore = administratedTest.TotalScore;
+            TotalScore = administratedTest.TotalScore ?? 0;
             TestId = administratedTest.TestId;
             TestSubject = administratedTest.TestSubject;
             Date = administratedTest.Date;
             AdministratedQuestions =
                 administratedTest.AdministratedQuestions.Select(q => new AdministratedQuestionDto(q));
+            ResultScore = administratedTest.ResultScore ?? 0;
         }
 
         public int Id { get; set; }
@@ -35,38 +36,39 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
 
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
+        public decimal ResultScore { get; set; }
+        
+        //public decimal? CalculateMaxScore()
+        //{
+        //    try
+        //    {
+        //        return AdministratedQuestions.SelectMany(q => q.AdministratedAnswers).Sum(a => a.Score);
+        //    }
+        //    catch (ArgumentNullException ex)
+        //    {
+        //        return null;
+        //    }
+        //    catch (OverflowException ex)
+        //    {
+        //        return null;
+        //    }
+        //}
 
-        public decimal? CalculateMaxScore()
-        {
-            try
-            {
-                return AdministratedQuestions.SelectMany(q => q.AdministratedAnswers).Sum(a => a.Score);
-            }
-            catch (ArgumentNullException ex)
-            {
-                return null;
-            }
-            catch (OverflowException ex)
-            {
-                return null;
-            }
-        }
-
-        public decimal? CalculateResultScore()
-        {
-            try
-            {
-                return AdministratedQuestions.SelectMany(q => q.AdministratedAnswers).Where(a => (bool) a.IsCorrect && (bool)a.IsSelected).Sum(a => a.Score);
-            }
-            catch (ArgumentNullException ex)
-            {
-                return null;
-            }
-            catch (OverflowException ex)
-            {
-                return null;
-            }
-        }
+        //public decimal? CalculateResultScore()
+        //{
+        //    try
+        //    {
+        //        return AdministratedQuestions.SelectMany(q => q.AdministratedAnswers).Where(a => (bool) a.IsCorrect && (bool)a.IsSelected).Sum(a => a.Score);
+        //    }
+        //    catch (ArgumentNullException ex)
+        //    {
+        //        return null;
+        //    }
+        //    catch (OverflowException ex)
+        //    {
+        //        return null;
+        //    }
+        //}
 
         public IEnumerable<AdministratedQuestionDto> AdministratedQuestions { get; set; }
     }
