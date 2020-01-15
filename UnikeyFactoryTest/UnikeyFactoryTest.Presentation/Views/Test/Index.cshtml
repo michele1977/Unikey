@@ -3,37 +3,32 @@
 @{
     ViewBag.Title = "Index";
 }
-
 <style>
-    .class-selected {
-        border: 2px solid limegreen
-    }
-
-    .class-unselected {
-        border: 1px solid black
+    #myDivContainerTop {
     }
 
     .class-mymarginleft {
-        margin-left: 5px
+        margin-left: 5px;
+    }
+
+    #class-textBox {
+        max-width: 100%;
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    #myDivContainerDown {
+        margin-top: 10px;
+    }
+
+    .class-selected {
+        border: 2px solid limegreen
     }
 </style>
 
 <script>
-
-    function CorrectAnswer(id,idchk, idtxt, idlbl) {
-        //$('#' +id).addClass("class-selected");
-        //alert($("#checkbox1").val());
-        //alert($('.myCheckbox').is(':checked'));
-        
-        //if($('.myCheckbox').is(':checked')) {
-        //    $('#' + id).addClass("class-selected");
-        //}
-        //else {
-        //    $('#' + id).addClass("class-unselected");
-        //}
-
-        var isChecked = document.getElementById(id).checked 
-       // alert(isChecked);
+    function CorrectAnswer(id, idchk, idtxt, idlbl) {
+        var isChecked = document.getElementById(id).checked
         if (isChecked == true) {
             document.getElementById(idchk).classList.add("class-selected")
             document.getElementById(idtxt).hidden = false
@@ -44,101 +39,60 @@
             document.getElementById(idtxt).hidden = true
             document.getElementById(idlbl).hidden = true
         }
-
-
     }
 
-    function enablebtnaddquestion(idBtn, idBtn2) {
-        document.getElementById(idBtn).hidden = false
-
-        document.getElementById(idBtn2).hidden = true
-
+    function EnableQuestionForm(id) {
+        document.getElementById(id).hidden = false
     }
 
-    function setdivvisible(idDiv, idDiv2) {
-
-        document.getElementById(idDiv).hidden = false
-        document.getElementById(idDiv2).hidden = true
-
+    function DisableQuestionForm(id) {
+        document.getElementById(id).hidden = true
     }
-    function setdivinvisible(idDiv, idDiv2) {
-        document.getElementById(idDiv).hidden = true
-        document.getElementById(idDiv2).hidden = false
-
-    }
-
 </script>
-<div class="container" style="text-align: center">
-    <div class="form-group">
-        <h1> Create new test</h1>
-        <label for="nomeTest">TestTitle:</label>
-        @*@Html.TextBox("Txt", "", new { @class = "form-control" })*@
-        <input type="text" class="form-control" id="nomeTest" style="max-width: 100%; width: 80%;margin-left: 100px" />
 
-        <label>DataCreazione:</label>
-        @Html.TextBox("Txt1", @DateTime.Now.ToString(), new { @class = "form-control", @type = "date", style = "max-width: 100%;width: 80%;margin-left: 100px" })
+
+<div class="col-lg-6 col-md-6 col-sm-6" id="myDivContainerTop">
+
+    @Html.TextBoxFor(x => x.TestName, new { @class = "form-control", id = "class-textBox", placeholder = "TestName" })
+    @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date" })
+</div>
+
+
+
+<div class="container" id="myDivContainerDown">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <table class="table">
+                <tr>
+                    <th>
+                        QuestionText
+                    </th>
+                    <th>
+                        <button class="btn btn-dark" onclick="EnableQuestionForm('mydivQuestionForm')">+</button>
+                    </th>
+                </tr>
+
+
+                @foreach (var Question in Model.Questions)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => Question.Text)
+                        </td>
+
+                        <td>
+                             DELETE|DETAILS
+                            @*@Html.ActionLink("Delete", "DeleteQuestion", "Test", new { Id = Question.Id }, null) |
+                                @Html.ActionLink("Details", "Details", "Test", new { Id = Question.Id }, null) *@
+                        </td>
+                    </tr>
+                }
+
+
+            </table>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6" hidden id="mydivQuestionForm">
+            @Html.Partial("AddQuestionForm");
+        </div>
     </div>
 </div>
-
-<button class="btn btn-primary" onclick="enablebtnaddquestion('btnaddquestion','btnSave')" id="btnSave" style="margin-left: 120px">Create</button>
-
-<button class="btn btn-primary" style="margin-left: 950px" hidden id="btnaddquestion" onclick="setdivvisible('mydiv','mydiv2')">+</button>
-
-<div class="container" id="mydiv" style="text-align: center" hidden>
-    @using (Html.BeginForm("AddQuestion", "Test", FormMethod.Post))
-    {
-
-        @Html.Label("Question")
-        <br />
-        @Html.TextAreaFor(m => m.QuestionText, new { @class = "required", style = "max-width: 100%;width: 80%;", @rows = 5 })
-        <div class="form-group">
-            @Html.Label("Answers:")
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <input type="checkbox" id="check1" onclick="CorrectAnswer('check1','checkbox1','txt1','lbl1')" />
-                    </div>
-                </div>
-                <input type="text" class="form-control " style="max-width: 100%;width: 70%;" id="checkbox1" />
-                <label hidden id="lbl1" class="class-mymarginleft ">Score:</label>
-                <input type="number" id="txt1" hidden class="class-mymarginleft " style="width: 80px" step="0.5">
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <input type="checkbox" id="check2" onclick="CorrectAnswer('check2','checkbox2','txt2','lbl2')">
-                    </div>
-                </div>
-                <input type="text" class="form-control" style="max-width: 100%;width: 70%;" id="checkbox2" />
-                <label hidden id="lbl2" class="class-mymarginleft ">Score:</label>
-                <input type="number" id="txt2" hidden class="class-mymarginleft " style="width: 80px" step="0.5">
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <input type="checkbox" id="check3" onclick="CorrectAnswer('check3','checkbox3','txt3','lbl3')">
-                    </div>
-                </div>
-                <input type="text" class="form-control" style="max-width: 100%;width: 70%;" id="checkbox3" />
-                <label hidden id="lbl3" class="class-mymarginleft ">Score:</label>
-                <input type="number" id="txt3" hidden class="class-mymarginleft " style="width: 80px" step="0.5">
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <input type="checkbox" id="check4" onclick="CorrectAnswer('check4','checkbox4','txt4','lbl4')">
-                    </div>
-                </div>
-                <input type="text" class="form-control" style="max-width: 100%;width: 70%;" id="checkbox4" />
-                <label hidden id="lbl4" class="class-mymarginleft ">Score:</label>
-                <input type="number" id="txt4" hidden class="class-mymarginleft " style="width: 80px" step="0.5">
-            </div>
-        </div>
-    }
-    @*@using (Html.BeginForm("AddTest", "Test", FormMethod.Post))
-        {*@
-    <button class="btn btn-info" style="text-align: right" onclick="setdivinvisible('mydiv','mydiv2')">SaveQuestion</button>
-
-    @*}*@
-</div>
-

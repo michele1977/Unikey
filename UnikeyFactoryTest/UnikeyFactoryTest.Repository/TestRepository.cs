@@ -82,6 +82,9 @@ namespace UnikeyFactoryTest.Repository
             _ctx.Tests.Remove(task);
             _ctx.SaveChanges();
         }
+
+
+
         public async void UpdateTest(TestBusiness test)
         {
             if (test == null)
@@ -100,6 +103,19 @@ namespace UnikeyFactoryTest.Repository
             testToUpdate.AdministratedTests = mappedTest.AdministratedTests;
             testToUpdate.Questions = mappedTest.Questions;
 
+            _ctx.SaveChanges();
+        }
+        public async Task DeleteQuestion(int questionId)
+        {
+            var question = await Task.Run(() =>
+            {
+                return _ctx.Questions.FirstOrDefault(q => q.Id == questionId);
+            });
+            if (question == null)
+            {
+                throw new NullReferenceException("Question not found ");
+            }
+            _ctx.Questions.Remove(question);
             _ctx.SaveChanges();
         }
 

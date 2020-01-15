@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using UnikeyFactoryTest.Context;
@@ -32,11 +33,19 @@ namespace UnikeyFactoryTest.Presentation.Models
         //    AnswerScore = question.CorrectAnswerScore.ToString();
         //}
 
+        public bool IsCorrect { get; set; }
+        public string TestName { get; set; }
+        public DateTime Date { get; set; } = DateTime.Now;
+
         public TestDto Test { get; set; }
         public int QuestionId { get; set; }
+
+        [Required(ErrorMessage = "Required Field")]
         public string QuestionText { get; set; }
-        public string CorrectAnswerText { get; set; }
-        public List<string> WrongAnswers { get; set; }
+        public List<QuestionDto> Questions { get; set; }
+        public string AnswerText { get; set; }
+       // public string CorrectAnswerText { get; set; }
+        public List<string> Answers { get; set; }
         public int UserId { get; set; }
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;

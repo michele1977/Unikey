@@ -34,23 +34,24 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public ActionResult AddQuestion(TestModel model)
         {
             List<Answer> answers = new List<Answer>();
-            Answer correctAnswer = new Answer()
+            //Answer correctAnswer = new Answer()
+            //{
+            //    Text = model.CorrectAnswerText,
+            //    IsCorrect = true,
+            //    Score = Convert.ToInt32(model.AnswerScore)
+            //};
+            //answers.Add(correctAnswer);
+            foreach (var AnswerText in model.Answers)
             {
-                Text = model.CorrectAnswerText,
-                IsCorrect = true,
-                Score = Convert.ToInt32(model.AnswerScore)
-            };
-            answers.Add(correctAnswer);
-            foreach (var wrongAnswerText in model.WrongAnswers)
-            {
-                if (!string.IsNullOrWhiteSpace(wrongAnswerText))
+                if (!string.IsNullOrWhiteSpace(AnswerText))
                 {
-                    Answer wrongAnswer = new Answer()
+                    Answer Answer = new Answer()
                     {
-                        Text = wrongAnswerText,
-                        IsCorrect = false
+                        Text = AnswerText,
+                        IsCorrect = model.IsCorrect,
+                        Score = Convert.ToInt32(model.AnswerScore)
                     };
-                    answers.Add(wrongAnswer);
+                    answers.Add(Answer);
                 }
             }
 
@@ -66,10 +67,11 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult> AddTest(TestModel model)
         {
+           // test.TestName = model.TestName;
             test.UserId = UserId;
             test.URL = _service.GenerateGuid();
-            test.Date = DateTime.Now;
-            await _service.AddNewTest(TestMapper.MapDalToBizHeavy(test));
+            test.Date = model.Date;
+             await _service.AddNewTest(TestMapper.MapDalToBizHeavy(test));
             return View("Index");
         }
 
@@ -126,6 +128,15 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             return View(testToPass);
         }
 
+        [HttpGet]
+        public async Task<ActionResult> DeleteQuestion(QuestionDto question)
+        {
+            TestService service = new TestService();
+            await service.DeleteQuestion(question.Id);
+
+            return View("Index");
+        }
+
         //[HttpPost]
         //public ActionResult TextSearch(TestsListModel testsListModel)
         //{
@@ -161,7 +172,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         //public ActionResult EditQuestion_Post(TestModel question)
         //{
         //    // TODO
-            
+
         //    return RedirectToAction("TestContent", "Test", new {Id = question.Test.Id});
         //}
     }

@@ -1,0 +1,73 @@
+﻿@model UnikeyFactoryTest.Presentation.Models.TestModel
+
+@Html.TextAreaFor(m => m.QuestionText, new { @class = "required", style = "max-width: 100%;width: 90%;", @rows = 5, placeholder = "Enter the question " })
+@Html.ValidationMessageFor(x => x.QuestionText, null, new { @class = "alert-danger" })
+<div class="form-group">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                @Html.CheckBoxFor(x => x.IsCorrect, new { id = "check1", onclick = "CorrectAnswer('check1','checkbox1','txt1','lbl1')" })
+            </div>
+        </div>
+        @Html.TextBoxFor(x => x.AnswerText, new { @class = "form-control ", style = "max-width: 100%;width: 70%;", id = "checkbox1", placeholder = "Enter the answer " })
+
+        @Html.TextBoxFor(x => x.AnswerText, new { type = "number", id = "txt1", @class = "class-mymarginleft", style = "width: 80px", step = "0.5", placeholder = "Score", @hidden = "hidden" })
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                @Html.CheckBoxFor(x => x.IsCorrect, new { id = "check2", onclick = "CorrectAnswer('check2','checkbox2','txt2','lbl2')" })
+            </div>
+        </div>
+        @Html.TextBoxFor(x => x.AnswerText, new { type = "text", @class = "form-control", style = "max-width: 100%;width: 70%;", id = "checkbox2", placeholder = "Enter the answer " })
+        @Html.TextBoxFor(x => x.AnswerText, new { type = "number", id = "txt2", @class = "class-mymarginleft ", style = "width: 80px", step = "0.5", placeholder = "Score", @hidden = "hidden" })
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                @Html.CheckBoxFor(x => x.IsCorrect, new { id = "check3", onclick = "CorrectAnswer('check3','checkbox3','txt3','lbl3')" })
+            </div>
+        </div>
+        @Html.TextBoxFor(x => x.AnswerText,new { type = "text", @class = "form-control", style = "max-width: 100%;width: 70%;", id = "checkbox3", placeholder = "Enter the answer " })
+        @Html.TextBoxFor(x => x.AnswerText, new { type = "number", id = "txt3", @class = "class-mymarginleft ", style = "width: 80px", step = "0.5", placeholder = "Score", @hidden = "hidden" })
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                @Html.CheckBoxFor(x => x.IsCorrect, new { id = "check4", onclick = "CorrectAnswer('check4','checkbox4','txt4','lbl4')" })
+            </div>
+        </div>
+        @Html.TextBoxFor(x => x.AnswerText, new { type = "text", @class = "form-control", style = "max-width: 100%;width: 70%;", id = "checkbox4", placeholder = "Enter the answer " })
+        @Html.TextBoxFor(x => x.AnswerText, new { type = "number", id = "txt4", @class = "class-mymarginleft ", style = "width: 80px", step = "0.5", placeholder = "Score", @hidden = "hidden" })
+    </div>
+</div>
+
+
+@*@using (Html.BeginForm("AddTest", "Test", FormMethod.Post))
+    {*@
+<button class="btn btn-info" data-toggle="modal" data-target="#staticBackdrop">Back</button>
+
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Alert</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                If you press Confirm the question will not be saved. Press Back to be able to save the question before exiting.
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="DisableQuestionForm('mydivQuestionForm')">Confirm</button>
+                    <button type="button" class="btn btn-primary">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<button class="btn btn-info" style="margin-left: 64%" onclick="DisableQuestionForm('mydivQuestionForm')">SaveQuestion</button>
+
+@*}*@
+
