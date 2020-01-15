@@ -147,6 +147,7 @@
     <Compile Include="Models\DTO\AdministratedTestDto.cs" />
     <Compile Include="Models\DTO\AnswerDto.cs" />
     <Compile Include="Models\DTO\QuestionDto.cs" />
+    <Compile Include="Models\DTO\State.cs" />
     <Compile Include="Models\DTO\TestDto.cs" />
     <Compile Include="Models\DTO\UserDto.cs" />
     <Compile Include="Models\TestsListModel.cs" />

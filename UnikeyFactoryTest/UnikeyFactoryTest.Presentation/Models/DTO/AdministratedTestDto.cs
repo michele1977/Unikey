@@ -7,6 +7,7 @@ using UnikeyFactoryTest.Domain;
 
 namespace UnikeyFactoryTest.Presentation.Models.DTO
 {
+    
     public class AdministratedTestDto
     {
         public AdministratedTestDto()
@@ -31,14 +32,10 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public int TestId { get; set; }
         public string TestSubject { get; set; }
         public DateTime? Date { get; set; }
-
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
+        public State State { get; set; }
 
-        public enum State
-        {
-            Created = 1, Open , Started , Closed 
-        }
         public decimal? CalculateMaxScore()
         {
             try

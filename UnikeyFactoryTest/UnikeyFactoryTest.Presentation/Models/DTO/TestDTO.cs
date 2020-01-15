@@ -58,25 +58,7 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
                 Questions.Sum(q => q.CorrectAnswerScore);
         }
 
-        //public decimal? CalculateScore()
-        //{
-        //    try
-        //    {
-        //        return Questions.SelectMany(q => q.Answers).Sum(a => a.Score);
-        //    }
-        //    catch (ArgumentNullException ex)
-        //    {
-        //        return null;
-        //    }
-        //    catch (OverflowException ex)
-        //    {
-        //        return null;
-        //    }
-        //}
-
         public List<AdministratedTestDto> AdministratedTests { get; set; }
-
-        //public List<AdministratedTestDto> AdministratedTestsOpened { get; set; }
         public ICollection<QuestionDto> Questions { get; set; }
     }
 }
