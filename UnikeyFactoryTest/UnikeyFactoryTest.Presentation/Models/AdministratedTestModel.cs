@@ -17,5 +17,6 @@ namespace UnikeyFactoryTest.Presentation.Models
         public string Name { get; set; }
         public string Surname { get; set; }
         public AdministratedQuestionBusiness Question { get; set; }
+        public bool IsLast { get; set; }
     }
 }

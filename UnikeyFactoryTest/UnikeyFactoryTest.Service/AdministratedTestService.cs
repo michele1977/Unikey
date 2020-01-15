@@ -16,6 +16,8 @@ namespace UnikeyFactoryTest.Service
 
         public int QuestionPosition = 0;
 
+        public bool IsLast = false;
+
         public AdministratedTestService()
         {
             _repo = new AdministratedTestRepository();
@@ -127,15 +129,21 @@ namespace UnikeyFactoryTest.Service
 
         public AdministratedQuestionBusiness Next(AdministratedTestBusiness administratedTest)
         {
-            if (QuestionPosition != administratedTest.AdministratedQuestions.Count)
+            if (QuestionPosition != administratedTest.AdministratedQuestions.Count - 1)
             {
                 QuestionPosition++;
                 return administratedTest.AdministratedQuestions.ElementAt(QuestionPosition);
             }
             else
             {
-                return null;
+                IsLast = true;
+                return administratedTest.AdministratedQuestions.ElementAt(QuestionPosition);
             }
+        }
+
+        public async Task Update_Save_Question(AdministratedQuestionBusiness adQuestion)
+        {
+            await _repo.Update_Save_Question(adQuestion);
         }
     }
 }

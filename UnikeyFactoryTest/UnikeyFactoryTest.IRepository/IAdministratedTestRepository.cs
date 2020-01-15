@@ -16,5 +16,6 @@ namespace UnikeyFactoryTest.IRepository
         Task<AdministratedTestBusiness> GetAdministratedTestById(int adTestId);
         Task<List<AdministratedTestBusiness>> GetAdministratedTests();
         Task DeleteAdministratedTest(int administratedTestId);
+        Task Update_Save_Question(AdministratedQuestionBusiness adQuestion);
     }
 }
