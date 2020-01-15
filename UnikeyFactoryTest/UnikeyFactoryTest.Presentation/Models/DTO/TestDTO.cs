@@ -18,27 +18,25 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
 
         public TestDto(TestBusiness test)
         {
-            TestService service = new TestService();
-            AdministratedTestService business = new AdministratedTestService();
+            var service = new TestService();
 
             Id = test.Id;
             URL = service.GenerateUrl(test.URL);
             Date = test.Date;
             UserId = test.UserId;
             Questions = test.Questions?.Select(q => new QuestionDto(q)).ToList();
-            //AdministratedTests = new List<AdministratedTestDto>();
-            //AdministratedTestsOpened = new List<AdministratedTestDto>();
-            FillAdministratedTests(business);
-            FillAdministratedTestsOpened(business);
+            AdministratedTests = new List<AdministratedTestDto>();
+            AdministratedTestsOpened = new List<AdministratedTestDto>();
             NumQuestions = test.NumQuestions;
             
         }
 
-        private async Task FillAdministratedTests(AdministratedTestService business)
+        public async Task FillAdministratedTests(AdministratedTestService business)
         {
             var dtoList = new List<AdministratedTestDto>();
+            var listAdministratedTest = await business.GetAdministratedTests();
 
-            foreach (var adTest in await business.GetAdministratedTests())
+            foreach (var adTest in listAdministratedTest)
             {
                 dtoList.Add(new AdministratedTestDto(adTest));
             }
