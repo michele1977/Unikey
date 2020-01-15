@@ -18,14 +18,16 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
         public TestDto(TestBusiness test)
         {
             TestService service = new TestService();
+            AdministratedTestService business = new AdministratedTestService();
 
             Id = test.Id;
             URL = service.GenerateUrl(test.URL);
             Date = test.Date;
             UserId = test.UserId;
             Questions = test.Questions?.Select(q => new QuestionDto(q)).ToList();
-            //AdministratedTests = test.AdministratedTests?.Select(t => new AdministratedTestDto(t)).ToList();
+            AdministratedTests = business.GetAdministratedTests();
             NumQuestions = test.NumQuestions;
+            
         }
 
         public int Id { get; set; }
@@ -59,7 +61,8 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
         //    }
         //}
 
-        //public ICollection<AdministratedTestDto> AdministratedTests { get; set; }
+        public List<AdministratedTestDto> AdministratedTests { get; set; }
+        public List<AdministratedTestDto> AdministratedTestsOpened { get; set; }
         public ICollection<QuestionDto> Questions { get; set; }
     }
 }

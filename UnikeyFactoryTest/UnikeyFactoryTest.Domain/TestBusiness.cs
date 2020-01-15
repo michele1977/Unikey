@@ -21,7 +21,7 @@ namespace UnikeyFactoryTest.Domain
         public int UserId { get; set; }
         public int NumQuestions { get; set; }
 
-        //public List<AdministratedTestBusiness> AdministratedTests { get; set; }
+        public List<AdministratedTestBusiness> AdministratedTests { get; set; }
         public List<QuestionBusiness> Questions { get; set; }
         //public UserBusiness User { get; set; }
     }
