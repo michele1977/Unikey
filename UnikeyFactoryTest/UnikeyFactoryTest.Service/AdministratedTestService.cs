@@ -127,18 +127,10 @@ namespace UnikeyFactoryTest.Service
             }
         }
 
-        public AdministratedQuestionBusiness Next(int AdministratedTestId, int position)
+        public async Task<AdministratedQuestionBusiness> Next(int AdministratedTestId, int position)
         {
-            if (QuestionPosition != administratedTest.AdministratedQuestions.Count - 1)
-            {
-                QuestionPosition++;
-                return administratedTest.AdministratedQuestions.ElementAt(QuestionPosition);
-            }
-            else
-            {
-                IsLast = true;
-                return administratedTest.AdministratedQuestions.ElementAt(QuestionPosition);
-            }
+            var test = await _repo.GetAdministratedTestById(AdministratedTestId);
+            return test.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
         }
 
         public async Task Update_Save_Question(AdministratedQuestionBusiness adQuestion)

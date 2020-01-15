@@ -7,7 +7,6 @@
         using (Html.BeginForm("SaveTest", "ExTest"))
         {
             <input type="hidden" value="@Model.Url" name="Url"/>
-            <input type="hidden" name="admnistratedTestId" value="@Model.AdmnistratedTestId"/>
             <div class="QuestionContainer">
                 @{
                     if (String.IsNullOrEmpty(Model.ActualQuestion.Text) != true)
