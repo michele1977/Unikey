@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Presentation.Models.DTO;
@@ -25,9 +26,30 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
             Date = test.Date;
             UserId = test.UserId;
             Questions = test.Questions?.Select(q => new QuestionDto(q)).ToList();
-            AdministratedTests = business.GetAdministratedTests();
+            FillAdministratedTests(business);
+            FillAdministratedTestsOpened(business);
             NumQuestions = test.NumQuestions;
             
+        }
+
+        private async Task FillAdministratedTests(AdministratedTestService business)
+        {
+            var dtoList = new List<AdministratedTestDto>();
+
+            foreach (var adTest in await business.GetAdministratedTests())
+            {
+                dtoList.Add(new AdministratedTestDto(adTest));
+            }
+
+            AdministratedTests = dtoList;
+        }
+
+        private async Task FillAdministratedTestsOpened(AdministratedTestService business)
+        {
+            var dtoList = new List<AdministratedTestDto>();
+
+
+            AdministratedTestsOpened = dtoList;
         }
 
         public int Id { get; set; }
