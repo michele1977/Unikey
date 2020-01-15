@@ -68,6 +68,18 @@ namespace UnikeyFactoryTest.Repository
             return await myTask;
         }
 
+        public async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId)
+        {
+            var myTask = Task.Run(() =>
+            {
+                var filteredList = _ctx.AdministratedTests.Where(t => t.TestId == testId).ToListAsync();
+                return filteredList;
+            });
+            var adTestList = await myTask;
+            var filteredList2 = adTestList.Select(AdministratedTestMapper.MapDaoToDomainLight).ToList();
+            return filteredList2;
+        }
+
         #region DeleteAdministratedTest
         public async Task DeleteAdministratedTest(int administratedTestId)
         {

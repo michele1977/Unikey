@@ -10,6 +10,22 @@ namespace UnikeyFactoryTest.Mapper
 {
     public class AdministratedTestMapper 
     {
+        public static AdministratedTestBusiness MapDaoToDomainLight(AdministratedTest dao)
+        {
+            var returned = new AdministratedTestBusiness
+            {
+                Id = dao.Id,
+                URL = dao.URL,
+                Date = dao.Date,
+                TotalScore = dao.TotalScore,
+                TestId = dao.TestId,
+                TestSubject = dao.TestSubject,
+                AdministratedQuestions = new List<AdministratedQuestionBusiness>()
+                
+            };
+            return returned;
+        }
+
         public static AdministratedTestBusiness MapDaoToDomain(AdministratedTest dao)
         {
             var returned = new AdministratedTestBusiness

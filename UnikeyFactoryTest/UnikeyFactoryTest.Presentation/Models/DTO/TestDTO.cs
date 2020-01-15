@@ -30,18 +30,25 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
             
         }
 
-        public async Task FillAdministratedTests(AdministratedTestService business)
-        {
-            var dtoList = new List<AdministratedTestDto>();
-            var listAdTest = await business.GetAdministratedTests();
+        #region FillAdministratedTests()
 
-            foreach (var adTest in listAdTest)
-            {
-                dtoList.Add(new AdministratedTestDto(adTest));
-            }
+        public async Task FillAdministratedTests(int testId)
+        {
+            var filteredList = (await GetAdministratedTestsByTestId(testId)).Where(t => t.TestId == Id);
+            var dtoList = filteredList.Select(adTest => new AdministratedTestDto(adTest)).ToList();
 
             AdministratedTests = dtoList;
         }
+
+        private static async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId)
+        {
+            var service = new AdministratedTestService();
+            var listAdTest = await service.GetAdministratedTestsByTestId(testId);
+            return listAdTest;
+        }
+
+        #endregion)
+        
 
         public int Id { get; set; }
         public string URL { get; set; }

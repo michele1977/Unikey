@@ -85,7 +85,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var adTestService = new AdministratedTestService();
             foreach (var dto in testsListModel.Tests)
             {
-                await dto.FillAdministratedTests(adTestService);
+                await dto.FillAdministratedTests(dto.Id);
                 
             }
 

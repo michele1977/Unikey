@@ -23,6 +23,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
             Date = administratedTest.Date;
             AdministratedQuestions =
                 administratedTest.AdministratedQuestions.Select(q => new AdministratedQuestionDto(q));
+            // State = administratedTest.State;
         }
 
         public int Id { get; set; }
