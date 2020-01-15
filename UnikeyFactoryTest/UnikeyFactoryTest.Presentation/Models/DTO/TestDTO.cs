@@ -26,7 +26,7 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
             UserId = test.UserId;
             Questions = test.Questions?.Select(q => new QuestionDto(q)).ToList();
             AdministratedTests = new List<AdministratedTestDto>();
-            AdministratedTestsOpened = new List<AdministratedTestDto>();
+            //AdministratedTestsOpened = new List<AdministratedTestDto>();
             NumQuestions = test.NumQuestions;
             
         }
@@ -34,9 +34,9 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
         public async Task FillAdministratedTests(AdministratedTestService business)
         {
             var dtoList = new List<AdministratedTestDto>();
-            var listAdministratedTest = await business.GetAdministratedTests();
+            var listAdTest = await business.GetAdministratedTests();
 
-            foreach (var adTest in listAdministratedTest)
+            foreach (var adTest in listAdTest)
             {
                 dtoList.Add(new AdministratedTestDto(adTest));
             }
@@ -84,7 +84,8 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
         //}
 
         public List<AdministratedTestDto> AdministratedTests { get; set; }
-        public List<AdministratedTestDto> AdministratedTestsOpened { get; set; }
+
+        //public List<AdministratedTestDto> AdministratedTestsOpened { get; set; }
         public ICollection<QuestionDto> Questions { get; set; }
     }
 }

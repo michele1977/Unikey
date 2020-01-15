@@ -20,13 +20,7 @@ namespace UnikeyFactoryTest.Presentation.Models
         public TestsListModel()
         {
             Tests = new List<TestDto>();
-
-            //foreach (var dto in Tests)
-            //{
-            //    dto.AdministratedTests = FillAdministratedTests();
-            //    dto.AdministratedTestsOpened = new List<AdministratedTestDto>();
-            //}
-
+            
         }
         public List<TestDto> Tests { get; set; }
 

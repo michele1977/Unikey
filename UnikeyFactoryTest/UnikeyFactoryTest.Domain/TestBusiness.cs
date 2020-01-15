@@ -11,9 +11,8 @@ namespace UnikeyFactoryTest.Domain
     {
         public TestBusiness()
         {
-            //AdministratedTests = new List<AdministratedTestBusiness>();
+            AdministratedTests = new List<AdministratedTestBusiness>();
             Questions = new List<QuestionBusiness>();
-
         }
         public int Id { get; set; }
         public string URL { get; set; }

@@ -95,6 +95,10 @@ namespace UnikeyFactoryTest.Service
             return administratedTests.Select(AdministratedTestMapper.MapDaoToDomain);
         }
 
+        //public async Task<IEnumerable<AdministratedTestBusiness>> GetAdministratedTestsByTestId()
+        //{
+
+        //}
 
         public async Task DeleteAdministratedTest(int administratedTestId)
         {

@@ -11,7 +11,6 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
     {
         public AdministratedTestDto()
         {
-
         }
         public AdministratedTestDto(AdministratedTestBusiness administratedTest)
         {
@@ -70,4 +69,5 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
 
         public IEnumerable<AdministratedQuestionDto> AdministratedQuestions { get; set; }
     }
+
 }
