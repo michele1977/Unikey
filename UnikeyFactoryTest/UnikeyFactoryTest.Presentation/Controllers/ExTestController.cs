@@ -78,16 +78,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             testsListModel.Tests = testsListModel.Paginate(tests.ToList());
             
-
-            if (testsListModel.IsAjaxCall)
-            {
-                return Json(new
-                {
-                    redirectUrl = Url.Action("AdministratedTestsList",
-                        new { PageNumber = testsListModel.PageNumber, PageSize = testsListModel.PageSize })
-                });
-            }
-
             return View(testsListModel);
         }
 
