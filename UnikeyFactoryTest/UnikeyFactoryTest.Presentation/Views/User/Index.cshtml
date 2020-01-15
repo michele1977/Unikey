@@ -1,4 +1,5 @@
-﻿@model UnikeyFactoryTest.Presentation.Models.UserModel
+﻿@using UnikeyFactoryTest.Presentation.Models
+@model UnikeyFactoryTest.Presentation.Models.UserModel
 
 @{
     Layout = null;
@@ -15,44 +16,56 @@
 </head>
 
 <body>
-<div style="width: 100%;text-align: center">
-    <h1>Welcome User</h1>
-</div>
+    <div class="container" style="height:700px;">
+        <div class="row" style="height:700px;padding-top: 40px;">
+            <div class="col-8" style="background-color: antiquewhite;">
 
-    <div class="container col-6" style="padding: 15px; max-width: 500px; border: 1px solid black; border-radius: 10px; background-color: lightblue">
-        <form action="/User/CheckData" method="post">
-            <div class="form-group">
-                <label for="lbUsername">Username</label>
-                <input type="text" class="form-control" id="lbUsername" name="Username">
-                @Html.ValidationMessageFor(x => x.Username, null, new { @class = "text-danger" })
             </div>
-            <div class="form-group">
-                <label for="lbPassword">Password</label>
-                <input type="password" class="form-control" id="lbPassword" name="Password">
-            </div>
-            <div class="form-group">
-                <label for="lbRetypedPassword">Retype password</label>
-                <input type="password" class="form-control" id="lbRetypedPassword" name="RetypedPassword">
-                @Html.ValidationMessageFor(x => x.RetypedPassword, null, new { @class = "text-danger" })
-            </div>
-            <div style="width: 100%;text-align: right">
-                <button type="submit" class="btn btn-primary">Log In</button>
-            </div>
-        </form>
-    </div>
-    <br />
+            <div class="col-4" style="padding-top: 100px;background-color: rgb(0, 132, 255);">
+                @Html.Partial("_LoginFormPartial", Model.LoginModel)
 
-    <div class="container alert alert-danger col-6" role="alert" style="display:none" id="myDiv">
-        Username or password invalid
+                @Html.Partial("_SigningUpFormPartial", Model.SigningUpModel)
+            </div>
+        </div>
     </div>
 
-    @if (Model.IsUser.Equals("IsNotAUser"))
+
+    @if (Model.UserState == UserState.IsNotAUser)
     {
         <script>
-            let myDiv = document.getElementById("myDiv");
+            let myDiv = document.getElementById("logInFailed");
             myDiv.style.display = "block";
         </script>
     }
+
+    @if (Model.UserState == UserState.RegistrationOk)
+    {
+        <script>
+            document.getElementById("logInForm").style.display = "none";
+            document.getElementById("signingUpForm").style.display = "block";
+            document.getElementById("signingUpOk").style.display = "block";
+        </script>
+    }
+    else if(Model.UserState == UserState.RegistrationKo)
+    {
+        <script>
+            document.getElementById("logInForm").style.display = "none";
+            document.getElementById("signingUpForm").style.display = "block";
+        </script>
+    }
+
+    <script>
+        function ChangeForm(process) {
+            if (process === 1) {
+                document.getElementById("logInForm").style.display = "none";
+                document.getElementById("signingUpForm").style.display = "block";
+            }
+            else if (process === 2) {
+                document.getElementById("signingUpForm").style.display = "none";
+                document.getElementById("logInForm").style.display = "block";
+            }
+        }
+    </script>
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
