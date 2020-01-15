@@ -36,6 +36,10 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
 
+        public enum State
+        {
+            Created = 1, Open , Started , Closed 
+        }
         public decimal? CalculateMaxScore()
         {
             try

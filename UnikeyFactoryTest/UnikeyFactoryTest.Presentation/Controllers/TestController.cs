@@ -82,7 +82,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             foreach (var dto in testsListModel.Tests)
             {
                 await dto.FillAdministratedTests(adTestService);
-                var test = dto.AdministratedTests;
+                
             }
 
             var service = new TestService();
