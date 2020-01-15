@@ -38,6 +38,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
         public async Task<ActionResult> SaveTest(AdministratedTestModel model, FormCollection form)
         {
+            await service.Update_Save_Question(model.ActualQuestion);
             var AdminstratedTest = await service.GetAdministratedTestById(model.ActualQuestion.AdministratedTestId);
             model.QuestionAnswerDictionary = new Dictionary<int, int>();
             //popolo il dictionary con domanda e relativa risposta
