@@ -39,6 +39,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
         public async Task<ActionResult> SaveTest(AdministratedTestModel model, FormCollection form)
         {
+            await service.Update_Save_Question(model.ActualQuestion);
             var AdminstratedTest = await service.GetAdministratedTestById(model.ActualQuestion.AdministratedTestId);
             model.QuestionAnswerDictionary = new Dictionary<int, int>();
             //popolo il dictionary con domanda e relativa risposta
@@ -103,6 +104,14 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             //model.ActualQuestion = AdministratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == model.ActualPosition);
             //await service.Update_Save_Question(model.ActualQuestion);
             model.ActualQuestion = await service.Next(model.AdministratedTestId,model.ActualPosition+1);
+            return View("Test", model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Close(AdministratedTestModel model)
+        {
+            await service.Update_Save_Question(model.ActualQuestion);
+            await service.Update_Save(await service.GetAdministratedTestById(model.ActualQuestion.AdministratedTestId));
             return View("Test", model);
         }
     }
