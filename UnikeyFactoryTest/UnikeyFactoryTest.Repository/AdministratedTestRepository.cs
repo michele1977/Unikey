@@ -33,7 +33,7 @@ namespace UnikeyFactoryTest.Repository
                     var newAdTestDb = AdministratedTestMapper.MapDomainToDao(adTest);
                     _ctx.AdministratedTests.Add(newAdTestDb);
                     _ctx.SaveChanges();
-                    adTest = AdministratedTestMapper.MapDaoToDomain(newAdTestDb);
+                    adTest = AdministratedTestMapper.MapDaoToDomainHeavy(newAdTestDb);
                     return adTest;
                 }
                 catch (Exception ex)
@@ -44,28 +44,36 @@ namespace UnikeyFactoryTest.Repository
             return await addTask;
         }
 
-        public async Task<AdministratedTestBusiness> GetAdministratedTestById(int adTestId)
+        public async Task<AdministratedTestBusiness> GetAdministratedTestById(int testId)
         {
-            var task = Task.Run(() =>
+            var task = await Task.Run(() =>
             {
-                var adTestDb = _ctx.AdministratedTests.FirstOrDefault(x => x.Id.Equals(adTestId));
-                
-                if (adTestDb == null)
-                {
-                    throw new Exception("Not valid id");
-                }
-
-                return AdministratedTestMapper.MapDaoToDomain(adTestDb);
-
+                return _ctx.AdministratedTests.FirstOrDefault(x => x.Id.Equals(testId));
             });
 
-            return await task;
+            if (task == null)
+            {
+                throw new Exception("Not valid id");
+            }
+
+            return AdministratedTestMapper.MapDaoToDomainHeavy(task);
         }
 
-        public async Task<List<AdministratedTest>> GetAdministratedTests()
+        public async Task<List<AdministratedTestBusiness>> GetAdministratedTests()
         {
-            var myTask = Task.Run(() => _ctx.AdministratedTests.ToListAsync());
-            return await myTask;
+            var administratedTestListTask = await Task.Run(() => _ctx.AdministratedTests.Select(t => new AdministratedTestBusiness()
+            {
+                Id = t.Id,
+                TestSubject = t.TestSubject,
+                Date = t.Date,
+                TotalScore = t.TotalScore,
+                ResultScore = t.AdministratedQuestions
+                    .SelectMany(q => q.AdministratedAnswers)
+                    .Where(a => (bool) a.isSelected)
+                    .Sum(a => a.Score)
+            }).ToList());
+
+            return administratedTestListTask;
         }
 
         #region DeleteAdministratedTest

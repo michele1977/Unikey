@@ -47,24 +47,21 @@ namespace UserTest
 
             var adTest = new AdministratedTestBusiness
             {
-                Id = 0,
-                TestId = 0,
+                TestId = 1,
                 TestSubject = "",
                 URL = "",
                 AdministratedQuestions = new List<AdministratedQuestionBusiness>
                 {
                     new AdministratedQuestionBusiness
                     {
-                        Id = 0,
                         Text = "",
-                        AdministratedTestId = 0,
+                        AdministratedTestId = 986,
                         AdministratedAnswers = new List<AdministratedAnswerBusiness>
                         {
                             new AdministratedAnswerBusiness
                             {
-                                Id = 0,
                                 Text = "",
-                                AdministratedQuestionId = 0
+                                AdministratedQuestionId = 987
                             }
                         }
                     }
@@ -81,11 +78,23 @@ namespace UserTest
                 {
                     throw new Exception();
                 }
+                
             }
 
-            var test = myCtx.AdministratedTests.Local[myCtx.AdministratedTests.ToList().Count];
-            Assert.IsNotNull(test);
+            var g = 0;
+            try
+            {
+                var test = myCtx.AdministratedTests.FirstOrDefault(t => t.Id == 994);
 
+                if(test is null)
+                    throw new Exception();
+            }
+            catch
+            {
+                g = 1;
+            }
+            
+            Assert.AreEqual(0, g);
         }
 
         [TestMethod]
@@ -102,7 +111,7 @@ namespace UserTest
             {
                 try
                 {
-                    await myRepo.Update_Save(AdministratedTestMapper.MapDaoToDomain(myAdTest));
+                    await myRepo.Update_Save(myAdTest);
                 }
                 catch
                 {

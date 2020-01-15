@@ -11,9 +11,9 @@ namespace UnikeyFactoryTest.Presentation.Models
     {
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
-        public bool LastPage { get; set; }
         public bool IsAjaxCall { get; set; }
         public string TextFilter { get; set; }
+        public int LastPage { get; set; }
 
         public AdministratedTestsListModel()
         {
@@ -24,14 +24,17 @@ namespace UnikeyFactoryTest.Presentation.Models
 
         public List<AdministratedTestDto> Paginate(List<AdministratedTestBusiness> tests)
         {
+            LastPage = (int)Math.Ceiling((float)tests.Count / PageSize);
+
+            if (PageNumber > LastPage)
+            {
+                PageNumber = LastPage;
+            }
+
             List<AdministratedTestDto> filteredList = tests.Select(t => new AdministratedTestDto(t))
                 .Skip((PageNumber - 1) * PageSize)
                 .Take(PageSize).ToList();
 
-            if ((tests.Skip((PageNumber) * PageSize).Take(PageSize).ToList().Count) == 0)
-            {
-                LastPage = true;
-            }
 
             return filteredList;
         }
