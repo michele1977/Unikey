@@ -33,6 +33,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var savedTest = await service.Add(newExecutionTest);
             model.NumQuestion = test.Questions.Count;
             model.ActualQuestion = savedTest.AdministratedQuestions.FirstOrDefault(x => x.Position==0);
+            model.AdministratedTestId = savedTest.Id;
             return View("Test", model);
         }
 
@@ -94,8 +95,14 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult> Next(AdministratedTestModel model)
         {
-            await service.Update_Save_Question(model.ActualQuestion);
-            model.ActualQuestion = await service.Next(model.ActualQuestion.AdministratedTestId,model.ActualQuestion.Position+1);
+            //var AdministratedTest = await service.GetAdministratedTestById(model.AdministratedTestId);
+            //for (int i = 0; i < AdministratedTest.AdministratedQuestions.Count; i++)
+            //{
+            //    AdministratedTest.AdministratedQuestions.ElementAt(i).Position = i;
+            //}
+            //model.ActualQuestion = AdministratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == model.ActualPosition);
+            //await service.Update_Save_Question(model.ActualQuestion);
+            model.ActualQuestion = await service.Next(model.AdministratedTestId,model.ActualPosition+1);
             return View("Test", model);
         }
     }
