@@ -18,14 +18,14 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         {
             var model = new AdministratedTestModel();
 
-            model.URL = guid;
+            model.Url = guid;
 
 
             return View("TestStart", model);
         }
         // test
         [HttpPost]
-        public async Task<ActionResult> BeginTest(AdministratedTestModel2 model)
+        public async Task<ActionResult> BeginTest(AdministratedTestModel model)
         {
             var subject = model.Name + " " + model.Surname;
             var test = testService.GetTestByURL(model.Url);
@@ -38,7 +38,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
         public async Task<ActionResult> SaveTest(AdministratedTestModel model, FormCollection form)
         {
-            var AdminstratedTest = await service.GetAdministratedTestById(model.AdmnistratedTestId);
+            var AdminstratedTest = await service.GetAdministratedTestById(model.ActualQuestion.AdministratedTestId);
             model.QuestionAnswerDictionary = new Dictionary<int, int>();
             //popolo il dictionary con domanda e relativa risposta
             foreach (var key in form.AllKeys)
@@ -92,7 +92,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Next(AdministratedTestModel2 model)
+        public async Task<ActionResult> Next(AdministratedTestModel model)
         {
             await service.Update_Save_Question(model.ActualQuestion);
             model.ActualQuestion = await service.Next(model.ActualQuestion.AdministratedTestId,model.ActualQuestion.Position+1);

@@ -9,21 +9,9 @@ namespace UnikeyFactoryTest.Presentation.Models
 {
     public class AdministratedTestModel
     {
-        public Dictionary<int,int> QuestionAnswerDictionary { get; set; }
+        public Dictionary<int, int> QuestionAnswerDictionary { get; set; }
 
-        public AdministratedTestBusiness Test { get; set; }
-        public int AdmnistratedTestId { get; set; }
-        public string URL { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public AdministratedQuestionBusiness Question { get; set; }
-        public bool IsLast { get; set; }
-    }
-
-    public class AdministratedTestModel2
-    {
         public int NumQuestion { get; set; }
-
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Url { get; set; }
