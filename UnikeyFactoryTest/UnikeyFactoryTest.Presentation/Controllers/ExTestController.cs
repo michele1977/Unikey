@@ -65,6 +65,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                     AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key).Text + " ";
             }
             await service.Update_Save(AdminstratedTest);
+            //set status test at CLOSED!!
             return View("TestEnded");
         }
 
@@ -96,23 +97,40 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult> Next(AdministratedTestModel model)
         {
-            //var AdministratedTest = await service.GetAdministratedTestById(model.AdministratedTestId);
-            //for (int i = 0; i < AdministratedTest.AdministratedQuestions.Count; i++)
-            //{
-            //    AdministratedTest.AdministratedQuestions.ElementAt(i).Position = i;
-            //}
-            //model.ActualQuestion = AdministratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == model.ActualPosition);
-            //await service.Update_Save_Question(model.ActualQuestion);
             model.ActualQuestion = await service.Next(model.AdministratedTestId,model.ActualPosition+1);
             return View("Test", model);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Close(AdministratedTestModel model)
+        public async Task<ActionResult> Close(AdministratedTestModel model, FormCollection form)
         {
             await service.Update_Save_Question(model.ActualQuestion);
-            await service.Update_Save(await service.GetAdministratedTestById(model.ActualQuestion.AdministratedTestId));
-            return View("Test", model);
+            var AdminstratedTest = await service.GetAdministratedTestById(model.ActualQuestion.AdministratedTestId);
+            model.QuestionAnswerDictionary = new Dictionary<int, int>();
+            //popolo il dictionary con domanda e relativa risposta
+            foreach (var key in form.AllKeys)
+            {
+                if (key != "URL" && key != "admnistratedTestId")
+                {
+                    var value = Request.Form[key];
+                    model.QuestionAnswerDictionary[System.Convert.ToInt32(key)] = System.Convert.ToInt32(value);
+                }
+
+            }
+            foreach (var question in model.QuestionAnswerDictionary)
+            {
+
+                if (question.Value != 0)
+                {
+                    AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key)
+                        .AdministratedAnswers.FirstOrDefault(a => a.Id == question.Value).isSelected = true;
+                }
+
+                AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key).Text =
+                    AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key).Text + " ";
+            }
+            await service.Update_Save(await service.GetAdministratedTestById(model.AdministratedTestId));
+            return View("TestEnded");
         }
     }
 }
