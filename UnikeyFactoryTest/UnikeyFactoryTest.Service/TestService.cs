@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Domain;
@@ -23,8 +24,8 @@ namespace UnikeyFactoryTest.Service
         {
             using (TestRepository _repo = new TestRepository())
             {
-                if(string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
-                await _repo.SaveTest(TestMapper.MapBizToDal(test));
+                if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
+                    await _repo.SaveTest(TestMapper.MapBizToDal(test));
             }
         }
 
@@ -34,22 +35,7 @@ namespace UnikeyFactoryTest.Service
 
             TestBusiness test = null;
 
-            try
-            {
-                test = await Repo.GetTest(testId);
-            }
-            catch (NullReferenceException ex)
-            {
-                throw;
-            }
-            catch (InvalidOperationException ex)
-            {
-                //TODO
-            }
-            catch (Exception ex)
-            {
-                //TODO
-            }
+            test = await Repo.GetTest(testId);
 
             return test;
         }
@@ -65,30 +51,7 @@ namespace UnikeyFactoryTest.Service
         {
             using (Repo = new TestRepository())
             {
-                try
-                {
-                    await Repo.DeleteTest(testId);
-                }
-                catch (NullReferenceException ex)
-                {
-                    throw;
-                }
-                catch (NotSupportedException ex)
-                {
-
-                }
-                catch (ObjectDisposedException ex)
-                {
-
-                }
-                catch (InvalidOperationException ex)
-                {
-
-                }
-                catch (Exception ex)
-                {
-
-                }
+                await Repo.DeleteTest(testId);
             }
         }
 

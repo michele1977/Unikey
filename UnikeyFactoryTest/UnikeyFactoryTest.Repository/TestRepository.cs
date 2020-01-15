@@ -37,20 +37,25 @@ namespace UnikeyFactoryTest.Repository
 
         public TestBusiness GetTestByURL(string URL)
         {
-            var result = _ctx.Tests.FirstOrDefault(x => x.URL.Equals(URL));
-            if (result == null) throw new Exception("Not valid URL");
-            else return TestMapper.MapDalToBizHeavy(result);
+            var result = _ctx.Tests.First(x => x.URL.Equals(URL));
+
+            if (result == null)
+            {
+                throw new Exception($"Test not found at specified URL ({URL})");
+            }
+
+            return TestMapper.MapDalToBizHeavy(result);
         }
 
         public async Task<TestBusiness> GetTest(int testId)
         {
-            var myTask = await Task.Run(() => _ctx.Tests.FirstOrDefault(t => t.Id == testId));
-
+            var myTask = await Task.Run(() => _ctx.Tests.First(t => t.Id == testId));
 
             if (myTask == null)
             {
-                throw new NullReferenceException("Test not found at specified id");
+                throw new Exception($"Test not found at specified id ({testId})");
             }
+
             return TestMapper.MapDalToBizHeavy(myTask);
         }
 
@@ -73,12 +78,9 @@ namespace UnikeyFactoryTest.Repository
         {
             var task = await Task.Run(() =>
             {
-                return _ctx.Tests.FirstOrDefault(t => t.Id == testId);
+                return _ctx.Tests.First(t => t.Id == testId);
             });
-            if (task == null)
-            {
-                throw new NullReferenceException("Test not found at specified id");
-            }
+
             _ctx.Tests.Remove(task);
             _ctx.SaveChanges();
         }
