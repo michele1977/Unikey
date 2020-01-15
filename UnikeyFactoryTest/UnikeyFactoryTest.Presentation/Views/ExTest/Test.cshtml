@@ -2,75 +2,68 @@
 @model UnikeyFactoryTest.Presentation.Models.AdministratedTestModel
 <img src="~/Logos/UnikeyLogo.png" class="logo" />
 <div class="container" style="width:100%;">
-    @{
-        <h2 class="Title">Assessment of @Model.Name @Model.Surname</h2>
-        using (Html.BeginForm("SaveTest", "ExTest"))
+
+    <h2 class="Title">Assessment of @Model.Name @Model.Surname</h2>
+    <div class="QuestionContainer" style="position:relative">
+        @using (Html.BeginForm("SaveTest", "ExTest"))
         {
             <input type="hidden" value="@Model.Url" name="Url" />
-            <div class="QuestionContainer">
-                @{
-                    if (String.IsNullOrEmpty(Model.ActualQuestion.Text) != true)
-                    {
-                        <label id="Question">
-                            @Model.ActualQuestion.Text
-                        </label>
-                        <hr />
-                    }
 
-                    <div class="AnswerContainer">
-                        @{
-                            foreach (var answer in Model.ActualQuestion.AdministratedAnswers)
-                            {
-                                <div class="answer" onclick="selected(@answer.Id);">
-                                    <div class="form-check">
-                                        <label class="AnswerLabel">@answer.Text</label>
-                                        <span class="RadioInput">
-                                            @Html.RadioButton(Model.ActualQuestion.Id.ToString(), answer.Id.ToString(), new { @id = answer.Id })
-                                        </span>
-                                    </div>
-                                </div>
-                            }
-                        }
+
+            if (String.IsNullOrEmpty(Model.ActualQuestion.Text) != true)
+            {
+                <label id="Question">
+                    @Model.ActualQuestion.Text
+                </label>
+                <hr />
+            }
+            <div class="AnswerContainer">
+
+                @foreach (var answer in Model.ActualQuestion.AdministratedAnswers)
+                {
+                    <div class="answer" onclick="selected(@answer.Id);">
+                        <div class="form-check">
+                            <label class="AnswerLabel">@answer.Text</label>
+                            <span class="RadioInput">
+                                @Html.RadioButton(Model.ActualQuestion.Id.ToString(), answer.Id.ToString(), new { @id = answer.Id })
+                            </span>
+                        </div>
                     </div>
-
                 }
-                <button style="float: left" class="btn btn-success PreviousButton">Previous</button>
-                <button style="text-align: center;" class="btn btn-success CloseButton">Close</button>
-
-
-
 
             </div>
-            <div style="text-align: center;"><button type="submit" class="btn btn-success SaveButton">Save Test</button></div>
+            <div><button type="submit" class="btn btn-success SaveButton">Save Test</button></div>
         }
-        using (Html.BeginForm("Next", "ExTest", FormMethod.Post))
+
+
+
+
+
+
+        @using (Html.BeginForm("Next", "ExTest", FormMethod.Post))
         {
             <input type="hidden" name="NumQuestion" value="@Model.NumQuestion" />
             <input type="hidden" name="ActualPosition" value="@Model.ActualQuestion.Position" />
             <input type="hidden" name="Name" value="@Model.Name" />
             <input type="hidden" name="Surname" value="@Model.Surname" />
             <input type="hidden" name="AdministratedTestId" value="@Model.ActualQuestion.AdministratedTestId" />
-            <button style="float: right" class="btn btn-success NextButton">Next</button>
+            <button style="float:left;" class="btn btn-success PreviousButton">Previous</button>
+            <button style="text-align: center;" class="btn btn-success CloseButton">Close</button>
+            <button class="btn btn-success NextButton" style="float:right">Next</button>
         }
-    }
+    </div>
+
     <script type="text/javascript">
         //window.addEventListener('beforeunload', function (e) {
         //    e.preventDefault();
         //    e.returnValue = '';
         //});
-
         function selected(data) {
             let isCheked = document.getElementById(data).checked;
-
             if (isCheked == false) {
                 document.getElementById(data).checked = true;
             }
-
-
         }
     </script>
-
-
-
 </div>
 
