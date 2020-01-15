@@ -14,6 +14,8 @@ namespace UnikeyFactoryTest.Service
     {
         private  IAdministratedTestRepository _repo;
 
+        private readonly int QuestionPosition = 0;
+
         public AdministratedTestService()
         {
             _repo = new AdministratedTestRepository();
