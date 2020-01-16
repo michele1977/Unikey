@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -17,6 +19,8 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 {
     public class TestController : Controller
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
         private static int UserId { get; set; }
         private static readonly Test test = new Test();
         private readonly TestService _service = new TestService();
@@ -26,7 +30,16 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         {
             if(UserId == 0)
                 UserId = model.UserId;
-            ModelState.Clear();
+
+            try
+            {
+                ModelState.Clear();
+            }
+            catch (NotSupportedException e)
+            {
+                Logger.Warn(e);
+            }
+
             return View(model);
         }
 
@@ -34,13 +47,35 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public ActionResult AddQuestion(TestModel model)
         {
             List<Answer> answers = new List<Answer>();
+
             Answer correctAnswer = new Answer()
             {
                 Text = model.CorrectAnswerText,
                 IsCorrect = true,
-                Score = Convert.ToInt32(model.AnswerScore)
             };
+
+            try
+            {
+                correctAnswer.Score = Convert.ToInt32(model.AnswerScore);
+            }
+            catch (FormatException e)
+            {
+                Logger.Error(e);
+                throw;
+            }
+            catch (InvalidCastException e)
+            {
+                Logger.Error(e);
+                throw;
+            }
+            catch (OverflowException e)
+            {
+                Logger.Error(e);
+                throw;
+            }
+            
             answers.Add(correctAnswer);
+
             foreach (var wrongAnswerText in model.WrongAnswers)
             {
                 if (!string.IsNullOrWhiteSpace(wrongAnswerText))
@@ -59,7 +94,17 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 Text = model.QuestionText,
                 Answers = answers
             };
-            test.Questions.Add(question);
+
+            try
+            {
+                test.Questions.Add(question);
+            }
+            catch (NotSupportedException e)
+            {
+                Logger.Error(e);
+                throw;
+            }
+            
             return RedirectToAction("Index");
         }
 
@@ -69,7 +114,47 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             test.UserId = UserId;
             test.URL = _service.GenerateGuid();
             test.Date = DateTime.Now;
-            await _service.AddNewTest(TestMapper.MapDalToBizHeavy(test));
+
+            try
+            {
+                await _service.AddNewTest(TestMapper.MapDalToBizHeavy(test));
+            }
+            catch (ArgumentNullException e)
+            {
+                Logger.Error(e);
+                throw;
+            }
+            catch (InvalidOperationException e)
+            {
+                Logger.Error(e);
+                throw;
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                Logger.Error(e);
+                throw;
+            }
+            catch (DbEntityValidationException e)
+            {
+                Logger.Error(e);
+                throw;
+            }
+            catch (DbUpdateException e)
+            {
+                Logger.Error(e);
+                throw;
+            }
+            catch (NotSupportedException e)
+            {
+                Logger.Error(e);
+                throw;
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                throw;
+            }
+
             return View("Index");
         }
 
@@ -80,7 +165,20 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             TestService service = new TestService();
 
-            testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
+            try
+            {
+                testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
+            }
+            catch (ArgumentNullException e)
+            {
+                Logger.Error(e);
+                throw;
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                throw;
+            }
 
             return View(testsListModel);
         }
@@ -106,7 +204,46 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public async Task<JsonResult> DeleteTest(TestDto test)
         {
             TestService service = new TestService();
-            await service.DeleteTest(test.Id);
+            
+            try
+            {
+                await service.DeleteTest(test.Id);
+            }
+            catch (ArgumentNullException e)
+            {
+                Logger.Error(e);
+                return Json(new {redirectUrl = Url.Action("Index", "Error")});
+            }
+            catch (InvalidOperationException e)
+            {
+                Logger.Error(e);
+                return Json(new {redirectUrl = Url.Action("Index", "Error")});
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                Logger.Error(e);
+                return Json(new {redirectUrl = Url.Action("Index", "Error")});
+            }
+            catch (DbEntityValidationException e)
+            {
+                Logger.Error(e);
+                return Json(new {redirectUrl = Url.Action("Index", "Error")});
+            }
+            catch (DbUpdateException e)
+            {
+                Logger.Error(e);
+                return Json(new {redirectUrl = Url.Action("Index", "Error")});
+            }
+            catch (NotSupportedException e)
+            {
+                Logger.Error(e);
+                return Json(new {redirectUrl = Url.Action("Index", "Error")});
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                return Json(new {redirectUrl = Url.Action("Index", "Error")});
+            }
 
             return Json(new
             {
@@ -119,10 +256,31 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public async Task<ActionResult> TestContent(TestDto test)
         {
             TestService service = new TestService();
-            TestDto testToPass = new TestDto(await service.GetTestById(test.Id));
-            testToPass.PageNumber = test.PageNumber;
-            testToPass.PageSize = test.PageSize;
-            testToPass.URL = service.GenerateUrl(testToPass.URL);
+            TestDto testToPass = new TestDto();
+
+            try
+            {
+                testToPass = new TestDto(await service.GetTestById(test.Id));
+                testToPass.PageNumber = test.PageNumber;
+                testToPass.PageSize = test.PageSize;
+                testToPass.URL = service.GenerateUrl(testToPass.URL);
+            }
+            catch (ArgumentNullException ex)
+            {
+                Logger.Error(ex);
+                throw;
+            }
+            catch (InvalidOperationException ex)
+            {
+                Logger.Error(ex);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+                throw;
+            }
+
             return View(testToPass);
         }
 
