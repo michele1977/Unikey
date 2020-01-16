@@ -29,13 +29,16 @@ namespace UnikeyFactoryTest.Service
 
         public AdministratedTestBusiness AdministratedTest_Builder(TestBusiness test, string subject)
         {
-            var newAdTest = new AdministratedTestBusiness();
+            var newAdTest = new AdministratedTestBusiness
+            {
+                Date = DateTime.Today,
+                URL = test.URL,
+                TestId = test.Id,
+                TestSubject = subject,
+                AdministratedQuestions = new List<AdministratedQuestionBusiness>(),
+                StateEnum = (State)1
+            };
 
-            newAdTest.Date = DateTime.Today;
-            newAdTest.URL = test.URL;
-            newAdTest.TestId = test.Id;
-            newAdTest.TestSubject = subject;
-            newAdTest.AdministratedQuestions = new List<AdministratedQuestionBusiness>();
             foreach (var q in test.Questions)
             {
                 newAdTest.AdministratedQuestions.Add(new AdministratedQuestionBusiness()
@@ -95,6 +98,12 @@ namespace UnikeyFactoryTest.Service
             return administratedTests;
         }
 
+        public async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId)
+        {
+            _repo = new AdministratedTestRepository();
+            var myTask = Task.Run(() => _repo.GetAdministratedTestsByTestId(testId));
+            return await myTask;
+        }
 
         public async Task DeleteAdministratedTest(int administratedTestId)
         {

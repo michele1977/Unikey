@@ -9,6 +9,10 @@ namespace UnikeyFactoryTest.Presentation.Models
 {
     public class AdministratedTestModel
     {
+        //enum State
+        //{
+        //    Created = 1, Started = 2, Closed = 3
+        //}
         public Dictionary<int,int> QuestionAnswerDictionary { get; set; }
 
         public AdministratedTestBusiness Test { get; set; }

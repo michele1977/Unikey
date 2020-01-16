@@ -11,9 +11,8 @@ namespace UnikeyFactoryTest.Domain
     {
         public TestBusiness()
         {
-            //AdministratedTests = new List<AdministratedTestBusiness>();
+            AdministratedTests = new List<AdministratedTestBusiness>();
             Questions = new List<QuestionBusiness>();
-
         }
         public int Id { get; set; }
         public string URL { get; set; }
@@ -21,7 +20,7 @@ namespace UnikeyFactoryTest.Domain
         public int UserId { get; set; }
         public int NumQuestions { get; set; }
 
-        //public List<AdministratedTestBusiness> AdministratedTests { get; set; }
+        public List<AdministratedTestBusiness> AdministratedTests { get; set; }
         public List<QuestionBusiness> Questions { get; set; }
         //public UserBusiness User { get; set; }
     }

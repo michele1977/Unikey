@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Presentation.Models.DTO;
@@ -14,19 +15,40 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
         {
             Questions = new List<QuestionDto>();
         }
-
+        
         public TestDto(TestBusiness test)
         {
-            TestService service = new TestService();
+            var service = new TestService();
 
             Id = test.Id;
             URL = service.GenerateUrl(test.URL);
             Date = test.Date;
             UserId = test.UserId;
             Questions = test.Questions?.Select(q => new QuestionDto(q)).ToList();
-            //AdministratedTests = test.AdministratedTests?.Select(t => new AdministratedTestDto(t)).ToList();
+            AdministratedTests = new List<AdministratedTestDto>();
             NumQuestions = test.NumQuestions;
+            
         }
+
+        #region FillAdministratedTests()
+
+        public async Task FillAdministratedTests(int testId)
+        {
+            var filteredList = (await GetAdministratedTestsByTestId(testId)).Where(t => t.TestId == Id);
+            var dtoList = filteredList.Select(adTest => new AdministratedTestDto(adTest)).ToList();
+
+            AdministratedTests = dtoList;
+        }
+
+        private static async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId)
+        {
+            var service = new AdministratedTestService();
+            var listAdTest = await service.GetAdministratedTestsByTestId(testId);
+            return listAdTest;
+        }
+
+        #endregion)
+        
 
         public int Id { get; set; }
         public string URL { get; set; }
@@ -43,23 +65,7 @@ namespace UnikeyFactoryTest.Presentation.Models.Dto
                 Questions.Sum(q => q.CorrectAnswerScore);
         }
 
-        //public decimal? CalculateScore()
-        //{
-        //    try
-        //    {
-        //        return Questions.SelectMany(q => q.Answers).Sum(a => a.Score);
-        //    }
-        //    catch (ArgumentNullException ex)
-        //    {
-        //        return null;
-        //    }
-        //    catch (OverflowException ex)
-        //    {
-        //        return null;
-        //    }
-        //}
-
-        //public ICollection<AdministratedTestDto> AdministratedTests { get; set; }
+        public List<AdministratedTestDto> AdministratedTests { get; set; }
         public ICollection<QuestionDto> Questions { get; set; }
     }
 }

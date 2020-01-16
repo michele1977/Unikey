@@ -78,9 +78,16 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         {
             testsListModel = testsListModel ?? new TestsListModel();
 
-            TestService service = new TestService();
+            var service = new TestService();
+            var tests = await service.GetTests();
+            testsListModel.Tests = testsListModel.Paginate(tests);
 
-            testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
+            var adTestService = new AdministratedTestService();
+            foreach (var dto in testsListModel.Tests)
+            {
+                await dto.FillAdministratedTests(dto.Id);
+                
+            }
 
             return View(testsListModel);
         }

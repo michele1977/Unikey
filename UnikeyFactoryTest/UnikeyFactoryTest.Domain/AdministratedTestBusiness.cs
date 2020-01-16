@@ -3,6 +3,13 @@ using System.Collections.Generic;
 
 namespace UnikeyFactoryTest.Domain
 {
+    public enum State
+    {
+        Open = 1,
+        Started = 2,
+        Closed = 3
+    }
+
     public class AdministratedTestBusiness
     {
         public AdministratedTestBusiness()
@@ -17,6 +24,7 @@ namespace UnikeyFactoryTest.Domain
         public string TestSubject { get; set; }
         public DateTime? Date { get; set; }
         public decimal? ResultScore { get; set; }
+        public State StateEnum { get; set; }
         public virtual ICollection<AdministratedQuestionBusiness> AdministratedQuestions { get; set; }
     }
 }

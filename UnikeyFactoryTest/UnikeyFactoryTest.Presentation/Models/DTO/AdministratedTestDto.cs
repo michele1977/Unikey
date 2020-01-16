@@ -7,11 +7,11 @@ using UnikeyFactoryTest.Domain;
 
 namespace UnikeyFactoryTest.Presentation.Models.DTO
 {
+    
     public class AdministratedTestDto
     {
         public AdministratedTestDto()
         {
-
         }
         public AdministratedTestDto(AdministratedTestBusiness administratedTest)
         {
@@ -33,7 +33,6 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public int TestId { get; set; }
         public string TestSubject { get; set; }
         public DateTime? Date { get; set; }
-
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public decimal ResultScore { get; set; }
@@ -72,4 +71,5 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
 
         public IEnumerable<AdministratedQuestionDto> AdministratedQuestions { get; set; }
     }
+
 }
