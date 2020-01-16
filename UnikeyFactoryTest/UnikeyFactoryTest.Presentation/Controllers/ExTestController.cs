@@ -97,7 +97,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult> Next(AdministratedTestModel model)
         {
+            //await service.Update_Save_Question(model.ActualQuestion);
             model.ActualQuestion = await service.Next(model.AdministratedTestId,model.ActualPosition+1);
+            
             return View("Test", model);
         }
 
@@ -131,6 +133,11 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             }
             await service.Update_Save(await service.GetAdministratedTestById(model.AdministratedTestId));
             return View("TestEnded");
+        }
+        public async Task<ActionResult> Previous(AdministratedTestModel model)
+        {
+            model.ActualQuestion = await service.Previous(model.AdministratedTestId, model.ActualPosition-1);
+            return View("Test", model);
         }
     }
 }

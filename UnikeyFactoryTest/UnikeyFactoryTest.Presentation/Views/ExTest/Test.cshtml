@@ -47,8 +47,8 @@
             <input type="hidden" name="Name" value="@Model.Name" />
             <input type="hidden" name="Surname" value="@Model.Surname" />
             <input type="hidden" name="AdministratedTestId" value="@Model.ActualQuestion.AdministratedTestId" />
-            <button style="float:left;" class="btn btn-success PreviousButton">Previous</button>
-            <button style="text-align: center;" class="btn btn-success CloseButton">Close</button>
+            <button style="float:left;" class="btn btn-success PreviousButton" formaction="/ExTest/Previous">Previous</button>
+            <button style="text-align: center;" class="btn btn-success CloseButton" formaction="/ExTest/Next">Close</button>
             <button class="btn btn-success NextButton" style="float:right">Next</button>
         }
     </div>

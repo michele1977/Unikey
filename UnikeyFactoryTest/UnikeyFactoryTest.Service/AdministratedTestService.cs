@@ -142,5 +142,14 @@ namespace UnikeyFactoryTest.Service
         {
             await _repo.Update_Save_Question(adQuestion);
         }
+        public async Task<AdministratedQuestionBusiness> Previous(int AdministratedTestId, int position)
+        {
+            var test = await _repo.GetAdministratedTestById(AdministratedTestId);
+            for (int i = 0; i < test.AdministratedQuestions.Count; i++)
+            {
+                test.AdministratedQuestions.ElementAt(i).Position = i;
+            }
+            return test.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
+        }
     }
 }
