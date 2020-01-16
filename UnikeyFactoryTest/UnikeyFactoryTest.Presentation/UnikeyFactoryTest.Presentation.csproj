@@ -149,6 +149,7 @@
     <Compile Include="Models\DTO\QuestionDto.cs" />
     <Compile Include="Models\DTO\TestDto.cs" />
     <Compile Include="Models\DTO\UserDto.cs" />
+    <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\TestsListModel.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\UserModel.cs" />

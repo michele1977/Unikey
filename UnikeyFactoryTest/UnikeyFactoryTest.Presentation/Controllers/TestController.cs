@@ -12,6 +12,7 @@ using UnikeyFactoryTest.Presentation.Models;
 using UnikeyFactoryTest.Presentation.Models.Dto;
 using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service;
+using UnikeyFactoryTest.Service.Providers.MailProvider;
 
 namespace UnikeyFactoryTest.Presentation.Controllers
 {
@@ -161,8 +162,18 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         //public ActionResult EditQuestion_Post(TestModel question)
         //{
         //    // TODO
-            
+
         //    return RedirectToAction("TestContent", "Test", new {Id = question.Test.Id});
         //}
+        public async Task<JsonResult> SendMail(EmailModel emailModel)
+        {
+            TestService service = new TestService();
+            var test = await service.GetTestById(emailModel.Id);
+            TestDto sendTest = new TestDto(test);
+            var URL = sendTest.URL;
+            MailProvider provider = new MailProvider();
+            var result = provider.SendMail(emailModel.email, emailModel.name, URL);
+            return Json(new {result = result});
+        }
     }
 }
