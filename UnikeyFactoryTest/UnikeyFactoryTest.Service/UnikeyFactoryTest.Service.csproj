@@ -53,6 +53,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdministratedTestService.cs" />
+    <Compile Include="Providers\MailProvider\IMailProvider.cs" />
+    <Compile Include="Providers\MailProvider\IMailTools.cs" />
+    <Compile Include="Providers\MailProvider\MailProvider.cs" />
+    <Compile Include="Providers\MailProvider\MailTools.cs" />
     <Compile Include="TestService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserService.cs" />
@@ -89,6 +93,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

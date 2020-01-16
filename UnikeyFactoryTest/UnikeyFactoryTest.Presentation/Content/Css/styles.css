@@ -105,6 +105,13 @@
     height: 100px;
 }
 
+.PreviousButton{
+    border: 1px solid black;
+}
+.NextButton {
+    border: 1px solid black;
+}
+
 .QuestionContainer {
     background-color: darkcyan;
     border-radius: 8px;

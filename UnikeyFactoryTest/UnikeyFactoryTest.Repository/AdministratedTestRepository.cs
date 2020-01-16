@@ -76,6 +76,29 @@ namespace UnikeyFactoryTest.Repository
             return administratedTestListTask;
         }
 
+        public async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId)
+        {
+            var myTask = Task.Run(() =>
+            {
+                var filteredList = _ctx.AdministratedTests.Where(t => t.TestId == testId).ToListAsync();
+                return filteredList;
+            });
+            var adTestList = await myTask;
+            var filteredList2 = adTestList.Select(AdministratedTestMapper.MapDaoToDomainLight).ToList();
+            return filteredList2;
+        }
+
+        public async Task<int> GetState(int AdministratedTestId)
+        {
+            var myTask = Task.Run(() =>
+            {
+                var FilteredState = _ctx.AdministratedTests.FirstOrDefault(x => x.Id.Equals(AdministratedTestId))
+                    .StateEnum;
+                return FilteredState;
+            });
+            var State = await myTask;
+            return (int) State;
+        }
         #region DeleteAdministratedTest
         public async Task DeleteAdministratedTest(int administratedTestId)
         {
@@ -110,7 +133,6 @@ namespace UnikeyFactoryTest.Repository
             var newTest = AdministratedTestMapper.MapDomainToDao(adTest);
             try
             {
-                await Update_Save_Questions(newTest);
                 await Update_Save_Score(newTest);
                 await Update_Save_Date(newTest);
                 
@@ -155,14 +177,6 @@ namespace UnikeyFactoryTest.Repository
             return score;
         }
 
-        private async Task Update_Save_Questions(AdministratedTest newTest)
-        {
-            foreach (var q in newTest.AdministratedQuestions)
-            {
-                await Update_Save_Answers(q);
-            }
-        }
-
         private async Task Update_Save_Answers(AdministratedQuestion q)
         {
             foreach (var a in q.AdministratedAnswers)
@@ -172,6 +186,7 @@ namespace UnikeyFactoryTest.Repository
                     if (a.isSelected == true)
                     {
                         _ctx.AdministratedAnswers.FirstOrDefault(x => x.Id == a.Id).isSelected = true;
+                        _ctx.SaveChanges();
                     }
                 });
                 await myTask2;
@@ -182,6 +197,12 @@ namespace UnikeyFactoryTest.Repository
         public void Dispose()
         {
             _ctx.Dispose();
+        }
+
+        public async Task Update_Save_Question(AdministratedQuestionBusiness adQuestion)
+        {
+            var newQuestion = AdministratedQuestionMapper.MapDomainToDao(adQuestion);
+            await Update_Save_Answers(newQuestion);
         }
     }
 }

@@ -149,9 +149,12 @@
     <Compile Include="Models\DTO\QuestionDto.cs" />
     <Compile Include="Models\DTO\TestDto.cs" />
     <Compile Include="Models\DTO\UserDto.cs" />
+    <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\TestsListModel.cs" />
     <Compile Include="Models\TestModel.cs" />
+    <Compile Include="Models\UserLoginModel.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\UserSigningUpModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +199,7 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Nlog.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -328,7 +332,7 @@
     <Content Include="Views\ExTest\TestEnded.cshtml" />
     <Content Include="Views\ExTest\TestStart.cshtml" />
     <Content Include="Views\Test\TestsTablePartial.cshtml" />
-    <Content Include="Views\Test\AddQuestionForm.cshtml" />
+    <Content Include="Views\Test\AddQuestionPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,8 +1,7 @@
-﻿@model UnikeyFactoryTest.Presentation.Models.TestModel
+﻿@using UnikeyFactoryTest.Presentation.Models.DTO
+@model UnikeyFactoryTest.Presentation.Models.DTO.TestDto
 
-@{
-    ViewBag.Title = "Index";
-}
+
 <style>
     #myDivContainerTop {
     }
@@ -27,72 +26,72 @@
 </style>
 
 <script>
-    function CorrectAnswer(id, idchk, idtxt, idlbl) {
+    function CorrectAnswer(id, idchk, idtxt) {
         var isChecked = document.getElementById(id).checked
         if (isChecked == true) {
-            document.getElementById(idchk).classList.add("class-selected")
-            document.getElementById(idtxt).hidden = false
-            document.getElementById(idlbl).hidden = false
+            document.getElementById(idchk).classList.add("class-selected");
+            document.getElementById(idtxt).hidden = false;
         }
         else {
-            document.getElementById(idchk).classList.remove("class-selected")
-            document.getElementById(idtxt).hidden = true
-            document.getElementById(idlbl).hidden = true
+            document.getElementById(idchk).classList.remove("class-selected");
+            document.getElementById(idtxt).hidden = true;
         }
     }
 
     function EnableQuestionForm(id) {
-        document.getElementById(id).hidden = false
+        document.getElementById(id).hidden = false;
     }
 
     function DisableQuestionForm(id) {
-        document.getElementById(id).hidden = true
+        document.getElementById(id).hidden = true;
     }
 </script>
 
 
 <div class="col-lg-6 col-md-6 col-sm-6" id="myDivContainerTop">
-
-    @Html.TextBoxFor(x => x.TestName, new { @class = "form-control", id = "class-textBox", placeholder = "TestName" })
+    @Html.TextBox("t", "", new { @class = "form-control", id = "class-textBox", placeholder = "TestName" })
+    @*@@Html.TextBoxFor(x => x.TestName, new { @class = "form-control", id = "class-textBox", placeholder = "TestName" })@*@
     @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date" })
 </div>
 
 
-
-<div class="container" id="myDivContainerDown">
-    <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <table class="table">
-                <tr>
-                    <th>
-                        QuestionText
-                    </th>
-                    <th>
-                        <button class="btn btn-dark" onclick="EnableQuestionForm('mydivQuestionForm')">+</button>
-                    </th>
-                </tr>
-
-
-                @foreach (var Question in Model.Questions)
-                {
+@if (Model != null)
+{
+    <div class="container" id="myDivContainerDown">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <table class="table">
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => Question.Text)
-                        </td>
-
-                        <td>
-                             DELETE|DETAILS
-                            @*@Html.ActionLink("Delete", "DeleteQuestion", "Test", new { Id = Question.Id }, null) |
-                                @Html.ActionLink("Details", "Details", "Test", new { Id = Question.Id }, null) *@
-                        </td>
+                        <th>
+                            QuestionText
+                        </th>
+                        <th>
+                            <button class="btn btn-dark" onclick="EnableQuestionForm('mydivQuestionForm')">+</button>
+                        </th>
                     </tr>
-                }
 
 
-            </table>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6" hidden id="mydivQuestionForm">
-            @Html.Partial("AddQuestionForm");
+                    @foreach (var Question in Model.Questions)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => Question.Text)
+                            </td>
+
+                            <td>
+                                DELETE|DETAILS
+                                @*@Html.ActionLink("Delete", "DeleteQuestion", "Test", new { Id = Question.Id }, null) |
+                                @Html.ActionLink("Details", "Details", "Test", new { Id = Question.Id }, null) *@
+                            </td>
+                        </tr>
+                    }
+
+
+                </table>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6" hidden id="mydivQuestionForm">
+                @Html.Partial("AddQuestionPartial",new QuestionDto());
+            </div>
         </div>
     </div>
-</div>
+}

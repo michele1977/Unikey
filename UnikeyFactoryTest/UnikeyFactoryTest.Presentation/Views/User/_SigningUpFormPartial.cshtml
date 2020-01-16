@@ -1,0 +1,34 @@
+﻿@model UnikeyFactoryTest.Presentation.Models.UserSigningUpModel
+
+    <div id="signingUpForm" class="container" style="display: none;padding: 15px; padding-top: 25px;max-width: 500px; border: 2px solid black; border-radius: 10px; background-color: antiquewhite">
+        <form action="/User/Subscribe" method="post">
+            <div class="form-group">
+                <label for="lbSUsername" style="font-family:Verdana, Geneva">Username</label>
+                <input type="text" class="form-control" id="lbSUsername" name="Username">
+                @Html.ValidationMessageFor(x => x.Username, null, new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="lbSPassword" style="font-family:Verdana, Geneva">Password</label>
+                <input type="password" class="form-control" id="lbSPassword" name="Password">
+                @Html.ValidationMessageFor(x => x.Password, null, new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="lbRetypedPassword" style="font-family:Verdana, Geneva">Retype Password</label>
+                <input type="password" class="form-control" id="lbRetypedPassword" name="RetypedPassword">
+                @Html.ValidationMessageFor(x => x.RetypedPassword, null, new { @class = "text-danger" })
+            </div>
+
+            <div style="width: 100%;text-align: right">
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+            </div>
+            <br>
+
+            <div class="container alert alert-success" role="alert" style="display: none;width: 100%" id="signingUpOk">
+                Congratulations, registration succeeded
+            </div>
+        </form>
+
+        <div style="width: 100%; text-align: center">
+            <button onclick="ChangeForm(2)" class="btn btn-primary">Log In</button>
+        </div>
+    </div>

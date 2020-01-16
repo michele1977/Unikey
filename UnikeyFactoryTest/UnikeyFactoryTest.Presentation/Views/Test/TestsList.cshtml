@@ -1,11 +1,9 @@
-﻿@using UnikeyFactoryTest.Presentation.Models.Dto
-@using UnikeyFactoryTest.Service
+﻿@using UnikeyFactoryTest.Service
 @model  UnikeyFactoryTest.Presentation.Models.TestsListModel
 
 @{
     ViewBag.Title = "TestsList";
 }
-
 
 <h2>Tests List</h2>
 
@@ -39,16 +37,56 @@
         <th>Id</th>
         <th>Date</th>
         <th>URL</th>
-        <th>Questions No</th>
+        <th>Number of tests</th>
+        <th>Number of tests opened</th>
         <th>Actions</th>
     </tr>
 
-    @foreach (TestDto test in Model.Tests)
+    @foreach (var test in Model.Tests)
     {
         Html.RenderPartial("TestsTablePartial", test);
     }
 
 </table>
+
+<div class="modal fade" id="mailModal" tabindex="-1" role="dialog" aria-labelledby="mailModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mailModalLabel">Send test with email</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <input type="text" hidden="hidden" id="selectedTest"/>
+                        <label for="recipient-name" class="col-form-label">Mail Address:</label>
+                        <input required type="text" class="form-control" placeholder="example@mail.com" id="email-address">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Subject name:</label>
+                        <input required type="text" class="form-control" id="subject-name">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" onclick="send()" class="btn btn-primary">Send email</button>
+            </div>
+            <div>
+            </div>
+            <div>
+                <label hidden="hidden" id="true" style="text-align: right;color: green">Sending successful</label>
+            </div>
+            <div>
+                <label hidden="hidden" id="false" style="text-align: right;color: red">Not valid mail</label>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div>
     @if (Model.PageNumber > 1)

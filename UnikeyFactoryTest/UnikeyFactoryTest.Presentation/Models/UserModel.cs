@@ -7,25 +7,26 @@ using UnikeyFactoryTest.Presentation.CustomValidators;
 
 namespace UnikeyFactoryTest.Presentation.Models
 {
+    public enum UserState
+    {
+        WaitingFor,
+        IsNotAUser,
+        RegistrationOk,
+        RegistrationKo
+    }
+
     public class UserModel
     {
-        [Required(ErrorMessage = "Please enter a username")]
-        //[MaxLength(10,ErrorMessage = "MaxLength Error")]
-        //[MinLength(4, ErrorMessage = "MinLength Error")]
-        public string Username { get; set; }
+        public UserLoginModel LoginModel { get; set; }
+        public UserSigningUpModel SigningUpModel { get; set; }
 
-        [Required(ErrorMessage = "Please enter a password")]
-        public string Password { get; set; }
-
-        [Required(ErrorMessage = "Please retype the password")]
-        [RetypedPassword("Password")]
-        public string RetypedPassword { get; set; }
-
-        public string IsUser { get; set; }
+        public UserState UserState { get; set; }
 
         public UserModel()
         {
-
+            LoginModel = new UserLoginModel();
+            SigningUpModel = new UserSigningUpModel();
         }
     }
+
 }
