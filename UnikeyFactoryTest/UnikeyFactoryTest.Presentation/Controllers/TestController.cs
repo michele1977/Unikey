@@ -9,7 +9,6 @@ using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Presentation.Models;
-using UnikeyFactoryTest.Presentation.Models.Dto;
 using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service;
 
@@ -31,9 +30,14 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddQuestion(TestModel model)
+        public async Task<ActionResult> AddQuestion(QuestionDto model)
         {
-            List<Answer> answers = new List<Answer>();
+            var answerBiz = model.MapToDomain();
+            var test = await _service.GetTestById(answerBiz.TestId);
+            test.Questions.Add(answerBiz);
+            _service.UpdateTest(test);
+            return View("Index",model);
+            //List<Answer> answers = new List<Answer>();
             //Answer correctAnswer = new Answer()
             //{
             //    Text = model.CorrectAnswerText,
@@ -41,27 +45,27 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             //    Score = Convert.ToInt32(model.AnswerScore)
             //};
             //answers.Add(correctAnswer);
-            foreach (var AnswerText in model.Answers)
-            {
-                if (!string.IsNullOrWhiteSpace(AnswerText))
-                {
-                    Answer Answer = new Answer()
-                    {
-                        Text = AnswerText,
-                        IsCorrect = model.IsCorrect,
-                        Score = Convert.ToInt32(model.AnswerScore)
-                    };
-                    answers.Add(Answer);
-                }
-            }
+            //foreach (var AnswerText in model.Answers)
+            //{
+            //    if (!string.IsNullOrWhiteSpace(AnswerText))
+            //    {
+            //        Answer Answer = new Answer()
+            //        {
+            //            Text = AnswerText,
+            //            IsCorrect = model.IsCorrect,
+            //            Score = Convert.ToInt32(model.AnswerScore)
+            //        };
+            //        answers.Add(Answer);
+            //    }
+            //}
 
-            Question question = new Question()
-            {
-                Text = model.QuestionText,
-                Answers = answers
-            };
-            test.Questions.Add(question);
-            return RedirectToAction("Index");
+            //Question question = new Question()
+            //{
+            //    Text = model.QuestionText,
+            //    Answers = answers
+            //};
+            //test.Questions.Add(question);
+            //return RedirectToAction("Index");
         }
 
         [HttpPost]

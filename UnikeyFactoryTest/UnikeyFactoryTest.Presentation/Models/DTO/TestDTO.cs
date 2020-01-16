@@ -6,7 +6,7 @@ using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service;
 
-namespace UnikeyFactoryTest.Presentation.Models.Dto
+namespace UnikeyFactoryTest.Presentation.Models.DTO
 {
     public class TestDto
     {

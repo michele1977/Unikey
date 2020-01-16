@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using UnikeyFactoryTest.Context;
-using UnikeyFactoryTest.Presentation.Models.Dto;
 using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service;
 
@@ -14,7 +13,8 @@ namespace UnikeyFactoryTest.Presentation.Models
     {
         public TestModel()
         {
-
+            Questions = new List<QuestionDto>();
+            Answers = new List<string>();
         }
 
         //public TestModel(QuestionDto question)
@@ -33,7 +33,6 @@ namespace UnikeyFactoryTest.Presentation.Models
         //    AnswerScore = question.CorrectAnswerScore.ToString();
         //}
 
-        public bool IsCorrect { get; set; }
         public string TestName { get; set; }
         public DateTime Date { get; set; } = DateTime.Now;
 

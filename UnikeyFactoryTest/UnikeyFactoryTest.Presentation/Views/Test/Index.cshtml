@@ -1,4 +1,4 @@
-﻿@model UnikeyFactoryTest.Presentation.Models.TestModel
+﻿@model UnikeyFactoryTest.Presentation.Models.DTO.TestDto
 
 @{
     ViewBag.Title = "Index";
@@ -42,11 +42,11 @@
     }
 
     function EnableQuestionForm(id) {
-        document.getElementById(id).hidden = false
+        document.getElementById(id).hidden = false;
     }
 
     function DisableQuestionForm(id) {
-        document.getElementById(id).hidden = true
+        document.getElementById(id).hidden = true;
     }
 </script>
 

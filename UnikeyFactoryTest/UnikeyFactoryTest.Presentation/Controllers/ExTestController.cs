@@ -62,7 +62,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key).Text =
                     AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key).Text + " ";
             }
-            service.Update_Save(AdminstratedTest);
+            await service.Update_Save(AdminstratedTest);
             return View("TestEnded");
         }
 

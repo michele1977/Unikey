@@ -18,8 +18,8 @@ namespace UnikeyFactoryTest.Mapper
                 Id = answer.Id,
                 Text = answer.Text,
                 QuestionId = answer.QuestionId,
-                IsCorrect = answer.IsCorrect,
-                Score = answer.Score
+                IsCorrect = answer.IsCorrect.HasValue ? answer.IsCorrect.Value : false,
+                Score = answer.Score.HasValue ? answer.Score.Value : 0
             };
 
             return returned;
