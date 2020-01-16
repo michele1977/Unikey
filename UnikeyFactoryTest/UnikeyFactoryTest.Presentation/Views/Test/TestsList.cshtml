@@ -61,6 +61,7 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
+                        <input type="text" hidden="hidden" id="selectedTest"/>
                         <label for="recipient-name" class="col-form-label">Mail Address:</label>
                         <input required type="text" class="form-control" placeholder="example@mail.com" id="email-address">
                     </div>
@@ -75,6 +76,8 @@
                 <button type="button" onclick="send()" class="btn btn-primary">Send email</button>
             </div>
             <div>
+            </div>
+            <div>
                 <label hidden="hidden" id="true" style="text-align: right;color: green">Sending successful</label>
             </div>
             <div>
@@ -83,6 +86,7 @@
         </div>
     </div>
 </div>
+
 
 <div>
     @if (Model.PageNumber > 1)

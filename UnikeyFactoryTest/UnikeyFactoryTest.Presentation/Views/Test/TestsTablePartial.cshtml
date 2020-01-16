@@ -1,5 +1,11 @@
 ﻿@model UnikeyFactoryTest.Presentation.Models.Dto.TestDto
 
+<script>
+    function openModal(Id) {
+        $('#mailModal').modal("show");
+        document.getElementById("selectedTest").value = Id;
+    }
+</script>
 <tr>
     <td>
         @Model.Id
@@ -14,15 +20,14 @@
         @Model.NumQuestions
     </td>
     <td>
-    @Html.ActionLink(
-        "Content",
-        "TestContent",
-        "Test",
-        new { @Model.Id, @Model.PageNumber, @Model.PageSize },
-        new { @class = "btn btn-info" }) |
-    <button class="btn btn-info" onclick="deleteConfirmation(@Model.Id, @Model.PageNumber, @Model.PageSize)">Delete</button> |
-
-    <button type="button" value="@Model.Id" class="btn btn-info" data-toggle="modal" data-target="#mailModal" id="ID">Send</button>
+        @Html.ActionLink(
+            "Content",
+            "TestContent",
+            "Test",
+            new { @Model.Id, @Model.PageNumber, @Model.PageSize },
+            new { @class = "btn btn-info" }) |
+        <button class="btn btn-info" onclick="deleteConfirmation(@Model.Id, @Model.PageNumber, @Model.PageSize)">Delete</button> |
+        <button type="button" onclick="openModal(@Model.Id)" class="btn btn-info" id="openButton">Send</button>
 
 </tr>
 
