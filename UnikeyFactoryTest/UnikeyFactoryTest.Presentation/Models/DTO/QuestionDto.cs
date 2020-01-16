@@ -42,7 +42,9 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
             var returned = new QuestionBusiness
             {
                 Id = Id,
-                Answers = new List<AnswerBusiness>()
+                Answers = new List<AnswerBusiness>(),
+                Text = Text,
+                TestId = TestId
 
             };
             foreach (var answerDto in this.Answers)
@@ -50,7 +52,10 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
                 var answerBiz = new AnswerBusiness
                 {
                     IsCorrect = answerDto.IsCorrect,
-                    Score = answerDto.Score
+                    Score = answerDto.Score,
+                    Text = answerDto.Text,
+                    Id = answerDto.Id,
+                    QuestionId = answerDto.QuestionId
                 };
                 returned.Answers.Add(answerBiz);
             }

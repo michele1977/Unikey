@@ -33,7 +33,7 @@ namespace UnikeyFactoryTest.Presentation.Models
         //    AnswerScore = question.CorrectAnswerScore.ToString();
         //}
 
-        public string TestName { get; set; }
+      
         public DateTime Date { get; set; } = DateTime.Now;
 
         public TestDto Test { get; set; }
@@ -42,8 +42,6 @@ namespace UnikeyFactoryTest.Presentation.Models
         [Required(ErrorMessage = "Required Field")]
         public string QuestionText { get; set; }
         public List<QuestionDto> Questions { get; set; }
-        public string AnswerText { get; set; }
-       // public string CorrectAnswerText { get; set; }
         public List<string> Answers { get; set; }
         public int UserId { get; set; }
         public int PageNumber { get; set; } = 1;
