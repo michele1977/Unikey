@@ -133,7 +133,6 @@ namespace UnikeyFactoryTest.Repository
             var newTest = AdministratedTestMapper.MapDomainToDao(adTest);
             try
             {
-                await Update_Save_Questions(newTest);
                 await Update_Save_Score(newTest);
                 await Update_Save_Date(newTest);
                 
@@ -178,14 +177,6 @@ namespace UnikeyFactoryTest.Repository
             return score;
         }
 
-        private async Task Update_Save_Questions(AdministratedTest newTest)
-        {
-            foreach (var q in newTest.AdministratedQuestions)
-            {
-                await Update_Save_Answers(q);
-            }
-        }
-
         private async Task Update_Save_Answers(AdministratedQuestion q)
         {
             foreach (var a in q.AdministratedAnswers)
@@ -195,6 +186,7 @@ namespace UnikeyFactoryTest.Repository
                     if (a.isSelected == true)
                     {
                         _ctx.AdministratedAnswers.FirstOrDefault(x => x.Id == a.Id).isSelected = true;
+                        _ctx.SaveChanges();
                     }
                 });
                 await myTask2;
@@ -205,6 +197,12 @@ namespace UnikeyFactoryTest.Repository
         public void Dispose()
         {
             _ctx.Dispose();
+        }
+
+        public async Task Update_Save_Question(AdministratedQuestionBusiness adQuestion)
+        {
+            var newQuestion = AdministratedQuestionMapper.MapDomainToDao(adQuestion);
+            await Update_Save_Answers(newQuestion);
         }
     }
 }

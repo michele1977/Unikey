@@ -105,6 +105,13 @@
     height: 100px;
 }
 
+.PreviousButton{
+    border: 1px solid black;
+}
+.NextButton {
+    border: 1px solid black;
+}
+
 .QuestionContainer {
     background-color: darkcyan;
     border-radius: 8px;
@@ -124,8 +131,9 @@
 }
 
 .AnswerLabel {
-    width: 100px;
+    width: 90%;
 }
+
 
 .SaveButton {
     margin-bottom: 20px;
@@ -145,12 +153,29 @@ hr {
     margin-top: 2px;
 }
 
+.answer {
+    background-color: cyan;
+    padding: 10px 10px 5px 10px;
+    margin-bottom: 10px;
+}
+    .answer:hover {
+        background-color: cyan;
+        padding: 10px 10px 5px 10px;
+        margin-bottom: 10px;
+        box-shadow: black 1px 1px 10px;
+    }
+.hoveredAnswer {
+    background-color: cyan;
+    padding: 10px 10px 5px 10px;
+    margin-bottom: 10px;
+    box-shadow: black 1px 1px 10px;
+}
+
 .AnswerHr {
     margin: 0px;
 }
 
 .AnswerContainer {
-    background-color: cyan;
     width: 300px;
     margin: auto;
 }

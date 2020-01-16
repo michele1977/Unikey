@@ -12,7 +12,11 @@ namespace UnikeyFactoryTest.Service
 {
     public class AdministratedTestService
     {
-        private  IAdministratedTestRepository _repo;
+        private IAdministratedTestRepository _repo;
+
+        public int QuestionPosition = 0;
+
+        public bool IsLast = false;
 
         public AdministratedTestService()
         {
@@ -21,7 +25,7 @@ namespace UnikeyFactoryTest.Service
 
         public AdministratedTestService(AdministratedTestRepository repo)
         {
-            if(repo is null)
+            if (repo is null)
                 _repo = new AdministratedTestRepository();
             else
                 _repo = repo;
@@ -54,7 +58,7 @@ namespace UnikeyFactoryTest.Service
 
         public async Task<AdministratedTestBusiness> Add(AdministratedTestBusiness adTest)
         {
-           return await _repo.Add(adTest);
+            return await _repo.Add(adTest);
         }
 
         public async Task Update_Save(AdministratedTestBusiness adTest)
@@ -62,7 +66,7 @@ namespace UnikeyFactoryTest.Service
             await _repo.Update_Save(adTest);
         }
 
-        public async Task<AdministratedTestBusiness> GetAdministratedTestById (int adTestId)
+        public async Task<AdministratedTestBusiness> GetAdministratedTestById(int adTestId)
         {
             return await _repo.GetAdministratedTestById(adTestId);
         }
@@ -94,7 +98,7 @@ namespace UnikeyFactoryTest.Service
         {
             _repo = new AdministratedTestRepository();
             var administratedTests = await _repo.GetAdministratedTests();
-            
+
             return administratedTests;
         }
 
@@ -132,6 +136,29 @@ namespace UnikeyFactoryTest.Service
             }
         }
 
+        public async Task<AdministratedQuestionBusiness> Next(int AdministratedTestId, int position)
+        {
+            var test = await _repo.GetAdministratedTestById(AdministratedTestId);
+            for (int i = 0; i < test.AdministratedQuestions.Count; i++)
+            {
+                test.AdministratedQuestions.ElementAt(i).Position = i;
+            }
 
+            return test.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
+        }
+
+        public async Task Update_Save_Question(AdministratedQuestionBusiness adQuestion)
+        {
+            await _repo.Update_Save_Question(adQuestion);
+        }
+        public async Task<AdministratedQuestionBusiness> Previous(int AdministratedTestId, int position)
+        {
+            var test = await _repo.GetAdministratedTestById(AdministratedTestId);
+            for (int i = 0; i < test.AdministratedQuestions.Count; i++)
+            {
+                test.AdministratedQuestions.ElementAt(i).Position = i;
+            }
+            return test.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
+        }
     }
 }
