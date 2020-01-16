@@ -4,6 +4,11 @@
     function openModal(Id) {
         $('#mailModal').modal("show");
         document.getElementById("selectedTest").value = Id;
+
+        document.getElementById("false").setAttribute("hidden", "hidden");
+        document.getElementById("true").setAttribute("hidden", "hidden");
+        document.getElementById("subject-name").value = null;
+        document.getElementById("email-address").value = null;
     }
 </script>
 <tr>
