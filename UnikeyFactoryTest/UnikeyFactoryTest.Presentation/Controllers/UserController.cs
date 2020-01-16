@@ -15,13 +15,17 @@ namespace UnikeyFactoryTest.Presentation.Controllers
     {
         public ActionResult Index()
         {
-            var model = new UserModel {IsUser = "WaitingForLogin"};
+            var model = new UserModel();
+            model.UserState = UserState.WaitingFor;
+            
             return View(model);
         }
 
         [HttpPost]
-        public async Task<ActionResult> CheckData(UserModel model)
+        public async Task<ActionResult> CheckData(UserLoginModel model)
         {
+            var userViewModel = new UserModel();
+
             if (ModelState.IsValid)
             {
                 var user = new User {Username = model.Username, Password = model.Password};
@@ -36,23 +40,42 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 }
                 else
                 {
-                    model.IsUser = "IsNotAUser";
-                    return View("Index", model);
+                    userViewModel.UserState = UserState.IsNotAUser;
+                    return View("Index", userViewModel);
                 }
             }
             else
             {
-                model.IsUser = "";
-                //ModelState.AddModelError("", "Unable to rr");
-                return View("Index", model);
+                userViewModel.UserState = UserState.WaitingFor;
+                return View("Index", userViewModel);
             }
         }
+
+
+        public ActionResult Subscribe(UserSigningUpModel model)
+        {
+            var userViewModel = new UserModel();
+
+            if (ModelState.IsValid == true)
+            {
+                //Chiama service, invoca il metodo per aggiungere uno user
+                userViewModel.UserState = UserState.RegistrationOk;
+                return View("Index", userViewModel);
+            }
+            else
+            {
+                userViewModel.UserState = UserState.RegistrationKo;
+                return View("Index", userViewModel);
+            }
+            
+        }
+
 
         [HttpGet]
         public ActionResult Logout()
         {
             var model = new UserModel();
-            model.IsUser = "WaitingForLogin";
+            model.UserState = UserState.WaitingFor;
             return View("Index", model);
         }
     }
