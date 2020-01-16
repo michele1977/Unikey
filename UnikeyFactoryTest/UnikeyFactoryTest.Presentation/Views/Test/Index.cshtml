@@ -1,4 +1,5 @@
-﻿@model UnikeyFactoryTest.Presentation.Models.DTO.TestDto
+﻿@using UnikeyFactoryTest.Presentation.Models.DTO
+@model UnikeyFactoryTest.Presentation.Models.DTO.TestDto
 
 
 <style>
@@ -25,17 +26,15 @@
 </style>
 
 <script>
-    function CorrectAnswer(id, idchk, idtxt, idlbl) {
+    function CorrectAnswer(id, idchk, idtxt) {
         var isChecked = document.getElementById(id).checked
         if (isChecked == true) {
-            document.getElementById(idchk).classList.add("class-selected")
-            document.getElementById(idtxt).hidden = false
-            document.getElementById(idlbl).hidden = false
+            document.getElementById(idchk).classList.add("class-selected");
+            document.getElementById(idtxt).hidden = false;
         }
         else {
-            document.getElementById(idchk).classList.remove("class-selected")
-            document.getElementById(idtxt).hidden = true
-            document.getElementById(idlbl).hidden = true
+            document.getElementById(idchk).classList.remove("class-selected");
+            document.getElementById(idtxt).hidden = true;
         }
     }
 
@@ -49,7 +48,11 @@
 </script>
 
 
-
+<div class="col-lg-6 col-md-6 col-sm-6" id="myDivContainerTop">
+    @Html.TextBox("t", "", new { @class = "form-control", id = "class-textBox", placeholder = "TestName" })
+    @*@@Html.TextBoxFor(x => x.TestName, new { @class = "form-control", id = "class-textBox", placeholder = "TestName" })@*@
+    @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date" })
+</div>
 
 
 @if (Model != null)
@@ -87,7 +90,7 @@
                 </table>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6" hidden id="mydivQuestionForm">
-                @Html.Partial("AddQuestionPartial");
+                @Html.Partial("AddQuestionPartial",new QuestionDto());
             </div>
         </div>
     </div>

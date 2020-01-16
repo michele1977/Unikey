@@ -36,7 +36,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 if (result == true)
                 {
                     user.Id = await service.GetUserIdByUsername(user);
-                    return RedirectToAction("Index", "Test");
+                    return RedirectToAction("TestsList", "Test");
                 }
                 else
                 {

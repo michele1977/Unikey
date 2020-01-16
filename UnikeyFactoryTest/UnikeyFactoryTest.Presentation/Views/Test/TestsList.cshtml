@@ -1,5 +1,4 @@
-﻿@using UnikeyFactoryTest.Presentation.Models.Dto
-@using UnikeyFactoryTest.Service
+﻿@using UnikeyFactoryTest.Service
 @model  UnikeyFactoryTest.Presentation.Models.TestsListModel
 
 @{
@@ -43,7 +42,7 @@
         <th>Actions</th>
     </tr>
 
-    @foreach (TestDto test in Model.Tests)
+    @foreach (var test in Model.Tests)
     {
         Html.RenderPartial("TestsTablePartial", test);
     }

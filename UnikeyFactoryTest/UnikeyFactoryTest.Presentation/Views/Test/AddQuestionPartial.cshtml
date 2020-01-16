@@ -8,12 +8,12 @@
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
-                        @Html.CheckBoxFor(x => x.Answers[i].IsCorrect, new { id = "check1", onclick = "CorrectAnswer('check1','checkbox1','txt1','lbl1')" })
+                        @Html.CheckBoxFor(x => x.Answers[i].IsCorrect, new { id = "check1"+i, onclick = "CorrectAnswer('check'"+i+",'checkbox'"+i+",'txt'"+i+")" })
                     </div>
                 </div>
-                @Html.TextBoxFor(x => x.Answers[i].Text, new { @class = "form-control ", style = "max-width: 100%;width: 70%;", id = "checkbox1", placeholder = "Enter the answer " })
+                @Html.TextBoxFor(x => x.Answers[i].Text, new { @class = "form-control ", style = "max-width: 100%;width: 70%;", id = "checkbox"+i, placeholder = "Enter the answer " })
 
-                @Html.TextBoxFor(x => x.Answers[i].Score, new { type = "number", id = "txt1", @class = "class-mymarginleft", style = "width: 80px", step = "0.5", placeholder = "Score", @hidden = "hidden" })
+                @Html.TextBoxFor(x => x.Answers[i].Score, new { type = "number", id = "txt"+i, @class = "class-mymarginleft", style = "width: 80px", step = "0.5", placeholder = "Score", @hidden = "hidden" })
             </div>
         }
 
