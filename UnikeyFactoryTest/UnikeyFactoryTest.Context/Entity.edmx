@@ -4,13 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TestPlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TestPlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AdministratedAnswer">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Text" Type="varchar" MaxLength="50" />
+          <Property Name="Text" Type="nvarchar(max)" />
           <Property Name="isCorrect" Type="bit" />
           <Property Name="isSelected" Type="bit" />
           <Property Name="AdministratedQuestionId" Type="int" Nullable="false" />
@@ -21,7 +21,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Text" Type="varchar" MaxLength="50" />
+          <Property Name="Text" Type="nvarchar(max)" />
           <Property Name="AdministratedTestId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="AdministratedTest">
@@ -32,7 +32,7 @@
           <Property Name="URL" Type="varchar" MaxLength="50" />
           <Property Name="Text" Type="varchar" MaxLength="50" />
           <Property Name="TotalScore" Type="int" />
-          <Property Name="TestId" Type="int" Nullable="false" />
+          <Property Name="TestId" Type="int" />
           <Property Name="TestSubject" Type="varchar" MaxLength="50" />
           <Property Name="Date" Type="datetime" />
         </EntityType>
@@ -51,7 +51,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Text" Type="varchar" MaxLength="50" />
+          <Property Name="Text" Type="varchar(max)" />
           <Property Name="TestId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
@@ -72,6 +72,7 @@
           <Property Name="URL" Type="varchar" MaxLength="50" />
           <Property Name="Date" Type="datetime" />
           <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -81,8 +82,10 @@
           <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <Association Name="FK_AdministratedAnswer_AdministratedQuestion">
-          <End Role="AdministratedQuestion" Type="Self.AdministratedQuestion" Multiplicity="1" />
+        <Association Name="FK_administratedanswer_administratedquestion">
+          <End Role="AdministratedQuestion" Type="Self.AdministratedQuestion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="AdministratedAnswer" Type="Self.AdministratedAnswer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AdministratedQuestion">
@@ -93,8 +96,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AdministratedQuestion_AdministratedTest">
-          <End Role="AdministratedTest" Type="Self.AdministratedTest" Multiplicity="1" />
+        <Association Name="FK_administratedquestion_administratedtest">
+          <End Role="AdministratedTest" Type="Self.AdministratedTest" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="AdministratedQuestion" Type="Self.AdministratedQuestion" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AdministratedTest">
@@ -105,8 +110,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AdministratedTest_Test">
-          <End Role="Test" Type="Self.Test" Multiplicity="1" />
+        <Association Name="FK_AdministratedTest_test">
+          <End Role="Test" Type="Self.Test" Multiplicity="0..1" />
           <End Role="AdministratedTest" Type="Self.AdministratedTest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Test">
@@ -117,8 +122,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Answer_Question">
-          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+        <Association Name="FK_answer_question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Question">
@@ -129,8 +136,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Question_Test">
-          <End Role="Test" Type="Self.Test" Multiplicity="1" />
+        <Association Name="FK_question_test">
+          <End Role="Test" Type="Self.Test" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Question" Type="Self.Question" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Test">
@@ -141,7 +150,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Test_User">
+        <Association Name="FK_test_user">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Test" Type="Self.Test" Multiplicity="*" />
           <ReferentialConstraint>
@@ -162,33 +171,32 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Test" EntityType="Self.Test" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_AdministratedAnswer_AdministratedQuestion" Association="Self.FK_AdministratedAnswer_AdministratedQuestion">
+          <AssociationSet Name="FK_administratedanswer_administratedquestion" Association="Self.FK_administratedanswer_administratedquestion">
             <End Role="AdministratedQuestion" EntitySet="AdministratedQuestion" />
             <End Role="AdministratedAnswer" EntitySet="AdministratedAnswer" />
           </AssociationSet>
-          <AssociationSet Name="FK_AdministratedQuestion_AdministratedTest" Association="Self.FK_AdministratedQuestion_AdministratedTest">
+          <AssociationSet Name="FK_administratedquestion_administratedtest" Association="Self.FK_administratedquestion_administratedtest">
             <End Role="AdministratedTest" EntitySet="AdministratedTest" />
             <End Role="AdministratedQuestion" EntitySet="AdministratedQuestion" />
           </AssociationSet>
-          <AssociationSet Name="FK_AdministratedTest_Test" Association="Self.FK_AdministratedTest_Test">
+          <AssociationSet Name="FK_AdministratedTest_test" Association="Self.FK_AdministratedTest_test">
             <End Role="Test" EntitySet="Test" />
             <End Role="AdministratedTest" EntitySet="AdministratedTest" />
           </AssociationSet>
-          <AssociationSet Name="FK_Answer_Question" Association="Self.FK_Answer_Question">
+          <AssociationSet Name="FK_answer_question" Association="Self.FK_answer_question">
             <End Role="Question" EntitySet="Question" />
             <End Role="Answer" EntitySet="Answer" />
           </AssociationSet>
-          <AssociationSet Name="FK_Question_Test" Association="Self.FK_Question_Test">
+          <AssociationSet Name="FK_question_test" Association="Self.FK_question_test">
             <End Role="Test" EntitySet="Test" />
             <End Role="Question" EntitySet="Question" />
           </AssociationSet>
-          <AssociationSet Name="FK_Test_User" Association="Self.FK_Test_User">
+          <AssociationSet Name="FK_test_user" Association="Self.FK_test_user">
             <End Role="User" EntitySet="User" />
             <End Role="Test" EntitySet="Test" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TestPlatformDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -197,7 +205,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Text" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="isCorrect" Type="Boolean" />
           <Property Name="isSelected" Type="Boolean" />
           <Property Name="AdministratedQuestionId" Type="Int32" Nullable="false" />
@@ -209,7 +217,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Text" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AdministratedTestId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AdministratedAnswers" Relationship="Self.FK_AdministratedAnswer_AdministratedQuestion" FromRole="AdministratedQuestion" ToRole="AdministratedAnswer" />
           <NavigationProperty Name="AdministratedTest" Relationship="Self.FK_AdministratedQuestion_AdministratedTest" FromRole="AdministratedQuestion" ToRole="AdministratedTest" />
@@ -221,7 +229,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="URL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TotalScore" Type="Int32" />
-          <Property Name="TestId" Type="Int32" Nullable="false" />
+          <Property Name="TestId" Type="Int32" />
           <Property Name="TestSubject" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="AdministratedQuestions" Relationship="Self.FK_AdministratedQuestion_AdministratedTest" FromRole="AdministratedTest" ToRole="AdministratedQuestion" />
@@ -243,7 +251,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Text" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="TestId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Answers" Relationship="Self.FK_Answer_Question" FromRole="Question" ToRole="Answer" />
           <NavigationProperty Name="Test" Relationship="Self.FK_Question_Test" FromRole="Question" ToRole="Test" />
@@ -269,6 +277,7 @@
           <NavigationProperty Name="AdministratedTests" Relationship="Self.FK_AdministratedTest_Test" FromRole="Test" ToRole="AdministratedTest" />
           <NavigationProperty Name="Questions" Relationship="Self.FK_Question_Test" FromRole="Test" ToRole="Question" />
           <NavigationProperty Name="User" Relationship="Self.FK_Test_User" FromRole="Test" ToRole="User" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -304,7 +313,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AdministratedTest_Test">
-          <End Role="Test" Type="Self.Test" Multiplicity="1" />
+          <End Role="Test" Type="Self.Test" Multiplicity="0..1" />
           <End Role="AdministratedTest" Type="Self.AdministratedTest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Test">
@@ -458,6 +467,7 @@
           <EntitySetMapping Name="Tests">
             <EntityTypeMapping TypeName="TestPlatformDBModel.Test">
               <MappingFragment StoreEntitySet="Test">
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="URL" ColumnName="URL" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
