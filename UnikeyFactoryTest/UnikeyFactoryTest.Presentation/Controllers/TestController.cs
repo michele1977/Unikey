@@ -22,7 +22,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         private readonly TestService _service = new TestService();
 
         // GET: Test
-        public ActionResult Index(TestModel model)
+        public ActionResult Index(TestDto model)
         {
             if(UserId == 0)
                 UserId = model.UserId;
