@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
 namespace UnikeyFactoryTest.Service.Providers.MailProvider
 {
@@ -13,9 +11,11 @@ namespace UnikeyFactoryTest.Service.Providers.MailProvider
         public bool SendMail(string user, string UserName, string URL)
         {
             var mailtools = new MailTools();
-            StringBuilder myStringBuilder = new StringBuilder(mailtools.ReadFile(@"C:\CodiceHtml.txt"));
+            var path = HttpContext.Current.Server.MapPath("/MailTemplate") + @"\CodiceHtml.txt";
+            StringBuilder myStringBuilder = new StringBuilder(mailtools.ReadFile(path));
             myStringBuilder.Replace("NomeUtente", UserName).Replace("URLTest", URL).ToString();
-            string body = myStringBuilder.ToString();
+            var body = myStringBuilder.ToString();
+
 
             try
             {
