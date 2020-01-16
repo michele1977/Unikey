@@ -42,6 +42,9 @@ namespace UnikeyFactoryTest.Mapper
             };
             return returned;
         }
+
+
+
         public static AdministratedTest MapDomainToDao(AdministratedTestBusiness domain)
         {
             var returned = new AdministratedTest
@@ -55,6 +58,24 @@ namespace UnikeyFactoryTest.Mapper
                 StateEnum = (Context.State) domain.StateEnum,
                 AdministratedQuestions = domain.AdministratedQuestions.Select(AdministratedQuestionMapper.MapDomainToDao).ToList()
             };
+            return returned;
+        }
+
+
+
+        public static AdministratedTestBusiness MapDaoToDomainHeavy(AdministratedTest dao)
+        {
+            var returned = new AdministratedTestBusiness
+            {
+                Id = dao.Id,
+                URL = dao.URL,
+                TotalScore = dao.TotalScore,
+                TestId = dao.TestId,
+                TestSubject = dao.TestSubject,
+                Date = dao.Date,
+                AdministratedQuestions = dao.AdministratedQuestions.Select(AdministratedQuestionMapper.MapDaoToDomain).ToList()
+            };
+
             return returned;
         }
     }

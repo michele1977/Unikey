@@ -85,5 +85,36 @@ namespace UnikeyFactoryTest.Service
                 return _repo.GetTestByURL(modelUrl);
             }
         }
+
+        public async Task DeleteQuestion(int questionId)
+        {
+            using (Repo = new TestRepository())
+            {
+                try
+                {
+                    await Repo.DeleteQuestion(questionId);
+                }
+                catch (NullReferenceException ex)
+                {
+                    throw;
+                }
+                catch (NotSupportedException ex)
+                {
+
+                }
+                catch (ObjectDisposedException ex)
+                {
+
+                }
+                catch (InvalidOperationException ex)
+                {
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+        }
     }
 }

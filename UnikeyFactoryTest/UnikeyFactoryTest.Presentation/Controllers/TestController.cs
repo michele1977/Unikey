@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -11,7 +9,6 @@ using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Presentation.Models;
-using UnikeyFactoryTest.Presentation.Models.Dto;
 using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service;
 
@@ -19,8 +16,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 {
     public class TestController : Controller
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-
         private static int UserId { get; set; }
         private static readonly Test test = new Test();
         private readonly TestService _service = new TestService();
@@ -30,131 +25,57 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         {
             if(UserId == 0)
                 UserId = model.UserId;
-
-            try
-            {
-                ModelState.Clear();
-            }
-            catch (NotSupportedException e)
-            {
-                Logger.Warn(e);
-            }
-
+            ModelState.Clear();
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult AddQuestion(TestModel model)
+        public async Task<ActionResult> AddQuestion(QuestionDto model)
         {
-            List<Answer> answers = new List<Answer>();
+            var answerBiz = model.MapToDomain();
+            var test = await _service.GetTestById(answerBiz.TestId);
+            test.Questions.Add(answerBiz);
+            _service.UpdateTest(test);
+            return View("Index",model);
+            //List<Answer> answers = new List<Answer>();
+            //Answer correctAnswer = new Answer()
+            //{
+            //    Text = model.CorrectAnswerText,
+            //    IsCorrect = true,
+            //    Score = Convert.ToInt32(model.AnswerScore)
+            //};
+            //answers.Add(correctAnswer);
+            //foreach (var AnswerText in model.Answers)
+            //{
+            //    if (!string.IsNullOrWhiteSpace(AnswerText))
+            //    {
+            //        Answer Answer = new Answer()
+            //        {
+            //            Text = AnswerText,
+            //            IsCorrect = model.IsCorrect,
+            //            Score = Convert.ToInt32(model.AnswerScore)
+            //        };
+            //        answers.Add(Answer);
+            //    }
+            //}
 
-            Answer correctAnswer = new Answer()
-            {
-                Text = model.CorrectAnswerText,
-                IsCorrect = true,
-            };
-
-            try
-            {
-                correctAnswer.Score = Convert.ToInt32(model.AnswerScore);
-            }
-            catch (FormatException e)
-            {
-                Logger.Error(e);
-                throw;
-            }
-            catch (InvalidCastException e)
-            {
-                Logger.Error(e);
-                throw;
-            }
-            catch (OverflowException e)
-            {
-                Logger.Error(e);
-                throw;
-            }
-            
-            answers.Add(correctAnswer);
-
-            foreach (var wrongAnswerText in model.WrongAnswers)
-            {
-                if (!string.IsNullOrWhiteSpace(wrongAnswerText))
-                {
-                    Answer wrongAnswer = new Answer()
-                    {
-                        Text = wrongAnswerText,
-                        IsCorrect = false
-                    };
-                    answers.Add(wrongAnswer);
-                }
-            }
-
-            Question question = new Question()
-            {
-                Text = model.QuestionText,
-                Answers = answers
-            };
-
-            try
-            {
-                test.Questions.Add(question);
-            }
-            catch (NotSupportedException e)
-            {
-                Logger.Error(e);
-                throw;
-            }
-            
-            return RedirectToAction("Index");
+            //Question question = new Question()
+            //{
+            //    Text = model.QuestionText,
+            //    Answers = answers
+            //};
+            //test.Questions.Add(question);
+            //return RedirectToAction("Index");
         }
 
         [HttpPost]
         public async Task<ActionResult> AddTest(TestModel model)
         {
+           // test.TestName = model.TestName;
             test.UserId = UserId;
             test.URL = _service.GenerateGuid();
-            test.Date = DateTime.Now;
-
-            try
-            {
-                await _service.AddNewTest(TestMapper.MapDalToBizHeavy(test));
-            }
-            catch (ArgumentNullException e)
-            {
-                Logger.Error(e);
-                throw;
-            }
-            catch (InvalidOperationException e)
-            {
-                Logger.Error(e);
-                throw;
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                Logger.Error(e);
-                throw;
-            }
-            catch (DbEntityValidationException e)
-            {
-                Logger.Error(e);
-                throw;
-            }
-            catch (DbUpdateException e)
-            {
-                Logger.Error(e);
-                throw;
-            }
-            catch (NotSupportedException e)
-            {
-                Logger.Error(e);
-                throw;
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e);
-                throw;
-            }
-
+            test.Date = model.Date;
+             await _service.AddNewTest(TestMapper.MapDalToBizHeavy(test));
             return View("Index");
         }
 
@@ -163,31 +84,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         {
             testsListModel = testsListModel ?? new TestsListModel();
 
-            var service = new TestService();
+            TestService service = new TestService();
 
-            try
-            {
-                var tests = await service.GetTests();
-                testsListModel.Tests = testsListModel.Paginate(tests);
-
-                foreach (var dto in testsListModel.Tests)
-                {
-                    await dto.FillAdministratedTests(dto.Id);
-                
-                }
-
-            }
-            catch (ArgumentNullException e)
-            {
-                Logger.Error(e);
-                throw;
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e);
-                throw;
-            }
-           
+            testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
 
             return View(testsListModel);
         }
@@ -213,46 +112,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public async Task<JsonResult> DeleteTest(TestDto test)
         {
             TestService service = new TestService();
-            
-            try
-            {
-                await service.DeleteTest(test.Id);
-            }
-            catch (ArgumentNullException e)
-            {
-                Logger.Error(e);
-                return Json(new {redirectUrl = Url.Action("Index", "Error")});
-            }
-            catch (InvalidOperationException e)
-            {
-                Logger.Error(e);
-                return Json(new {redirectUrl = Url.Action("Index", "Error")});
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                Logger.Error(e);
-                return Json(new {redirectUrl = Url.Action("Index", "Error")});
-            }
-            catch (DbEntityValidationException e)
-            {
-                Logger.Error(e);
-                return Json(new {redirectUrl = Url.Action("Index", "Error")});
-            }
-            catch (DbUpdateException e)
-            {
-                Logger.Error(e);
-                return Json(new {redirectUrl = Url.Action("Index", "Error")});
-            }
-            catch (NotSupportedException e)
-            {
-                Logger.Error(e);
-                return Json(new {redirectUrl = Url.Action("Index", "Error")});
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e);
-                return Json(new {redirectUrl = Url.Action("Index", "Error")});
-            }
+            await service.DeleteTest(test.Id);
 
             return Json(new
             {
@@ -265,32 +125,20 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public async Task<ActionResult> TestContent(TestDto test)
         {
             TestService service = new TestService();
-            TestDto testToPass = new TestDto();
-
-            try
-            {
-                testToPass = new TestDto(await service.GetTestById(test.Id));
-                testToPass.PageNumber = test.PageNumber;
-                testToPass.PageSize = test.PageSize;
-                testToPass.URL = service.GenerateUrl(testToPass.URL);
-            }
-            catch (ArgumentNullException ex)
-            {
-                Logger.Error(ex);
-                throw;
-            }
-            catch (InvalidOperationException ex)
-            {
-                Logger.Error(ex);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex);
-                throw;
-            }
-
+            TestDto testToPass = new TestDto(await service.GetTestById(test.Id));
+            testToPass.PageNumber = test.PageNumber;
+            testToPass.PageSize = test.PageSize;
+            testToPass.URL = service.GenerateUrl(testToPass.URL);
             return View(testToPass);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> DeleteQuestion(QuestionDto question)
+        {
+            TestService service = new TestService();
+            await service.DeleteQuestion(question.Id);
+
+            return View("Index");
         }
 
         //[HttpPost]
@@ -328,7 +176,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         //public ActionResult EditQuestion_Post(TestModel question)
         //{
         //    // TODO
-            
+
         //    return RedirectToAction("TestContent", "Test", new {Id = question.Test.Id});
         //}
     }

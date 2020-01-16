@@ -18,7 +18,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         {
             var model = new AdministratedTestModel();
 
-            model.Url = guid;
+            model.URL = guid;
 
 
             return View("TestStart", model);
@@ -28,19 +28,17 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public async Task<ActionResult> BeginTest(AdministratedTestModel model)
         {
             var subject = model.Name + " " + model.Surname;
-            var test = testService.GetTestByURL(model.Url);
-            var newExecutionTest = service.AdministratedTest_Builder(test, subject);
-            var savedTest = await service.Add(newExecutionTest);
-            model.NumQuestion = test.Questions.Count;
-            model.ActualQuestion = savedTest.AdministratedQuestions.FirstOrDefault(x => x.Position==0);
-            model.AdministratedTestId = savedTest.Id;
+            var test = testService.GetTestByURL(model.URL);
+            model.Test = service.AdministratedTest_Builder(test, subject);
+            var savedTest = await service.Add(model.Test);
+            model.admnistratedTestId = savedTest.Id;
+            model.Test = savedTest;
             return View("Test", model);
         }
 
         public async Task<ActionResult> SaveTest(AdministratedTestModel model, FormCollection form)
         {
-            await service.Update_Save_Question(model.ActualQuestion);
-            var AdminstratedTest = await service.GetAdministratedTestById(model.ActualQuestion.AdministratedTestId);
+            var AdminstratedTest = await service.GetAdministratedTestById(model.admnistratedTestId);
             model.QuestionAnswerDictionary = new Dictionary<int, int>();
             //popolo il dictionary con domanda e relativa risposta
             foreach (var key in form.AllKeys)
@@ -65,7 +63,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                     AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key).Text + " ";
             }
             await service.Update_Save(AdminstratedTest);
-            //set status test at CLOSED!!
             return View("TestEnded");
         }
 
@@ -81,6 +78,16 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             testsListModel.Tests = testsListModel.Paginate(tests.ToList());
             
+
+            if (testsListModel.IsAjaxCall)
+            {
+                return Json(new
+                {
+                    redirectUrl = Url.Action("AdministratedTestsList",
+                        new { PageNumber = testsListModel.PageNumber, PageSize = testsListModel.PageSize })
+                });
+            }
+
             return View(testsListModel);
         }
 
@@ -92,52 +99,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             testToPass.PageNumber = test.PageNumber;
             testToPass.PageSize = test.PageSize;
             return View(testToPass);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> Next(AdministratedTestModel model)
-        {
-            //await service.Update_Save_Question(model.ActualQuestion);
-            model.ActualQuestion = await service.Next(model.AdministratedTestId,model.ActualPosition+1);
-            
-            return View("Test", model);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> Close(AdministratedTestModel model, FormCollection form)
-        {
-            await service.Update_Save_Question(model.ActualQuestion);
-            var AdminstratedTest = await service.GetAdministratedTestById(model.ActualQuestion.AdministratedTestId);
-            model.QuestionAnswerDictionary = new Dictionary<int, int>();
-            //popolo il dictionary con domanda e relativa risposta
-            foreach (var key in form.AllKeys)
-            {
-                if (key != "URL" && key != "admnistratedTestId")
-                {
-                    var value = Request.Form[key];
-                    model.QuestionAnswerDictionary[System.Convert.ToInt32(key)] = System.Convert.ToInt32(value);
-                }
-
-            }
-            foreach (var question in model.QuestionAnswerDictionary)
-            {
-
-                if (question.Value != 0)
-                {
-                    AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key)
-                        .AdministratedAnswers.FirstOrDefault(a => a.Id == question.Value).isSelected = true;
-                }
-
-                AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key).Text =
-                    AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key).Text + " ";
-            }
-            await service.Update_Save(await service.GetAdministratedTestById(model.AdministratedTestId));
-            return View("TestEnded");
-        }
-        public async Task<ActionResult> Previous(AdministratedTestModel model)
-        {
-            model.ActualQuestion = await service.Previous(model.AdministratedTestId, model.ActualPosition-1);
-            return View("Test", model);
         }
     }
 }

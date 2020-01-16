@@ -1,100 +1,98 @@
-﻿@model UnikeyFactoryTest.Presentation.Models.TestModel
+﻿@model UnikeyFactoryTest.Presentation.Models.DTO.TestDto
 
 @{
     ViewBag.Title = "Index";
 }
-
-
-<script>
-    function enable(idtxt, idbtn, idbtn2) {
-
-        document.getElementById(idtxt).disabled = false
-        document.getElementById(idtxt).required = true
-        document.getElementById(idbtn).disabled = false
-        document.getElementById(idbtn2).disabled = false
+<style>
+    #myDivContainerTop {
     }
 
+    .class-mymarginleft {
+        margin-left: 5px;
+    }
 
-    function mydisabled(idtxt, idbtn, idbtn2) {
+    #class-textBox {
+        max-width: 100%;
+        width: 100%;
+        margin-top: 5px;
+    }
 
-        document.getElementById(idtxt).disabled = true
-        document.getElementById(idtxt).required = false
-        document.getElementById(idbtn).disabled = true
-        document.getElementById(idbtn2).disabled = true
-    }</script>
+    #myDivContainerDown {
+        margin-top: 10px;
+    }
 
-<div class="container">
+    .class-selected {
+        border: 2px solid limegreen
+    }
+</style>
+
+<script>
+    function CorrectAnswer(id, idchk, idtxt, idlbl) {
+        var isChecked = document.getElementById(id).checked
+        if (isChecked == true) {
+            document.getElementById(idchk).classList.add("class-selected")
+            document.getElementById(idtxt).hidden = false
+            document.getElementById(idlbl).hidden = false
+        }
+        else {
+            document.getElementById(idchk).classList.remove("class-selected")
+            document.getElementById(idtxt).hidden = true
+            document.getElementById(idlbl).hidden = true
+        }
+    }
+
+    function EnableQuestionForm(id) {
+        document.getElementById(id).hidden = false;
+    }
+
+    function DisableQuestionForm(id) {
+        document.getElementById(id).hidden = true;
+    }
+</script>
+
+
+<div class="col-lg-6 col-md-6 col-sm-6" id="myDivContainerTop">
+    @Html.TextBox("t","" ,new { @class = "form-control", id = "class-textBox", placeholder = "TestName" })
+    @*@Html.TextBoxFor(x => x.TestName, new { @class = "form-control", id = "class-textBox", placeholder = "TestName" })*@
+    @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date" })
+</div>
+
+
+
+<div class="container" id="myDivContainerDown">
     <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-9">
-            @using (Html.BeginForm("AddQuestion", "Test", FormMethod.Post))
-            {
-                <h1> Create new test</h1>
-                @Html.Label("Write the question here")
-                <br />
-                @Html.TextAreaFor(m => m.QuestionText, new { @class = "required", @rows = 4, @cols = 400 })
-                <br />
-                @Html.Label("Write correct answer here")
-                <br />
-                <div class="input-group mb-3">
-                    @Html.TextBoxFor(m => m.CorrectAnswerText, new { @class = "form-control", style = "width: 100px;border-color:limegreen;", required = "true" })
-
-                    <div class="input-group-append" style="margin-left: 10px">
-                        <label>Its score is:</label>
-                        @Html.TextBoxFor(m => m.AnswerScore, new { @class = "form-control", style = "width: 100px;margin-left:10px", required = "true", @type = "number", @min = "0", @step = "0.50", @value = 0 })
-                    </div>
-                </div>
-
-                <br />
-                <div class="form-group">
-                    @Html.Label("Write wrong answers here")
-
-                    <br />
-                    <div class="input-group mb-3">
-                        @Html.TextBoxFor(m => m.WrongAnswers, new { @class = "form-control", style = "width: max;border-color:red;", required = "true" })
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" id="btn1" onclick="enable('txt2', 'btn2', 'btn6')">+</button>
-
-                        </div>
-                    </div>
-
-                    <div class="input-group mb-3">
-                        @Html.TextBoxFor(m => m.WrongAnswers, new { id = "txt2", @class = "form-control", style = "width: max;border-color:red;", disabled = "true" })
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" id="btn2" disabled onclick="enable('txt3', 'btn3', 'btn7')">+</button>
-                            <button class="btn btn-outline-secondary" id="btn6" disabled onclick="mydisabled('txt2', 'btn2', 'btn6')">-</button>
-                        </div>
-                    </div>
-
-                    <div class="input-group mb-3">
-                        @Html.TextBoxFor(m => m.WrongAnswers, new { id = "txt3", @class = "form-control", style = "width: max;border-color:red;", disabled = "true" })
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" id="btn3" disabled onclick="enable('txt4', 'btn8')">+</button>
-                            <button class="btn btn-outline-secondary" disabled id="btn7" onclick="mydisabled('txt3', 'btn3', 'btn7')">-</button>
-                        </div>
-                    </div>
-
-                    <div class="input-group mb-3">
-                        @Html.TextBoxFor(m => m.WrongAnswers, new { id = "txt4", @class = "form-control", style = "width: max;border-color:red;", disabled = "true" })
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" id="btn8" disabled onclick="mydisabled('txt4', 'btn8', 'btn8')">-</button>
-                        </div>
-                    </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <table class="table">
+                <tr>
+                    <th>
+                        QuestionText
+                    </th>
+                    <th>
+                        <button class="btn btn-dark" onclick="EnableQuestionForm('mydivQuestionForm')">+</button>
+                    </th>
+                </tr>
 
 
+                @foreach (var Question in Model.Questions)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => Question.Text)
+                        </td>
 
-                </div>
-                <br />
-                @Html.Label("If you want to save and add another question click here")
-                <button class="btn btn-primary" style="text-align: right">+</button>
+                        <td>
+                             DELETE|DETAILS
+                            @*@Html.ActionLink("Delete", "DeleteQuestion", "Test", new { Id = Question.Id }, null) |
+                                @Html.ActionLink("Details", "Details", "Test", new { Id = Question.Id }, null) *@
+                        </td>
+                    </tr>
+                }
 
-                <br />
-            }
-            @using (Html.BeginForm("AddTest", "Test", FormMethod.Post))
-            {
-                <button class="btn btn-info" style="text-align: right">SaveTest</button>
-            }
+
+            </table>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6" hidden id="mydivQuestionForm">
+            @Html.Partial("AddQuestionPartial");
         </div>
     </div>
 </div>
-
