@@ -1,5 +1,11 @@
 ﻿@model UnikeyFactoryTest.Presentation.Models.Dto.TestDto
 
+<script>
+    function openModal(Id) {
+        $('#mailModal').modal("show");
+        document.getElementById("selectedTest").value = Id;
+    }
+</script>
 <tr>
     <td>
         @Model.Id
@@ -22,6 +28,8 @@
             "Test",
             new { @Model.Id, @Model.PageNumber, @Model.PageSize },
             new { @class = "btn btn-info" }) |
-        <button class="btn btn-info" onclick="deleteConfirmation(@Model.Id, @Model.PageNumber, @Model.PageSize)">Delete</button>
-    </td>
+        <button class="btn btn-info" onclick="deleteConfirmation(@Model.Id, @Model.PageNumber, @Model.PageSize)">Delete</button> |
+        <button type="button" onclick="openModal(@Model.Id)" class="btn btn-info" id="openButton">Send</button>
+
 </tr>
+
