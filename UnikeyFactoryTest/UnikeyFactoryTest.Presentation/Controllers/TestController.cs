@@ -163,15 +163,19 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         {
             testsListModel = testsListModel ?? new TestsListModel();
 
-            TestService service = new TestService();
+            var service = new TestService();
 
             try
             {
                 var tests = await service.GetTests();
                 testsListModel.Tests = testsListModel.Paginate(tests);
-                var adTestService = new AdministratedTestService();
 
-                testsListModel.Tests.Select(async dto => await dto.FillAdministratedTests(dto.Id));
+                foreach (var dto in testsListModel.Tests)
+                {
+                    await dto.FillAdministratedTests(dto.Id);
+                
+                }
+
             }
             catch (ArgumentNullException e)
             {
