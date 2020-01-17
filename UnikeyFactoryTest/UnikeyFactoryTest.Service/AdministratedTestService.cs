@@ -113,26 +113,7 @@ namespace UnikeyFactoryTest.Service
         {
             using (_repo = new AdministratedTestRepository())
             {
-                try
-                {
-                    await _repo.DeleteAdministratedTest(administratedTestId);
-                }
-                catch (NotSupportedException ex)
-                {
-
-                }
-                catch (ObjectDisposedException ex)
-                {
-
-                }
-                catch (InvalidOperationException ex)
-                {
-
-                }
-                catch (Exception ex)
-                {
-
-                }
+                await _repo.DeleteAdministratedTest(administratedTestId);
             }
         }
 

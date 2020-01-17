@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Repository;
@@ -36,21 +37,13 @@ namespace UnikeyFactoryTestDAL.Test
 
             TestRepository testRepository = new TestRepository();
 
-            try
-            {
-                question.Answers.Add(answer);
-                test.Questions.Add(question);
-                testRepository.SaveTest(test);
-            }
-            catch (Exception ex)
-            {
-                int gg = 0;
-            }
+            question.Answers.Add(answer);
+            test.Questions.Add(question);
+            var res = Task.Run(() => testRepository.SaveTest(test));
 
             TestPlatformDBEntities _ctx = new TestPlatformDBEntities();
             Assert.AreEqual(1, _ctx.Tests.Count());
 
-            int g = 0;
         }
     }
 }

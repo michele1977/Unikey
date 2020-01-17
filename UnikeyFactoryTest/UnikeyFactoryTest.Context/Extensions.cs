@@ -19,6 +19,6 @@ namespace UnikeyFactoryTest.Context
 
     public partial class AdministratedTest
     {
-        public State StateEnum { get; set; } = State.Open;
+        public State StateEnum { get; set; }
     }
 }

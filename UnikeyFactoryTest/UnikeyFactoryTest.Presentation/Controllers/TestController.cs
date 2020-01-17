@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -17,6 +20,8 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 {
     public class TestController : Controller
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
         private static int UserId { get; set; }
         private static readonly Test test = new Test();
         private readonly TestService _service = new TestService();
@@ -24,20 +29,67 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         // GET: Test
         public ActionResult Index(TestDto model)
         {
-            if(UserId == 0)
+            if (UserId == 0)
                 UserId = model.UserId;
-            ModelState.Clear();
+            try
+            {
+                ModelState.Clear();
+            }
+            catch (NotSupportedException e)
+            {
+                Logger.Warn(e, e.Message);
+            }
+
             return View(model);
         }
 
         [HttpPost]
         public async Task<ActionResult> AddQuestion(QuestionDto model)
         {
-            var answerBiz = model.MapToDomain();
-            var test = await _service.GetTestById(answerBiz.TestId);
-            test.Questions.Add(answerBiz);
-            _service.UpdateTest(test);
-            return View("Index",model);
+            try
+            {
+                var answerBiz = model.MapToDomain();
+                var test = await _service.GetTestById(answerBiz.TestId);
+                test.Questions.Add(answerBiz);
+                _service.UpdateTest(test);
+            }
+            catch (ArgumentNullException e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
+            catch (InvalidOperationException e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
+            catch (DbEntityValidationException e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
+            catch (DbUpdateException e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
+            catch (NotSupportedException e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
+            catch (Exception e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
+
+            return View("Index", model);
             //List<Answer> answers = new List<Answer>();
             //Answer correctAnswer = new Answer()
             //{
@@ -72,11 +124,50 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult> AddTest(TestModel model)
         {
-           // test.TestName = model.TestName;
-            test.UserId = UserId;
-            test.URL = _service.GenerateGuid();
-            test.Date = model.Date;
-             await _service.AddNewTest(TestMapper.MapDalToBizHeavy(test));
+            try
+            {
+                // test.TestName = model.TestName;
+                test.UserId = UserId;
+                test.URL = _service.GenerateGuid();
+                test.Date = model.Date;
+                await _service.AddNewTest(TestMapper.MapDalToBizHeavy(test));
+            }
+            catch (ArgumentNullException e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
+            catch (InvalidOperationException e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
+            catch (DbEntityValidationException e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
+            catch (DbUpdateException e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
+            catch (NotSupportedException e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
+            catch (Exception e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
+
             return View("Index");
         }
 
@@ -87,7 +178,19 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             TestService service = new TestService();
 
-            testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
+            try
+            {
+                testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
+            }
+            catch (ArgumentNullException e)
+            {
+                Logger.Warn(e, e.Message);
+            }
+            catch (Exception e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
 
             return View(testsListModel);
         }
@@ -113,7 +216,47 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public async Task<JsonResult> DeleteTest(TestDto test)
         {
             TestService service = new TestService();
-            await service.DeleteTest(test.Id);
+
+            try
+            {
+                await service.DeleteTest(test.Id);
+                Logger.Info("Successfully deleted test");
+            }
+            catch (ArgumentNullException e)
+            {
+                Logger.Error(e, e.Message);
+                return Json(new { redirectUrl = Url.Action("Index", "Error") });
+            }
+            catch (InvalidOperationException e)
+            {
+                Logger.Error(e, e.Message);
+                return Json(new { redirectUrl = Url.Action("Index", "Error") });
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                Logger.Error(e, e.Message);
+                return Json(new { redirectUrl = Url.Action("Index", "Error") });
+            }
+            catch (DbEntityValidationException e)
+            {
+                Logger.Error(e, e.Message);
+                return Json(new { redirectUrl = Url.Action("Index", "Error") });
+            }
+            catch (DbUpdateException e)
+            {
+                Logger.Error(e, e.Message);
+                return Json(new { redirectUrl = Url.Action("Index", "Error") });
+            }
+            catch (NotSupportedException e)
+            {
+                Logger.Error(e, e.Message);
+                return Json(new { redirectUrl = Url.Action("Index", "Error") });
+            }
+            catch (Exception e)
+            {
+                Logger.Fatal(e, e.Message);
+                return Json(new { redirectUrl = Url.Action("Index", "Error") });
+            }
 
             return Json(new
             {
@@ -126,18 +269,77 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public async Task<ActionResult> TestContent(TestDto test)
         {
             TestService service = new TestService();
-            TestDto testToPass = new TestDto(await service.GetTestById(test.Id));
-            testToPass.PageNumber = test.PageNumber;
-            testToPass.PageSize = test.PageSize;
-            testToPass.URL = service.GenerateUrl(testToPass.URL);
+            TestDto testToPass = new TestDto();
+
+            try
+            {
+                testToPass = new TestDto(await service.GetTestById(test.Id));
+                testToPass.PageNumber = test.PageNumber;
+                testToPass.PageSize = test.PageSize;
+                testToPass.URL = service.GenerateUrl(testToPass.URL);
+            }
+            catch (ArgumentNullException ex)
+            {
+                Logger.Error(ex, ex.Message);
+                throw;
+            }
+            catch (InvalidOperationException ex)
+            {
+                Logger.Error(ex, ex.Message);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, ex.Message);
+                throw;
+            }
+
             return View(testToPass);
         }
 
         [HttpGet]
         public async Task<ActionResult> DeleteQuestion(QuestionDto question)
         {
-            TestService service = new TestService();
-            await service.DeleteQuestion(question.Id);
+            try
+            {
+                TestService service = new TestService();
+                await service.DeleteQuestion(question.Id);
+            }
+            catch (ArgumentNullException e)
+            {
+                Logger.Error(e, e.Message);
+                throw;
+            }
+            catch (InvalidOperationException e)
+            {
+                Logger.Error(e, e.Message);
+                throw;
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                Logger.Error(e, e.Message);
+                throw;
+            }
+            catch (DbEntityValidationException e)
+            {
+                Logger.Error(e, e.Message);
+                throw;
+            }
+            catch (DbUpdateException e)
+            {
+                Logger.Error(e, e.Message);
+                throw;
+            }
+            catch (NotSupportedException e)
+            {
+                Logger.Error(e, e.Message);
+                throw;
+            }
+            catch (Exception e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
 
             return View("Index");
         }
@@ -182,13 +384,101 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         //}
         public async Task<JsonResult> SendMail(EmailModel emailModel)
         {
-            TestService service = new TestService();
-            var test = await service.GetTestById(emailModel.Id);
+            TestBusiness test;
+
+            try
+            {
+                TestService service = new TestService();
+                test = await service.GetTestById(emailModel.Id);
+            }
+            catch (ArgumentNullException e)
+            {
+                Logger.Error(e, e.Message);
+                throw;
+            }
+            catch (InvalidOperationException e)
+            {
+                Logger.Error(e, e.Message);
+                throw;
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                Logger.Error(e, e.Message);
+                throw;
+            }
+            catch (DbEntityValidationException e)
+            {
+                Logger.Error(e, e.Message);
+                throw;
+            }
+            catch (DbUpdateException e)
+            {
+                Logger.Error(e, e.Message);
+                throw;
+            }
+            catch (NotSupportedException e)
+            {
+                Logger.Error(e, e.Message);
+                throw;
+            }
+            catch (Exception e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
+
+            bool result = false;
             TestDto sendTest = new TestDto(test);
             var URL = sendTest.URL;
             MailProvider provider = new MailProvider();
-            var result = provider.SendMail(emailModel.email, emailModel.name, URL);
-            return Json(new {result = result});
+
+            try
+            {
+                result = provider.SendMail(emailModel.email, emailModel.name, URL);
+            }
+            catch (HttpException e)
+            {
+                Logger.Error(e, e.Message);
+            }
+            catch (ArgumentNullException e)
+            {
+                Logger.Error(e, e.Message);
+
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                Logger.Error(e, e.Message);
+            }
+            catch (ArgumentException e)
+            {
+                Logger.Error(e, e.Message);
+            }
+            catch (FormatException e)
+            {
+                Logger.Error(e, e.Message);
+            }
+            catch (ObjectDisposedException e)
+            {
+                Logger.Error(e, e.Message);
+            }
+            catch (InvalidOperationException e)
+            {
+                Logger.Error(e, e.Message);
+            }
+            catch (SmtpFailedRecipientException e)
+            {
+                Logger.Error(e, e.Message);
+            }
+            catch (SmtpException e)
+            {
+                Logger.Error(e, e.Message);
+            }
+            catch (Exception e)
+            {
+                Logger.Fatal(e, e.Message);
+            }
+
+            return Json(new { result = result });
         }
     }
 }
