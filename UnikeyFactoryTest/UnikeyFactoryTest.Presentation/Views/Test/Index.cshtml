@@ -3,7 +3,9 @@
 
 
 <style>
-    #myDivContainerTop {
+    #buttonCreate {
+        margin-left: 83%;
+        margin-top: 2px;
     }
 
     .class-mymarginleft {
@@ -38,35 +40,47 @@
         }
     }
 
-    function EnableQuestionForm(id) {
+    function EnableDiv(id) {
         document.getElementById(id).hidden = false;
+      
+
+    }
+
+    function DisabledButtonCreate(id, idbtn) {
+        document.getElementById(id).hidden = false;
+        document.getElementById(idbtn).disable = true;
+
+
     }
 
     function DisableQuestionForm(id) {
         document.getElementById(id).hidden = true;
     }
+
+    
 </script>
 
-
-<div class="col-lg-6 col-md-6 col-sm-6" id="myDivContainerTop">
-    @Html.TextBox("t", "", new { @class = "form-control", id = "class-textBox", placeholder = "TestName" })
-    @*@@Html.TextBoxFor(x => x.TestName, new { @class = "form-control", id = "class-textBox", placeholder = "TestName" })@*@
-    @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date" })
-</div>
-
+@*@using (Html.BeginForm("AddTest", "Test", FormMethod.Post))
+{*@
+    <div class="col-lg-6 col-md-6 col-sm-6" id="myDivContainerTop">
+        @Html.TextBoxFor(x => x.Title, new {@class = "form-control", id = "class-textBox", placeholder = "TestName"})
+        @Html.TextBoxFor(x => x.Date, new {@class = "form-control", id = "class-textBox", placeholder = "Date", disabled="disabled"})
+        <button class="btn btn-primary"  id="buttonCreate" onclick="DisabledButtonCreate('divList','buttonCreate')">Create</button>
+    </div>
+@*}*@
 
 @if (Model != null)
 {
     <div class="container" id="myDivContainerDown">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="col-lg-6 col-md-6 col-sm-6" hidden id="divList"> 
                 <table class="table">
                     <tr>
                         <th>
                             QuestionText
                         </th>
                         <th>
-                            <button class="btn btn-dark" onclick="EnableQuestionForm('mydivQuestionForm')">+</button>
+                            <button class="btn btn-dark" onclick="EnableDiv('mydivQuestionForm')">+</button>
                         </th>
                     </tr>
 
