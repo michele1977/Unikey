@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Domain.Enums;
 
 namespace UnikeyFactoryTest.Mapper
 {
@@ -18,7 +19,7 @@ namespace UnikeyFactoryTest.Mapper
                 Id = answer.Id,
                 Text = answer.Text,
                 QuestionId = answer.QuestionId,
-                IsCorrect = answer.IsCorrect,
+                IsCorrect = (AnswerState)answer.IsCorrect,
                 Score = answer.Score
             };
 
@@ -32,7 +33,7 @@ namespace UnikeyFactoryTest.Mapper
                 Id = answer.Id,
                 Text = answer.Text,
                 QuestionId = answer.QuestionId,
-                IsCorrect = answer.IsCorrect,
+                IsCorrect = (byte)answer.IsCorrect,
                 Score = answer.Score
             };
 

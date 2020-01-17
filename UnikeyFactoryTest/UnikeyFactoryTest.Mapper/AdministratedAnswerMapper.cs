@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Context;
+using UnikeyFactoryTest.Domain.Enums;
 
 namespace UnikeyFactoryTest.Mapper
 {
@@ -16,7 +17,7 @@ namespace UnikeyFactoryTest.Mapper
             {
                 Id = dao.Id,
                 Text = dao.Text,
-                isCorrect = dao.isCorrect,
+                isCorrect = (AnswerState)dao.isCorrect,
                 isSelected = dao.isSelected,
                 Score = dao.Score,
                 AdministratedQuestionId = dao.AdministratedQuestionId,
@@ -31,7 +32,7 @@ namespace UnikeyFactoryTest.Mapper
             {
                 Id = domain.Id,
                 Text = domain.Text,
-                isCorrect = domain.isCorrect,
+                isCorrect = (byte)domain.isCorrect,
                 isSelected = domain.isSelected,
                 Score = domain.Score,
                 AdministratedQuestionId = domain.AdministratedQuestionId,

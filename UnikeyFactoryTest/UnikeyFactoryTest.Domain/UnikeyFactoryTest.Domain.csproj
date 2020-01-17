@@ -46,6 +46,7 @@
     <Compile Include="AdministratedTestBusiness.cs" />
     <Compile Include="AnswerBusiness.cs" />
     <Compile Include="Enums\AdministratedTestState.cs" />
+    <Compile Include="Enums\AnswerState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

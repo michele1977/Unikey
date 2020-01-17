@@ -17,7 +17,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         {
             Id = answer.Id;
             Text = answer.Text;
-            IsCorrect = answer.IsCorrect;
+            IsCorrect = (byte)answer.IsCorrect;
             QuestionId = answer.QuestionId;
             Score = answer.Score;
         }

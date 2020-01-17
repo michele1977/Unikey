@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Domain.Enums;
 
 namespace UnikeyFactoryTest.Presentation.Models.DTO
 {
@@ -20,7 +21,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
             Answers = question.Answers.Select(a => new AnswerDto(a)).ToList();
             TestId = question.TestId;
             Text = question.Text;
-            CorrectAnswerScore = question.Answers.Where(a => a.IsCorrect == 1).Sum(a => a.Score);
+            CorrectAnswerScore = question.Answers.Where(a => a.IsCorrect == AnswerState.Correct).Sum(a => a.Score);
         }
 
         public int Id { get; set; }
@@ -49,7 +50,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
             {
                 var answerBiz = new AnswerBusiness
                 {
-                    IsCorrect = answerDto.IsCorrect,
+                    IsCorrect = (AnswerState)answerDto.IsCorrect,
                     Score = answerDto.Score,
                     Text = answerDto.Text,
                     Id = answerDto.Id,

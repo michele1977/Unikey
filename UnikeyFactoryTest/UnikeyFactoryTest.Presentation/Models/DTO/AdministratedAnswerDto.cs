@@ -18,7 +18,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
             Id = administratedAnswer.Id;
             Text = administratedAnswer.Text;
             AdministratedQuestionId = administratedAnswer.AdministratedQuestionId;
-            IsCorrect = administratedAnswer.isCorrect;
+            IsCorrect = (byte)administratedAnswer.isCorrect;
             IsSelected = administratedAnswer.isSelected;
             Score = administratedAnswer.Score;
         }

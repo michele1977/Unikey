@@ -12,7 +12,6 @@ namespace UnikeyFactoryTest.Domain
         public string Text { get; set; }
         public int AdministratedTestId { get; set; }
         public short Position { get; set; }
-        public virtual List<AdministratedAnswerBusiness> AdministratedAnswers { get; set; }
-        public AdministratedTestBusiness AdministratedTest { get; set; }
+        public  List<AdministratedAnswerBusiness> AdministratedAnswers { get; set; }
     }
 }
