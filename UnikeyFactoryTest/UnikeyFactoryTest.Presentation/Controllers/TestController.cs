@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
-using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.Ajax.Utilities;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Mapper;
@@ -89,7 +86,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 throw;
             }
 
-            return View("Index", model);
+            return View("Index");
             //List<Answer> answers = new List<Answer>();
             //Answer correctAnswer = new Answer()
             //{
@@ -219,6 +216,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             try
             {
+                throw new ArgumentNullException();
                 await service.DeleteTest(test.Id);
                 Logger.Info("Successfully deleted test");
             }
@@ -234,17 +232,17 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             }
             catch (DbUpdateConcurrencyException e)
             {
-                Logger.Error(e, e.Message);
+                Logger.Fatal(e, e.Message);
                 return Json(new { redirectUrl = Url.Action("Index", "Error") });
             }
             catch (DbEntityValidationException e)
             {
-                Logger.Error(e, e.Message);
+                Logger.Fatal(e, e.Message);
                 return Json(new { redirectUrl = Url.Action("Index", "Error") });
             }
             catch (DbUpdateException e)
             {
-                Logger.Error(e, e.Message);
+                Logger.Fatal(e, e.Message);
                 return Json(new { redirectUrl = Url.Action("Index", "Error") });
             }
             catch (NotSupportedException e)
@@ -317,17 +315,17 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             }
             catch (DbUpdateConcurrencyException e)
             {
-                Logger.Error(e, e.Message);
+                Logger.Fatal(e, e.Message);
                 throw;
             }
             catch (DbEntityValidationException e)
             {
-                Logger.Error(e, e.Message);
+                Logger.Fatal(e, e.Message);
                 throw;
             }
             catch (DbUpdateException e)
             {
-                Logger.Error(e, e.Message);
+                Logger.Fatal(e, e.Message);
                 throw;
             }
             catch (NotSupportedException e)
@@ -403,17 +401,17 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             }
             catch (DbUpdateConcurrencyException e)
             {
-                Logger.Error(e, e.Message);
+                Logger.Fatal(e, e.Message);
                 throw;
             }
             catch (DbEntityValidationException e)
             {
-                Logger.Error(e, e.Message);
+                Logger.Fatal(e, e.Message);
                 throw;
             }
             catch (DbUpdateException e)
             {
-                Logger.Error(e, e.Message);
+                Logger.Fatal(e, e.Message);
                 throw;
             }
             catch (NotSupportedException e)
