@@ -11,7 +11,7 @@ namespace UnikeyFactoryTest.Service.Providers.MailProvider
         public bool SendMail(string user, string UserName, string URL)
         {
             var mailtools = new MailTools();
-            var path = HttpContext.Current.Server.MapPath("/MailTemplate") + @"\CodiceHtml.txt";
+            var path = HttpContext.Current.Server.MapPath("/Templates") + @"\MailTemplate\CodiceHtml.txt";
             StringBuilder myStringBuilder = new StringBuilder(mailtools.ReadFile(path));
             myStringBuilder.Replace("NomeUtente", UserName).Replace("URLTest", URL).ToString();
             var body = myStringBuilder.ToString();
