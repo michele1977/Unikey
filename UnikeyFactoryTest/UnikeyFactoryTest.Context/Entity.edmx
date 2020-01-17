@@ -10,77 +10,70 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Text" Type="nvarchar(max)" />
-          <Property Name="isCorrect" Type="bit" />
-          <Property Name="isSelected" Type="bit" />
+          <Property Name="Text" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="isCorrect" Type="tinyint" Nullable="false" />
+          <Property Name="isSelected" Type="bit" Nullable="false" />
           <Property Name="AdministratedQuestionId" Type="int" Nullable="false" />
-          <Property Name="Score" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Score" Type="decimal" Precision="10" Scale="1" Nullable="false" />
         </EntityType>
         <EntityType Name="AdministratedQuestion">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Text" Type="nvarchar(max)" />
+          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
           <Property Name="AdministratedTestId" Type="int" Nullable="false" />
+          <Property Name="Position" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="AdministratedTest">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="URL" Type="varchar" MaxLength="50" />
-          <Property Name="Text" Type="varchar" MaxLength="50" />
-          <Property Name="TotalScore" Type="int" />
+          <Property Name="URL" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="MaxScore" Type="decimal" Precision="10" Scale="1" Nullable="false" />
           <Property Name="TestId" Type="int" />
-          <Property Name="TestSubject" Type="varchar" MaxLength="50" />
-          <Property Name="Date" Type="datetime" />
+          <Property Name="TestSubject" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="State" Type="tinyint" Nullable="false" />
+          <Property Name="Score" Type="decimal" Precision="10" Scale="1" Nullable="false" />
         </EntityType>
         <EntityType Name="Answer">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Text" Type="varchar" MaxLength="50" />
-          <Property Name="IsCorrect" Type="bit" />
+          <Property Name="Text" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="IsCorrect" Type="tinyint" Nullable="false" />
           <Property Name="QuestionId" Type="int" Nullable="false" />
-          <Property Name="Score" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Score" Type="decimal" Precision="10" Scale="1" Nullable="false" />
         </EntityType>
         <EntityType Name="Question">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Text" Type="varchar(max)" />
+          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
           <Property Name="TestId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Test">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="URL" Type="varchar" MaxLength="50" />
-          <Property Name="Date" Type="datetime" />
+          <Property Name="URL" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_administratedanswer_administratedquestion">
           <End Role="AdministratedQuestion" Type="Self.AdministratedQuestion" Multiplicity="1">
@@ -168,7 +161,6 @@
           <EntitySet Name="AdministratedTest" EntityType="Self.AdministratedTest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Answer" EntityType="Self.Answer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Test" EntityType="Self.Test" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_administratedanswer_administratedquestion" Association="Self.FK_administratedanswer_administratedquestion">
@@ -205,11 +197,11 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="isCorrect" Type="Boolean" />
-          <Property Name="isSelected" Type="Boolean" />
+          <Property Name="Text" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="isCorrect" Type="Boolean" Nullable="false" />
+          <Property Name="isSelected" Type="Boolean" Nullable="false" />
           <Property Name="AdministratedQuestionId" Type="Int32" Nullable="false" />
-          <Property Name="Score" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Score" Type="Decimal" Precision="10" Scale="1" Nullable="false" />
           <NavigationProperty Name="AdministratedQuestion" Relationship="Self.FK_AdministratedAnswer_AdministratedQuestion" FromRole="AdministratedAnswer" ToRole="AdministratedQuestion" />
         </EntityType>
         <EntityType Name="AdministratedQuestion">
@@ -217,33 +209,38 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="AdministratedTestId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AdministratedAnswers" Relationship="Self.FK_AdministratedAnswer_AdministratedQuestion" FromRole="AdministratedQuestion" ToRole="AdministratedAnswer" />
           <NavigationProperty Name="AdministratedTest" Relationship="Self.FK_AdministratedQuestion_AdministratedTest" FromRole="AdministratedQuestion" ToRole="AdministratedTest" />
+          <Property Name="Position" Type="Int16" Nullable="false" />
         </EntityType>
         <EntityType Name="AdministratedTest">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="URL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="URL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="TotalScore" Type="Int32" />
           <Property Name="TestId" Type="Int32" />
-          <Property Name="TestSubject" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="TestSubject" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" Nullable="false" />
           <NavigationProperty Name="AdministratedQuestions" Relationship="Self.FK_AdministratedQuestion_AdministratedTest" FromRole="AdministratedTest" ToRole="AdministratedQuestion" />
           <NavigationProperty Name="Test" Relationship="Self.FK_AdministratedTest_Test" FromRole="AdministratedTest" ToRole="Test" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="MaxScore" Type="Decimal" Nullable="false" Precision="10" Scale="1" />
+          <Property Name="State" Type="Byte" Nullable="false" />
+          <Property Name="Score" Type="Decimal" Nullable="false" Precision="10" Scale="1" />
         </EntityType>
         <EntityType Name="Answer">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Text" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IsCorrect" Type="Boolean" />
+          <Property Name="Text" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsCorrect" Type="Boolean" Nullable="false" />
           <Property Name="QuestionId" Type="Int32" Nullable="false" />
-          <Property Name="Score" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Score" Type="Decimal" Precision="10" Scale="1" Nullable="false" />
           <NavigationProperty Name="Question" Relationship="Self.FK_Answer_Question" FromRole="Answer" ToRole="Question" />
         </EntityType>
         <EntityType Name="Question">
@@ -251,7 +248,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="TestId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Answers" Relationship="Self.FK_Answer_Question" FromRole="Question" ToRole="Answer" />
           <NavigationProperty Name="Test" Relationship="Self.FK_Question_Test" FromRole="Question" ToRole="Test" />
@@ -271,21 +268,21 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="URL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="URL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AdministratedTests" Relationship="Self.FK_AdministratedTest_Test" FromRole="Test" ToRole="AdministratedTest" />
           <NavigationProperty Name="Questions" Relationship="Self.FK_Question_Test" FromRole="Test" ToRole="Question" />
           <NavigationProperty Name="User" Relationship="Self.FK_Test_User" FromRole="Test" ToRole="User" />
-          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Tests" Relationship="Self.FK_Test_User" FromRole="User" ToRole="Test" />
         </EntityType>
         <Association Name="FK_AdministratedAnswer_AdministratedQuestion">
@@ -415,6 +412,7 @@
           <EntitySetMapping Name="AdministratedQuestions">
             <EntityTypeMapping TypeName="TestPlatformDBModel.AdministratedQuestion">
               <MappingFragment StoreEntitySet="AdministratedQuestion">
+                <ScalarProperty Name="Position" ColumnName="Position" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
                 <ScalarProperty Name="AdministratedTestId" ColumnName="AdministratedTestId" />
@@ -424,9 +422,12 @@
           <EntitySetMapping Name="AdministratedTests">
             <EntityTypeMapping TypeName="TestPlatformDBModel.AdministratedTest">
               <MappingFragment StoreEntitySet="AdministratedTest">
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="MaxScore" ColumnName="MaxScore" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="URL" ColumnName="URL" />
-                <ScalarProperty Name="TotalScore" ColumnName="TotalScore" />
                 <ScalarProperty Name="TestId" ColumnName="TestId" />
                 <ScalarProperty Name="TestSubject" ColumnName="TestSubject" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
@@ -450,17 +451,6 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
                 <ScalarProperty Name="TestId" ColumnName="TestId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="TestPlatformDBModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -25,7 +25,11 @@ namespace UnikeyFactoryTest.Context
         public Nullable<int> TotalScore { get; set; }
         public Nullable<int> TestId { get; set; }
         public string TestSubject { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
+        public System.DateTime Date { get; set; }
+        public string Title { get; set; }
+        public decimal MaxScore { get; set; }
+        public byte State { get; set; }
+        public decimal Score { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AdministratedQuestion> AdministratedQuestions { get; set; }

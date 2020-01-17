@@ -23,7 +23,7 @@ namespace UnikeyFactoryTest.Context
     
         public int Id { get; set; }
         public string URL { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
+        public System.DateTime Date { get; set; }
         public int UserId { get; set; }
         public string Title { get; set; }
     
