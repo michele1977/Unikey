@@ -9,6 +9,5 @@ namespace UnikeyFactoryTest.Domain
         public AnswerState IsCorrect { get; set; }
         public int QuestionId { get; set; }
         public decimal Score { get; set; }
-        public QuestionBusiness Question { get; set; }
     }
 }

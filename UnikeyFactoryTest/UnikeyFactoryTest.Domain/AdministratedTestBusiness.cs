@@ -21,6 +21,5 @@ namespace UnikeyFactoryTest.Domain
         public AdministratedTestState State { get; set; }
         public decimal Score { get; set; }
         public virtual List<AdministratedQuestionBusiness> AdministratedQuestions { get; set; }
-        public TestBusiness Test { get; set; }
     }
 }
