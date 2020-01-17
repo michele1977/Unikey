@@ -84,9 +84,6 @@
     <Compile Include="Question.cs">
       <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>Entity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Test.cs">
       <DependentUpon>Entity.tt</DependentUpon>
     </Compile>

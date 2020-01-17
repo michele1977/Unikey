@@ -13,7 +13,6 @@ namespace UnikeyFactoryTest.Domain
 
         public int Id { get; set; }
         public string URL { get; set; }
-        public int? TotalScore { get; set; }
         public int? TestId { get; set; }
         public string TestSubject { get; set; }
         public DateTime Date { get; set; }
