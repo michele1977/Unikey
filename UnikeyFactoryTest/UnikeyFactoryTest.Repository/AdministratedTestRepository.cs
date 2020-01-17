@@ -33,7 +33,7 @@ namespace UnikeyFactoryTest.Repository
                     var newAdTestDb = AdministratedTestMapper.MapDomainToDao(adTest);
                     _ctx.AdministratedTests.Add(newAdTestDb);
                     _ctx.SaveChanges();
-                    adTest = AdministratedTestMapper.MapDaoToDomainHeavy(newAdTestDb);
+                    adTest = AdministratedTestMapper.MapDaoToDomain(newAdTestDb);
                     return adTest;
                 }
                 catch (Exception ex)
@@ -56,7 +56,7 @@ namespace UnikeyFactoryTest.Repository
                 throw new Exception("Not valid id");
             }
 
-            return AdministratedTestMapper.MapDaoToDomainHeavy(task);
+            return AdministratedTestMapper.MapDaoToDomain(task);
         }
 
         public async Task<List<AdministratedTestBusiness>> GetAdministratedTests()

@@ -1,16 +1,5 @@
-﻿@model UnikeyFactoryTest.Presentation.Models.DTO.TestDto
+﻿@model UnikeyFactoryTest.Presentation.Models.Dto.TestDto
 
-<script>
-    function openModal(Id) {
-        $('#mailModal').modal("show");
-        document.getElementById("selectedTest").value = Id;
-
-        document.getElementById("false").setAttribute("hidden", "hidden");
-        document.getElementById("true").setAttribute("hidden", "hidden");
-        document.getElementById("subject-name").value = null;
-        document.getElementById("email-address").value = null;
-    }
-</script>
 <tr>
     <td>
         @Model.Id
@@ -27,14 +16,41 @@
     <td>
     </td>
     <td>
-        @Html.ActionLink(
-            "Content",
-            "TestContent",
-            "Test",
-            new { @Model.Id, @Model.PageNumber, @Model.PageSize },
-            new { @class = "btn btn-info" }) |
-        <button class="btn btn-info" onclick="deleteConfirmation(@Model.Id, @Model.PageNumber, @Model.PageSize)">Delete</button> |
-        <button type="button" onclick="openModal(@Model.Id)" class="btn btn-info" id="openButton">Send</button>
+        <div>
+            @Html.ActionLink(
+                "Content",
+                "TestContent",
+                "Test",
+                new { @Model.Id, @Model.PageNumber, @Model.PageSize },
+                new { @class = "btn btn-info" }) |
+            <button class="btn btn-info" onclick="deleteConfirmation(@Model.Id, @Model.PageNumber, @Model.PageSize)">Delete</button> 
+            <button class="btn btn-info" data-toggle="modal" data-target="#myModal">
+                Details
+            </button> |
+        </div>
+    </td>
 
 </tr>
+
+<script type="text/javascript">
+    $('.modal-content').resizable({
+        //alsoResize: ".modal-dialog",
+        minHeight: 300,
+        minWidth: 300
+    });
+    $('.modal-dialog').draggable();
+
+    $('#myModal').on('show.bs.modal', function () {
+        $(this).find('.modal-body').css({
+            'max-height': '100%'
+        });
+    });
+
+</script>
+
+<style>
+    .modal-body {
+        overflow: auto;
+    }
+</style>
 
