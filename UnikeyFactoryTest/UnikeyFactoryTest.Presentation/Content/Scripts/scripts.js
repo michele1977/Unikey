@@ -10,7 +10,15 @@
         }).then(
             function (response) {
                 window.location.href = response.redirectUrl;
-            });
+            }, 
+            function() {
+                var label = document.getElementById("ErrorAlert");
+                if (label.style.display === "none") {
+                    label.style.display = "block";
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+        );
     }
 }
 function resizePage(size, pageNumber, url) {
@@ -37,5 +45,12 @@ function send() {
                 document.getElementById("email-address").value = null;
             }
         });
+}
+
+function closeErrorAlert() {
+        var label = document.getElementById("ErrorAlert");
+        if (label.style.display === "block") {
+            label.style.display = "none";
+        }
 }
 
