@@ -25,12 +25,12 @@ namespace UnikeyFactoryTest.Context
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AdministratedAnswer> AdministratedAnswers { get; set; }
         public virtual DbSet<AdministratedQuestion> AdministratedQuestions { get; set; }
-        public virtual DbSet<Answer> Answers { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<Test> Tests { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<AdministratedTest> AdministratedTests { get; set; }
+        public virtual DbSet<AdministratedAnswer> AdministratedAnswers { get; set; }
+        public virtual DbSet<Answer> Answers { get; set; }
     }
 }

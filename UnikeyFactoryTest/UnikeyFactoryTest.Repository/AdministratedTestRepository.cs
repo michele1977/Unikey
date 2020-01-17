@@ -66,7 +66,6 @@ namespace UnikeyFactoryTest.Repository
                 Id = t.Id,
                 TestSubject = t.TestSubject,
                 Date = t.Date,
-                TotalScore = t.TotalScore,
                 Score = t.AdministratedQuestions
                     .SelectMany(q => q.AdministratedAnswers)
                     .Where(a => (bool) a.isSelected)
@@ -161,7 +160,7 @@ namespace UnikeyFactoryTest.Repository
             var myTask = Task.Run(() =>
             {
                 score = GetScore(newTest, score);
-                _ctx.AdministratedTests.FirstOrDefault(x => x.Id == newTest.Id).TotalScore = decimal.ToInt32(score);
+                _ctx.AdministratedTests.FirstOrDefault(x => x.Id == newTest.Id).Score = decimal.ToInt32(score);
             });
             await myTask;
         }
@@ -171,7 +170,7 @@ namespace UnikeyFactoryTest.Repository
             foreach (var q in newTest.AdministratedQuestions)
             {
                 if ((q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true)) != null)
-                    score = score + q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true).Score ?? 0;
+                    score += q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true).Score;
             }
 
             return score;

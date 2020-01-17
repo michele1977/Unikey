@@ -85,9 +85,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         {
             testsListModel = testsListModel ?? new TestsListModel();
 
-            TestService service = new TestService();
-
+            var service = new TestService();
             testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
+
 
             return View(testsListModel);
         }

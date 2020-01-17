@@ -192,18 +192,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TestPlatformDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="AdministratedAnswer">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Text" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="isCorrect" Type="Boolean" Nullable="false" />
-          <Property Name="isSelected" Type="Boolean" Nullable="false" />
-          <Property Name="AdministratedQuestionId" Type="Int32" Nullable="false" />
-          <Property Name="Score" Type="Decimal" Precision="10" Scale="1" Nullable="false" />
-          <NavigationProperty Name="AdministratedQuestion" Relationship="Self.FK_AdministratedAnswer_AdministratedQuestion" FromRole="AdministratedAnswer" ToRole="AdministratedQuestion" />
-        </EntityType>
         <EntityType Name="AdministratedQuestion">
           <Key>
             <PropertyRef Name="Id" />
@@ -211,20 +199,9 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="AdministratedTestId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AdministratedAnswers" Relationship="Self.FK_AdministratedAnswer_AdministratedQuestion" FromRole="AdministratedQuestion" ToRole="AdministratedAnswer" />
           <Property Name="Position" Type="Int16" Nullable="false" />
           <NavigationProperty Name="AdministratedTest" Relationship="TestPlatformDBModel.FK_administratedquestion_administratedtest" FromRole="AdministratedQuestion" ToRole="AdministratedTest" />
-        </EntityType>
-        <EntityType Name="Answer">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Text" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IsCorrect" Type="Boolean" Nullable="false" />
-          <Property Name="QuestionId" Type="Int32" Nullable="false" />
-          <Property Name="Score" Type="Decimal" Precision="10" Scale="1" Nullable="false" />
-          <NavigationProperty Name="Question" Relationship="Self.FK_Answer_Question" FromRole="Answer" ToRole="Question" />
+          <NavigationProperty Name="AdministratedAnswers" Relationship="TestPlatformDBModel.FK_administratedanswer_administratedquestion" FromRole="AdministratedQuestion" ToRole="AdministratedAnswer" />
         </EntityType>
         <EntityType Name="Question">
           <Key>
@@ -233,8 +210,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="TestId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Answers" Relationship="Self.FK_Answer_Question" FromRole="Question" ToRole="Answer" />
           <NavigationProperty Name="Test" Relationship="Self.FK_Question_Test" FromRole="Question" ToRole="Test" />
+          <NavigationProperty Name="Answers" Relationship="TestPlatformDBModel.FK_answer_question" FromRole="Question" ToRole="Answer" />
         </EntityType>
         <EntityType Name="Test">
           <Key>
@@ -258,30 +235,6 @@
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Tests" Relationship="Self.FK_Test_User" FromRole="User" ToRole="Test" />
         </EntityType>
-        <Association Name="FK_AdministratedAnswer_AdministratedQuestion">
-          <End Role="AdministratedQuestion" Type="Self.AdministratedQuestion" Multiplicity="1" />
-          <End Role="AdministratedAnswer" Type="Self.AdministratedAnswer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AdministratedQuestion">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AdministratedAnswer">
-              <PropertyRef Name="AdministratedQuestionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Answer_Question">
-          <End Role="Question" Type="Self.Question" Multiplicity="1" />
-          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Question">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Answer">
-              <PropertyRef Name="QuestionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Question_Test">
           <End Role="Test" Type="Self.Test" Multiplicity="1" />
           <End Role="Question" Type="Self.Question" Multiplicity="*" />
@@ -307,20 +260,10 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="TestPlatformDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AdministratedAnswers" EntityType="Self.AdministratedAnswer" />
           <EntitySet Name="AdministratedQuestions" EntityType="Self.AdministratedQuestion" />
-          <EntitySet Name="Answers" EntityType="Self.Answer" />
           <EntitySet Name="Questions" EntityType="Self.Question" />
           <EntitySet Name="Tests" EntityType="Self.Test" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK_AdministratedAnswer_AdministratedQuestion" Association="Self.FK_AdministratedAnswer_AdministratedQuestion">
-            <End Role="AdministratedQuestion" EntitySet="AdministratedQuestions" />
-            <End Role="AdministratedAnswer" EntitySet="AdministratedAnswers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Answer_Question" Association="Self.FK_Answer_Question">
-            <End Role="Question" EntitySet="Questions" />
-            <End Role="Answer" EntitySet="Answers" />
-          </AssociationSet>
           <AssociationSet Name="FK_Question_Test" Association="Self.FK_Question_Test">
             <End Role="Test" EntitySet="Tests" />
             <End Role="Question" EntitySet="Questions" />
@@ -337,6 +280,16 @@
           <AssociationSet Name="FK_AdministratedTest_test" Association="TestPlatformDBModel.FK_AdministratedTest_test">
             <End Role="Test" EntitySet="Tests" />
             <End Role="AdministratedTest" EntitySet="AdministratedTests" />
+          </AssociationSet>
+          <EntitySet Name="AdministratedAnswers" EntityType="TestPlatformDBModel.AdministratedAnswer" />
+          <AssociationSet Name="FK_administratedanswer_administratedquestion" Association="TestPlatformDBModel.FK_administratedanswer_administratedquestion">
+            <End Role="AdministratedQuestion" EntitySet="AdministratedQuestions" />
+            <End Role="AdministratedAnswer" EntitySet="AdministratedAnswers" />
+          </AssociationSet>
+          <EntitySet Name="Answers" EntityType="TestPlatformDBModel.Answer" />
+          <AssociationSet Name="FK_answer_question" Association="TestPlatformDBModel.FK_answer_question">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="Answer" EntitySet="Answers" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AdministratedTest">
@@ -381,24 +334,63 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AdministratedAnswer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="isCorrect" Type="Byte" Nullable="false" />
+          <Property Name="isSelected" Type="Boolean" Nullable="false" />
+          <Property Name="AdministratedQuestionId" Type="Int32" Nullable="false" />
+          <Property Name="Score" Type="Decimal" Nullable="false" Precision="10" Scale="1" />
+          <NavigationProperty Name="AdministratedQuestion" Relationship="TestPlatformDBModel.FK_administratedanswer_administratedquestion" FromRole="AdministratedAnswer" ToRole="AdministratedQuestion" />
+        </EntityType>
+        <Association Name="FK_administratedanswer_administratedquestion">
+          <End Type="TestPlatformDBModel.AdministratedQuestion" Role="AdministratedQuestion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="TestPlatformDBModel.AdministratedAnswer" Role="AdministratedAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdministratedQuestion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AdministratedAnswer">
+              <PropertyRef Name="AdministratedQuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IsCorrect" Type="Byte" Nullable="false" />
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <Property Name="Score" Type="Decimal" Nullable="false" Precision="10" Scale="1" />
+          <NavigationProperty Name="Question" Relationship="TestPlatformDBModel.FK_answer_question" FromRole="Answer" ToRole="Question" />
+        </EntityType>
+        <Association Name="FK_answer_question">
+          <End Type="TestPlatformDBModel.Question" Role="Question" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="TestPlatformDBModel.Answer" Role="Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="TestPlatformDBModelStoreContainer" CdmEntityContainer="TestPlatformDBEntities">
-          <EntitySetMapping Name="AdministratedAnswers">
-            <EntityTypeMapping TypeName="TestPlatformDBModel.AdministratedAnswer">
-              <MappingFragment StoreEntitySet="AdministratedAnswer">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Text" ColumnName="Text" />
-                <ScalarProperty Name="isCorrect" ColumnName="isCorrect" />
-                <ScalarProperty Name="isSelected" ColumnName="isSelected" />
-                <ScalarProperty Name="AdministratedQuestionId" ColumnName="AdministratedQuestionId" />
-                <ScalarProperty Name="Score" ColumnName="Score" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AdministratedQuestions">
             <EntityTypeMapping TypeName="TestPlatformDBModel.AdministratedQuestion">
               <MappingFragment StoreEntitySet="AdministratedQuestion">
@@ -406,17 +398,6 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
                 <ScalarProperty Name="AdministratedTestId" ColumnName="AdministratedTestId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Answers">
-            <EntityTypeMapping TypeName="TestPlatformDBModel.Answer">
-              <MappingFragment StoreEntitySet="Answer">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Text" ColumnName="Text" />
-                <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
-                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
-                <ScalarProperty Name="Score" ColumnName="Score" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -460,6 +441,29 @@
                 <ScalarProperty Name="MaxScore" ColumnName="MaxScore" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AdministratedAnswers">
+            <EntityTypeMapping TypeName="TestPlatformDBModel.AdministratedAnswer">
+              <MappingFragment StoreEntitySet="AdministratedAnswer">
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="AdministratedQuestionId" ColumnName="AdministratedQuestionId" />
+                <ScalarProperty Name="isSelected" ColumnName="isSelected" />
+                <ScalarProperty Name="isCorrect" ColumnName="isCorrect" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Answers">
+            <EntityTypeMapping TypeName="TestPlatformDBModel.Answer">
+              <MappingFragment StoreEntitySet="Answer">
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

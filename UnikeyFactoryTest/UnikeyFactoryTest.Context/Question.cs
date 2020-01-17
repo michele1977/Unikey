@@ -24,8 +24,8 @@ namespace UnikeyFactoryTest.Context
         public string Text { get; set; }
         public int TestId { get; set; }
     
+        public virtual Test Test { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Answer> Answers { get; set; }
-        public virtual Test Test { get; set; }
     }
 }

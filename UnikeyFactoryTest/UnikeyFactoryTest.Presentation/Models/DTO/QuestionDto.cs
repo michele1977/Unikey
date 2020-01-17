@@ -20,10 +20,8 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
             Answers = question.Answers.Select(a => new AnswerDto(a)).ToList();
             TestId = question.TestId;
             Text = question.Text;
-            CorrectAnswerScore = question.Answers.Where(a => (bool) a.IsCorrect).Sum(a => a.Score);
+            CorrectAnswerScore = question.Answers.Where(a => a.IsCorrect == 1).Sum(a => a.Score);
         }
-
-
 
         public int Id { get; set; }
         public string Text { get; set; }

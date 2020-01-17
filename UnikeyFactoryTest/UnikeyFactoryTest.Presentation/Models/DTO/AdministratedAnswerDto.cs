@@ -25,7 +25,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
 
         public int Id { get; set; }
         public string Text { get; set; }
-        public bool IsCorrect { get; set; }
+        public byte IsCorrect { get; set; }
         public bool IsSelected { get; set; }
         public int AdministratedQuestionId { get; set; }
         public decimal Score { get; set; }
