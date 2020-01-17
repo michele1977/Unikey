@@ -22,12 +22,11 @@ namespace UnikeyFactoryTest.Context
     
         public int Id { get; set; }
         public string URL { get; set; }
-        public Nullable<int> TotalScore { get; set; }
+        public string Title { get; set; }
+        public decimal MaxScore { get; set; }
         public Nullable<int> TestId { get; set; }
         public string TestSubject { get; set; }
         public System.DateTime Date { get; set; }
-        public string Title { get; set; }
-        public decimal MaxScore { get; set; }
         public byte State { get; set; }
         public decimal Score { get; set; }
     

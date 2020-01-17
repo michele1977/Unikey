@@ -1,30 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnikeyFactoryTest.Domain.Enums;
 
 namespace UnikeyFactoryTest.Domain
 {
-    public enum State
-    {
-        Open = 1,
-        Started = 2,
-        Closed = 3
-    }
-
     public class AdministratedTestBusiness
     {
         public AdministratedTestBusiness()
         {
-            AdministratedQuestions = new List<AdministratedQuestionBusiness>();
+            this.AdministratedQuestions = new List<AdministratedQuestionBusiness>();
         }
 
         public int Id { get; set; }
         public string URL { get; set; }
-        public int? TotalScore { get; set; }
-        public int TestId { get; set; }
+        public int? TestId { get; set; }
         public string TestSubject { get; set; }
-        public DateTime? Date { get; set; }
-        public decimal? ResultScore { get; set; }
-        public State StateEnum { get; set; }
-        public virtual ICollection<AdministratedQuestionBusiness> AdministratedQuestions { get; set; }
+        public DateTime Date { get; set; }
+        public string Title { get; set; }
+        public decimal MaxScore { get; set; }
+        public AdministratedTestState State { get; set; }
+        public decimal Score { get; set; }
+        public virtual List<AdministratedQuestionBusiness> AdministratedQuestions { get; set; }
+        public TestBusiness Test { get; set; }
     }
 }

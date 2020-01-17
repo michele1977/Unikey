@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Domain.Enums;
 using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Repository;
@@ -40,7 +41,7 @@ namespace UnikeyFactoryTest.Service
                 TestId = test.Id,
                 TestSubject = subject,
                 AdministratedQuestions = new List<AdministratedQuestionBusiness>(),
-                StateEnum = (State)1
+                State = (AdministratedTestState)1
             };
 
             foreach (var q in test.Questions)
@@ -120,11 +121,6 @@ namespace UnikeyFactoryTest.Service
         public async Task<AdministratedQuestionBusiness> Next(int AdministratedTestId, int position)
         {
             var test = await _repo.GetAdministratedTestById(AdministratedTestId);
-            for (int i = 0; i < test.AdministratedQuestions.Count; i++)
-            {
-                test.AdministratedQuestions.ElementAt(i).Position = i;
-            }
-
             return test.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
         }
 
@@ -135,10 +131,6 @@ namespace UnikeyFactoryTest.Service
         public async Task<AdministratedQuestionBusiness> Previous(int AdministratedTestId, int position)
         {
             var test = await _repo.GetAdministratedTestById(AdministratedTestId);
-            for (int i = 0; i < test.AdministratedQuestions.Count; i++)
-            {
-                test.AdministratedQuestions.ElementAt(i).Position = i;
-            }
             return test.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
         }
     }

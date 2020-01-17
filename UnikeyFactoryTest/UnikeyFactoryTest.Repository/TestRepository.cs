@@ -68,7 +68,6 @@ namespace UnikeyFactoryTest.Repository
                 Id = t.Id,
                 URL = t.URL,
                 Date = t.Date,
-                NumQuestions = t.Questions.Count
             }).ToList());
 
             return testListTask;
