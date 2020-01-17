@@ -174,11 +174,13 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             testsListModel = testsListModel ?? new TestsListModel();
 
             var service = new TestService();
-            testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
-
             try
             {
                 testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
+                foreach (var dto in testsListModel.Tests)
+                {
+                    await dto.FillAdministratedTests(dto.Id);
+                }
             }
             catch (ArgumentNullException e)
             {

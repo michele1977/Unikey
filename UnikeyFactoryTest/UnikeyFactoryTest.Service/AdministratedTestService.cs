@@ -24,7 +24,7 @@ namespace UnikeyFactoryTest.Service
             _repo = new AdministratedTestRepository();
         }
 
-        public AdministratedTestService(AdministratedTestRepository repo)
+        public AdministratedTestService(IAdministratedTestRepository repo)
         {
             if (repo is null)
                 _repo = new AdministratedTestRepository();
