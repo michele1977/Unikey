@@ -174,7 +174,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             testsListModel = testsListModel ?? new TestsListModel();
 
             var service = new TestService();
-            testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
 
             try
             {
@@ -213,23 +212,23 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpPost]
         public async Task<JsonResult> DeleteTest(TestDto test)
         {
+
             TestService service = new TestService();
 
             try
             {
-                throw new ArgumentNullException();
                 await service.DeleteTest(test.Id);
                 Logger.Info("Successfully deleted test");
             }
             catch (ArgumentNullException e)
             {
                 Logger.Error(e, e.Message);
-                return Json(new { redirectUrl = Url.Action("Index", "Error") });
+                throw;
             }
             catch (InvalidOperationException e)
             {
                 Logger.Error(e, e.Message);
-                return Json(new { redirectUrl = Url.Action("Index", "Error") });
+                throw;
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -249,13 +248,14 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             catch (NotSupportedException e)
             {
                 Logger.Error(e, e.Message);
-                return Json(new { redirectUrl = Url.Action("Index", "Error") });
+                throw;
             }
             catch (Exception e)
             {
                 Logger.Fatal(e, e.Message);
                 return Json(new { redirectUrl = Url.Action("Index", "Error") });
             }
+
 
             return Json(new
             {

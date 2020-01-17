@@ -34,7 +34,7 @@
                                                            PageNumber = @Model.PageNumber,
                                                            PageSize = @Model.PageSize,
                                                            QuestionId = question.Id,
-                                                           CorrectAnswerScore=question.Answers.Where(a => (bool) a.IsCorrect)
+                                                           CorrectAnswerScore=question.Answers.Where(a => a.IsCorrect == 1)
                                                                .Select(a => a.Score)})'><img id="editIcon" src="~/Content/ICONS/editIcon.png" alt="edit"></a>
                     </div>
                     <hr />
