@@ -45,6 +45,7 @@
     <Compile Include="AdministratedQuestionBusiness.cs" />
     <Compile Include="AdministratedTestBusiness.cs" />
     <Compile Include="AnswerBusiness.cs" />
+    <Compile Include="Enums\AdministratedTestState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -52,5 +53,6 @@
     <Compile Include="TestBusiness.cs" />
     <Compile Include="UserBusiness.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

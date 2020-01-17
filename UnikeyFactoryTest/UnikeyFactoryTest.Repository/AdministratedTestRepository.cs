@@ -67,7 +67,7 @@ namespace UnikeyFactoryTest.Repository
                 TestSubject = t.TestSubject,
                 Date = t.Date,
                 TotalScore = t.TotalScore,
-                ResultScore = t.AdministratedQuestions
+                Score = t.AdministratedQuestions
                     .SelectMany(q => q.AdministratedAnswers)
                     .Where(a => (bool) a.isSelected)
                     .Sum(a => a.Score)
@@ -93,7 +93,7 @@ namespace UnikeyFactoryTest.Repository
             var myTask = Task.Run(() =>
             {
                 var FilteredState = _ctx.AdministratedTests.FirstOrDefault(x => x.Id.Equals(AdministratedTestId))
-                    .StateEnum;
+                    .State;
                 return FilteredState;
             });
             var State = await myTask;

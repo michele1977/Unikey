@@ -4,10 +4,15 @@ namespace UnikeyFactoryTest.Domain
 {
     public class AdministratedQuestionBusiness
     {
-        public int Position { get; set; }
+        public AdministratedQuestionBusiness()
+        {
+            this.AdministratedAnswers = new List<AdministratedAnswerBusiness>();
+        }
         public int Id { get; set; }
         public string Text { get; set; }
         public int AdministratedTestId { get; set; }
-        public virtual ICollection<AdministratedAnswerBusiness> AdministratedAnswers { get; set; }
+        public short Position { get; set; }
+        public virtual List<AdministratedAnswerBusiness> AdministratedAnswers { get; set; }
+        public AdministratedTestBusiness AdministratedTest { get; set; }
     }
 }

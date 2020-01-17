@@ -26,8 +26,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
             UserId = test.UserId;
             Questions = test.Questions?.Select(q => new QuestionDto(q)).ToList();
             AdministratedTests = new List<AdministratedTestDto>();
-            NumQuestions = test.NumQuestions;
-            
+
         }
 
         #region FillAdministratedTests()
