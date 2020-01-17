@@ -18,6 +18,7 @@ namespace UnikeyFactoryTest.Mapper
                 Id = dao.Id,
                 URL = dao.URL,
                 Date = dao.Date,
+                Title = dao.Title,
                 TestId = dao.TestId.Value,
                 TestSubject = dao.TestSubject,
                 State = (AdministratedTestState) dao.State
@@ -33,6 +34,7 @@ namespace UnikeyFactoryTest.Mapper
                 Id = dao.Id,
                 URL = dao.URL,
                 TestId = dao.TestId.Value,
+                Title = dao.Title,
                 TestSubject = dao.TestSubject,
                 Date = dao.Date,
                 State = (AdministratedTestState) dao.State, 
@@ -48,6 +50,7 @@ namespace UnikeyFactoryTest.Mapper
                 Id = domain.Id,
                 URL = domain.URL,
                 TestId = domain.TestId,
+                Title = domain.Title,
                 TestSubject = domain.TestSubject,
                 Date = domain.Date,
                 State = (byte) domain.State,
@@ -63,6 +66,7 @@ namespace UnikeyFactoryTest.Mapper
                 Id = dao.Id,
                 URL = dao.URL,
                 TestId = dao.TestId.Value,
+                Title = dao.Title,
                 TestSubject = dao.TestSubject,
                 Date = dao.Date,
                 AdministratedQuestions = dao.AdministratedQuestions.Select(AdministratedQuestionMapper.MapDaoToDomain).ToList()

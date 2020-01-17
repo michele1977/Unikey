@@ -40,6 +40,7 @@ namespace UnikeyFactoryTest.Service
                 URL = test.URL,
                 TestId = test.Id,
                 TestSubject = subject,
+                Title = test.Title,
                 AdministratedQuestions = new List<AdministratedQuestionBusiness>(),
                 State = (AdministratedTestState)1
             };
