@@ -1,5 +1,11 @@
 ﻿@model UnikeyFactoryTest.Presentation.Models.Dto.TestDto
 
+<style>
+    .modal-body {
+        overflow: auto;
+    }
+</style>
+
 <tr>
     <td>
         @Model.Id
@@ -22,6 +28,68 @@
             "Test",
             new { @Model.Id, @Model.PageNumber, @Model.PageSize },
             new { @class = "btn btn-info" }) |
+
         <button class="btn btn-info" onclick="deleteConfirmation(@Model.Id, @Model.PageNumber, @Model.PageSize)">Delete</button>
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+            Details
+        </button>
+       
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="container">
+                                <h2>Condensed Table</h2>
+                                <p>The .table-condensed class makes a table more compact by cutting cell padding in half:</p>
+                                <table class="table table-condensed">
+                                    <thead>
+                                    <tr>
+                                        <th>Test Subject</th>
+                                        <th>State</th>
+                                        <th>Score</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                            <td>@Model.Id</td>
+                                            <td>@Model.URL</td>
+                                            <td>@Model.MaxScore</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+        <script type="text/javascript">
+            $('.modal-content').resizable({
+                //alsoResize: ".modal-dialog",
+                minHeight: 300,
+                minWidth: 300
+            });
+            $('.modal-dialog').draggable();
+
+            $('#myModal').on('show.bs.modal', function () {
+                $(this).find('.modal-body').css({
+                    'max-height': '100%'
+                });
+            });
+        </script>
     </td>
 </tr>

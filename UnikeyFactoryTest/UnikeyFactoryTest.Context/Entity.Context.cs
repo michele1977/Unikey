@@ -33,5 +33,7 @@ namespace UnikeyFactoryTest.Context
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Test> Tests { get; set; }
         public virtual DbSet<User> Users { get; set; }
+
+        public System.Data.Entity.DbSet<UnikeyFactoryTest.Presentation.Models.DTO.AdministratedTestDto> AdministratedTestDtoes { get; set; }
     }
 }
