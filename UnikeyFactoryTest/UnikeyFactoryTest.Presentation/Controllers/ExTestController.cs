@@ -32,7 +32,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var newExecutionTest = service.AdministratedTest_Builder(test, subject);
             var savedTest = await service.Add(newExecutionTest);
             model.NumQuestion = test.Questions.Count;
-            model.ActualQuestion = savedTest.AdministratedQuestions.FirstOrDefault(x => x.Position==0);
+            model.ActualQuestion = savedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == 0);
             model.AdministratedTestId = savedTest.Id;
             return View("Test", model);
         }
@@ -50,11 +50,11 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                     var value = Request.Form[key];
                     model.QuestionAnswerDictionary[System.Convert.ToInt32(key)] = System.Convert.ToInt32(value);
                 }
-                
+
             }
             foreach (var question in model.QuestionAnswerDictionary)
             {
-               
+
                 if (question.Value != 0)
                 {
                     AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key)
@@ -80,7 +80,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var tests = await service.GetAdministratedTests();
 
             testsListModel.Tests = testsListModel.Paginate(tests.ToList());
-            
+
             return View(testsListModel);
         }
 
@@ -95,13 +95,18 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Next(AdministratedTestModel model)
+        public async Task<ActionResult> Next(AdministratedTestModel model, FormCollection form)
         {
             var administratedTest = await service.GetAdministratedTestById(model.AdministratedTestId);
+            for (short i = 0; i < administratedTest.AdministratedQuestions.Count; i++)
+            {
+                administratedTest.AdministratedQuestions[i].Position = i;
+            }
             var actualQuestion = administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == model.ActualPosition);
+            var value = Request.Form[actualQuestion.Id.ToString()];
+            actualQuestion.AdministratedAnswers.FirstOrDefault(a => a.Id == System.Convert.ToInt32(value)).isSelected = true;
             await service.Update_Save_Question(actualQuestion);
-            model.ActualQuestion = await service.Next(model.AdministratedTestId,model.ActualPosition+1);
-            
+            model.ActualQuestion = await service.Next(administratedTest, model.ActualPosition + 1);
             return View("Test", model);
         }
 
@@ -136,9 +141,18 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             await service.Update_Save(await service.GetAdministratedTestById(model.AdministratedTestId));
             return View("TestEnded");
         }
-        public async Task<ActionResult> Previous(AdministratedTestModel model)
+        public async Task<ActionResult> Previous(AdministratedTestModel model, FormCollection form)
         {
-            model.ActualQuestion = await service.Previous(model.AdministratedTestId, model.ActualPosition-1);
+            var administratedTest = await service.GetAdministratedTestById(model.AdministratedTestId);
+            for (short i = 0; i < administratedTest.AdministratedQuestions.Count; i++)
+            {
+                administratedTest.AdministratedQuestions[i].Position = i;
+            }
+            var actualQuestion = administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == model.ActualPosition);
+            var value = Request.Form[actualQuestion.Id.ToString()];
+            actualQuestion.AdministratedAnswers.FirstOrDefault(a => a.Id == System.Convert.ToInt32(value)).isSelected = true;
+            await service.Update_Save_Question(actualQuestion);
+            model.ActualQuestion = await service.Previous(administratedTest, model.ActualPosition - 1);
             return View("Test", model);
         }
     }

@@ -44,7 +44,6 @@ namespace UnikeyFactoryTest.Service
                 AdministratedQuestions = new List<AdministratedQuestionBusiness>(),
                 State = (AdministratedTestState)1
             };
-
             foreach (var q in test.Questions)
             {
                 newAdTest.AdministratedQuestions.Add(new AdministratedQuestionBusiness()
@@ -53,6 +52,7 @@ namespace UnikeyFactoryTest.Service
                     AdministratedTestId = q.TestId,
                     AdministratedAnswers = q.Answers.Select(a => new AdministratedAnswerBusiness() { Text = a.Text, Score = a.Score, AdministratedQuestionId = a.QuestionId, isCorrect = a.IsCorrect, isSelected = false }).ToList()
                 });
+
             }
 
             return newAdTest;
@@ -119,20 +119,19 @@ namespace UnikeyFactoryTest.Service
             }
         }
 
-        public async Task<AdministratedQuestionBusiness> Next(int AdministratedTestId, int position)
+        public async Task<AdministratedQuestionBusiness> Next(AdministratedTestBusiness administratedTest, int position)
         {
-            var test = await _repo.GetAdministratedTestById(AdministratedTestId);
-            return test.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
+
+            return administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
         }
 
         public async Task Update_Save_Question(AdministratedQuestionBusiness adQuestion)
         {
             await _repo.Update_Save_Question(adQuestion);
         }
-        public async Task<AdministratedQuestionBusiness> Previous(int AdministratedTestId, int position)
+        public async Task<AdministratedQuestionBusiness> Previous(AdministratedTestBusiness administratedTest, int position)
         {
-            var test = await _repo.GetAdministratedTestById(AdministratedTestId);
-            return test.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
+            return administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
         }
     }
 }

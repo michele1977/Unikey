@@ -26,8 +26,8 @@ namespace UnikeyFactoryTest.Repository
 
         public async Task<AdministratedTestBusiness> Add(AdministratedTestBusiness adTest)
         {
-            
-            
+
+
             var addTask = Task.Run(() =>
             {
                 try
@@ -70,7 +70,7 @@ namespace UnikeyFactoryTest.Repository
                 Date = t.Date,
                 Score = t.AdministratedQuestions
                     .SelectMany(q => q.AdministratedAnswers)
-                    .Where(a => (bool) a.isSelected)
+                    .Where(a => (bool)a.isSelected)
                     .Sum(a => a.Score)
             }).ToList());
 
@@ -98,7 +98,7 @@ namespace UnikeyFactoryTest.Repository
                 return FilteredState;
             });
             var State = await myTask;
-            return (int) State;
+            return (int)State;
         }
         #region DeleteAdministratedTest
         public async Task DeleteAdministratedTest(int administratedTestId)
@@ -136,9 +136,9 @@ namespace UnikeyFactoryTest.Repository
             {
                 await Update_Save_Score(newTest);
                 await Update_Save_Date(newTest);
-                
+
                 _ctx.SaveChanges();
-                
+
             }
             catch (Exception)
             {
@@ -149,7 +149,7 @@ namespace UnikeyFactoryTest.Repository
 
         private async Task Update_Save_Date(AdministratedTest newTest)
         {
-            await Task.Run(()=>
+            await Task.Run(() =>
             {
                 return _ctx.AdministratedTests.FirstOrDefault(x => x.Id == newTest.Id).Date = DateTime.Today;
             });
@@ -177,6 +177,11 @@ namespace UnikeyFactoryTest.Repository
 
             return score;
         }
+        public async Task Update_Save_Question(AdministratedQuestionBusiness adQuestion)
+        {
+            var newQuestion = AdministratedQuestionMapper.MapDomainToDao(adQuestion);
+            await Update_Save_Answers(newQuestion);
+        }
 
         private async Task Update_Save_Answers(AdministratedQuestion q)
         {
@@ -198,12 +203,6 @@ namespace UnikeyFactoryTest.Repository
         public void Dispose()
         {
             _ctx.Dispose();
-        }
-
-        public async Task Update_Save_Question(AdministratedQuestionBusiness adQuestion)
-        {
-            var newQuestion = AdministratedQuestionMapper.MapDomainToDao(adQuestion);
-            await Update_Save_Answers(newQuestion);
         }
     }
 }
