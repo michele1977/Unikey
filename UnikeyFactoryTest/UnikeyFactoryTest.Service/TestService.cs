@@ -90,30 +90,7 @@ namespace UnikeyFactoryTest.Service
         {
             using (Repo = new TestRepository())
             {
-                try
-                {
-                    await Repo.DeleteQuestion(questionId);
-                }
-                catch (NullReferenceException ex)
-                {
-                    throw;
-                }
-                catch (NotSupportedException ex)
-                {
-
-                }
-                catch (ObjectDisposedException ex)
-                {
-
-                }
-                catch (InvalidOperationException ex)
-                {
-
-                }
-                catch (Exception ex)
-                {
-
-                }
+                await Repo.DeleteQuestion(questionId);
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Service;
@@ -31,17 +32,10 @@ namespace UserTest
 
             TestService testService = new TestService();
 
-            try
-            {
-                question.Answers.Add(answer);
-                test.Questions.Add(question);
+            question.Answers.Add(answer);
+            test.Questions.Add(question);
 
-                testService.AddNewTest(test);
-            }
-            catch(Exception ex)
-            {
-                int g = 0;
-            }
+            var res = Task.Run(() => testService.AddNewTest(test));
         }
     }
 }

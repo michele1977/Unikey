@@ -170,7 +170,7 @@ namespace UnikeyFactoryTest.Repository
             foreach (var q in newTest.AdministratedQuestions)
             {
                 if ((q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true)) != null)
-                    score += q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true).Score;
+                    score = score + (q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true)?.Score ?? 0);
             }
 
             return score;
