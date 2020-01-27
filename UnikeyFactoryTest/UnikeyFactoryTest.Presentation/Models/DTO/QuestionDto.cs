@@ -29,7 +29,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public int TestId { get; set; }
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
-        public decimal? CorrectAnswerScore { get; set; }
+        public decimal CorrectAnswerScore { get; set; }
 
         public List<AnswerDto> Answers { get; set; }
 
@@ -50,7 +50,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
             {
                 var answerBiz = new AnswerBusiness
                 {
-                    IsCorrect = (AnswerState)answerDto.IsCorrect,
+                    IsCorrect = answerDto.IsCorrect ? AnswerState.Correct : AnswerState.NotCorrect,
                     Score = answerDto.Score,
                     Text = answerDto.Text,
                     Id = answerDto.Id,
