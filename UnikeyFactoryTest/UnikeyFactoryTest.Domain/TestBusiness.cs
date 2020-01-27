@@ -14,7 +14,7 @@ namespace UnikeyFactoryTest.Domain
         public string URL { get; set; }
         public DateTime Date { get; set; }
         public int UserId { get; set; }
-        public string Title { get; set; }
+        public string Title { get; set; } = "";
         public List<AdministratedTestBusiness> AdministratedTests { get; set; }
         public List<QuestionBusiness> Questions { get; set; }
     }

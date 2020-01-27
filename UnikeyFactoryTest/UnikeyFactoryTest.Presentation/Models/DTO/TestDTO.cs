@@ -21,6 +21,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
             var service = new TestService();
 
             Id = test.Id;
+            Title = test.Title;
             URL = service.GenerateUrl(test.URL);
             Date = test.Date;
             UserId = test.UserId;
@@ -53,6 +54,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public string URL { get; set; }
         public DateTime? Date { get; set; }
         public int UserId { get; set; }
+        public string Title { get; set; }
 
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
