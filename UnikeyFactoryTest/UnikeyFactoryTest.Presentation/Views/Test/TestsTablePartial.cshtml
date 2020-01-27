@@ -18,21 +18,21 @@
     <td>
         <div>
             @Html.ActionLink(
-                "Content",
-                "TestContent",
-                "Test",
-                new { @Model.Id, @Model.PageNumber, @Model.PageSize },
-                new { @class = "btn btn-info" }) |
+                linkText: "Content",
+                actionName: "TestContent",
+                controllerName: "Test",
+                routeValues: new { @Model.Id, @Model.PageNumber, @Model.PageSize },
+                htmlAttributes: new { @class = "btn btn-info" }) |
             <button class="btn btn-info" onclick="deleteConfirmation(@Model.Id, @Model.PageNumber, @Model.PageSize)">Delete</button> 
-            <button class="btn btn-info" data-toggle="modal" data-target="#myModal">
+            <button class="btn btn-info" onclick="getDetailsTablePartial()">
                 Details
-            </button> |
+            </button>
         </div>
     </td>
 
 </tr>
 
-<script type="text/javascript">
+@*<script type="text/javascript">
     $('.modal-content').resizable({
         //alsoResize: ".modal-dialog",
         minHeight: 300,
@@ -46,7 +46,7 @@
         });
     });
 
-</script>
+</script>*@
 
 <style>
     .modal-body {

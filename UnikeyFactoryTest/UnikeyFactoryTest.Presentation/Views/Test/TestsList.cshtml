@@ -1,4 +1,5 @@
-﻿@using UnikeyFactoryTest.Service
+﻿@using UnikeyFactoryTest.Presentation.Models.DTO
+@using UnikeyFactoryTest.Service
 @model  UnikeyFactoryTest.Presentation.Models.TestsListModel
 
 @{
@@ -41,72 +42,35 @@
         <th>Number of tests opened</th>
         <th>Actions</th>
     </tr>
+    <div id="myrender">
 
+    </div>
     @foreach (var test in Model.Tests)
     {
         Html.RenderPartial("TestsTablePartial", test);
     }
-    
+
 </table>
 
-<div class="modal fade" id="mailModal" tabindex="-1" role="dialog" aria-labelledby="mailModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="mailModalLabel">Send test with email</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <input type="text" hidden="hidden" id="selectedTest" />
-                        <input required type="text" class="form-control" placeholder="example@mail.com" id="email-address">
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Subject name:</label>
-                        <input required type="text" class="form-control" id="subject-name">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" onclick="send()" class="btn btn-primary">Send email</button>
-            </div>
-            <div>
-            </div>
-            <div>
-                <span class="glyphicon glyphicon-ok" aria-hidden="true">Sending successful</span>
-                <label hidden="hidden" id="true" style="text-align: right; color: green"> Sending successful</label>
-            </div>
-            <div>
-                <label hidden="hidden" id="false" style="text-align: right;color: red">Not valid mail</label>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <div>
-    @if (Model.PageNumber > 1)
-    {
-        @Html.ActionLink(
-            "Previous",
-            "TestsList",
-            "Test",
-            new { PageNumber = Model.PageNumber - 1, Model.PageSize },
-            new { @class = "btn btn-info" })
-    }
-    <label>@Model.PageNumber of @Model.LastPage</label>
-    @if (@Model.PageNumber != @Model.LastPage)
-    {
-        @Html.ActionLink(
-            "Next",
-            "TestsList",
-            "Test",
-            new { PageNumber = Model.PageNumber + 1, Model.PageSize },
-            new { @class = "btn btn-info" })
-    }
-</div>
+        @if (Model.PageNumber > 1)
+        {
+            @Html.ActionLink(
+                "Previous",
+                "TestsList",
+                "Test",
+                new { PageNumber = Model.PageNumber - 1, Model.PageSize },
+                new { @class = "btn btn-info" })
+        }
+        <label>@Model.PageNumber of @Model.LastPage</label>
+        @if (@Model.PageNumber != @Model.LastPage)
+        {
+            @Html.ActionLink(
+                "Next",
+                "TestsList",
+                "Test",
+                new { PageNumber = Model.PageNumber + 1, Model.PageSize },
+                new { @class = "btn btn-info" })
+        }
+    </div>
 

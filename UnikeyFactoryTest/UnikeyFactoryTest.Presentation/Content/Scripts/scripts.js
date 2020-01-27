@@ -38,4 +38,17 @@ function send() {
             }
         });
 }
+function getDetailsTablePartial() {
+    function functionOk(resp) {
+        $("#myrender").html(resp);
+        $('#myModal').modal('show');
+    }
+    function functionKo(resp) {
+        alert('ko');
+    }
+    let myurl = "/Test/DetailsTablePartial";
+    //$('#myModal').modal('show');
+    //alert($('#myModal'));
+    $.ajax({ url: myurl, method: "GET" }).then(functionOk,functionKo);
+}
 
