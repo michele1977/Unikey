@@ -24,6 +24,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
             URL = service.GenerateUrl(test.URL);
             Date = test.Date;
             UserId = test.UserId;
+            Title = test.Title;
             Questions = test.Questions?.Select(q => new QuestionDto(q)).ToList();
             AdministratedTests = new List<AdministratedTestDto>();
 
@@ -51,7 +52,8 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
 
         public int Id { get; set; }
         public string URL { get; set; }
-        public DateTime? Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Now;
+        public string Title { get; set; }
         public int UserId { get; set; }
 
         public int PageNumber { get; set; } = 1;

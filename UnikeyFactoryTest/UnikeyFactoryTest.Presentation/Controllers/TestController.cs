@@ -43,12 +43,17 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult> AddQuestion(QuestionDto model)
         {
+            var returned = new TestDto();
             try
             {
                 var answerBiz = model.MapToDomain();
                 var test = await _service.GetTestById(answerBiz.TestId);
                 test.Questions.Add(answerBiz);
-                _service.UpdateTest(test);
+
+                    _service.UpdateTest(test);
+              
+                returned = new TestDto(test);
+             
             }
             catch (ArgumentNullException e)
             {
@@ -85,45 +90,16 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 Logger.Fatal(e, e.Message);
                 throw;
             }
-
-            return View("Index");
-            //List<Answer> answers = new List<Answer>();
-            //Answer correctAnswer = new Answer()
-            //{
-            //    Text = model.CorrectAnswerText,
-            //    IsCorrect = true,
-            //    Score = Convert.ToInt32(model.AnswerScore)
-            //};
-            //answers.Add(correctAnswer);
-            //foreach (var AnswerText in model.Answers)
-            //{
-            //    if (!string.IsNullOrWhiteSpace(AnswerText))
-            //    {
-            //        Answer Answer = new Answer()
-            //        {
-            //            Text = AnswerText,
-            //            IsCorrect = model.IsCorrect,
-            //            Score = Convert.ToInt32(model.AnswerScore)
-            //        };
-            //        answers.Add(Answer);
-            //    }
-            //}
-
-            //Question question = new Question()
-            //{
-            //    Text = model.QuestionText,
-            //    Answers = answers
-            //};
-            //test.Questions.Add(question);
-            //return RedirectToAction("Index");
+            
+            return View("Index", returned );
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddTest(TestModel model)
+        public async Task<ActionResult> AddTest(TestDto model)
         {
             try
-            {
-                // test.TestName = model.TestName;
+            { 
+                test.Title = model.Title;
                 test.UserId = UserId;
                 test.URL = _service.GenerateGuid();
                 test.Date = model.Date;
@@ -174,7 +150,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             testsListModel = testsListModel ?? new TestsListModel();
 
             var service = new TestService();
-            testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
 
             try
             {
@@ -213,23 +188,23 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpPost]
         public async Task<JsonResult> DeleteTest(TestDto test)
         {
+
             TestService service = new TestService();
 
             try
             {
-                throw new ArgumentNullException();
                 await service.DeleteTest(test.Id);
                 Logger.Info("Successfully deleted test");
             }
             catch (ArgumentNullException e)
             {
                 Logger.Error(e, e.Message);
-                return Json(new { redirectUrl = Url.Action("Index", "Error") });
+                throw;
             }
             catch (InvalidOperationException e)
             {
                 Logger.Error(e, e.Message);
-                return Json(new { redirectUrl = Url.Action("Index", "Error") });
+                throw;
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -249,13 +224,14 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             catch (NotSupportedException e)
             {
                 Logger.Error(e, e.Message);
-                return Json(new { redirectUrl = Url.Action("Index", "Error") });
+                throw;
             }
             catch (Exception e)
             {
                 Logger.Fatal(e, e.Message);
                 return Json(new { redirectUrl = Url.Action("Index", "Error") });
             }
+
 
             return Json(new
             {

@@ -346,6 +346,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
+    <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -364,6 +365,10 @@
     <ProjectReference Include="..\UnikeyFactoryTest.Mapper\UnikeyFactoryTest.Mapper.csproj">
       <Project>{d9fa8193-e2c4-4e4d-a41d-7493ba8818a6}</Project>
       <Name>UnikeyFactoryTest.Mapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.Repository\UnikeyFactoryTest.Repository.csproj">
+      <Project>{1AE6EE8E-E465-41C5-A17A-EF35DA1ED082}</Project>
+      <Name>UnikeyFactoryTest.Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\UnikeyFactoryTest.Service\UnikeyFactoryTest.Service.csproj">
       <Project>{694c09a8-9dc2-408a-b91f-9383b02e93f0}</Project>

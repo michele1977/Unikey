@@ -6,7 +6,7 @@
     @Html.Label(@Model.Text, @Model.Text,
         new
         {
-            style = ((bool)Model.IsCorrect)
+            style = (Model.IsCorrect == 1)
                 ? "background-color: #70db70" : ""
         })
 

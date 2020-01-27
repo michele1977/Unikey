@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Domain.Enums;
 
 namespace UnikeyFactoryTest.Presentation.Models.DTO
 {
@@ -17,14 +18,14 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         {
             Id = answer.Id;
             Text = answer.Text;
-            IsCorrect = (byte)answer.IsCorrect;
+            IsCorrect = answer.IsCorrect == AnswerState.Correct;
             QuestionId = answer.QuestionId;
             Score = answer.Score;
         }
 
         public int Id { get; set; }
         public string Text { get; set; }
-        public byte IsCorrect { get; set; }
+        public bool IsCorrect { get; set; }
         public int QuestionId { get; set; }
         public decimal Score { get; set; }
     }
