@@ -68,33 +68,15 @@ namespace UnikeyFactoryTest.Service
             await _repo.Update_Save(adTest);
         }
 
+        public async Task ChangeAdministratedTestState(int id)
+        {
+            await _repo.ChangeState(id);
+        }
+
         public async Task<AdministratedTestBusiness> GetAdministratedTestById(int adTestId)
         {
             return await _repo.GetAdministratedTestById(adTestId);
         }
-
-        //public async Task<AdministratedTestBusiness> GetAdministratedTest(int administratedTestId)
-        //{
-        //    _repo = new AdministratedTestRepository();
-
-        //    try
-        //    {
-        //        return await _repo.GetAdministratedTestById(administratedTestId);
-        //    }
-        //    catch (NullReferenceException ex)
-        //    {
-        //        //TODO
-        //    }
-        //    catch (ArgumentNullException ex)
-        //    {
-        //        //TODO
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //TODO
-        //    }
-
-        //}
 
         public async Task<IEnumerable<AdministratedTestBusiness>> GetAdministratedTests()
         {

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Domain.Enums;
 using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.Mapper;
 
@@ -203,6 +204,16 @@ namespace UnikeyFactoryTest.Repository
         public void Dispose()
         {
             _ctx.Dispose();
+        }
+
+        public async Task ChangeState(int id)
+        {
+            var myTask = Task.Run(() =>
+            {
+                _ctx.AdministratedTests.FirstOrDefault(x => x.Id.Equals(id)).State = (byte) AdministratedTestState.Closed;
+                _ctx.SaveChanges();
+            });
+            await myTask;
         }
     }
 }
