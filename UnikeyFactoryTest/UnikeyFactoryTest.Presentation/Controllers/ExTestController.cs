@@ -49,6 +49,13 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             if (Request.Form[actualQuestion.Id.ToString()] != null)
             {
                 var value = Request.Form[actualQuestion.Id.ToString()];
+                foreach (var administratedAnswer in actualQuestion.AdministratedAnswers)
+                {
+                    if (administratedAnswer.isSelected)
+                    {
+                        administratedAnswer.isSelected = false;
+                    }
+                }
                 actualQuestion.AdministratedAnswers.FirstOrDefault(a => a.Id == System.Convert.ToInt32(value)).isSelected = true;
                 await service.Update_Save_Question(actualQuestion);
             }
@@ -92,9 +99,16 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 administratedTest.AdministratedQuestions[i].Position = i;
             }
             var actualQuestion = administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == model.ActualPosition);
-            if(Request.Form[actualQuestion.Id.ToString()] != null)
+            if (Request.Form[actualQuestion.Id.ToString()] != null)
             {
                 var value = Request.Form[actualQuestion.Id.ToString()];
+                foreach (var administratedAnswer in actualQuestion.AdministratedAnswers)
+                {
+                    if (administratedAnswer.isSelected)
+                    {
+                        administratedAnswer.isSelected = false;
+                    }
+                }
                 actualQuestion.AdministratedAnswers.FirstOrDefault(a => a.Id == System.Convert.ToInt32(value)).isSelected = true;
                 await service.Update_Save_Question(actualQuestion);
             }
@@ -115,6 +129,13 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             if (Request.Form[actualQuestion.Id.ToString()] != null)
             {
                 var value = Request.Form[actualQuestion.Id.ToString()];
+                foreach (var administratedAnswer in actualQuestion.AdministratedAnswers)
+                {
+                    if (administratedAnswer.isSelected)
+                    {
+                        administratedAnswer.isSelected = false;
+                    }
+                }
                 actualQuestion.AdministratedAnswers.FirstOrDefault(a => a.Id == System.Convert.ToInt32(value)).isSelected = true;
                 await service.Update_Save_Question(actualQuestion);
             }
@@ -129,9 +150,16 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 administratedTest.AdministratedQuestions[i].Position = i;
             }
             var actualQuestion = administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == model.ActualPosition);
-            if(Request.Form[actualQuestion.Id.ToString()] != null)
+            if (Request.Form[actualQuestion.Id.ToString()] != null)
             {
                 var value = Request.Form[actualQuestion.Id.ToString()];
+                foreach (var administratedAnswer in actualQuestion.AdministratedAnswers)
+                {
+                    if (administratedAnswer.isSelected)
+                    {
+                        administratedAnswer.isSelected = false;
+                    }
+                }
                 actualQuestion.AdministratedAnswers.FirstOrDefault(a => a.Id == System.Convert.ToInt32(value)).isSelected = true;
                 await service.Update_Save_Question(actualQuestion);
             }

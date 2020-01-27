@@ -190,6 +190,9 @@ namespace UnikeyFactoryTest.Repository
             {
                 var myTask2 = Task.Run(() =>
                 {
+                    _ctx.AdministratedAnswers.FirstOrDefault(x => x.Id == a.Id).isSelected = false;
+                    _ctx.SaveChanges();
+
                     if (a.isSelected == true)
                     {
                         _ctx.AdministratedAnswers.FirstOrDefault(x => x.Id == a.Id).isSelected = true;
