@@ -60,14 +60,15 @@
     
 </script>
 
-@*@using (Html.BeginForm("AddTest", "Test", FormMethod.Post))
-{*@
+@using (Html.BeginForm("AddTest", "Test", FormMethod.Post))
+{
+
     <div class="col-lg-6 col-md-6 col-sm-6" id="myDivContainerTop">
         @Html.TextBoxFor(x => x.Title, new {@class = "form-control", id = "class-textBox", placeholder = "TestName"})
-        @Html.TextBoxFor(x => x.Date, new {@class = "form-control", id = "class-textBox", placeholder = "Date", disabled="disabled"})
-        <button class="btn btn-primary"  id="buttonCreate" onclick="DisabledButtonCreate('divList','buttonCreate')">Create</button>
+        @Html.TextBoxFor(x => x.Date, new {@class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled"})
+        <button class="btn btn-primary" id="buttonCreate" onclick="DisabledButtonCreate('divList', 'buttonCreate')">Create</button>
     </div>
-@*}*@
+}
 
 @if (Model != null)
 {
