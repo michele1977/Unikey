@@ -481,11 +481,5 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             return Json(new { result = result });
         }
-
-        public ActionResult DetailsTablePartial()
-        {
-            return PartialView("DetailsTablePartial");
-        }
-
     }
 }

@@ -38,15 +38,15 @@ function send() {
             }
         });
 }
-function getDetailsTablePartial() {
+function getDetailsTablePartial(id) {
     function functionOk(resp) {
         $("#myrender").html(resp);
         $('#myModal').modal('show');
     }
-    function functionKo(resp) {
+    function functionKo() {
         alert('ko');
     }
-    let myurl = "/Test/DetailsTablePartial";
+    let myurl = "/ExTest/DetailsTablePartial?testId=" + id;
     //$('#myModal').modal('show');
     //alert($('#myModal'));
     $.ajax({ url: myurl, method: "GET" }).then(functionOk,functionKo);

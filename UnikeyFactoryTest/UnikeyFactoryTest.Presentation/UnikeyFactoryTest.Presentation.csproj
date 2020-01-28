@@ -347,7 +347,7 @@
     <Content Include="Views\Test\TestsTablePartial.cshtml" />
     <Content Include="Views\Shared\_FruitionLayout.cshtml" />
     <Content Include="Views\Test\AdTestsTablePartial.cshtml" />
-    <Content Include="Views\Test\DetailsTablePartial.cshtml" />
+    <Content Include="Views\ExTest\DetailsTablePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

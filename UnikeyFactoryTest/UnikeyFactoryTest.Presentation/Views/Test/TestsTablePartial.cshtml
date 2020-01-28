@@ -24,33 +24,12 @@
                 routeValues: new { @Model.Id, @Model.PageNumber, @Model.PageSize },
                 htmlAttributes: new { @class = "btn btn-info" }) |
             <button class="btn btn-info" onclick="deleteConfirmation(@Model.Id, @Model.PageNumber, @Model.PageSize)">Delete</button> 
-            <button class="btn btn-info" onclick="getDetailsTablePartial()">
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <button class="btn btn-info" onclick="getDetailsTablePartial(@Model.Id)">
                 Details
             </button>
         </div>
     </td>
 
 </tr>
-
-@*<script type="text/javascript">
-    $('.modal-content').resizable({
-        //alsoResize: ".modal-dialog",
-        minHeight: 300,
-        minWidth: 300
-    });
-    $('.modal-dialog').draggable();
-
-    $('#myModal').on('show.bs.modal', function () {
-        $(this).find('.modal-body').css({
-            'max-height': '100%'
-        });
-    });
-
-</script>*@
-
-<style>
-    .modal-body {
-        overflow: auto;
-    }
-</style>
 
