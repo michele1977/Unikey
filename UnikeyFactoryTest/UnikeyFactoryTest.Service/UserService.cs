@@ -26,5 +26,13 @@ namespace UnikeyFactoryTest.Service
             }
         }
 
+        public void InsertUser(User user)
+        {
+            using (UserRepository repo = new UserRepository())
+            {
+                repo.InsertUser(user);
+            }
+        }
+
     }
 }

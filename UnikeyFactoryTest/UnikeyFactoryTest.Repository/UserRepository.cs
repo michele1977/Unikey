@@ -17,15 +17,12 @@ namespace UnikeyFactoryTest.Repository
             _context = new TestPlatformDBEntities();
         }
 
+
+        //GET
         public async Task<bool> FindUser(User user)
         {
             var myTask = Task.Run(() => _context.Users.ToList().Exists(x => x.Username == user.Username && x.Password == user.Password));
             return await myTask;
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
         }
 
         public async Task<int> GetUserIdByUsername(User user)
@@ -33,5 +30,21 @@ namespace UnikeyFactoryTest.Repository
             var myTask = Task.Run(() => _context.Users.First(u => u.Username.Equals(user.Username)).Id);
             return await myTask;
         }
+
+        //POST
+        public void InsertUser(User user)
+        {
+            _context.Users.Add(user);
+            _context.SaveChanges();
+        }
+
+        
+
+        public void Dispose()
+        {
+            _context.Dispose();
+        }
+
+
     }
 }

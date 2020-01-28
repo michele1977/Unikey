@@ -145,6 +145,7 @@
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="CustomValidators\RetypePasswordValidator.cs" />
+    <Compile Include="CustomValidators\StrongPassword.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -332,7 +333,6 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\User\Yes.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Test\EditQuestion.cshtml" />
     <Content Include="Views\Test\TestEnded.cshtml" />
@@ -342,6 +342,8 @@
     <Content Include="Views\ExTest\TestStart.cshtml" />
     <Content Include="Views\Test\TestsTablePartial.cshtml" />
     <Content Include="Views\Test\AddQuestionPartial.cshtml" />
+    <Content Include="Views\User\_LoginFormPartial.cshtml" />
+    <Content Include="Views\User\_SigningUpFormPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

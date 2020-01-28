@@ -58,7 +58,11 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             if (ModelState.IsValid == true)
             {
-                //Chiama service, invoca il metodo per aggiungere uno user
+                User user = new User() {Username = model.Username, Password = model.Password};
+
+                UserService service = new UserService();
+                service.InsertUser(user);
+                
                 userViewModel.UserState = UserState.RegistrationOk;
                 return View("Index", userViewModel);
             }

@@ -10,5 +10,7 @@ namespace UnikeyFactoryTest.IRepository
     public interface IUserRepository
     {
         Task<bool> FindUser(User user);
+        Task<int> GetUserIdByUsername(User user);
+        void InsertUser(User user);
     }
 }

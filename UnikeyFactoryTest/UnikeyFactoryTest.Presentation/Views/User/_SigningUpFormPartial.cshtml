@@ -9,8 +9,9 @@
             </div>
             <div class="form-group">
                 <label for="lbSPassword" style="font-family:Verdana, Geneva">Password</label>
-                <input type="password" class="form-control" id="lbSPassword" name="Password">
+                <input type="password" class="form-control" id="lbSPassword" name="Password" aria-describedby="passwordHelp">
                 @Html.ValidationMessageFor(x => x.Password, null, new { @class = "text-danger" })
+            <small id="passwordHelp" class="form-text text-muted">La password deve contenere almeno 6 caratteri e massimo 50, almeno un carattere maiuscolo, uno minuscolo, uno speciale e almeno un valore numerico</small>
             </div>
             <div class="form-group">
                 <label for="lbRetypedPassword" style="font-family:Verdana, Geneva">Retype Password</label>
@@ -29,6 +30,6 @@
         </form>
 
         <div style="width: 100%; text-align: center">
-            <button onclick="ChangeForm(2)" class="btn btn-primary">Log In</button>
+            <a onclick="ChangeForm(2)" target="_top" style="color: dodgerblue">Go to LogIn</a>
         </div>
     </div>

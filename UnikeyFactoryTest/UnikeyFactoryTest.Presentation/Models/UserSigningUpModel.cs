@@ -13,11 +13,11 @@ namespace UnikeyFactoryTest.Presentation.Models
         public string Username { get; set; }
 
         [Required(ErrorMessage = "Please enter a password")]
-        //Custom Validator con Regex
+        [StrongPassword(ErrorMessage = "Invalid password")]
         public string Password { get; set; }
 
-        [RetypedPassword("Password", ErrorMessage = "The passwords don't match")]
         [Required(ErrorMessage = "Please retype the password")]
+        [RetypedPassword("Password", ErrorMessage = "The passwords don't match")]
         public string RetypedPassword { get; set; }
 
         public UserSigningUpModel()
