@@ -50,6 +50,7 @@ namespace UnikeyFactoryTest.Service
                 {
                     Text = q.Text,
                     AdministratedTestId = q.TestId,
+                    Position = q.Position,
                     AdministratedAnswers = q.Answers.Select(a => new AdministratedAnswerBusiness() { Text = a.Text, Score = a.Score, AdministratedQuestionId = a.QuestionId, isCorrect = a.IsCorrect, isSelected = false }).ToList()
                 });
 

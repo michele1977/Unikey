@@ -24,6 +24,11 @@ namespace UnikeyFactoryTest.Service
         {
             using (TestRepository _repo = new TestRepository())
             {
+                for(short i = 0; i < test.Questions.Count; i++)
+                {
+                    test.Questions[i].Position = i;
+                }
+
                 if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
                     await _repo.SaveTest(TestMapper.MapBizToDal(test));
             }
@@ -59,6 +64,11 @@ namespace UnikeyFactoryTest.Service
         {
             using (TestRepository _repo = new TestRepository())
             {
+                for (short i = 0; i < test.Questions.Count; i++)
+                {
+                    test.Questions[i].Position = i;
+                }
+
                 if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
                 _repo.UpdateTest(test);
             }

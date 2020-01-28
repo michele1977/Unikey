@@ -58,8 +58,8 @@ namespace UnikeyFactoryTest.Repository
             {
                 throw new Exception("Not valid id");
             }
-
-            return AdministratedTestMapper.MapDaoToDomainHeavy(task);
+            var result = AdministratedTestMapper.MapDaoToDomainHeavy(task);
+            return result;
         }
 
         public async Task<List<AdministratedTestBusiness>> GetAdministratedTests()

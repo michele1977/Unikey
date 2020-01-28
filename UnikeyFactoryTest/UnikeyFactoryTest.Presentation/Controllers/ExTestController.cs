@@ -40,10 +40,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public async Task<ActionResult> SaveTest(AdministratedTestModel model, FormCollection form)
         {
             var administratedTest = await service.GetAdministratedTestById(model.AdministratedTestId);
-            for (short i = 0; i < administratedTest.AdministratedQuestions.Count; i++)
-            {
-                administratedTest.AdministratedQuestions[i].Position = i;
-            }
             var actualQuestion = administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == model.ActualPosition);
 
             if (Request.Form[actualQuestion.Id.ToString()] != null)
@@ -94,10 +90,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public async Task<ActionResult> Next(AdministratedTestModel model, FormCollection form)
         {
             var administratedTest = await service.GetAdministratedTestById(model.AdministratedTestId);
-            for (short i = 0; i < administratedTest.AdministratedQuestions.Count; i++)
-            {
-                administratedTest.AdministratedQuestions[i].Position = i;
-            }
             var actualQuestion = administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == model.ActualPosition);
             if (Request.Form[actualQuestion.Id.ToString()] != null)
             {
@@ -120,10 +112,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public async Task<ActionResult> Close(AdministratedTestModel model, FormCollection form)
         {
             var administratedTest = await service.GetAdministratedTestById(model.AdministratedTestId);
-            for (short i = 0; i < administratedTest.AdministratedQuestions.Count; i++)
-            {
-                administratedTest.AdministratedQuestions[i].Position = i;
-            }
             var actualQuestion = administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == model.ActualPosition);
 
             if (Request.Form[actualQuestion.Id.ToString()] != null)
@@ -145,10 +133,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public async Task<ActionResult> Previous(AdministratedTestModel model, FormCollection form)
         {
             var administratedTest = await service.GetAdministratedTestById(model.AdministratedTestId);
-            for (short i = 0; i < administratedTest.AdministratedQuestions.Count; i++)
-            {
-                administratedTest.AdministratedQuestions[i].Position = i;
-            }
             var actualQuestion = administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == model.ActualPosition);
             if (Request.Form[actualQuestion.Id.ToString()] != null)
             {
