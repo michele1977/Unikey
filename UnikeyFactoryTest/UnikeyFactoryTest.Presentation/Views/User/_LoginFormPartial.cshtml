@@ -4,17 +4,17 @@
     <form action="/User/CheckData" method="post">
         <div class="form-group">
             <label for="lbUsername" style="font-family:Verdana, Geneva">Username</label>
-            <input type="text" class="form-control" id="lbUsername" name="Username">
+            <input type="text" class="form-control" id="lbUsername" name="Username" onkeyup="CheckLogInForm()">
             @Html.ValidationMessageFor(x => x.Username, null, new { @class = "text-danger" })
         </div>
         <div class="form-group">
             <label for="lbPassword" style="font-family:Verdana, Geneva">Password</label>
-            <input type="password" class="form-control" id="lbPassword" name="Password">
+            <input type="password" class="form-control" id="lbPassword" name="Password" onkeyup="CheckLogInForm()">
             @Html.ValidationMessageFor(x => x.Password, null, new { @class = "text-danger" })
         </div>
 
         <div style="width: 100%;text-align: right">
-            <button type="submit" class="btn btn-primary">Log In</button>
+            <button id="btnLogin" type="submit" class="btn btn-primary" disabled="disabled">Log In</button>
         </div>
         <br>
 
@@ -26,4 +26,18 @@
     <div style="width: 100%; text-align: center">
         <p>Are you not a member? <a onclick="ChangeForm(1)" target="_top" style="color: dodgerblue">Join us!</a></p>
     </div>
+    
+    
+    <script>
+        function CheckLogInForm() {
+            let firstInput = document.getElementById("lbUsername").value;
+            let secondInput = document.getElementById("lbPassword").value;
+
+            if(firstInput !== "" && secondInput !== "") {
+                document.getElementById("btnLogin").removeAttribute("disabled");
+            } else {
+                document.getElementById("btnLogin").setAttribute("disabled", "true");
+            }
+        }
+    </script>
 </div>

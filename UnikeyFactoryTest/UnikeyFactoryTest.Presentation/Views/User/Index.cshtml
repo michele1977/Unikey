@@ -18,10 +18,20 @@
 <body>
     <div class="container" style="height:700px;">
         <div class="row" style="height:700px;padding-top: 40px;">
-            <div class="col-8" style="background-color: antiquewhite;">
-
+            <div class="col-8" style="background-color: white;">
+                <div style="text-align: center; padding-top: 80px">
+                    <img src="~/Logos/assestmentImage.png" />
+                </div>
+                <br/>
+                <div style="text-align: center">
+                    <img style="height: 65px;width: 10%" src="~/Logos/Unikey.png" />
+                </div>
             </div>
-            <div class="col-4" style="padding-top: 100px;background-color: rgb(0, 132, 255);">
+            <div class="col-4" style="padding-top: 70px; background-color: rgb(0, 132, 255);">
+                <div style="text-align: center">
+                    <h2 style="color: aliceblue">Welcome</h2>
+                </div>
+                <br/>
                 @Html.Partial("_LoginFormPartial", Model.LoginModel)
 
                 @Html.Partial("_SigningUpFormPartial", Model.SigningUpModel)
