@@ -34,6 +34,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             model.NumQuestion = test.Questions.Count;
             model.ActualQuestion = savedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == 0);
             model.AdministratedTestId = savedTest.Id;
+            await service.ChangeAdministratedTestStateToStarted(savedTest.Id);
             return View("Test", model);
         }
 
@@ -56,7 +57,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 await service.Update_Save_Question(actualQuestion);
             }
 
-            await service.ChangeAdministratedTestState(administratedTest.Id);
+            await service.ChangeAdministratedTestStateToStarted(administratedTest.Id);
             await service.Update_Save(administratedTest);
             return View("TestEnded");
         }

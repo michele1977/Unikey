@@ -209,11 +209,21 @@ namespace UnikeyFactoryTest.Repository
             _ctx.Dispose();
         }
 
-        public async Task ChangeState(int id)
+        public async Task ChangeStateToClosed(int id)
         {
             var myTask = Task.Run(() =>
             {
                 _ctx.AdministratedTests.FirstOrDefault(x => x.Id.Equals(id)).State = (byte) AdministratedTestState.Closed;
+                _ctx.SaveChanges();
+            });
+            await myTask;
+        }
+
+        public async Task ChangeStateToStarted(int id)
+        {
+            var myTask = Task.Run(() =>
+            {
+                _ctx.AdministratedTests.FirstOrDefault(x => x.Id.Equals(id)).State = (byte)AdministratedTestState.Started;
                 _ctx.SaveChanges();
             });
             await myTask;

@@ -69,9 +69,14 @@ namespace UnikeyFactoryTest.Service
             await _repo.Update_Save(adTest);
         }
 
-        public async Task ChangeAdministratedTestState(int id)
+        public async Task ChangeAdministratedTestStateToClosed(int id)
         {
-            await _repo.ChangeState(id);
+            await _repo.ChangeStateToClosed(id);
+        }
+
+        public async Task ChangeAdministratedTestStateToStarted(int id)
+        {
+            await _repo.ChangeStateToStarted(id);
         }
 
         public async Task<AdministratedTestBusiness> GetAdministratedTestById(int adTestId)
