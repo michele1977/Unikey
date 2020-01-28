@@ -1,31 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Web;
-using System.Web.UI;
+using System.Text;
+using System.Threading.Tasks;
 using AutoMapper;
 using Ninject;
-using Ninject.Infrastructure.Language;
-using UnikeyFactoryTest.Context;
-using UnikeyFactoryTest.Domain;
-using UnikeyFactoryTest.Mapper;
-using UnikeyFactoryTest.Mapper.AutoMappers;
-using UnikeyFactoryTest.Mapper.AutoMappers.Attributes;
+using Ninject.Modules;
 
-namespace UnikeyFactoryTest.Presentation
+namespace UnikeyFactoryTest.Mapper.AutoMappers.Modules
 {
-    public class MapConfig
+    public class HeavyMapperModule : NinjectModule
     {
-        public void RegisterMap(IKernel kernel)
+        public override void Load()
         {
-            kernel.Bind<MapperConfiguration>().ToConstant(Configure()).InSingletonScope();
-            var mapper = new AutoMapper.Mapper(ConfigureLight(), type => kernel.Get(type));
-            kernel.Bind<IMapper>().ToMethod(ctx => mapper);
+            Kernel.Bind<MapperConfiguration>().ToConstant(Configure()).InSingletonScope();
+            Kernel.Bind<IMapper>().ToMethod(ctx => new AutoMapper.Mapper(ConfigureLight(), type => Kernel.Get(type)));
         }
 
+        #region Configure()
         private static MapperConfiguration Configure()
         {
             var mapperConfig = new MapperConfiguration(cfg => 
@@ -37,7 +29,9 @@ namespace UnikeyFactoryTest.Presentation
 
             return mapperConfig;
         }
-        
+        #endregion
+
+        #region ConfigureLight()
         private static MapperConfiguration ConfigureLight()
         {
             var mapperConfig = new MapperConfiguration(cfg => 
@@ -48,5 +42,9 @@ namespace UnikeyFactoryTest.Presentation
 
             return mapperConfig;
         }
+        #endregion
+
+
+
     }
 }

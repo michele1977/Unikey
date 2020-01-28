@@ -219,9 +219,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             try
             {
-                throw new ArgumentNullException();
                 await service.DeleteTest(test.Id);
                 Logger.Info("Successfully deleted test");
+                throw new ArgumentNullException();
             }
             catch (ArgumentNullException e)
             {

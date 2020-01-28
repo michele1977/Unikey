@@ -29,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mappers", "Mappers", "{F451
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.Mapper", "UnikeyFactoryTest.Mapper\UnikeyFactoryTest.Mapper.csproj", "{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.Mapper.Tests", "UnikeyFactoryTest.Mapper.Tests\UnikeyFactoryTest.Mapper.Tests.csproj", "{F1F765C1-56F5-4A6E-92D8-6852ABC4B565}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1F765C1-56F5-4A6E-92D8-6852ABC4B565}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1F765C1-56F5-4A6E-92D8-6852ABC4B565}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1F765C1-56F5-4A6E-92D8-6852ABC4B565}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1F765C1-56F5-4A6E-92D8-6852ABC4B565}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +87,7 @@ Global
 		{E2F1E71E-9900-4CEF-A8AB-0BC152698A47} = {09DA4313-D100-4588-9275-535B046748E7}
 		{F4512DB7-BE86-4310-83A9-166B39A25F22} = {0591EEC8-E5A8-45F4-80AD-BD56EBC7D550}
 		{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6} = {F4512DB7-BE86-4310-83A9-166B39A25F22}
+		{F1F765C1-56F5-4A6E-92D8-6852ABC4B565} = {F4512DB7-BE86-4310-83A9-166B39A25F22}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {16A85E8B-7001-49BB-8ABA-4B835045F2E7}
