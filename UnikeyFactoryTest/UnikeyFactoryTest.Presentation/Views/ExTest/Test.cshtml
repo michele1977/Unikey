@@ -8,7 +8,11 @@
         @using (Html.BeginForm("SaveTest", "ExTest"))
         {
             <input type="hidden" value="@Model.Url" name="Url" />
-
+            <input type="hidden" name="NumQuestion" value="@Model.NumQuestion" />
+            <input type="hidden" name="ActualPosition" value="@Model.ActualQuestion.Position" />
+            <input type="hidden" name="Name" value="@Model.Name" />
+            <input type="hidden" name="Surname" value="@Model.Surname" />
+            <input type="hidden" name="AdministratedTestId" value="@Model.ActualQuestion.AdministratedTestId" />
 
             if (String.IsNullOrEmpty(Model.ActualQuestion.Text) != true)
             {
@@ -21,18 +25,30 @@
 
                 @foreach (var answer in Model.ActualQuestion.AdministratedAnswers)
                 {
+
                     <div class="answer" onclick="selected(@answer.Id);">
                         <div class="form-check">
                             <label class="AnswerLabel">@answer.Text</label>
                             <span class="RadioInput">
-                                @Html.RadioButton(Model.ActualQuestion.Id.ToString(), answer.Id.ToString(), new { @id = answer.Id })
+                                @if (answer.isSelected)
+                                {
+                                    @Html.RadioButton(Model.ActualQuestion.Id.ToString(), answer.Id.ToString(), new { @id = answer.Id, @checked = "checked" })
+                                }
+                                else
+                                {
+                                    @Html.RadioButton(Model.ActualQuestion.Id.ToString(), answer.Id.ToString(), new { @id = answer.Id })
+                                }
+
                             </span>
                         </div>
                     </div>
                 }
 
             </div>
-            <div><button type="submit" class="btn btn-success SaveButton">Save Test</button></div>
+            <div><button type="submit" class="btn btn-success SaveButton" formaction="/ExTest/SaveTest">Save Test</button></div>
+            <button class="btn btn-success NextButton" style="float:right" formaction="/ExTest/Next">Next</button>
+            <button style="float:left;" class="btn btn-success PreviousButton" formaction="/ExTest/Previous">Previous</button>
+            <button style="text-align: center;" class="btn btn-success CloseButton" formaction="/ExTest/Close">Close</button>
         }
 
 
@@ -47,9 +63,9 @@
             <input type="hidden" name="Name" value="@Model.Name" />
             <input type="hidden" name="Surname" value="@Model.Surname" />
             <input type="hidden" name="AdministratedTestId" value="@Model.ActualQuestion.AdministratedTestId" />
-            <button style="float:left;" class="btn btn-success PreviousButton" formaction="/ExTest/Previous">Previous</button>
-            <button style="text-align: center;" class="btn btn-success CloseButton" formaction="/ExTest/Next">Close</button>
-            <button class="btn btn-success NextButton" style="float:right">Next</button>
+            @*<button style="float:left;" class="btn btn-success PreviousButton" formaction="/ExTest/Previous">Previous</button>
+                <button style="text-align: center;" class="btn btn-success CloseButton" formaction="/ExTest/Next">Close</button>*@
+
         }
     </div>
 
@@ -66,4 +82,3 @@
         }
     </script>
 </div>
-

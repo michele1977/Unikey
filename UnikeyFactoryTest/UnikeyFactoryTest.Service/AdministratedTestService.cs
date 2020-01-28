@@ -44,15 +44,16 @@ namespace UnikeyFactoryTest.Service
                 AdministratedQuestions = new List<AdministratedQuestionBusiness>(),
                 State = (AdministratedTestState)1
             };
-
             foreach (var q in test.Questions)
             {
                 newAdTest.AdministratedQuestions.Add(new AdministratedQuestionBusiness()
                 {
                     Text = q.Text,
                     AdministratedTestId = q.TestId,
+                    Position = q.Position,
                     AdministratedAnswers = q.Answers.Select(a => new AdministratedAnswerBusiness() { Text = a.Text, Score = a.Score, AdministratedQuestionId = a.QuestionId, isCorrect = a.IsCorrect, isSelected = false }).ToList()
                 });
+
             }
 
             return newAdTest;
@@ -68,33 +69,20 @@ namespace UnikeyFactoryTest.Service
             await _repo.Update_Save(adTest);
         }
 
+        public async Task ChangeAdministratedTestStateToClosed(int id)
+        {
+            await _repo.ChangeStateToClosed(id);
+        }
+
+        public async Task ChangeAdministratedTestStateToStarted(int id)
+        {
+            await _repo.ChangeStateToStarted(id);
+        }
+
         public async Task<AdministratedTestBusiness> GetAdministratedTestById(int adTestId)
         {
             return await _repo.GetAdministratedTestById(adTestId);
         }
-
-        //public async Task<AdministratedTestBusiness> GetAdministratedTest(int administratedTestId)
-        //{
-        //    _repo = new AdministratedTestRepository();
-
-        //    try
-        //    {
-        //        return await _repo.GetAdministratedTestById(administratedTestId);
-        //    }
-        //    catch (NullReferenceException ex)
-        //    {
-        //        //TODO
-        //    }
-        //    catch (ArgumentNullException ex)
-        //    {
-        //        //TODO
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //TODO
-        //    }
-
-        //}
 
         public async Task<IEnumerable<AdministratedTestBusiness>> GetAdministratedTests()
         {
@@ -119,20 +107,19 @@ namespace UnikeyFactoryTest.Service
             }
         }
 
-        public async Task<AdministratedQuestionBusiness> Next(int AdministratedTestId, int position)
+        public async Task<AdministratedQuestionBusiness> Next(AdministratedTestBusiness administratedTest, int position)
         {
-            var test = await _repo.GetAdministratedTestById(AdministratedTestId);
-            return test.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
+
+            return administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
         }
 
         public async Task Update_Save_Question(AdministratedQuestionBusiness adQuestion)
         {
             await _repo.Update_Save_Question(adQuestion);
         }
-        public async Task<AdministratedQuestionBusiness> Previous(int AdministratedTestId, int position)
+        public async Task<AdministratedQuestionBusiness> Previous(AdministratedTestBusiness administratedTest, int position)
         {
-            var test = await _repo.GetAdministratedTestById(AdministratedTestId);
-            return test.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
+            return administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
         }
     }
 }

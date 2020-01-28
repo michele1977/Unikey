@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Domain.Enums;
 using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.Mapper;
 
@@ -26,8 +27,8 @@ namespace UnikeyFactoryTest.Repository
 
         public async Task<AdministratedTestBusiness> Add(AdministratedTestBusiness adTest)
         {
-            
-            
+
+
             var addTask = Task.Run(() =>
             {
                 try
@@ -57,8 +58,8 @@ namespace UnikeyFactoryTest.Repository
             {
                 throw new Exception("Not valid id");
             }
-
-            return AdministratedTestMapper.MapDaoToDomainHeavy(task);
+            var result = AdministratedTestMapper.MapDaoToDomainHeavy(task);
+            return result;
         }
 
         public async Task<List<AdministratedTestBusiness>> GetAdministratedTests()
@@ -70,7 +71,7 @@ namespace UnikeyFactoryTest.Repository
                 Date = t.Date,
                 Score = t.AdministratedQuestions
                     .SelectMany(q => q.AdministratedAnswers)
-                    .Where(a => (bool) a.isSelected)
+                    .Where(a => (bool)a.isSelected)
                     .Sum(a => a.Score)
             }).ToList());
 
@@ -98,7 +99,7 @@ namespace UnikeyFactoryTest.Repository
                 return FilteredState;
             });
             var State = await myTask;
-            return (int) State;
+            return (int)State;
         }
         #region DeleteAdministratedTest
         public async Task DeleteAdministratedTest(int administratedTestId)
@@ -136,9 +137,9 @@ namespace UnikeyFactoryTest.Repository
             {
                 await Update_Save_Score(newTest);
                 await Update_Save_Date(newTest);
-                
+
                 _ctx.SaveChanges();
-                
+
             }
             catch (Exception)
             {
@@ -149,7 +150,7 @@ namespace UnikeyFactoryTest.Repository
 
         private async Task Update_Save_Date(AdministratedTest newTest)
         {
-            await Task.Run(()=>
+            await Task.Run(() =>
             {
                 return _ctx.AdministratedTests.FirstOrDefault(x => x.Id == newTest.Id).Date = DateTime.Today;
             });
@@ -177,6 +178,11 @@ namespace UnikeyFactoryTest.Repository
 
             return score;
         }
+        public async Task Update_Save_Question(AdministratedQuestionBusiness adQuestion)
+        {
+            var newQuestion = AdministratedQuestionMapper.MapDomainToDao(adQuestion);
+            await Update_Save_Answers(newQuestion);
+        }
 
         private async Task Update_Save_Answers(AdministratedQuestion q)
         {
@@ -184,6 +190,9 @@ namespace UnikeyFactoryTest.Repository
             {
                 var myTask2 = Task.Run(() =>
                 {
+                    _ctx.AdministratedAnswers.FirstOrDefault(x => x.Id == a.Id).isSelected = false;
+                    _ctx.SaveChanges();
+
                     if (a.isSelected == true)
                     {
                         _ctx.AdministratedAnswers.FirstOrDefault(x => x.Id == a.Id).isSelected = true;
@@ -200,10 +209,24 @@ namespace UnikeyFactoryTest.Repository
             _ctx.Dispose();
         }
 
-        public async Task Update_Save_Question(AdministratedQuestionBusiness adQuestion)
+        public async Task ChangeStateToClosed(int id)
         {
-            var newQuestion = AdministratedQuestionMapper.MapDomainToDao(adQuestion);
-            await Update_Save_Answers(newQuestion);
+            var myTask = Task.Run(() =>
+            {
+                _ctx.AdministratedTests.FirstOrDefault(x => x.Id.Equals(id)).State = (byte) AdministratedTestState.Closed;
+                _ctx.SaveChanges();
+            });
+            await myTask;
+        }
+
+        public async Task ChangeStateToStarted(int id)
+        {
+            var myTask = Task.Run(() =>
+            {
+                _ctx.AdministratedTests.FirstOrDefault(x => x.Id.Equals(id)).State = (byte)AdministratedTestState.Started;
+                _ctx.SaveChanges();
+            });
+            await myTask;
         }
     }
 }

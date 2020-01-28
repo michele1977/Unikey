@@ -17,6 +17,7 @@ namespace UnikeyFactoryTest.Mapper
                 Id = question.Id,
                 Text = question.Text,
                 TestId = question.TestId,
+                Position = question.Position,
                 Answers = question.Answers.Select(AnswerMapper.MapDalToBiz).ToList(),
             };
 
@@ -30,6 +31,7 @@ namespace UnikeyFactoryTest.Mapper
                 Id = question.Id,
                 Text = question.Text,
                 TestId = question.TestId,
+                Position = question.Position,
                 Answers = question.Answers.Select(AnswerMapper.MapBizToDal).ToList(),
             };
 
