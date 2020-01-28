@@ -34,38 +34,31 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             model.NumQuestion = test.Questions.Count;
             model.ActualQuestion = savedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == 0);
             model.AdministratedTestId = savedTest.Id;
+            await service.ChangeAdministratedTestStateToStarted(savedTest.Id);
             return View("Test", model);
         }
 
         public async Task<ActionResult> SaveTest(AdministratedTestModel model, FormCollection form)
         {
-            await service.Update_Save_Question(model.ActualQuestion);
-            var AdminstratedTest = await service.GetAdministratedTestById(model.ActualQuestion.AdministratedTestId);
-            model.QuestionAnswerDictionary = new Dictionary<int, int>();
-            //popolo il dictionary con domanda e relativa risposta
-            foreach (var key in form.AllKeys)
+            var administratedTest = await service.GetAdministratedTestById(model.AdministratedTestId);
+            var actualQuestion = administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == model.ActualPosition);
+
+            if (Request.Form[actualQuestion.Id.ToString()] != null)
             {
-                if (key != "URL" && key != "admnistratedTestId")
+                var value = Request.Form[actualQuestion.Id.ToString()];
+                foreach (var administratedAnswer in actualQuestion.AdministratedAnswers)
                 {
-                    var value = Request.Form[key];
-                    model.QuestionAnswerDictionary[System.Convert.ToInt32(key)] = System.Convert.ToInt32(value);
+                    if (administratedAnswer.isSelected)
+                    {
+                        administratedAnswer.isSelected = false;
+                    }
                 }
-
+                actualQuestion.AdministratedAnswers.FirstOrDefault(a => a.Id == System.Convert.ToInt32(value)).isSelected = true;
+                await service.Update_Save_Question(actualQuestion);
             }
-            foreach (var question in model.QuestionAnswerDictionary)
-            {
 
-                if (question.Value != 0)
-                {
-                    AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key)
-                        .AdministratedAnswers.FirstOrDefault(a => a.Id == question.Value).isSelected = true;
-                }
-
-                AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key).Text =
-                    AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key).Text + " ";
-            }
-            await service.Update_Save(AdminstratedTest);
-            //set status test at CLOSED!!
+            await service.ChangeAdministratedTestStateToStarted(administratedTest.Id);
+            await service.Update_Save(administratedTest);
             return View("TestEnded");
         }
 
@@ -98,14 +91,20 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public async Task<ActionResult> Next(AdministratedTestModel model, FormCollection form)
         {
             var administratedTest = await service.GetAdministratedTestById(model.AdministratedTestId);
-            for (short i = 0; i < administratedTest.AdministratedQuestions.Count; i++)
-            {
-                administratedTest.AdministratedQuestions[i].Position = i;
-            }
             var actualQuestion = administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == model.ActualPosition);
-            var value = Request.Form[actualQuestion.Id.ToString()];
-            actualQuestion.AdministratedAnswers.FirstOrDefault(a => a.Id == System.Convert.ToInt32(value)).isSelected = true;
-            await service.Update_Save_Question(actualQuestion);
+            if (Request.Form[actualQuestion.Id.ToString()] != null)
+            {
+                var value = Request.Form[actualQuestion.Id.ToString()];
+                foreach (var administratedAnswer in actualQuestion.AdministratedAnswers)
+                {
+                    if (administratedAnswer.isSelected)
+                    {
+                        administratedAnswer.isSelected = false;
+                    }
+                }
+                actualQuestion.AdministratedAnswers.FirstOrDefault(a => a.Id == System.Convert.ToInt32(value)).isSelected = true;
+                await service.Update_Save_Question(actualQuestion);
+            }
             model.ActualQuestion = await service.Next(administratedTest, model.ActualPosition + 1);
             return View("Test", model);
         }
@@ -113,45 +112,42 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult> Close(AdministratedTestModel model, FormCollection form)
         {
-            await service.Update_Save_Question(model.ActualQuestion);
-            var AdminstratedTest = await service.GetAdministratedTestById(model.ActualQuestion.AdministratedTestId);
-            model.QuestionAnswerDictionary = new Dictionary<int, int>();
-            //popolo il dictionary con domanda e relativa risposta
-            foreach (var key in form.AllKeys)
+            var administratedTest = await service.GetAdministratedTestById(model.AdministratedTestId);
+            var actualQuestion = administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == model.ActualPosition);
+
+            if (Request.Form[actualQuestion.Id.ToString()] != null)
             {
-                if (key != "URL" && key != "admnistratedTestId")
+                var value = Request.Form[actualQuestion.Id.ToString()];
+                foreach (var administratedAnswer in actualQuestion.AdministratedAnswers)
                 {
-                    var value = Request.Form[key];
-                    model.QuestionAnswerDictionary[System.Convert.ToInt32(key)] = System.Convert.ToInt32(value);
+                    if (administratedAnswer.isSelected)
+                    {
+                        administratedAnswer.isSelected = false;
+                    }
                 }
-
+                actualQuestion.AdministratedAnswers.FirstOrDefault(a => a.Id == System.Convert.ToInt32(value)).isSelected = true;
+                await service.Update_Save_Question(actualQuestion);
             }
-            foreach (var question in model.QuestionAnswerDictionary)
-            {
-
-                if (question.Value != 0)
-                {
-                    AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key)
-                        .AdministratedAnswers.FirstOrDefault(a => a.Id == question.Value).isSelected = true;
-                }
-
-                AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key).Text =
-                    AdminstratedTest.AdministratedQuestions.FirstOrDefault(q => q.Id == question.Key).Text + " ";
-            }
-            await service.Update_Save(await service.GetAdministratedTestById(model.AdministratedTestId));
+            await service.Update_Save(administratedTest);
             return View("TestEnded");
         }
         public async Task<ActionResult> Previous(AdministratedTestModel model, FormCollection form)
         {
             var administratedTest = await service.GetAdministratedTestById(model.AdministratedTestId);
-            for (short i = 0; i < administratedTest.AdministratedQuestions.Count; i++)
-            {
-                administratedTest.AdministratedQuestions[i].Position = i;
-            }
             var actualQuestion = administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == model.ActualPosition);
-            var value = Request.Form[actualQuestion.Id.ToString()];
-            actualQuestion.AdministratedAnswers.FirstOrDefault(a => a.Id == System.Convert.ToInt32(value)).isSelected = true;
-            await service.Update_Save_Question(actualQuestion);
+            if (Request.Form[actualQuestion.Id.ToString()] != null)
+            {
+                var value = Request.Form[actualQuestion.Id.ToString()];
+                foreach (var administratedAnswer in actualQuestion.AdministratedAnswers)
+                {
+                    if (administratedAnswer.isSelected)
+                    {
+                        administratedAnswer.isSelected = false;
+                    }
+                }
+                actualQuestion.AdministratedAnswers.FirstOrDefault(a => a.Id == System.Convert.ToInt32(value)).isSelected = true;
+                await service.Update_Save_Question(actualQuestion);
+            }
             model.ActualQuestion = await service.Previous(administratedTest, model.ActualPosition - 1);
             return View("Test", model);
         }

@@ -56,6 +56,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
           <Property Name="TestId" Type="int" Nullable="false" />
+          <Property Name="Position" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="Test">
           <Key>
@@ -212,6 +213,7 @@
           <Property Name="TestId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Test" Relationship="Self.FK_Question_Test" FromRole="Question" ToRole="Test" />
           <NavigationProperty Name="Answers" Relationship="TestPlatformDBModel.FK_answer_question" FromRole="Question" ToRole="Answer" />
+          <Property Name="Position" Type="Int16" Nullable="false" />
         </EntityType>
         <EntityType Name="Test">
           <Key>
@@ -404,6 +406,7 @@
           <EntitySetMapping Name="Questions">
             <EntityTypeMapping TypeName="TestPlatformDBModel.Question">
               <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="Position" ColumnName="Position" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
                 <ScalarProperty Name="TestId" ColumnName="TestId" />

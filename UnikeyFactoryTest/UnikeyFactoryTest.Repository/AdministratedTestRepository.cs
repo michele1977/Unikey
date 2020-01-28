@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Domain.Enums;
 using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.Mapper;
 
@@ -57,8 +58,8 @@ namespace UnikeyFactoryTest.Repository
             {
                 throw new Exception("Not valid id");
             }
-
-            return AdministratedTestMapper.MapDaoToDomainHeavy(task);
+            var result = AdministratedTestMapper.MapDaoToDomainHeavy(task);
+            return result;
         }
 
         public async Task<List<AdministratedTestBusiness>> GetAdministratedTests()
@@ -189,6 +190,9 @@ namespace UnikeyFactoryTest.Repository
             {
                 var myTask2 = Task.Run(() =>
                 {
+                    _ctx.AdministratedAnswers.FirstOrDefault(x => x.Id == a.Id).isSelected = false;
+                    _ctx.SaveChanges();
+
                     if (a.isSelected == true)
                     {
                         _ctx.AdministratedAnswers.FirstOrDefault(x => x.Id == a.Id).isSelected = true;
@@ -203,6 +207,26 @@ namespace UnikeyFactoryTest.Repository
         public void Dispose()
         {
             _ctx.Dispose();
+        }
+
+        public async Task ChangeStateToClosed(int id)
+        {
+            var myTask = Task.Run(() =>
+            {
+                _ctx.AdministratedTests.FirstOrDefault(x => x.Id.Equals(id)).State = (byte) AdministratedTestState.Closed;
+                _ctx.SaveChanges();
+            });
+            await myTask;
+        }
+
+        public async Task ChangeStateToStarted(int id)
+        {
+            var myTask = Task.Run(() =>
+            {
+                _ctx.AdministratedTests.FirstOrDefault(x => x.Id.Equals(id)).State = (byte)AdministratedTestState.Started;
+                _ctx.SaveChanges();
+            });
+            await myTask;
         }
     }
 }
