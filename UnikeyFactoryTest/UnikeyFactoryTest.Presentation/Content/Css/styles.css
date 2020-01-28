@@ -212,3 +212,6 @@ hr {
     margin: auto;
     text-align: center;
 }
+.modal-body {
+    overflow: auto;
+}

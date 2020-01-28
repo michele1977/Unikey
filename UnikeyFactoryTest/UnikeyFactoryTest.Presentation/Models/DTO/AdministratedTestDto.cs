@@ -37,6 +37,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public decimal ResultScore { get; set; }
        
         public List<AdministratedQuestionDto> AdministratedQuestions { get; set; }
+        public List<AdministratedTestBusiness> AdministratedTests { get; set; }
     }
 
 }

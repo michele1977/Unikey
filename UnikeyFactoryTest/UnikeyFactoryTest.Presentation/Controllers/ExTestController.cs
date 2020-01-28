@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -140,6 +141,22 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         {
             model.ActualQuestion = await service.Previous(model.AdministratedTestId, model.ActualPosition-1);
             return View("Test", model);
+        }
+        [HttpGet]
+        public async Task<ActionResult> DetailsTablePartial(int testId)
+        {
+            AdministratedTestService service = new AdministratedTestService();
+            AdministratedTestDto testToPass = new AdministratedTestDto();
+            try
+            {
+                var theTest = await service.GetAdministratedTestsByTestId(testId);
+                testToPass.AdministratedTests = theTest;
+            }
+            catch(Exception e)
+            {
+                
+            }
+            return PartialView("DetailsTablePartial", testToPass/*,*//*TestVisual*/);
         }
     }
 }
