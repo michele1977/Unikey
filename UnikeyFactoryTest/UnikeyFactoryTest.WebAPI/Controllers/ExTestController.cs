@@ -8,10 +8,8 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Service;
-<<<<<<< HEAD
-=======
 using UnikeyFactoryTest.WebAPI.Models;
->>>>>>> c637e23ad3b20b33f122feb98cb85bee9b967c85
+
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
@@ -25,20 +23,15 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
 
         // GET: api/ExTest/5
         public async Task<JsonResult<AdministratedTestBusiness>> Get(int testId)
-        { 
+        {
             AdministratedTestService testService = new AdministratedTestService();
             var test = await testService.GetAdministratedTestById(testId);
             if (test == null) throw new Exception("Test non trovato");
             return Json(test);
         }
 
-<<<<<<< HEAD
-            // POST: api/ExTest
-        public void Post([FromBody]string value)
-=======
         // POST: api/ExTest
         public async Task<JsonResult<AdministratedTestBusiness>> Post([FromBody]ExTestModel model)
->>>>>>> c637e23ad3b20b33f122feb98cb85bee9b967c85
         {
             AdministratedTestService service = new AdministratedTestService();
             TestService testService = new TestService();
@@ -51,8 +44,31 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         }
 
         // PUT: api/ExTest/5
-        public void Put(int id, [FromBody]string value)
+        public async Task<IHttpActionResult> Put([FromBody]ExTestModel model)
         {
+            AdministratedTestService service = new AdministratedTestService();
+            var adtest = await service.GetAdministratedTestById(model.testId);
+            var question = adtest.AdministratedQuestions.FirstOrDefault(x => x.Id == model.Question.Id);
+            foreach (var answer in model.Question.AdministratedAnswers)
+            {
+                try
+                {
+                    question.AdministratedAnswers.FirstOrDefault(x => x.Id == answer.Id).isSelected = answer.isSelected;
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Question not found");
+                }
+            }
+            await service.Update_Save_Question(question);
+
+            return Ok();
+        }
+
+        // PATCH: api/ExTest
+        public void Patch()
+        {
+
         }
 
         // DELETE: api/ExTest/5
