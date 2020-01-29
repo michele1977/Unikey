@@ -37,6 +37,7 @@ namespace UnikeyFactoryTest.Mapper
                 Title = dao.Title,
                 TestSubject = dao.TestSubject,
                 Date = dao.Date,
+                Score = dao.Score,
                 State = (AdministratedTestState) dao.State, 
                 AdministratedQuestions = dao.AdministratedQuestions.Select(AdministratedQuestionMapper.MapDaoToDomain).ToList()
             };
@@ -54,6 +55,7 @@ namespace UnikeyFactoryTest.Mapper
                 TestSubject = domain.TestSubject,
                 Date = domain.Date,
                 State = (byte) domain.State,
+                Score = domain.Score,
                 AdministratedQuestions = domain.AdministratedQuestions.Select(AdministratedQuestionMapper.MapDomainToDao).ToList()
             };
             return returned;

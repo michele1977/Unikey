@@ -42,7 +42,7 @@ namespace UnikeyFactoryTest.Service
                 TestSubject = subject,
                 Title = test.Title,
                 AdministratedQuestions = new List<AdministratedQuestionBusiness>(),
-                State = (AdministratedTestState)1
+                State = AdministratedTestState.Open
             };
             foreach (var q in test.Questions)
             {
@@ -67,16 +67,6 @@ namespace UnikeyFactoryTest.Service
         public async Task Update_Save(AdministratedTestBusiness adTest)
         {
             await _repo.Update_Save(adTest);
-        }
-
-        public async Task ChangeAdministratedTestStateToClosed(int id)
-        {
-            await _repo.ChangeStateToClosed(id);
-        }
-
-        public async Task ChangeAdministratedTestStateToStarted(int id)
-        {
-            await _repo.ChangeStateToStarted(id);
         }
 
         public async Task<AdministratedTestBusiness> GetAdministratedTestById(int adTestId)
