@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Results;
+using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Service;
+using UnikeyFactoryTest.WebAPI.Models;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
@@ -22,8 +27,16 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         }
 
         // POST: api/ExTest
-        public void Post([FromBody]string value)
+        public async Task<JsonResult<AdministratedTestBusiness>> Post([FromBody]ExTestModel model)
         {
+            AdministratedTestService service = new AdministratedTestService();
+            TestService testService = new TestService();
+            var subject = model.name + " " + model.surname;
+            var test = testService.GetTestByURL(model.guid);
+            var administratedTest = service.AdministratedTest_Builder(test, subject);
+            var savedTest = await service.Add(administratedTest);
+            await service.ChangeAdministratedTestStateToStarted(savedTest.Id);
+            return Json(savedTest);
         }
 
         // PUT: api/ExTest/5
