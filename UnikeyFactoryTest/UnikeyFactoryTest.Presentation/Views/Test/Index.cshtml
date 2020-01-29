@@ -42,31 +42,38 @@
 
     function EnableDiv(id) {
         document.getElementById(id).hidden = false;
-      
-
-    }
-
-    function DisabledButtonCreate(id, idbtn) {
-        document.getElementById(id).hidden = false;
-        document.getElementById(idbtn).disable = true;
 
 
     }
+
+    //function DisabledButtonCreate(id, idbtn) {
+    //    document.getElementById(id).removeAttribute("hidden");
+    //    document.getElementById(idbtn).setAttribute("disabled");
+
+
+    //}
 
     function DisableQuestionForm(id) {
         document.getElementById(id).hidden = true;
     }
 
-    
+
 </script>
 
 @using (Html.BeginForm("AddTest", "Test", FormMethod.Post))
 {
-
+    @Html.HiddenFor(x => x.Id)
     <div class="col-lg-6 col-md-6 col-sm-6" id="myDivContainerTop">
-        @Html.TextBoxFor(x => x.Title, new {@class = "form-control", id = "class-textBox", placeholder = "TestName"})
-        @Html.TextBoxFor(x => x.Date, new {@class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled"})
-        <button class="btn btn-primary" id="buttonCreate" onclick="DisabledButtonCreate('divList', 'buttonCreate')">Create</button>
+        @Html.TextBoxFor(x => x.Title, new { @class = "form-control", id = "class-textBox", placeholder = "TestName" })
+        @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled" })
+        @if (Model.ShowForm)
+        {
+            <button class="btn btn-primary" id="buttonCreate"  disabled>Create</button>
+        }
+        @if (!Model.ShowForm)
+        {
+            <button class="btn btn-primary" id="buttonCreate">Create</button>
+        }
     </div>
 }
 
@@ -74,38 +81,44 @@
 {
     <div class="container" id="myDivContainerDown">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6" hidden id="divList"> 
+            <div class="col-lg-6 col-md-6 col-sm-6" id="divList">
                 <table class="table">
-                    <tr>
-                        <th>
-                            QuestionText
-                        </th>
-                        <th>
-                            <button class="btn btn-dark" onclick="EnableDiv('mydivQuestionForm')">+</button>
-                        </th>
-                    </tr>
-
-
-                    @foreach (var Question in Model.Questions)
-                    {
                         <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => Question.Text)
-                            </td>
-
-                            <td>
-                                DELETE|DETAILS
-                                @*@Html.ActionLink("Delete", "DeleteQuestion", "Test", new { Id = Question.Id }, null) |
-                                @Html.ActionLink("Details", "Details", "Test", new { Id = Question.Id }, null) *@
-                            </td>
+                            <th>
+                                QuestionText
+                            </th>
+                            <th>
+                                <button class="btn btn-dark" onclick="EnableDiv('mydivQuestionForm')">+</button>
+                            </th>
                         </tr>
-                    }
 
 
-                </table>
+                        @foreach (var Question in Model.Questions)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Question.Text)
+                                </td>
+
+                                <td>
+                                    DELETE|DETAILS
+                                    @*@Html.ActionLink("Delete", "DeleteQuestion", "Test", new { Id = Question.Id }, null) |
+                                        @Html.ActionLink("Details", "Details", "Test", new { Id = Question.Id }, null) *@
+                                </td>
+                            </tr>
+                        }
+
+
+                    </table>
+                
+
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6" hidden id="mydivQuestionForm">
-                @Html.Partial("AddQuestionPartial",new QuestionDto());
+                @{
+                    var myModel = new QuestionDto();
+                    myModel.TestId = Model.Id;
+                }
+                @Html.Partial("AddQuestionPartial", myModel);
             </div>
         </div>
     </div>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Presentation;
 using UnikeyFactoryTest.Presentation.Models;
@@ -36,6 +37,8 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 if (result == true)
                 {
                     user.Id = await service.GetUserIdByUsername(user);
+                    HttpContext.Session["UserId"] = user.Id;
+
                     return RedirectToAction("TestsList", "Test");
                 }
                 else

@@ -17,6 +17,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 {
     public class TestController : Controller
     {
+        
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         private static int UserId { get; set; }
@@ -37,6 +38,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 Logger.Warn(e, e.Message);
             }
 
+            model.ShowForm = false;
             return View(model);
         }
 
@@ -46,11 +48,11 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var returned = new TestDto();
             try
             {
-                var answerBiz = model.MapToDomain();
-                var test = await _service.GetTestById(answerBiz.TestId);
-                test.Questions.Add(answerBiz);
+                var questionBiz = model.MapToDomain();
+                var test = await _service.GetTestById(questionBiz.TestId);
+                test.Questions.Add(questionBiz);
 
-                    _service.UpdateTest(test);
+               await _service.UpdateTest(test);
               
                 returned = new TestDto(test);
              
@@ -98,12 +100,17 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public async Task<ActionResult> AddTest(TestDto model)
         {
             try
-            { 
+            {
+                test.Id = model.Id;
                 test.Title = model.Title;
                 test.UserId = UserId;
                 test.URL = _service.GenerateGuid();
                 test.Date = model.Date;
-                await _service.AddNewTest(TestMapper.MapDalToBizHeavy(test));
+                var testDomain = TestMapper.MapDalToBizHeavy(test);
+                await _service.AddNewTest(testDomain);
+                model.Id = testDomain.Id;
+
+                model.ShowForm = true;
             }
             catch (ArgumentNullException e)
             {
@@ -141,12 +148,13 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 throw;
             }
 
-            return View("Index");
+            return View("Index", model);
         }
 
         [HttpGet]
         public async Task<ActionResult> TestsList(TestsListModel testsListModel)
         {
+            UserId = System.Convert.ToInt32(HttpContext.Session["UserId"]);
             testsListModel = testsListModel ?? new TestsListModel();
 
             var service = new TestService();

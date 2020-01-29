@@ -2,6 +2,7 @@
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity;
 using System.Data.Entity.Core.Common.CommandTrees;
 using System.Linq;
 using System.Text;
@@ -82,28 +83,27 @@ namespace UnikeyFactoryTest.Repository
             _ctx.SaveChanges();
         }
 
-
-
-        public async void UpdateTest(TestBusiness test)
+        public async Task UpdateTest(TestBusiness test)
         {
             if (test == null)
             {
                 throw new NullReferenceException("No test to update");
             }
 
-            var mappedTest = await Task.Run(() => TestMapper.MapBizToDal(test));
-
-            var testToUpdate = await Task.Run(() => _ctx.Tests.FirstOrDefault(t => t.Id == test.Id));
+            var mappedTest = TestMapper.MapBizToDal(test);
+            
+           var testToUpdate = await _ctx.Tests.FirstOrDefaultAsync(t => t.Id == test.Id);
 
             testToUpdate.URL = mappedTest.URL;
             testToUpdate.User = mappedTest.User;
             testToUpdate.Date = mappedTest.Date;
             testToUpdate.UserId = mappedTest.UserId;
             testToUpdate.AdministratedTests = mappedTest.AdministratedTests;
-            testToUpdate.Questions = mappedTest.Questions;
+            testToUpdate.Questions.Add(mappedTest.Questions.FirstOrDefault(x => x.Id == 0)); 
 
             _ctx.SaveChanges();
         }
+
         public async Task DeleteQuestion(int questionId)
         {
             var question = await Task.Run(() =>
