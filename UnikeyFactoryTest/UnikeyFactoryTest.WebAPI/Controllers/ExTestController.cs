@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Results;
+using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Service;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
@@ -16,12 +20,15 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         }
 
         // GET: api/ExTest/5
-        public string Get(int id)
-        {
-            return "value";
+        public async Task<JsonResult<AdministratedTestBusiness>> Get(int testId)
+        { 
+            AdministratedTestService testService = new AdministratedTestService();
+            var test = await testService.GetAdministratedTestById(testId);
+            if (test == null) throw new Exception("Test non trovato");
+            return Json(test);
         }
 
-        // POST: api/ExTest
+            // POST: api/ExTest
         public void Post([FromBody]string value)
         {
         }
