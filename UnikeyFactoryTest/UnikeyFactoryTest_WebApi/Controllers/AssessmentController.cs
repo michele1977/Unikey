@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Service;
 
 namespace UnikeyFactoryTest_WebApi.Controllers
 {
@@ -22,8 +24,14 @@ namespace UnikeyFactoryTest_WebApi.Controllers
         }
 
         // POST: api/ExTest
-        public void Post([FromBody]string value)
+        public async JsonResult Post(string GUID, string Name, string Surname)
         {
+            AdministratedTestService service = new AdministratedTestService();
+            TestService testService = new TestService();
+            var subject = Name + " " + Surname;
+            var test = testService.GetTestByURL(GUID);
+            var AdTest = service.AdministratedTest_Builder(test, subject);
+            await service.Add(AdTest);
         }
 
         // PUT: api/ExTest/5
