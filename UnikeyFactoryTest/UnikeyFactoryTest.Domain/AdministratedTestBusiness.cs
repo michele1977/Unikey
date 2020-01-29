@@ -22,7 +22,7 @@ namespace UnikeyFactoryTest.Domain
         public int? TotalScore { get; set; }
         public int TestId { get; set; }
         public string TestSubject { get; set; }
-        public DateTime? Date { get; set; }
+        public DateTime Date { get; set; }
         public decimal? ResultScore { get; set; }
         public State StateEnum { get; set; }
         public virtual ICollection<AdministratedQuestionBusiness> AdministratedQuestions { get; set; }
