@@ -125,10 +125,6 @@ namespace UnikeyFactoryTest.Service
             return test.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
         }
 
-        public async Task Update_Save_Question(AdministratedQuestionBusiness adQuestion)
-        {
-            await _repo.Update_Save_Question(adQuestion);
-        }
         public async Task<AdministratedQuestionBusiness> Previous(int AdministratedTestId, int position)
         {
             var test = await _repo.GetAdministratedTestById(AdministratedTestId);

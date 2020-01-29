@@ -129,89 +129,17 @@ namespace UnikeyFactoryTest.Repository
         #endregion
 
         #region Update_Save
-        public async Task Update_Save(AdministratedTestBusiness adTest)
-        {
-            var newTest = AdministratedTestMapper.MapDomainToDao(adTest);
-            try
-            {
-                await Update_Save_Score(newTest);
-                await Update_Save_Date(newTest);
-                
-                _ctx.SaveChanges();
-                
-            }
-            catch (Exception)
-            {
-                throw new Exception("Update failed");
-            }
 
-        }
-
-        private async Task Update_Save_Date(AdministratedTest newTest)
-        {
-            await Task.Run(()=>
-            {
-                return _ctx.AdministratedTests.FirstOrDefault(x => x.Id == newTest.Id).Date = DateTime.Today;
-            });
-        }
-
-        private async Task Update_Save_Score(AdministratedTest newTest)
-        {
-            decimal score = 0;
-
-            var myTask = Task.Run(() =>
-            {
-                score = GetScore(newTest, score);
-                _ctx.AdministratedTests.FirstOrDefault(x => x.Id == newTest.Id).Score = decimal.ToInt32(score);
-            });
-            await myTask;
-        }
-
-        private static decimal GetScore(AdministratedTest newTest, decimal score)
-        {
-            foreach (var q in newTest.AdministratedQuestions)
-            {
-                if ((q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true)) != null)
-                    score = score + (q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true)?.Score ?? 0);
-            }
-
-            return score;
-        }
-
-        private async Task Update_Save_Answers(AdministratedQuestion q)
-        {
-            foreach (var a in q.AdministratedAnswers)
-            {
-                var myTask2 = Task.Run(() =>
-                {
-                    if (a.isSelected == true)
-                    {
-                        _ctx.AdministratedAnswers.FirstOrDefault(x => x.Id == a.Id).isSelected = true;
-                        _ctx.SaveChanges();
-                    }
-                });
-                await myTask2;
-            }
-        }
-        #endregion
-
-        public void Dispose()
-        {
-            _ctx.Dispose();
-        }
-
-        public async Task Update_Save_Question(AdministratedQuestionBusiness adQuestion)
-        {
-            var newQuestion = AdministratedQuestionMapper.MapDomainToDao(adQuestion);
-            await Update_Save_Answers(newQuestion);
-        }
-
-        public async void UpdateTest(AdministratedTestBusiness test)
+        public async Task Update_Save(AdministratedTestBusiness test)
         {
             if (test == null)
             {
                 throw new NullReferenceException("No test to update");
             }
+
+            decimal score = 0;
+            test.Date = DateTime.Today;
+            test.Score = GetScore(test, score);
             var newValue = (EntityExtension)AdministratedTestMapper.MapDomainToDao(test);
             var oldValue = await Task.Run(() => (EntityExtension)(_ctx.AdministratedTests.FirstOrDefault(x => x.Id == newValue.MyId)));
             NewUpdate(newValue, oldValue);
@@ -235,6 +163,24 @@ namespace UnikeyFactoryTest.Repository
             }
 
             _ctx.SaveChanges();
+        }
+
+        private static decimal GetScore(AdministratedTestBusiness newTest, decimal score)
+        {
+            foreach (var q in newTest.AdministratedQuestions)
+            {
+                if ((q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true)) != null)
+                    score = score + (q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true)?.Score ?? 0);
+            }
+
+            return score;
+        }
+
+        #endregion
+
+        public void Dispose()
+        {
+            _ctx.Dispose();
         }
 
     }
