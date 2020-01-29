@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
+using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
@@ -153,7 +154,8 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             try
             {
-                testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
+                if (String.IsNullOrWhiteSpace(testsListModel.TextFilter))
+                    testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
             }
             catch (ArgumentNullException e)
             {
@@ -209,17 +211,17 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             catch (DbUpdateConcurrencyException e)
             {
                 Logger.Fatal(e, e.Message);
-                return Json(new { redirectUrl = Url.Action("Index", "Error") });
+                throw;
             }
             catch (DbEntityValidationException e)
             {
                 Logger.Fatal(e, e.Message);
-                return Json(new { redirectUrl = Url.Action("Index", "Error") });
+                throw;
             }
             catch (DbUpdateException e)
             {
                 Logger.Fatal(e, e.Message);
-                return Json(new { redirectUrl = Url.Action("Index", "Error") });
+                throw;
             }
             catch (NotSupportedException e)
             {
@@ -319,44 +321,22 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             return View("Index");
         }
 
-        //[HttpPost]
-        //public ActionResult TextSearch(TestsListModel testsListModel)
-        //{
-        //    if (!testsListModel.TextFilter.IsNullOrWhiteSpace())
-        //    {
-        //        TestService service = new TestService();
+        [HttpPost]
+        public async Task<ActionResult> TextSearch(TestsListModel testsListModel)
+        {
+            if (!String.IsNullOrWhiteSpace(testsListModel.TextFilter))
+            {
+                TestService service = new TestService();
 
-        //        testsListModel.Tests = service.GetTests()
-        //            .Where(t => t.User.Username.Contains(testsListModel.TextFilter))
-        //            .Select(t => new TestDto(t)).ToList();
-        //    }
+                var tests = await service.GetTests();
 
-        //    return RedirectToAction("TestsList");
-        //}
+                testsListModel.Tests = tests.Where(t => t.Title.ToLower().Contains(testsListModel.TextFilter.ToLower()))
+                    .Select(t => new TestDto(t)).ToList();
+            }
 
-        //[HttpGet]
-        //[ActionName("EditQuestion")]
-        //public ActionResult EditQuestion_Get(QuestionDto question)
-        //{
-        //    TestBusiness questionRelatedTest = _service.GetTestById(question.TestId);
+            return RedirectToAction("TestsList", testsListModel);
+        }
 
-        //    QuestionDto questionToEdit = new QuestionDto(questionRelatedTest.Questions.FirstOrDefault(q => q.Id == question.Id));
-
-        //    questionToEdit.CorrectAnswerScore = question.CorrectAnswerScore;
-
-        //    TestModel questionToUpdate = new TestModel(questionToEdit);
-
-        //    return View(questionToUpdate);
-        //}
-
-        //[HttpPost]
-        //[ActionName("EditQuestion")]
-        //public ActionResult EditQuestion_Post(TestModel question)
-        //{
-        //    // TODO
-
-        //    return RedirectToAction("TestContent", "Test", new {Id = question.Test.Id});
-        //}
         public async Task<JsonResult> SendMail(EmailModel emailModel)
         {
             TestBusiness test;

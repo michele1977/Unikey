@@ -13,7 +13,6 @@ using UnikeyFactoryTest.Mapper;
 
 namespace UnikeyFactoryTest.Repository
 {
-
     public class TestRepository : ITestRepository
     {
         private readonly TestPlatformDBEntities _ctx;
