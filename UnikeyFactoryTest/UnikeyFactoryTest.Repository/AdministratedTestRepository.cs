@@ -205,5 +205,37 @@ namespace UnikeyFactoryTest.Repository
             var newQuestion = AdministratedQuestionMapper.MapDomainToDao(adQuestion);
             await Update_Save_Answers(newQuestion);
         }
+
+        public async void UpdateTest(AdministratedTestBusiness test)
+        {
+            if (test == null)
+            {
+                throw new NullReferenceException("No test to update");
+            }
+            var newValue = (EntityExtension)AdministratedTestMapper.MapDomainToDao(test);
+            var oldValue = await Task.Run(() => (EntityExtension)(_ctx.AdministratedTests.FirstOrDefault(x => x.Id == newValue.MyId)));
+            NewUpdate(newValue, oldValue);
+        }
+
+        public void NewUpdate(EntityExtension newValue, EntityExtension oldValue)
+        {
+            oldValue.SetFlatProperty(newValue);
+            var toRemove = oldValue.Childs.Where(x => newValue.Childs.All(y => y.MyId != x.MyId)).ToList();
+            var toAdd = newValue.Childs.Where(x => oldValue.Childs.All(y => y.MyId != x.MyId)).ToList();
+            var toUpdate = newValue.Childs.Where(x => oldValue.Childs.All(y => y.MyId == x.MyId)).ToList();
+
+            foreach (var child in toRemove) oldValue.RemoveChild(child, _ctx);
+
+            foreach (var child in toAdd) oldValue.AddChild(child, _ctx);
+
+            foreach (var child in toUpdate)
+            {
+                var childToUpdate = oldValue.Childs.FirstOrDefault(x => x.MyId == child.MyId);
+                NewUpdate(child, childToUpdate);
+            }
+
+            _ctx.SaveChanges();
+        }
+
     }
 }
