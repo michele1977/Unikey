@@ -27,7 +27,7 @@ namespace UnikeyFactoryTest.Presentation
             var kernel = new StandardKernel();
             kernel.Load(Assembly.GetExecutingAssembly());
             var mapConfig = new MapConfig();
-            mapConfig.RegisterMap(kernel);
+            mapConfig.RegisterMap(CreateKernel());
             return kernel;
         }
     }

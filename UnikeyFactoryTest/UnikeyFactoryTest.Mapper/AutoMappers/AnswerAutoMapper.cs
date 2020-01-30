@@ -2,7 +2,6 @@
 using AutoMapper;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
-using UnikeyFactoryTest.Mapper.AutoMappers.Attributes;
 
 namespace UnikeyFactoryTest.Mapper.AutoMappers
 {

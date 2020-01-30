@@ -22,7 +22,7 @@ namespace UnikeyFactoryTest.Service
 
         public async Task AddNewTest(TestBusiness test)
         {
-            using (TestRepository _repo = new TestRepository())
+            using (var _repo = new TestRepository())
             {
                 if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
                     await _repo.SaveTest(TestMapper.MapBizToDal(test));

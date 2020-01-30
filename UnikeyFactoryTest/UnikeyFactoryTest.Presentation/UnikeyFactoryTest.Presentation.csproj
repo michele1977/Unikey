@@ -363,6 +363,7 @@
     <Content Include="Views\Shared\_FruitionLayout.cshtml" />
     <Content Include="Views\Test\AdTestsTablePartial.cshtml" />
     <Content Include="Views\ExTest\DetailsTablePartial.cshtml" />
+    <Content Include="Views\UnitTest\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -375,12 +376,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UnikeyFactoryTest.Context\UnikeyFactoryTest.Context.csproj">
-      <Project>{858F3FB2-AB75-4685-BE3B-B83B9983F51B}</Project>
-      <Name>UnikeyFactoryTest.Context</Name>
-    </ProjectReference>
     <ProjectReference Include="..\UnikeyFactoryTest.Domain\UnikeyFactoryTest.Domain.csproj">
-      <Project>{e2f1e71e-9900-4cef-a8ab-0bc152698a47}</Project>
+      <Project>{E2F1E71E-9900-4CEF-A8AB-0BC152698A47}</Project>
       <Name>UnikeyFactoryTest.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\UnikeyFactoryTest.Mapper\UnikeyFactoryTest.Mapper.csproj">

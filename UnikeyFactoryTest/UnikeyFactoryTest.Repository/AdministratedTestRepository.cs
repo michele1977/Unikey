@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Ninject;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.Mapper;
+using UnikeyFactoryTest.Mapper.AutoMappers;
 
 namespace UnikeyFactoryTest.Repository
 {
     public class AdministratedTestRepository : IAdministratedTestRepository, IDisposable
     {
         private readonly TestPlatformDBEntities _ctx;
+        private readonly AutoMapperFactory _autoMapperFactory;
 
         public AdministratedTestRepository()
         {
             _ctx = new TestPlatformDBEntities();
+            _autoMapperFactory = new AutoMapperFactory(new StandardKernel());
         }
 
         public AdministratedTestRepository(TestPlatformDBEntities ctx)
@@ -30,7 +34,8 @@ namespace UnikeyFactoryTest.Repository
             {
                 try
                 {
-                    var newAdTestDb = AdministratedTestMapper.MapDomainToDao(adTest);
+                    var mapper = _autoMapperFactory.GetMapper("Heavy");
+                    var newAdTestDb = mapper.Map<AdministratedTest>(adTest);
                     _ctx.AdministratedTests.Add(newAdTestDb);
                     _ctx.SaveChanges();
                     adTest = AdministratedTestMapper.MapDaoToDomain(newAdTestDb);

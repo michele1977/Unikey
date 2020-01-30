@@ -7,8 +7,8 @@ using Ninject;
 using Ninject.Modules;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Domain.Enums;
 using UnikeyFactoryTest.Mapper.AutoMappers;
-using UnikeyFactoryTest.Mapper.AutoMappers.Attributes;
 
 namespace UnikeyFactoryTest.Mapper.Tests
 {
@@ -18,62 +18,84 @@ namespace UnikeyFactoryTest.Mapper.Tests
         [TestMethod]
         public void AnswerAutoMapper_OK()
         {
-            var answer = new Answer
+            var administratedTestBusiness = new AdministratedTestBusiness()
             {
                 Id = 1,
-                Text = "",
-                IsCorrect = 0,
-                Question = new Question
+                AdministratedQuestions = new List<AdministratedQuestionBusiness>
                 {
-                    Id = 1,
-                    Text = "",
-                    Answers = new List<Answer>(),
-                    Test = new Test(),
-                    TestId = 1
+                    new AdministratedQuestionBusiness
+                    {
+                        Id = 1,
+                        AdministratedAnswers = new List<AdministratedAnswerBusiness>
+                        {
+                            new AdministratedAnswerBusiness
+                            {
+                                Id = 1
+                            }
+                        }
+                    }
                 },
-                QuestionId = 1,
-                Score = 1
+                State = AdministratedTestState.Open,
+                Test = new TestBusiness
+                {
+                    Id = 1
+                }
+            };
+            var test = new Test
+            {
+                Id = 1,
+                URL = "",
+                Date = DateTime.Now,
+                Title = "",
+                AdministratedTests = new List<AdministratedTest>
+                {
+                    new AdministratedTest()
+                }
             };
 
             var _kernel = new StandardKernel();
-            _kernel.Bind<MapperConfiguration>().ToConstant(LightConfiguration.Configure()).WhenClassHas(typeof(LightAttribute));
-            _kernel.Bind<MapperConfiguration>().ToConstant(HeavyConfiguration.Configure()).WhenClassHas(typeof(HeavyAttribute));
-
-            var mapperLight = new AutoMapper.Mapper(LightConfiguration.Configure(), type => _kernel.Get(type));
-
-            _kernel.Bind<IMapper>().ToMethod(ctx => mapperLight);
-            //_kernel.Bind<IMapper>().ToMethod(ctx => new AutoMapper.Mapper(LightConfiguration.Configure(), type => ctx.Kernel.Get(type))).Named("Light");
+            _kernel.Bind<MapperConfiguration>().ToConstant(ConfigureLight()).InSingletonScope();
+            _kernel.Bind<MapperConfiguration>().ToConstant(Configure()).InSingletonScope();
             
-            var mapper = _kernel.Get<IMapper>();
-            var ab = mapper.Map<Answer, AnswerBusiness>(answer);
-            Assert.AreEqual(1, ab.Question.Id);
-        }
-    }
+            _kernel.Bind<IMapper>().ToMethod(ctx => new AutoMapper.Mapper(ConfigureLight(), type => _kernel.Get(type)))
+                .Named("Light");
+            _kernel.Bind<IMapper>().ToMethod(ctx => new AutoMapper.Mapper(Configure(), type => _kernel.Get(type)))
+                .Named("Heavy");
 
-    public static class HeavyConfiguration
-    {
+            var autoMapperFactory = new AutoMapperFactory(_kernel);
+            var mapper = autoMapperFactory.GetMapper(test.AdministratedTests != null ? "Heavy" : "Light");
+
+            var atb = mapper.Map<TestBusiness>(test);
+            Assert.AreEqual(1, atb.Id);
+        }
+
         public static MapperConfiguration Configure()
         {
             var mapperConfig = new MapperConfiguration(cfg => 
                 cfg.AddProfiles(new List<Profile>
                 {
                     new AnswerAutoMapper(),
-                    new QuestionAutoMapper()
+                    new QuestionAutoMapper(),
+                    new TestAutoMapper(),
+                    new AdministratedTestAutoMapper(),
+                    new AdministratedQuestionAutoMapper(),
+                    new AdministratedAnswerAutoMapper()
                 }));
 
             return mapperConfig;
         }
-    }
 
-    public static class LightConfiguration
-    {
-        public static MapperConfiguration Configure()
+        public static MapperConfiguration ConfigureLight()
         {
             var mapperConfig = new MapperConfiguration(cfg => 
                 cfg.AddProfiles(new List<Profile>
                 {
                     new AnswerAutoMapperLight(),
-                    new QuestionAutoMapperLight()
+                    new QuestionAutoMapperLight(),
+                    new TestAutoMapperLight(),
+                    new AdministratedTestAutoMapperLight(),
+                    new AdministratedQuestionAutoMapperLight(),
+                    new AdministratedAnswerAutoMapperLight()
                 }));
 
             return mapperConfig;

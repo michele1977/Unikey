@@ -5,6 +5,8 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
+using Ninject;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Mapper;
@@ -18,10 +20,17 @@ namespace UnikeyFactoryTest.Presentation.Controllers
     public class TestController : Controller
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private IKernel _kernel;
+        private IMapper _mapper;
 
         private static int UserId { get; set; }
         private static readonly Test test = new Test();
         private readonly TestService _service = new TestService();
+
+        public TestController(IKernel kernel)
+        {
+            _kernel = kernel;
+        }
 
         // GET: Test
         public ActionResult Index(TestDto model)
@@ -87,35 +96,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             }
 
             return View("Index");
-            //List<Answer> answers = new List<Answer>();
-            //Answer correctAnswer = new Answer()
-            //{
-            //    Text = model.CorrectAnswerText,
-            //    IsCorrect = true,
-            //    Score = Convert.ToInt32(model.AnswerScore)
-            //};
-            //answers.Add(correctAnswer);
-            //foreach (var AnswerText in model.Answers)
-            //{
-            //    if (!string.IsNullOrWhiteSpace(AnswerText))
-            //    {
-            //        Answer Answer = new Answer()
-            //        {
-            //            Text = AnswerText,
-            //            IsCorrect = model.IsCorrect,
-            //            Score = Convert.ToInt32(model.AnswerScore)
-            //        };
-            //        answers.Add(Answer);
-            //    }
-            //}
-
-            //Question question = new Question()
-            //{
-            //    Text = model.QuestionText,
-            //    Answers = answers
-            //};
-            //test.Questions.Add(question);
-            //return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -127,6 +107,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 test.UserId = UserId;
                 test.URL = _service.GenerateGuid();
                 test.Date = model.Date;
+
+
+                var mapper = _kernel.Get<IMapper>(test.AdministratedTests != null ? "Heavy" : "Light");
                 await _service.AddNewTest(TestMapper.MapDalToBizHeavy(test));
             }
             catch (ArgumentNullException e)
@@ -194,23 +177,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             return View(testsListModel);
         }
-
-        //[HttpGet]
-        //public async Task<ActionResult> TestsListJson(TestsListModel testsListModel)
-        //{
-        //    testsListModel = testsListModel ?? new TestsListModel();
-
-        //    TestService service = new TestService();
-
-        //    testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
-
-        //    return Json(new
-        //    {
-        //        redirectUrl = Url.Action("TestsList",
-        //            new { PageNumber = testsListModel.PageNumber, PageSize = testsListModel.PageSize })
-        //    }, JsonRequestBehavior.AllowGet);
-
-        //}
 
         [HttpPost]
         public async Task<JsonResult> DeleteTest(TestDto test)
@@ -345,44 +311,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             return View("Index");
         }
 
-        //[HttpPost]
-        //public ActionResult TextSearch(TestsListModel testsListModel)
-        //{
-        //    if (!testsListModel.TextFilter.IsNullOrWhiteSpace())
-        //    {
-        //        TestService service = new TestService();
-
-        //        testsListModel.Tests = service.GetTests()
-        //            .Where(t => t.User.Username.Contains(testsListModel.TextFilter))
-        //            .Select(t => new TestDto(t)).ToList();
-        //    }
-
-        //    return RedirectToAction("TestsList");
-        //}
-
-        //[HttpGet]
-        //[ActionName("EditQuestion")]
-        //public ActionResult EditQuestion_Get(QuestionDto question)
-        //{
-        //    TestBusiness questionRelatedTest = _service.GetTestById(question.TestId);
-
-        //    QuestionDto questionToEdit = new QuestionDto(questionRelatedTest.Questions.FirstOrDefault(q => q.Id == question.Id));
-
-        //    questionToEdit.CorrectAnswerScore = question.CorrectAnswerScore;
-
-        //    TestModel questionToUpdate = new TestModel(questionToEdit);
-
-        //    return View(questionToUpdate);
-        //}
-
-        //[HttpPost]
-        //[ActionName("EditQuestion")]
-        //public ActionResult EditQuestion_Post(TestModel question)
-        //{
-        //    // TODO
-
-        //    return RedirectToAction("TestContent", "Test", new {Id = question.Test.Id});
-        //}
         public async Task<JsonResult> SendMail(EmailModel emailModel)
         {
             TestBusiness test;

@@ -13,7 +13,6 @@ using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Mapper.AutoMappers;
-using UnikeyFactoryTest.Mapper.AutoMappers.Attributes;
 
 namespace UnikeyFactoryTest.Presentation
 {
@@ -21,9 +20,15 @@ namespace UnikeyFactoryTest.Presentation
     {
         public void RegisterMap(IKernel kernel)
         {
+            kernel.Bind<MapperConfiguration>().ToConstant(ConfigureLight()).InSingletonScope();
             kernel.Bind<MapperConfiguration>().ToConstant(Configure()).InSingletonScope();
-            var mapper = new AutoMapper.Mapper(ConfigureLight(), type => kernel.Get(type));
-            kernel.Bind<IMapper>().ToMethod(ctx => mapper);
+            kernel.Bind<IKernel>().To<StandardKernel>().InSingletonScope();
+            kernel.Bind<IAutoMapperFactory>().To<AutoMapperFactory>();
+
+            kernel.Bind<IMapper>().ToMethod(ctx => new AutoMapper.Mapper(ConfigureLight(), type => kernel.Get(type)))
+                .Named("Light");
+            kernel.Bind<IMapper>().ToMethod(ctx => new AutoMapper.Mapper(Configure(), type => kernel.Get(type)))
+                .Named("Heavy");
         }
 
         private static MapperConfiguration Configure()
@@ -32,7 +37,11 @@ namespace UnikeyFactoryTest.Presentation
                 cfg.AddProfiles(new List<Profile>
                 {
                     new AnswerAutoMapper(),
-                    new QuestionAutoMapper()
+                    new QuestionAutoMapper(),
+                    new TestAutoMapper(),
+                    new AdministratedTestAutoMapper(),
+                    new AdministratedQuestionAutoMapper(),
+                    new AdministratedAnswerAutoMapper()
                 }));
 
             return mapperConfig;
@@ -43,7 +52,12 @@ namespace UnikeyFactoryTest.Presentation
             var mapperConfig = new MapperConfiguration(cfg => 
                 cfg.AddProfiles(new List<Profile>
                 {
-                    new AnswerAutoMapperLight()
+                    new AnswerAutoMapperLight(),
+                    new QuestionAutoMapperLight(),
+                    new TestAutoMapperLight(),
+                    new AdministratedTestAutoMapperLight(),
+                    new AdministratedQuestionAutoMapperLight(),
+                    new AdministratedAnswerAutoMapperLight()
                 }));
 
             return mapperConfig;
