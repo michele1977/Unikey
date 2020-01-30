@@ -47,7 +47,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         public async Task<IHttpActionResult> Put([FromBody]ExTestModel model)
         {
             AdministratedTestService service = new AdministratedTestService();
-            var adtest = await service.GetAdministratedTestById(model.testId);
+            var adtest = await service.GetAdministratedTestById(model.admTestId);
             var question = adtest.AdministratedQuestions.FirstOrDefault(x => x.Id == model.Question.Id);
             foreach (var answer in model.Question.AdministratedAnswers)
             {
