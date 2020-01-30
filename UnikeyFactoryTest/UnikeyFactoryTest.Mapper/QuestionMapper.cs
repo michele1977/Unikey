@@ -18,6 +18,7 @@ namespace UnikeyFactoryTest.Mapper
                 Text = question.Text,
                 TestId = question.TestId,
                 Answers = question.Answers.Select(AnswerMapper.MapDalToBiz).ToList(),
+                Position = question.Position
             };
 
             return returned;
@@ -31,6 +32,7 @@ namespace UnikeyFactoryTest.Mapper
                 Text = question.Text,
                 TestId = question.TestId,
                 Answers = question.Answers.Select(AnswerMapper.MapBizToDal).ToList(),
+                Position = question.Position
             };
 
             return returned;

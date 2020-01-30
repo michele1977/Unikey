@@ -36,7 +36,7 @@ namespace UnikeyFactoryTest.Repository
                     adTest = AdministratedTestMapper.MapDaoToDomainHeavy(newAdTestDb);
                     return adTest;
                 }
-                catch (Exception ex)
+                catch 
                 {
                     throw new Exception("Save Failed");
                 }
