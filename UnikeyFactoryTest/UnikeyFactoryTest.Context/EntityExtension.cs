@@ -58,6 +58,7 @@ namespace UnikeyFactoryTest.Context
         public override void SetFlatProperty(EntityExtension newEntity)
         {
             Text = ((Question) newEntity).Text;
+            Position = ((Question) newEntity).Position;
         }
     }
 
