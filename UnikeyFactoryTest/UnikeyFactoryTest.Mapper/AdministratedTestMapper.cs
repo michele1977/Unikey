@@ -21,6 +21,8 @@ namespace UnikeyFactoryTest.Mapper
                 Title = dao.Title,
                 TestId = dao.TestId.Value,
                 TestSubject = dao.TestSubject,
+                MaxScore = dao.MaxScore,
+                Score = dao.Score,
                 State = (AdministratedTestState) dao.State
                 
             };

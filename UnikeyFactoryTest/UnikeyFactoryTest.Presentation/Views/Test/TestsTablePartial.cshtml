@@ -1,16 +1,5 @@
 ﻿@model UnikeyFactoryTest.Presentation.Models.DTO.TestDto
 
-<script>
-    function openModal(Id) {
-        $('#mailModal').modal("show");
-        document.getElementById("selectedTest").value = Id;
-
-        document.getElementById("false").setAttribute("hidden", "hidden");
-        document.getElementById("true").setAttribute("hidden", "hidden");
-        document.getElementById("subject-name").value = null;
-        document.getElementById("email-address").value = null;
-    }
-</script>
 <tr>
     <td>
         @Model.Id
@@ -30,14 +19,20 @@
     <td>
     </td>
     <td>
-        @Html.ActionLink(
-            "Content",
-            "TestContent",
-            "Test",
-            new { @Model.Id, @Model.PageNumber, @Model.PageSize },
-            new { @class = "btn btn-info" }) |
-        <button class="btn btn-info" onclick="deleteConfirmation(@Model.Id, @Model.PageNumber, @Model.PageSize)">Delete</button> |
-        <button type="button" onclick="openModal(@Model.Id)" class="btn btn-info" id="openButton">Send</button>
+        <div>
+            @Html.ActionLink(
+                linkText: "Content",
+                actionName: "TestContent",
+                controllerName: "Test",
+                routeValues: new { @Model.Id, @Model.PageNumber, @Model.PageSize },
+                htmlAttributes: new { @class = "btn btn-info" }) |
+            <button class="btn btn-info" onclick="deleteConfirmation(@Model.Id, @Model.PageNumber, @Model.PageSize)">Delete</button> 
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <button class="btn btn-info" onclick="getDetailsTablePartial(@Model.Id)">
+                Details
+            </button>
+        </div>
+    </td>
 
 </tr>
 
