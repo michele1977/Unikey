@@ -20,15 +20,20 @@ namespace UnikeyFactoryTest.Presentation
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            var mapConfig = new MapConfig();
+            mapConfig.RegisterMap(CreateKernel());
         }
 
         protected override IKernel CreateKernel()
         {
             var kernel = new StandardKernel();
-            kernel.Load(Assembly.GetExecutingAssembly());
-            var mapConfig = new MapConfig();
-            mapConfig.RegisterMap(CreateKernel());
+            RegisterServices(kernel);
             return kernel;
+        }
+
+        private void RegisterServices(IKernel kernel)
+        {
+            kernel.Load(Assembly.GetExecutingAssembly());
         }
     }
 }
