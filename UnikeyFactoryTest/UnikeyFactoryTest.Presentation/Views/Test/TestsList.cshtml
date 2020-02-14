@@ -8,6 +8,18 @@
 
 <h2>Tests List</h2>
 
+<script>
+    function openModal(Id) {
+        $('#mailModal').modal("show");
+        document.getElementById("selectedTest").value = Id;
+
+        document.getElementById("false").setAttribute("hidden", "hidden");
+        document.getElementById("true").setAttribute("hidden", "hidden");
+        document.getElementById("subject-name").value = null;
+        document.getElementById("email-address").value = null;
+    }
+</script>
+
 <div id="ErrorAlert" class="alert alert-danger" role="alert" style="display:none">
     <strong>Holy holy maccaroni!</strong> An error occurred while deleting the test
     <button type="button" class="close" aria-label="Close" onclick="closeErrorAlert()">

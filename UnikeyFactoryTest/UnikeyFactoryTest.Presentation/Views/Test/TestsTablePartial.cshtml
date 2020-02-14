@@ -26,13 +26,17 @@
                 controllerName: "Test",
                 routeValues: new { @Model.Id, @Model.PageNumber, @Model.PageSize },
                 htmlAttributes: new { @class = "btn btn-info" }) |
-            <button class="btn btn-info" onclick="deleteConfirmation(@Model.Id, @Model.PageNumber, @Model.PageSize)">Delete</button> 
+            <button class="btn btn-info" onclick="deleteConfirmation(@Model.Id, @Model.PageNumber, @Model.PageSize)">Delete</button>
             <input type="hidden" name="Id" value="@Model.Id" />
             <button class="btn btn-info" onclick="getDetailsTablePartial(@Model.Id)">
                 Details
             </button>
+            <button type="button" onclick="openModal(@Model.Id)" class="btn btn-info" id="openButton">Send</button>
+
+
         </div>
     </td>
 
 </tr>
+
 
