@@ -30,6 +30,7 @@ namespace UnikeyFactoryTest.Mapper
                 URL = test.URL,
                 Title = test.Title,
                 Date = test.Date,
+                Title = test.Title,
                 UserId = test.UserId,
                 Questions = test.Questions.Select(QuestionMapper.MapDalToBiz).ToList()
             };
@@ -43,6 +44,7 @@ namespace UnikeyFactoryTest.Mapper
                 URL = test.URL,
                 Title = test.Title,
                 Date = test.Date,
+                Title = test.Title,
                 UserId = test.UserId,
                 Questions = test.Questions.Select(QuestionMapper.MapBizToDal).ToList(),
             };

@@ -2,6 +2,7 @@
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity;
 using System.Data.Entity.Core.Common.CommandTrees;
 using System.Linq;
 using System.Text;
@@ -120,7 +121,6 @@ namespace UnikeyFactoryTest.Repository
 
             _ctx.SaveChanges();
         }
-
         public async Task DeleteQuestion(int questionId)
         {
             var question = await Task.Run(() =>

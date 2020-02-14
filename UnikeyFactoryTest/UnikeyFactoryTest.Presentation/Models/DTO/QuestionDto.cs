@@ -22,6 +22,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
             TestId = question.TestId;
             Text = question.Text;
             CorrectAnswerScore = question.Answers.Where(a => a.IsCorrect == AnswerState.Correct).Sum(a => a.Score);
+            Position = question.Position;
         }
 
         public int Id { get; set; }
@@ -32,7 +33,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public decimal CorrectAnswerScore { get; set; }
 
         public List<AnswerDto> Answers { get; set; }
-
+        public short Position { get; set; }
 
 
 
@@ -43,9 +44,10 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
                 Id = Id,
                 Answers = new List<AnswerBusiness>(),
                 Text = Text,
-                TestId = TestId
-
-            };
+                TestId = TestId,
+                Position = Position
+                
+                };
             foreach (var answerDto in this.Answers)
             {
                 var answerBiz = new AnswerBusiness

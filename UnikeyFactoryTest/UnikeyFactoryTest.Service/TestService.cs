@@ -30,7 +30,10 @@ namespace UnikeyFactoryTest.Service
                 }
 
                 if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
-                    await _repo.SaveTest(TestMapper.MapBizToDal(test));
+                var testDao = TestMapper.MapBizToDal(test);
+                    await _repo.SaveTest(testDao);
+                    test.Id = testDao.Id;
+
             }
         }
 
@@ -59,8 +62,8 @@ namespace UnikeyFactoryTest.Service
                 await Repo.DeleteTest(testId);
             }
         }
-
-        public void UpdateTest(TestBusiness test)
+         
+        public async Task UpdateTest(TestBusiness test)
         {
             using (TestRepository _repo = new TestRepository())
             {
@@ -70,7 +73,7 @@ namespace UnikeyFactoryTest.Service
                 }
 
                 if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
-                _repo.UpdateTest(test);
+                await _repo.UpdateTest(test);
             }
         }
 

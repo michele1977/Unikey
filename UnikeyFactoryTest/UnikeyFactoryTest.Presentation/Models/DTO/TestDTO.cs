@@ -56,6 +56,9 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public DateTime Date { get; set; } = DateTime.Now;
         public string Title { get; set; }
         public int UserId { get; set; }
+
+        public bool ShowForm { get; set; }
+
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int NumQuestions { get; set; }
