@@ -46,6 +46,19 @@ function send() {
             }
         });
 }
+function getDetailsTablePartial(id) {
+    function functionOk(resp) {
+        $("#myrender").html(resp);
+        $('#myModal').modal('show');
+    }
+    function functionKo() {
+        alert('ko');
+    }
+    let myurl = "/ExTest/DetailsTablePartial?testId=" + id;
+    //$('#myModal').modal('show');
+    //alert($('#myModal'));
+    $.ajax({ url: myurl, method: "GET" }).then(functionOk,functionKo);
+}
 
 function closeErrorAlert() {
         var label = document.getElementById("ErrorAlert");

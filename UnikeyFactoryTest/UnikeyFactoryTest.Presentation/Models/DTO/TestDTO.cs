@@ -21,6 +21,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
             var service = new TestService();
 
             Id = test.Id;
+            Title = test.Title;
             URL = service.GenerateUrl(test.URL);
             Date = test.Date;
             UserId = test.UserId;
@@ -56,14 +57,15 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public string Title { get; set; }
         public int UserId { get; set; }
 
+        public bool ShowForm { get; set; }
+
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int NumQuestions { get; set; }
 
         public decimal? MaxScore
         {
-            get =>
-                Questions.Sum(q => q.CorrectAnswerScore);
+            get => Questions.Sum(q => q.CorrectAnswerScore);
         }
 
         public List<AdministratedTestDto> AdministratedTests { get; set; }

@@ -12,7 +12,6 @@ namespace UnikeyFactoryTest.Presentation.Models
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int LastPage { get; set; }
-        public bool IsJsCall { get; set; }
         public string TextFilter { get; set; }
 
         public TestsListModel()

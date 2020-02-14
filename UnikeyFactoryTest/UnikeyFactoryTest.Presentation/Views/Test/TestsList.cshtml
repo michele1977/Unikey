@@ -8,8 +8,8 @@
 
 <h2>Tests List</h2>
 
-<div id="ErrorAlert" class="alert alert-warning" role="alert" style="display:none">
-    <strong>Holy guacamole!</strong> An error occurred while deleting the test
+<div id="ErrorAlert" class="alert alert-danger" role="alert" style="display:none">
+    <strong>Holy holy maccaroni!</strong> An error occurred while deleting the test
     <button type="button" class="close" aria-label="Close" onclick="closeErrorAlert()">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -19,8 +19,11 @@
 
 <div>
     <form action="@Url.Action("TextSearch", "Test")" method="post">
-        <input id="textSearch" type="text" placeholder="@Model.TextFilter" name="textFilter" />
-        <input type="submit" value="Filter" class="btn btn-info" />
+        <div class="btn-group">
+            <input id="searchinput" value="@Model.TextFilter" type="search" name="textFilter" class="form-control">
+            <span id="searchclear" class="glyphicon glyphicon-remove-circle"></span>
+            <input type="submit" class="btn btn-primary" value="Search"/>
+        </div>
     </form>
 </div>
 
@@ -41,15 +44,17 @@
 
 <table class="table">
     <tr>
-        @*<th>Title</th>*@
         <th>Id</th>
+        <th>Title</th>
         <th>Date</th>
         <th>URL</th>
         <th>Number of tests</th>
         <th>Number of tests opened</th>
         <th>Actions</th>
     </tr>
+    <div id="myrender">
 
+    </div>
     @foreach (var test in Model.Tests)
     {
         Html.RenderPartial("TestsTablePartial", test);
@@ -99,6 +104,12 @@
     @if (Model.PageNumber > 1)
     {
         @Html.ActionLink(
+            "First",
+            "TestsList",
+            "Test",
+            new { PageNumber = 1, Model.PageSize },
+            new { @class = "btn btn-info" })
+        @Html.ActionLink(
             "Previous",
             "TestsList",
             "Test",
@@ -113,6 +124,12 @@
             "TestsList",
             "Test",
             new { PageNumber = Model.PageNumber + 1, Model.PageSize },
+            new { @class = "btn btn-info" })
+        @Html.ActionLink(
+            "Last",
+            "TestsList",
+            "Test",
+            new { PageNumber = Model.LastPage, Model.PageSize },
             new { @class = "btn btn-info" })
     }
 </div>

@@ -1,25 +1,35 @@
-﻿@model UnikeyFactoryTest.Presentation.Models.DTO.QuestionDto
+﻿@using Antlr.Runtime.Misc
+@using UnikeyFactoryTest.Domain.Enums
+@using UnikeyFactoryTest.Presentation.Models.DTO
+@model UnikeyFactoryTest.Presentation.Models.DTO.QuestionDto
+@using (Html.BeginForm("AddQuestion", "Test", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.TestId)
+    @Html.HiddenFor(x=> x.Id)
 
-@Html.TextAreaFor(m => m.Text, new { @class = "required", style = "max-width: 100%;width: 90%;", @rows = 5, placeholder = "Enter the question " })
-@Html.ValidationMessageFor(x => x.Text, null, new { @class = "alert-danger" })
-<div class="form-group">
-    @for (var i = 0; i < 4; i++)
-    {
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <div class="input-group-text">
-                    @Html.CheckBoxFor(x => x.Answers[i].IsCorrect, new { id = "check" + i, onclick = "CorrectAnswer('check"+i+"','checkbox"+i+"','txt"+i+"')" })
+    @Html.TextAreaFor(m => m.Text, new { @class = "required", style = "max-width: 100%;width: 90%;", @rows = 5, placeholder = "Enter the question " })
+    @Html.ValidationMessageFor(x => x.Text, null, new { @class = "alert-danger" })
+    <div class="form-group">
+
+        @for (var i = 0; i < 4; i++)
+        {
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        @Html.CheckBoxFor(x => x.Answers[i].IsCorrectBool, new {id = "check" + i, onclick = "CorrectAnswer('check" + i + "','checkbox" + i + "','txt" + i + "')"})
+                    </div>
                 </div>
+                @Html.TextBoxFor(x => x.Answers[i].Text, new {@class = "form-control ", style = "max-width: 100%;width: 70%;", id = "checkbox" + i, placeholder = "Enter the answer "})
+
+                @Html.TextBoxFor(x => x.Answers[i].Score, new {type = "number", id = "txt" + i, @class = "class-mymarginleft", style = "width: 80px", step = "0.5", placeholder = "Score", @hidden = "hidden"})
             </div>
-            @Html.TextBoxFor(x => x.Answers[i].Text, new { @class = "form-control ", style = "max-width: 100%;width: 70%;", id = "checkbox" + i, placeholder = "Enter the answer " })
+        }
 
-            @Html.TextBoxFor(x => x.Answers[i].Score, new { type = "number", id = "txt" + i, @class = "class-mymarginleft", style = "width: 80px", step = "0.5", placeholder = "Score", @hidden = "hidden" })
-        </div>
-    }
+    </div>
 
-</div>
+    <button class="btn btn-info" style="margin-left: 64%" onclick="DisableQuestionForm('mydivQuestionForm')">SaveQuestion</button>
 
-
+}
 
 <button class="btn btn-info" data-toggle="modal" data-target="#staticBackdrop">Back</button>
 
@@ -42,8 +52,5 @@
         </div>
     </div>
 </div>
-@using (Html.BeginForm("AddQuestion", "Test", FormMethod.Post)){
-<button class="btn btn-info" style="margin-left: 64%" onclick="DisableQuestionForm('mydivQuestionForm')">SaveQuestion</button>
 
-}
 
