@@ -14,7 +14,6 @@ namespace UnikeyFactoryTest.Mapper.AutoMappers
         public QuestionAutoMapperLight()
         {
             CreateMap<Question, QuestionBusiness>()
-                .ForMember(ab => ab.Test, a => a.Ignore())
                 .ForMember(ab => ab.Answers, a => a.Ignore());
 
             CreateMap<QuestionBusiness, Question>()

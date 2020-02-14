@@ -63,7 +63,7 @@ namespace UnikeyFactoryTest.Service
             }
         }
          
-        public async Task UpdateTest(TestBusiness test)
+        public void UpdateTest(TestBusiness test)
         {
             using (TestRepository _repo = new TestRepository())
             {
@@ -73,7 +73,7 @@ namespace UnikeyFactoryTest.Service
                 }
 
                 if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
-                await _repo.UpdateTest(test);
+                _repo.UpdateTest(test);
             }
         }
 

@@ -53,7 +53,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 var test = await _service.GetTestById(questionBiz.TestId);
                 test.Questions.Add(questionBiz);
 
-               await _service.UpdateTest(test);
+               _service.UpdateTest(test);
               
                 returned = new TestDto(test);
              

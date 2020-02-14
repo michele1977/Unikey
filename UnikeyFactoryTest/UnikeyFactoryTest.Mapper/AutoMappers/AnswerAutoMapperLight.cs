@@ -9,7 +9,7 @@ namespace UnikeyFactoryTest.Mapper.AutoMappers
     {
         public AnswerAutoMapperLight()
         {
-            CreateMap<Answer, AnswerBusiness>().ForMember(ab => ab.Question, a => a.Ignore());
+            CreateMap<Answer, AnswerBusiness>();
             CreateMap<AnswerBusiness, Answer>().ForMember(a => a.Question, ab => ab.Ignore());
         }
     }
