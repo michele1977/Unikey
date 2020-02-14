@@ -22,7 +22,7 @@ namespace UnikeyFactoryTest.Service
 
         public async Task AddNewTest(TestBusiness test)
         {
-            using (TestRepository _repo = new TestRepository())
+            using (var _repo = new TestRepository())
             {
                 for(short i = 0; i < test.Questions.Count; i++)
                 {
@@ -30,7 +30,10 @@ namespace UnikeyFactoryTest.Service
                 }
 
                 if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
-                    await _repo.SaveTest(TestMapper.MapBizToDal(test));
+                var testDao = TestMapper.MapBizToDal(test);
+                    await _repo.SaveTest(testDao);
+                    test.Id = testDao.Id;
+
             }
         }
 
@@ -59,7 +62,7 @@ namespace UnikeyFactoryTest.Service
                 await Repo.DeleteTest(testId);
             }
         }
-
+         
         public void UpdateTest(TestBusiness test)
         {
             using (TestRepository _repo = new TestRepository())

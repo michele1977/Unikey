@@ -16,7 +16,6 @@ namespace UnikeyFactoryTest.Presentation.Models
         public string Surname { get; set; }
         public string Url { get; set; }
         public int ActualPosition { get; set; }
-
         public int AdministratedTestId { get; set; }
         public AdministratedQuestionBusiness ActualQuestion { get; set; }
     }

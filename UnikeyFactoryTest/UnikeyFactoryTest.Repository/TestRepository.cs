@@ -2,6 +2,7 @@
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity;
 using System.Data.Entity.Core.Common.CommandTrees;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,6 @@ using UnikeyFactoryTest.Mapper;
 
 namespace UnikeyFactoryTest.Repository
 {
-
     public class TestRepository : ITestRepository
     {
         private readonly TestPlatformDBEntities _ctx;
@@ -84,23 +84,40 @@ namespace UnikeyFactoryTest.Repository
 
 
 
-        public async void UpdateTest(TestBusiness test)
+        //public async void UpdateTest(TestBusiness test)
+        //{
+        //    if (test == null)
+        //    {
+        //        throw new NullReferenceException("No test to update");
+        //    }
+        //    var newValue = (EntityExtension)TestMapper.MapBizToDal(test);
+        //    var oldValue = await Task.Run(() => (EntityExtension)(_ctx.Tests.FirstOrDefault(x => x.Id == newValue.MyId))); 
+        //    NewUpdate(newValue, oldValue);
+        //}
+
+        public void UpdateTest(TestBusiness test)
         {
-            if (test == null)
+            var newValue = TestMapper.MapBizToDal(test);
+            var oldValue = (EntityExtension) (_ctx.Tests.FirstOrDefault(x => x.Id == test.Id));
+            NewUpdate(newValue, oldValue);
+        }
+
+        public void NewUpdate(EntityExtension newValue, EntityExtension oldValue)
+        {
+            oldValue.SetFlatProperty(newValue);
+            var toRemove = oldValue.Childs.Where(x => newValue.Childs.All(y => y.MyId != x.MyId)).ToList();
+            var toAdd = newValue.Childs.Where(x => oldValue.Childs.All(y => y.MyId != x.MyId)).ToList();
+            var toUpdate = newValue.Childs.Where(x => oldValue.Childs.Any(y => y.MyId == x.MyId)).ToList();
+
+            foreach (var child in toRemove) oldValue.RemoveChild(child, _ctx);
+
+            foreach (var child in toAdd) oldValue.AddChild(child, _ctx);
+
+            foreach (var child in toUpdate)
             {
-                throw new NullReferenceException("No test to update");
+                var childToUpdate = oldValue.Childs.FirstOrDefault(x=>x.MyId == child.MyId);
+                NewUpdate(child, childToUpdate);
             }
-
-            var mappedTest = await Task.Run(() => TestMapper.MapBizToDal(test));
-
-            var testToUpdate = await Task.Run(() => _ctx.Tests.FirstOrDefault(t => t.Id == test.Id));
-
-            testToUpdate.URL = mappedTest.URL;
-            testToUpdate.User = mappedTest.User;
-            testToUpdate.Date = mappedTest.Date;
-            testToUpdate.UserId = mappedTest.UserId;
-            testToUpdate.AdministratedTests = mappedTest.AdministratedTests;
-            testToUpdate.Questions = mappedTest.Questions;
 
             _ctx.SaveChanges();
         }

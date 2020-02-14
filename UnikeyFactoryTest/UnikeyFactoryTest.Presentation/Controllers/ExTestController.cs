@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using UnikeyFactoryTest.Domain.Enums;
 using UnikeyFactoryTest.Presentation.Models;
 using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service;
@@ -34,7 +36,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             model.NumQuestion = test.Questions.Count;
             model.ActualQuestion = savedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == 0);
             model.AdministratedTestId = savedTest.Id;
-            await service.ChangeAdministratedTestStateToStarted(savedTest.Id);
+            //await service.ChangeAdministratedTestStateToStarted(savedTest.Id);
             return View("Test", model);
         }
 
@@ -54,10 +56,11 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                     }
                 }
                 actualQuestion.AdministratedAnswers.FirstOrDefault(a => a.Id == System.Convert.ToInt32(value)).isSelected = true;
-                await service.Update_Save_Question(actualQuestion);
+                //await service.Update_Save_Question(actualQuestion);
             }
 
-            await service.ChangeAdministratedTestStateToStarted(administratedTest.Id);
+
+            administratedTest.State = AdministratedTestState.Closed;
             await service.Update_Save(administratedTest);
             return View("TestEnded");
         }
@@ -126,8 +129,10 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                     }
                 }
                 actualQuestion.AdministratedAnswers.FirstOrDefault(a => a.Id == System.Convert.ToInt32(value)).isSelected = true;
-                await service.Update_Save_Question(actualQuestion);
+                //await service.Update_Save_Question(actualQuestion);
             }
+
+            administratedTest.State = AdministratedTestState.Open;
             await service.Update_Save(administratedTest);
             return View("TestEnded");
         }
@@ -150,6 +155,22 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             }
             model.ActualQuestion = await service.Previous(administratedTest, model.ActualPosition - 1);
             return View("Test", model);
+        }
+        [HttpGet]
+        public async Task<ActionResult> DetailsTablePartial(int testId)
+        {
+            AdministratedTestService service = new AdministratedTestService();
+            AdministratedTestDto testToPass = new AdministratedTestDto();
+            try
+            {
+                var theTest = await service.GetAdministratedTestsByTestId(testId);
+                testToPass.AdministratedTests = theTest;
+            }
+            catch(Exception e)
+            {
+                
+            }
+            return PartialView("DetailsTablePartial", testToPass/*,*//*TestVisual*/);
         }
     }
 }

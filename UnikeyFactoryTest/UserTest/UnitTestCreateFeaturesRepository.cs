@@ -29,7 +29,6 @@ namespace UnikeyFactoryTestDAL.Test
             };
             Answer answer = new Answer()
             {
-                IsCorrect = true,
                 QuestionId = 1,
                 Score = 10,
                 Text = "Answer Test"

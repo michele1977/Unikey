@@ -24,7 +24,6 @@ namespace UserTest
             };
             AnswerBusiness answer = new AnswerBusiness()
             {
-                IsCorrect = true,
                 QuestionId = 1,
                 Score = 10,
 

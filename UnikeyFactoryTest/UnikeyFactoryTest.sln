@@ -29,9 +29,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mappers", "Mappers", "{F451
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.Mapper", "UnikeyFactoryTest.Mapper\UnikeyFactoryTest.Mapper.csproj", "{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6}"
 EndProject
+<<<<<<< HEAD
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebAPI", "WebAPI", "{3C74A215-EB9C-4B59-90B1-C436F9B1AAB9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.WebAPI", "UnikeyFactoryTest.WebAPI\UnikeyFactoryTest.WebAPI.csproj", "{7E399DA7-96EE-4D2E-A1B3-B9854F5D7663}"
+=======
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extension", "Extension\Extension.csproj", "{8CAF7503-8E5C-40E0-9B8A-E050118FA318}"
+>>>>>>> 628c02a6328c177839db909c4e09b1b9f473b514
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,10 +75,17 @@ Global
 		{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
 		{7E399DA7-96EE-4D2E-A1B3-B9854F5D7663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7E399DA7-96EE-4D2E-A1B3-B9854F5D7663}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E399DA7-96EE-4D2E-A1B3-B9854F5D7663}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E399DA7-96EE-4D2E-A1B3-B9854F5D7663}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+		{8CAF7503-8E5C-40E0-9B8A-E050118FA318}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CAF7503-8E5C-40E0-9B8A-E050118FA318}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CAF7503-8E5C-40E0-9B8A-E050118FA318}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CAF7503-8E5C-40E0-9B8A-E050118FA318}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> 628c02a6328c177839db909c4e09b1b9f473b514
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

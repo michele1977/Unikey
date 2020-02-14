@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
+using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
@@ -17,6 +18,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 {
     public class TestController : Controller
     {
+        
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         private static int UserId { get; set; }
@@ -37,6 +39,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 Logger.Warn(e, e.Message);
             }
 
+            model.ShowForm = false;
             return View(model);
         }
 
@@ -46,11 +49,11 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var returned = new TestDto();
             try
             {
-                var answerBiz = model.MapToDomain();
-                var test = await _service.GetTestById(answerBiz.TestId);
-                test.Questions.Add(answerBiz);
+                var questionBiz = model.MapToDomain();
+                var test = await _service.GetTestById(questionBiz.TestId);
+                test.Questions.Add(questionBiz);
 
-                    _service.UpdateTest(test);
+               _service.UpdateTest(test);
               
                 returned = new TestDto(test);
              
@@ -98,12 +101,17 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public async Task<ActionResult> AddTest(TestDto model)
         {
             try
-            { 
+            {
+                test.Id = model.Id;
                 test.Title = model.Title;
                 test.UserId = UserId;
                 test.URL = _service.GenerateGuid();
                 test.Date = model.Date;
-                await _service.AddNewTest(TestMapper.MapDalToBizHeavy(test));
+                var testDomain = TestMapper.MapDalToBizHeavy(test);
+                await _service.AddNewTest(testDomain);
+                model.Id = testDomain.Id;
+
+                model.ShowForm = true;
             }
             catch (ArgumentNullException e)
             {
@@ -141,19 +149,21 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 throw;
             }
 
-            return View("Index");
+            return View("Index", model);
         }
 
         [HttpGet]
         public async Task<ActionResult> TestsList(TestsListModel testsListModel)
         {
+            UserId = System.Convert.ToInt32(HttpContext.Session["UserId"]);
             testsListModel = testsListModel ?? new TestsListModel();
 
             var service = new TestService();
 
             try
             {
-                testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
+                if (String.IsNullOrWhiteSpace(testsListModel.TextFilter))
+                    testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
             }
             catch (ArgumentNullException e)
             {
@@ -209,17 +219,17 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             catch (DbUpdateConcurrencyException e)
             {
                 Logger.Fatal(e, e.Message);
-                return Json(new { redirectUrl = Url.Action("Index", "Error") });
+                throw;
             }
             catch (DbEntityValidationException e)
             {
                 Logger.Fatal(e, e.Message);
-                return Json(new { redirectUrl = Url.Action("Index", "Error") });
+                throw;
             }
             catch (DbUpdateException e)
             {
                 Logger.Fatal(e, e.Message);
-                return Json(new { redirectUrl = Url.Action("Index", "Error") });
+                throw;
             }
             catch (NotSupportedException e)
             {
@@ -319,44 +329,22 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             return View("Index");
         }
 
-        //[HttpPost]
-        //public ActionResult TextSearch(TestsListModel testsListModel)
-        //{
-        //    if (!testsListModel.TextFilter.IsNullOrWhiteSpace())
-        //    {
-        //        TestService service = new TestService();
+        [HttpPost]
+        public async Task<ActionResult> TextSearch(TestsListModel testsListModel)
+        {
+            if (!String.IsNullOrWhiteSpace(testsListModel.TextFilter))
+            {
+                TestService service = new TestService();
 
-        //        testsListModel.Tests = service.GetTests()
-        //            .Where(t => t.User.Username.Contains(testsListModel.TextFilter))
-        //            .Select(t => new TestDto(t)).ToList();
-        //    }
+                var tests = await service.GetTests();
 
-        //    return RedirectToAction("TestsList");
-        //}
+                testsListModel.Tests = tests.Where(t => t.Title.ToLower().Contains(testsListModel.TextFilter.ToLower()))
+                    .Select(t => new TestDto(t)).ToList();
+            }
 
-        //[HttpGet]
-        //[ActionName("EditQuestion")]
-        //public ActionResult EditQuestion_Get(QuestionDto question)
-        //{
-        //    TestBusiness questionRelatedTest = _service.GetTestById(question.TestId);
+            return RedirectToAction("TestsList", testsListModel);
+        }
 
-        //    QuestionDto questionToEdit = new QuestionDto(questionRelatedTest.Questions.FirstOrDefault(q => q.Id == question.Id));
-
-        //    questionToEdit.CorrectAnswerScore = question.CorrectAnswerScore;
-
-        //    TestModel questionToUpdate = new TestModel(questionToEdit);
-
-        //    return View(questionToUpdate);
-        //}
-
-        //[HttpPost]
-        //[ActionName("EditQuestion")]
-        //public ActionResult EditQuestion_Post(TestModel question)
-        //{
-        //    // TODO
-
-        //    return RedirectToAction("TestContent", "Test", new {Id = question.Test.Id});
-        //}
         public async Task<JsonResult> SendMail(EmailModel emailModel)
         {
             TestBusiness test;
