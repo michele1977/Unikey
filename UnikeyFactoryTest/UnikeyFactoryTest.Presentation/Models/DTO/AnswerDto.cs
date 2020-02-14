@@ -26,6 +26,10 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public int Id { get; set; }
         public string Text { get; set; }
         public AnswerState IsCorrect { get; set; }
+        public bool IsCorrectBool
+        {
+            get => IsCorrect == AnswerState.Correct ? true : false;
+        }
         public int QuestionId { get; set; }
         public decimal Score { get; set; }
     }

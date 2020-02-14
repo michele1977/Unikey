@@ -52,7 +52,9 @@
         <th>Number of tests opened</th>
         <th>Actions</th>
     </tr>
+    <div id="myrender">
 
+    </div>
     @foreach (var test in Model.Tests)
     {
         Html.RenderPartial("TestsTablePartial", test);

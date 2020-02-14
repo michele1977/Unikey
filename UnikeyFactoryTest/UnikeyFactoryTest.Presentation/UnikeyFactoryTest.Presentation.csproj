@@ -365,6 +365,8 @@
     <Content Include="Views\Test\AddQuestionPartial.cshtml" />
     <Content Include="Views\User\_LoginFormPartial.cshtml" />
     <Content Include="Views\User\_SigningUpFormPartial.cshtml" />
+    <Content Include="Views\ExTest\DetailsTablePartial.cshtml" />
+    <Content Include="Views\Test\AdTestsTablePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
