@@ -69,10 +69,8 @@ namespace UnikeyFactoryTest.Repository
                 Id = t.Id,
                 TestSubject = t.TestSubject,
                 Date = t.Date,
-                Score = t.AdministratedQuestions
-                    .SelectMany(q => q.AdministratedAnswers)
-                    .Where(a => (bool)a.isSelected)
-                    .Sum(a => a.Score)
+                Score = t.Score,
+                MaxScore = t.MaxScore
             }).ToList());
 
             return administratedTestListTask;

@@ -24,7 +24,6 @@ namespace UnikeyFactoryTest.Mapper
                 MaxScore = dao.MaxScore,
                 Score = dao.Score,
                 State = (AdministratedTestState) dao.State
-                
             };
             return returned;
         }
@@ -58,6 +57,7 @@ namespace UnikeyFactoryTest.Mapper
                 Date = domain.Date,
                 State = (byte) domain.State,
                 Score = domain.Score,
+                MaxScore = domain.MaxScore,
                 AdministratedQuestions = domain.AdministratedQuestions.Select(AdministratedQuestionMapper.MapDomainToDao).ToList()
             };
             return returned;
@@ -73,6 +73,9 @@ namespace UnikeyFactoryTest.Mapper
                 Title = dao.Title,
                 TestSubject = dao.TestSubject,
                 Date = dao.Date,
+                MaxScore = dao.MaxScore,
+                Score = dao.Score,
+                State = (AdministratedTestState) dao.State,
                 AdministratedQuestions = dao.AdministratedQuestions.Select(AdministratedQuestionMapper.MapDaoToDomain).ToList()
             };
 

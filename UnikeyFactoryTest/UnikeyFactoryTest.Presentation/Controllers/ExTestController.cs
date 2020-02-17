@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
+using NLog;
+using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Domain.Enums;
 using UnikeyFactoryTest.Presentation.Models;
 using UnikeyFactoryTest.Presentation.Models.DTO;
@@ -12,8 +15,10 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 {
     public class ExTestController : Controller
     {
-        private AdministratedTestService service = new AdministratedTestService();
-        private TestService testService = new TestService();
+        private static int UserId { get; set; }
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly AdministratedTestService _adTestService = new AdministratedTestService();
+        private readonly TestService _testService = new TestService();
         // GET: AdministratedTest
 
         public ActionResult TestStart(string guid)
@@ -30,9 +35,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public async Task<ActionResult> BeginTest(AdministratedTestModel model)
         {
             var subject = model.Name + " " + model.Surname;
-            var test = testService.GetTestByURL(model.Url);
-            var newExecutionTest = service.AdministratedTest_Builder(test, subject);
-            var savedTest = await service.Add(newExecutionTest);
+            var test = _testService.GetTestByURL(model.Url);
+            var newExecutionTest = _adTestService.AdministratedTest_Builder(test, subject);
+            var savedTest = await _adTestService.Add(newExecutionTest);
             model.NumQuestion = test.Questions.Count;
             model.ActualQuestion = savedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == 0);
             model.AdministratedTestId = savedTest.Id;
@@ -42,7 +47,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
         public async Task<ActionResult> SaveTest(AdministratedTestModel model, FormCollection form)
         {
-            var administratedTest = await service.GetAdministratedTestById(model.AdministratedTestId);
+            var administratedTest = await _adTestService.GetAdministratedTestById(model.AdministratedTestId);
             var actualQuestion = administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == model.ActualPosition);
 
             if (Request.Form[actualQuestion.Id.ToString()] != null)
@@ -61,23 +66,48 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
 
             administratedTest.State = AdministratedTestState.Closed;
-            await service.Update_Save(administratedTest);
+            await _adTestService.Update_Save(administratedTest);
             return View("TestEnded");
         }
 
 
+        //[HttpGet]
+        //public async Task<ActionResult> AdministratedTestsList(AdministratedTestsListModel testsListModel)
+        //{
+        //    testsListModel = testsListModel ?? new AdministratedTestsListModel();
+
+        //    AdministratedTestService service = new AdministratedTestService();
+
+        //    var tests = await service.GetAdministratedTests();
+
+        //    testsListModel.Tests = testsListModel.Paginate(tests.ToList());
+
+        //    return View(testsListModel);
+        //}
+
         [HttpGet]
-        public async Task<ActionResult> AdministratedTestsList(AdministratedTestsListModel testsListModel)
+        public async Task<ActionResult> AdministratedTestsList(AdministratedTestsListModel adTestsListModel)
         {
-            testsListModel = testsListModel ?? new AdministratedTestsListModel();
+            adTestsListModel = adTestsListModel ?? new AdministratedTestsListModel();
 
-            AdministratedTestService service = new AdministratedTestService();
+            try
+            {
+                var adTests = (adTestsListModel.TextFilter.IsNullOrWhiteSpace())
+                    ? (await _adTestService.GetAdministratedTests()).ToList() : (await _adTestService.GetAdministratedTestsByFilter(adTestsListModel.TextFilter)).ToList();
 
-            var tests = await service.GetAdministratedTests();
+                adTestsListModel.Tests = adTestsListModel.Paginate(adTests);
+            }
+            catch (ArgumentNullException e)
+            {
+                Logger.Warn(e, e.Message);
+            }
+            catch (Exception e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
 
-            testsListModel.Tests = testsListModel.Paginate(tests.ToList());
-
-            return View(testsListModel);
+            return View(adTestsListModel);
         }
 
         [HttpGet]
@@ -93,7 +123,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult> Next(AdministratedTestModel model, FormCollection form)
         {
-            var administratedTest = await service.GetAdministratedTestById(model.AdministratedTestId);
+            var administratedTest = await _adTestService.GetAdministratedTestById(model.AdministratedTestId);
             var actualQuestion = administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == model.ActualPosition);
             if (Request.Form[actualQuestion.Id.ToString()] != null)
             {
@@ -106,16 +136,16 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                     }
                 }
                 actualQuestion.AdministratedAnswers.FirstOrDefault(a => a.Id == System.Convert.ToInt32(value)).isSelected = true;
-                await service.Update_Save_Question(actualQuestion);
+                await _adTestService.Update_Save_Question(actualQuestion);
             }
-            model.ActualQuestion = await service.Next(administratedTest, model.ActualPosition + 1);
+            model.ActualQuestion = await _adTestService.Next(administratedTest, model.ActualPosition + 1);
             return View("Test", model);
         }
 
         [HttpPost]
         public async Task<ActionResult> Close(AdministratedTestModel model, FormCollection form)
         {
-            var administratedTest = await service.GetAdministratedTestById(model.AdministratedTestId);
+            var administratedTest = await _adTestService.GetAdministratedTestById(model.AdministratedTestId);
             var actualQuestion = administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == model.ActualPosition);
 
             if (Request.Form[actualQuestion.Id.ToString()] != null)
@@ -133,12 +163,12 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             }
 
             administratedTest.State = AdministratedTestState.Open;
-            await service.Update_Save(administratedTest);
+            await _adTestService.Update_Save(administratedTest);
             return View("TestEnded");
         }
         public async Task<ActionResult> Previous(AdministratedTestModel model, FormCollection form)
         {
-            var administratedTest = await service.GetAdministratedTestById(model.AdministratedTestId);
+            var administratedTest = await _adTestService.GetAdministratedTestById(model.AdministratedTestId);
             var actualQuestion = administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == model.ActualPosition);
             if (Request.Form[actualQuestion.Id.ToString()] != null)
             {
@@ -151,9 +181,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                     }
                 }
                 actualQuestion.AdministratedAnswers.FirstOrDefault(a => a.Id == System.Convert.ToInt32(value)).isSelected = true;
-                await service.Update_Save_Question(actualQuestion);
+                await _adTestService.Update_Save_Question(actualQuestion);
             }
-            model.ActualQuestion = await service.Previous(administratedTest, model.ActualPosition - 1);
+            model.ActualQuestion = await _adTestService.Previous(administratedTest, model.ActualPosition - 1);
             return View("Test", model);
         }
         [HttpGet]
@@ -171,6 +201,27 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 
             }
             return PartialView("DetailsTablePartial", testToPass/*,*//*TestVisual*/);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> TextSearch(AdministratedTestsListModel adTestsListModel)
+        {
+            if (String.IsNullOrWhiteSpace(adTestsListModel.TextFilter))
+            {
+                return RedirectToAction("AdministratedTestsList", adTestsListModel);
+            }
+
+            var tests = await _adTestService.GetAdministratedTestsByFilter(adTestsListModel.TextFilter);
+
+            adTestsListModel.Tests = tests.Select(t => new AdministratedTestDto(t)).ToList();
+
+
+            adTestsListModel.PageNumber = 1;
+            adTestsListModel.PageSize = 10;
+
+            adTestsListModel.Paginate(adTestsListModel.Tests);
+
+            return View("AdministratedTestsList", adTestsListModel);
         }
     }
 }

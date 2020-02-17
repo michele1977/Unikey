@@ -23,12 +23,12 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
             AdministratedQuestions =
                 administratedTest.AdministratedQuestions.Select(q => new AdministratedQuestionDto(q)).ToList();
             ResultScore = administratedTest.Score;
+            TotalScore = administratedTest.MaxScore;
         }
 
         public int Id { get; set; }
         public string URL { get; set; }
-        public string Text { get; set; }
-        public int? TotalScore { get; set; }
+        public decimal TotalScore { get; set; }
         public int? TestId { get; set; }
         public string TestSubject { get; set; }
         public DateTime Date { get; set; }
