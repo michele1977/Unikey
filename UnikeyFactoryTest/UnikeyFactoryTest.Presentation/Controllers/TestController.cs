@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
@@ -6,6 +7,8 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
+using Microsoft.Ajax.Utilities;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Mapper;
@@ -158,12 +161,14 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             UserId = System.Convert.ToInt32(HttpContext.Session["UserId"]);
             testsListModel = testsListModel ?? new TestsListModel();
 
-            var service = new TestService();
-
             try
             {
-                if (String.IsNullOrWhiteSpace(testsListModel.TextFilter))
-                    testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
+                List<TestBusiness> tests = new List<TestBusiness>();
+
+                tests = testsListModel.TextFilter.IsNullOrWhiteSpace() ? await _service.GetTests() :
+                    await _service.GetTestsByFilter(testsListModel.TextFilter);
+
+                testsListModel.Tests = testsListModel.Paginate(tests);
             }
             catch (ArgumentNullException e)
             {
@@ -332,17 +337,22 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult> TextSearch(TestsListModel testsListModel)
         {
-            if (!String.IsNullOrWhiteSpace(testsListModel.TextFilter))
+            if (String.IsNullOrWhiteSpace(testsListModel.TextFilter))
             {
-                TestService service = new TestService();
-
-                var tests = await service.GetTests();
-
-                testsListModel.Tests = tests.Where(t => t.Title.ToLower().Contains(testsListModel.TextFilter.ToLower()))
-                    .Select(t => new TestDto(t)).ToList();
+                return RedirectToAction("TestsList", testsListModel);
             }
 
-            return RedirectToAction("TestsList", testsListModel);
+            var tests = await _service.GetTestsByFilter(testsListModel.TextFilter);
+
+            testsListModel.Tests = tests.Select(t => new TestDto(t)).ToList();
+            
+
+            testsListModel.PageNumber = 1;
+            testsListModel.PageSize = 10;
+
+            await testsListModel.Paginate(testsListModel.Tests);
+
+            return View("TestsList", testsListModel);
         }
 
         public async Task<JsonResult> SendMail(EmailModel emailModel)
