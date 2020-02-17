@@ -123,5 +123,72 @@ namespace UserTest
 
         //        Assert.IsTrue((bool)test);
         //    }
+
+        [TestMethod]
+        public void AdministratedTestRepository_DeleteQuestion_OK()
+        {
+            var _ctx = new TestPlatformDBEntities();
+            using (var trans =_ctx.Database.BeginTransaction())
+            {
+                try
+                {
+                    var repo = new TestRepository(_ctx);
+
+                    var User = new User();
+                    
+                    User.Password = "1234";
+                    User.Username = "Develollo";
+                    _ctx.Users.Add(User);
+                    _ctx.SaveChanges();
+
+                    var Test = new Test();
+                    Test.Date = DateTime.Now;
+                    Test.Title = "ProvaTest";
+                    Test.URL = "myURL";
+                    Test.UserId = _ctx.Users.FirstOrDefault(u=> u.Username == "Develollo").Id;
+                    _ctx.Tests.Add(Test);
+                    _ctx.SaveChanges();
+
+                    var question = new Question()
+                    {
+                        Text = "ProvaQuestion",
+                        Position = 1,
+                        TestId = Test.Id,
+                    };
+
+                    Test.Questions.Add(question);
+                    _ctx.SaveChanges();
+
+
+                    Test.Questions.FirstOrDefault().Answers.Add(new Answer()
+                    {
+                        Text = "ProvaAnswer",
+                        IsCorrect = 1,
+                        QuestionId = question.Id,
+                        Score = 30
+                    });
+
+                    _ctx.SaveChanges();
+
+
+                    var result = _ctx.Tests.FirstOrDefault(t => t.Id == Test.Id).Questions.Count;
+                    
+                    repo.DeleteQuestionByIdFromTest(question.Id);
+                    _ctx.SaveChanges();
+
+                    var expected = _ctx.Tests.FirstOrDefault(t => t.Id == Test.Id).Questions.Count;
+
+                    Assert.AreEqual(expected, result - 1);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+                finally
+                {
+                    trans.Rollback();
+                }
+            }
+        }
     }
 }

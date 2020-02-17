@@ -23,6 +23,11 @@ namespace UnikeyFactoryTest.Repository
             _ctx = new TestPlatformDBEntities();
         }
 
+        public TestRepository(TestPlatformDBEntities myCtx)
+        {
+            _ctx = myCtx;
+        }
+
         public async Task SaveTest(Test test)
         {
             var myTask = Task.Run(() => {
