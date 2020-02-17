@@ -11,7 +11,7 @@ namespace UnikeyFactoryTest.Presentation.Models
     {
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
-        public string TextFilter { get; set; } = "";
+        public string TextFilter { get; set; }
         public int LastPage { get; set; }
 
         public AdministratedTestsListModel()

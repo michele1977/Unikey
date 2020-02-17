@@ -117,6 +117,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var testToPass = new AdministratedTestDto(await service.GetAdministratedTestById(test.Id));
             testToPass.PageNumber = test.PageNumber;
             testToPass.PageSize = test.PageSize;
+            testToPass.TextFilter = test.TextFilter;
             return View(testToPass);
         }
 

@@ -267,6 +267,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 testToPass.PageNumber = test.PageNumber;
                 testToPass.PageSize = test.PageSize;
                 testToPass.URL = service.GenerateUrl(testToPass.URL);
+                testToPass.TextFilter = test.TextFilter;
             }
             catch (ArgumentNullException ex)
             {

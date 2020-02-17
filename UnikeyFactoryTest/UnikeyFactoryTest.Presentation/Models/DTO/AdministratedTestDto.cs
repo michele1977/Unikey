@@ -34,6 +34,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public DateTime Date { get; set; }
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
+        public string TextFilter { get; set; }
         public decimal ResultScore { get; set; }
        
         public List<AdministratedQuestionDto> AdministratedQuestions { get; set; }

@@ -9,7 +9,7 @@
 }
 
 <h2>@Model.Title</h2>
-<a title="Go Back" href='@Url.Action("TestsList", "Test", new {PageNumber=@Model.PageNumber, PageSize=@Model.PageSize})'><img id="backIcon" src="~/Content/ICONS/goBackIcon.png" alt="goBack"></a>
+<a title="Go Back" href='@Url.Action("TestsList", "Test", new {PageNumber=@Model.PageNumber, PageSize=@Model.PageSize, TextFilter=@Model.TextFilter})'><img id="backIcon" src="~/Content/ICONS/goBackIcon.png" alt="goBack"></a>
 <hr />
 <br />
 <div id="testContentStats">
