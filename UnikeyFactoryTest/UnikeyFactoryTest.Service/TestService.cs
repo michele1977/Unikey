@@ -99,11 +99,11 @@ namespace UnikeyFactoryTest.Service
             }
         }
 
-        public async Task DeleteQuestion(int questionId)
+        public async Task DeleteQuestionByIdFromTest(int questionId)
         {
             using (Repo = new TestRepository())
             {
-                await Repo.DeleteQuestion(questionId);
+                await Repo.DeleteQuestionByIdFromTest(questionId);
             }
         }
     }

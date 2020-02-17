@@ -288,7 +288,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             try
             {
                 TestService service = new TestService();
-                await service.DeleteQuestion(question.Id);
+                await service.DeleteQuestionByIdFromTest(question.Id);
             }
             catch (ArgumentNullException e)
             {

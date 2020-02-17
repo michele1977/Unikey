@@ -121,7 +121,7 @@ namespace UnikeyFactoryTest.Repository
 
             _ctx.SaveChanges();
         }
-        public async Task DeleteQuestion(int questionId)
+        public async Task DeleteQuestionByIdFromTest(int questionId)
         {
             var question = await Task.Run(() =>
             {
