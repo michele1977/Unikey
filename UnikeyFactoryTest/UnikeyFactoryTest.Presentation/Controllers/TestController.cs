@@ -57,6 +57,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 test.Questions.Add(questionBiz);
 
                _service.UpdateTest(test);
+
               
                 returned = new TestDto(test);
              
@@ -452,6 +453,13 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             }
 
             return Json(new { result = result });
+        }
+
+        public ActionResult GetAddQuestionPartial(TestDto model)
+        {
+            var myModel = new QuestionDto();
+            myModel.TestId = model.Id;
+            return PartialView("AddQuestionPartial", myModel);
         }
     }
 }

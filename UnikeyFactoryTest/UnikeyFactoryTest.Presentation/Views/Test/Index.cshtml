@@ -1,7 +1,7 @@
 ﻿@using UnikeyFactoryTest.Presentation.Models.DTO
 @model UnikeyFactoryTest.Presentation.Models.DTO.TestDto
 
-
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
 <style>
     #buttonCreate {
         margin-left: 83%;
@@ -42,8 +42,6 @@
 
     function EnableDiv(id) {
         document.getElementById(id).hidden = false;
-
-
     }
 
     //function DisabledButtonCreate(id, idbtn) {
@@ -53,8 +51,40 @@
 
     //}
 
-    function DisableQuestionForm(id) {
-        document.getElementById(id).hidden = true;
+
+
+    function UnloadAddQuestionPartial() {
+        $("#mydivQuestionForm").unload('@Url.Action("GetAddQuestionPartial", "Test",Model)');
+    }
+ 
+
+    function ShowAddQuestionPartial() {
+        $("#mydivQuestionForm").load('@Url.Action("GetAddQuestionPartial", "Test",Model)');
+
+    }
+
+    function emptyPartialView() {
+        
+        $("#mydivQuestionForm").empty();
+
+    }
+
+    function modalOpen() {
+        $('#myModal').modal('show');
+
+    }
+
+    function modalBack() {
+        $('#myModal').modal('hide');
+
+    }
+
+    function modalYes() {
+
+        $('#myModal').modal('hide');
+
+        emptyPartialView();
+
     }
 
 
@@ -85,43 +115,60 @@
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6" id="divList" style="text-align:center;">
                 <table class="table">
+                    <tr>
+                        <th>
+                            QuestionText
+                        </th>
+                        <th>
+                            <i class="fa fa-plus btn " onclick="ShowAddQuestionPartial()" title="Add question"></i>
+                        </th>
+                    </tr>
+
+                    @foreach (var Question in Model.Questions)
+                    {
                         <tr>
-                            <th>
-                                QuestionText
-                            </th>
-                            <th>
-                                <button class="btn btn-dark" onclick="EnableDiv('mydivQuestionForm')">+</button>
-                            </th>
+                            <td>
+                                @Html.DisplayFor(modelItem => Question.Text)
+                            </td>
+
+                            <td>
+                                <i class="fa fa-trash btn" title="Delete"></i> |
+                                <i class="fa fa-edit btn" title="Details"></i>
+
+                                @*@Html.ActionLink("Delete", "DeleteQuestion", "Test", new { Id = Question.Id }, null) |
+                    @Html.ActionLink("Details", "Details", "Test", new { Id = Question.Id }, null) *@
+                            </td>
                         </tr>
+                    }
 
 
-                        @foreach (var Question in Model.Questions)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => Question.Text)
-                                </td>
-
-                                <td>
-                                    DELETE|DETAILS
-                                    @*@Html.ActionLink("Delete", "DeleteQuestion", "Test", new { Id = Question.Id }, null) |
-                                        @Html.ActionLink("Details", "Details", "Test", new { Id = Question.Id }, null) *@
-                                </td>
-                            </tr>
-                        }
-
-
-                    </table>
-                
-                <button class="btn btn-success finishButton" id="doneBtn">Done</button>
+                </table>
+                <i class="fa fa-check btn" id="doneBtn" style="color: green" title="Done"></i>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-6" hidden id="mydivQuestionForm">
-                @{
-                    var myModel = new QuestionDto();
-                    myModel.TestId = Model.Id;
-                }
-                @Html.Partial("AddQuestionPartial", myModel)
+            <div class="col-lg-6 col-md-6 col-sm-6"  id="mydivQuestionForm">
+    
             </div>
         </div>
     </div>
 }
+
+
+<div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Alert</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to go back?
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="modalYes()">Yes</button>
+                    <button type="button" class="btn btn-primary" onclick="modalBack()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
