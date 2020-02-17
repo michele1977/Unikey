@@ -26,17 +26,27 @@
         {
             <div class="row testContentRow">
                 <div>
-                    <div>
-                        <strong>Domanda @i</strong>
-                        <a title="Edit" href='@Url.Action("EditQuestion",
-                                                  "Test",
-                                                  new {TestId=@Model.Id,
-                                                      PageNumber = @Model.PageNumber,
-                                                      PageSize = @Model.PageSize,
-                                                      QuestionId = question.Id,
-                                                      CorrectAnswerScore=question.Answers.Where(a => a.IsCorrect == AnswerState.Correct)
-                                                          .Select(a => a.Score)})'><img id="editIcon" src="~/Content/ICONS/editIcon.png" alt="edit"></a>
-                    </div>
+                        <div>
+                            <strong>Domanda @i</strong>
+                            <a title="Edit" href='@Url.Action("EditQuestion",
+                                                      "Test",
+                                                      new {TestId=@Model.Id,
+                                                          PageNumber = @Model.PageNumber,
+                                                          PageSize = @Model.PageSize,
+                                                          QuestionId = question.Id,
+                                                          CorrectAnswerScore=question.Answers.Where(a => a.IsCorrect == AnswerState.Correct)
+                                                              .Select(a => a.Score)})'><img id="editIcon" src="~/Content/ICONS/editIcon.png" alt="edit"></a>
+
+                            <a title="Delete" href='@Url.Action("DeleteQuestion",
+                                                      "Test",
+                                                        new {TestId=question.TestId,
+                                                            PageNumber = @Model.PageNumber,
+                                                            PageSize = @Model.PageSize,
+                                                            Id = question.Id,
+                                                            Text = question.Text,
+                                                            Position = question.Position
+                                                        })'><img id="deleteIcon" src="~/Content/ICONS/deleteIcon.png" alt="delete"></a>
+                        </div>
                     <hr />
                     <p>@question.Text</p>
                 </div>

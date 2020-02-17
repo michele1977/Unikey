@@ -89,6 +89,12 @@
     height: auto;
 }
 
+#deleteIcon {
+    float: right;
+    height: auto;
+    max-width: 4%;
+}
+
 .startContainer {
     border-radius: 5px;
     border: black 1px solid;

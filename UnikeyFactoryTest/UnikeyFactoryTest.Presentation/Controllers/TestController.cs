@@ -331,7 +331,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 throw;
             }
 
-            return View("Index");
+            var test = await  _service.GetTestById(question.TestId);
+            TestDto testDto = new TestDto(test);
+            return RedirectToAction("TestContent", testDto);
         }
 
         [HttpPost]

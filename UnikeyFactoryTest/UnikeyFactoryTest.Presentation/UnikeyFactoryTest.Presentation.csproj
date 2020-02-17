@@ -192,6 +192,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Css\styles.css" />
     <Content Include="Content\Icons\createIcon.png" />
+    <Content Include="Content\Icons\deleteIcon.png" />
     <Content Include="Content\Icons\editIcon.png" />
     <Content Include="Content\Icons\goBackIcon.png" />
     <Content Include="Content\Icons\logout.png" />
