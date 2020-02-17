@@ -106,5 +106,14 @@ namespace UnikeyFactoryTest.Service
                 await Repo.DeleteQuestionByIdFromTest(questionId);
             }
         }
+
+        public async Task<List<TestBusiness>> GetTestsByFilter(string filter)
+        {
+            using (Repo = new TestRepository())
+            {
+                var res = (await Repo.GetTests()).Where(t => t.Title.ToLower().Contains(filter.ToLower())).ToList();
+                return res;
+            }
+        }
     }
 }

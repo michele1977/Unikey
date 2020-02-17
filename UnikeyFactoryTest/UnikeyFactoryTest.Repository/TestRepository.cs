@@ -69,6 +69,7 @@ namespace UnikeyFactoryTest.Repository
             var  testListTask = await Task.Run(() => _ctx.Tests.Select(t => new TestBusiness()
             {
                 Id = t.Id,
+                Title = t.Title,
                 URL = t.URL,
                 Date = t.Date,
             }).ToList());

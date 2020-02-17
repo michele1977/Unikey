@@ -32,6 +32,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var subject = model.Name + " " + model.Surname;
             var test = testService.GetTestByURL(model.Url);
             var newExecutionTest = service.AdministratedTest_Builder(test, subject);
+            newExecutionTest.State = AdministratedTestState.Started;
             var savedTest = await service.Add(newExecutionTest);
             model.NumQuestion = test.Questions.Count;
             model.ActualQuestion = savedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == 0);

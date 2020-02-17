@@ -46,8 +46,14 @@
 
             </div>
             <div><button type="submit" class="btn btn-success SaveButton" formaction="/ExTest/SaveTest">Save Test</button></div>
-            <button class="btn btn-success NextButton" style="float:right" formaction="/ExTest/Next">Next</button>
-            <button style="float:left;" class="btn btn-success PreviousButton" formaction="/ExTest/Previous">Previous</button>
+            if (Model.ActualQuestion.Position < Model.NumQuestion - 1)
+            {
+                <button class="btn btn-success NextButton" style="float:right" formaction="/ExTest/Next">Next</button>
+            }
+            if (Model.ActualQuestion.Position > 0)
+            {
+                <button style="float:left;" class="btn btn-success PreviousButton" formaction="/ExTest/Previous">Previous</button>
+            }
             <button style="text-align: center;" class="btn btn-success CloseButton" formaction="/ExTest/Close">Close</button>
         }
 
@@ -64,7 +70,7 @@
             <input type="hidden" name="Surname" value="@Model.Surname" />
             <input type="hidden" name="AdministratedTestId" value="@Model.ActualQuestion.AdministratedTestId" />
             @*<button style="float:left;" class="btn btn-success PreviousButton" formaction="/ExTest/Previous">Previous</button>
-                <button style="text-align: center;" class="btn btn-success CloseButton" formaction="/ExTest/Next">Close</button>*@
+            <button style="text-align: center;" class="btn btn-success CloseButton" formaction="/ExTest/Next">Close</button>*@
 
         }
     </div>

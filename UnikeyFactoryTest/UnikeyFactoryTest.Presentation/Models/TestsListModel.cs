@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
+using Microsoft.Ajax.Utilities;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Presentation.Models.DTO;
+using UnikeyFactoryTest.Service;
 
 namespace UnikeyFactoryTest.Presentation.Models
 {
@@ -31,9 +34,24 @@ namespace UnikeyFactoryTest.Presentation.Models
             }
 
             List<TestDto> filteredList = tests.Select(t => new TestDto(t))
+                                .Skip((PageNumber - 1) * PageSize)
+                                .Take(PageSize).ToList();
+
+            return filteredList;
+        }
+
+        public async Task<List<TestDto>> Paginate(List<TestDto> tests)
+        {
+            LastPage = (int)Math.Ceiling((float)tests.Count / PageSize);
+
+            if (PageNumber > LastPage)
+            {
+                PageNumber = LastPage;
+            }
+
+            List<TestDto> filteredList = tests
                 .Skip((PageNumber - 1) * PageSize)
                 .Take(PageSize).ToList();
-
 
             return filteredList;
         }
