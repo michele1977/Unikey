@@ -12,14 +12,18 @@
 
 <div>
     <form action="@Url.Action("TextSearch", "ExTest")" method="post">
-        <input id="textSearch" type="text" placeholder="@Model.TextFilter" name="textFilter" />
-        <input type="submit" value="Filter" class="btn btn-info" />
+        <div class="btn-group">
+            <input id="searchinput" value="@Model.TextFilter" type="search" name="textFilter" class="form-control"
+                   onsearch="@Url.Action("AdministratedTestsList", "ExTest", new {TextFilter = ""})">
+            <span id="searchclear" class="glyphicon glyphicon-remove-circle"></span>
+            <input type="submit" class="btn btn-primary" value="Search" />
+        </div>
     </form>
 </div>
 
 <div id="pageSizeDropDownList">
     @Html.Label("Elements per page")
-    <select name="PageSizeSelection" onchange="resizePage(this.value, @Model.PageNumber, '/ExTest/AdministratedTestsList?PageSize=');">
+    <select name="PageSizeSelection" onchange="resizePage(this.value, @Model.PageNumber, '/ExTest/AdministratedTestsList?TextFilter=@Model.TextFilter&PageSize=');">
         <option value="@Model.PageSize" selected="selected">@Model.PageSize</option>
         @for (int i = 10; i <= 161; i *= 2)
         {
@@ -58,7 +62,7 @@
                     "See test",
                     "AdministratedTestContent",
                     "ExTest",
-                    new { @item.Id, @Model.PageNumber, @Model.PageSize },
+                    new { @item.Id, @Model.PageNumber, @Model.PageSize, @Model.TextFilter },
                     new { @class = "btn btn-info" })
             </td>
         </tr>
@@ -70,20 +74,32 @@
     @if (Model.PageNumber > 1)
     {
         @Html.ActionLink(
+            "First",
+            "AdministratedTestsList",
+            "ExTest",
+            new { PageNumber = 1, Model.PageSize, Model.TextFilter },
+            new { @class = "btn btn-info" })
+        @Html.ActionLink(
             "Previous",
             "AdministratedTestsList",
             "ExTest",
-            new { PageNumber = Model.PageNumber - 1, Model.PageSize },
+            new { PageNumber = Model.PageNumber - 1, Model.PageSize, Model.TextFilter },
             new { @class = "btn btn-info" })
     }
-    <label>@Model.PageNumber</label>
-    @if (@Model.PageNumber < @Model.LastPage)
+    <label>@Model.PageNumber of @Model.LastPage</label>
+    @if (@Model.PageNumber != @Model.LastPage)
     {
         @Html.ActionLink(
             "Next",
             "AdministratedTestsList",
             "ExTest",
-            new { PageNumber = Model.PageNumber + 1, Model.PageSize },
+            new { PageNumber = Model.PageNumber + 1, Model.PageSize, Model.TextFilter },
+            new { @class = "btn btn-info" })
+        @Html.ActionLink(
+            "Last",
+            "AdministratedTestsList",
+            "ExTest",
+            new { PageNumber = Model.LastPage, Model.PageSize, Model.TextFilter },
             new { @class = "btn btn-info" })
     }
 </div>

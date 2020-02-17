@@ -59,6 +59,15 @@ namespace UnikeyFactoryTest.Service
             return newAdTest;
         }
 
+        public async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByFilter(string textFilter)
+        {
+            using (_repo = new AdministratedTestRepository())
+            {
+                var res = (await _repo.GetAdministratedTests()).Where(t => t.TestSubject.ToLower().Contains(textFilter.ToLower())).ToList();
+                return res;
+            }
+        }
+
         public async Task<AdministratedTestBusiness> Add(AdministratedTestBusiness adTest)
         {
             return await _repo.Add(adTest);
@@ -76,7 +85,6 @@ namespace UnikeyFactoryTest.Service
 
         public async Task<IEnumerable<AdministratedTestBusiness>> GetAdministratedTests()
         {
-            _repo = new AdministratedTestRepository();
             var administratedTests = await _repo.GetAdministratedTests();
 
             return administratedTests;
