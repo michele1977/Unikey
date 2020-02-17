@@ -131,5 +131,15 @@ namespace Extension
             int g = 0;
 
         }
+
+        [TestMethod]
+        public void TestMethod2()
+        {
+            var repo = new TestRepository();
+
+            var question = repo.GetQuestionById(807);
+
+            Assert.AreEqual("I vecchi cosa ammirano?", question.Result.Text);
+        }
     }
 }

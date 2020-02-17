@@ -145,5 +145,16 @@ namespace UnikeyFactoryTest.Repository
         {
             _ctx.Dispose();
         }
+
+        public async Task<QuestionBusiness> GetQuestionById(int id)
+        {
+            var taskQuestion = await Task.Run(() => 
+            {
+                return _ctx.Questions.FirstOrDefault(q => q.Id == id);
+            });
+
+            var returned = QuestionMapper.MapDalToBiz(taskQuestion);
+            return returned;
+        }
     }
 }
