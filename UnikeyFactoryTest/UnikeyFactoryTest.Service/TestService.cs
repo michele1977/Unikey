@@ -115,5 +115,13 @@ namespace UnikeyFactoryTest.Service
                 return res;
             }
         }
+
+        public async Task<QuestionBusiness> GetQuestionById(int id)
+        {
+            using (Repo = new TestRepository())
+            {
+                return await Repo.GetQuestionById(id);
+            }
+        }
     }
 }

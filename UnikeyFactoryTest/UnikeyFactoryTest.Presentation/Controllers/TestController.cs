@@ -453,5 +453,13 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             return Json(new { result = result });
         }
+
+        [HttpGet]
+        public async Task<ActionResult> QuestionDetails(int id)
+        {
+            var questionDomain = await _service.GetQuestionById(id);
+            var questionDao = new QuestionDto(questionDomain);
+            return View("Index", questionDao);
+        }
     }
 }
