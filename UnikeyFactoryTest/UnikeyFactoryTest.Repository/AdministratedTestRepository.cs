@@ -27,8 +27,6 @@ namespace UnikeyFactoryTest.Repository
 
         public async Task<AdministratedTestBusiness> Add(AdministratedTestBusiness adTest)
         {
-
-
             var addTask = Task.Run(() =>
             {
                 try
