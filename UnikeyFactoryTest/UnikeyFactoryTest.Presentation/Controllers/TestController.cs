@@ -289,10 +289,12 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> DeleteQuestion(QuestionDto question)
+        public async Task<ActionResult> DeleteQuestion(QuestionDto question, int TestId)
         {
+            var returned = new TestDto();
             try
             {
+                
                 TestService service = new TestService();
                 await service.DeleteQuestionByIdFromTest(question.Id);
             }
@@ -332,9 +334,11 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 throw;
             }
 
-            var test = await  _service.GetTestById(question.TestId);
-            TestDto testDto = new TestDto(test);
-            return RedirectToAction("TestContent", testDto);
+
+            var test = await _service.GetTestById(TestId);
+            returned = new TestDto(test);
+            
+            return View("Index", returned);
         }
 
         [HttpPost]
@@ -465,11 +469,11 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> QuestionDetails(int id)
+        public async Task<ActionResult> QuestionDetails(QuestionDto question)
         {
-            var questionDomain = await _service.GetQuestionById(id);
+            var questionDomain = await _service.GetQuestionById(question.Id);
             var questionDao = new QuestionDto(questionDomain);
-            return View("Index", questionDao);
+            return PartialView("AddQuestionPartial", questionDao);
         }
     }
 }

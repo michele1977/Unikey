@@ -1,7 +1,7 @@
 ﻿@using UnikeyFactoryTest.Presentation.Models.DTO
 @model UnikeyFactoryTest.Presentation.Models.DTO.TestDto
 
-    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+<link href="~/Content/font-awesome.css" rel="stylesheet" />
 <style>
     #buttonCreate {
         margin-left: 83%;
@@ -56,7 +56,7 @@
     function UnloadAddQuestionPartial() {
         $("#mydivQuestionForm").unload('@Url.Action("GetAddQuestionPartial", "Test",Model)');
     }
- 
+
 
     function ShowAddQuestionPartial() {
         $("#mydivQuestionForm").load('@Url.Action("GetAddQuestionPartial", "Test",Model)');
@@ -64,7 +64,7 @@
     }
 
     function emptyPartialView() {
-        
+
         $("#mydivQuestionForm").empty();
 
     }
@@ -101,14 +101,14 @@
         @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled" })
         @if (Model.ShowForm)
         {
-            <button class="btn btn-primary" id="buttonCreate"  disabled>Create</button>
+            <button class="btn btn-primary" id="buttonCreate" disabled>Create</button>
         }
         @if (!Model.ShowForm)
         {
             <button class="btn btn-primary" id="buttonCreate">Create</button>
         }
-            
-        
+
+
     </div>
 }
 
@@ -135,39 +135,32 @@
                             </td>
 
                             <td>
-                                <i class="fa fa-trash btn" title="Delete"></i> |
+                                <a href="@Url.Action("DeleteQuestion", "Test", Question)">
+                                    <i class="fa fa-trash btn" title="Delete"></i> |
+                                </a>
+                                <a href="@Url.Action("QuestionDetails", "Test", Question)">
                                 <i class="fa fa-edit btn" title="Details"></i>
+                                </a>
 
-                                @*@Html.ActionLink("Delete", "DeleteQuestion", "Test", new { Id = Question.Id }, null) |
-                    @Html.ActionLink("Details", "Details", "Test", new { Id = Question.Id }, null) *@
                             </td>
                         </tr>
                     }
 
 
-                    </table>
-                <a class="btn btn-success" href="@Url.Action("TestsList", "Test", new {PageNumber = 1, PageSize = 10})" onclick="DoneBtn()">Done</a>
-                @*<button class="btn btn-success finishButton" id="doneBtn" onclick="DoneBtn()">Done</button>*@
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6" hidden id="mydivQuestionForm">
-                @{
-                    var myModel = new QuestionDto();
-                    myModel.TestId = Model.Id;
-                }
-                @Html.Partial("AddQuestionPartial", myModel)
-            </div>
-        </div>
-    </div>
-}
                 </table>
-                <i class="fa fa-check btn" id="doneBtn" style="color: green" title="Done"></i>
+                
+                <a href="@Url.Action("TestsList", "Test", new {PageNumber = 1, PageSize = 10})" onclick="DoneBtn()">
+                    <i class="fa fa-check btn" id="doneBtn" style="color: green" title="Done"></i>
+                </a>
+                
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-6"  id="mydivQuestionForm">
-    
+            <div class="col-lg-6 col-md-6 col-sm-6" id="mydivQuestionForm">
+
             </div>
         </div>
     </div>
 }
+
 
 
 <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
