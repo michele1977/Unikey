@@ -14,7 +14,7 @@
     @Html.HiddenFor(x => x.TestId)
     @Html.HiddenFor(x => x.Id)
 
-    @Html.TextAreaFor(m => m.Text, new { @class = "required", id = "txt_QuestionText", style = "max-width: 100%;width: 90%;", @rows = 5, placeholder = "Enter the question " })
+    @Html.TextAreaFor(m => m.Text, new { @class = "required", id = "txt_QuestionText", style = "max-width: 100%;width: 100%; border-radius: 5px; border: 1px solid black;", @rows = 5, placeholder = "Enter the question " })
     @Html.ValidationMessageFor(x => x.Text, null, new { @class = "alert-danger" })
     <div class="form-group">
 
@@ -26,7 +26,7 @@
                         @Html.CheckBoxFor(x => x.Answers[i].IsCorrectBool, new { id = "check" + i, onclick = "CorrectAnswer('check" + i + "','txt_AnswerText" + i + "','txt_Score" + i + "')" })
                     </div>
                 </div>
-                @Html.TextBoxFor(x => x.Answers[i].Text, new { @class = "form-control ", style = "max-width: 100%;width: 70%;", id = "txt_AnswerText" + i, placeholder = "Enter the answer " })
+                @Html.TextBoxFor(x => x.Answers[i].Text, new { @class = "form-control", style = "max-width: 100%;width: 70%;", id = "txt_AnswerText" + i, placeholder = "Enter the answer " })
 
                 @Html.TextBoxFor(x => x.Answers[i].Score, new { type = "number", id = "txt_Score" + i, @class = "class-mymarginleft", style = "width: 80px", step = "0.5", placeholder = "Score", @hidden = "hidden" })
             </div>
