@@ -12,7 +12,8 @@
 @using (Html.BeginForm("AddQuestion", "Test", FormMethod.Post))
 {
     @Html.HiddenFor(x => x.TestId)
-    @Html.HiddenFor(x => x.Id)
+    @*@Html.HiddenFor(x => x.Id)*@
+    <input type="hidden" value="@Model.Id" name="Id" />
 
     @Html.TextAreaFor(m => m.Text, new { @class = "required", id = "txt_QuestionText", style = "max-width: 100%;width: 100%; border-radius: 5px; border: 1px solid black;", @rows = 5, placeholder = "Enter the question " })
     @Html.ValidationMessageFor(x => x.Text, null, new { @class = "alert-danger" })

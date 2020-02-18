@@ -57,6 +57,7 @@
         $("#mydivQuestionForm").unload('@Url.Action("GetAddQuestionPartial", "Test",Model)');
     }
     function ShowAddQuestionPartial() {
+        //{ QuestionDto theQuestion = new QuestionDto(); question.TestId = Model.Id;}
         $("#mydivQuestionForm").load('@Url.Action("GetAddQuestionPartial", "Test",Model)');
 
     }
