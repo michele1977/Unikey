@@ -60,7 +60,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
               
                 returned = new TestDto(await _service.GetTestById(test.Id));
-             
+                returned.ShowForm = true;
             }
             catch (ArgumentNullException e)
             {
@@ -97,7 +97,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 Logger.Fatal(e, e.Message);
                 throw;
             }
-            
             return View("Index", returned );
         }
 
@@ -153,7 +152,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 throw;
             }
 
-            return View("Index", model);
+            return View("index", model);
         }
 
         [HttpGet]
@@ -338,6 +337,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             var test = await _service.GetTestById(TestId);
             returned = new TestDto(test);
+            returned.ShowForm = true;
             
             return View("Index", returned);
         }
@@ -474,7 +474,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         {
             var questionDomain = await _service.GetQuestionById(question.Id);
             var questionDao = new QuestionDto(questionDomain);
-            return PartialView("AddQuestionPartial", questionDao);
+            return PartialView("Index", questionDao);
         }
     }
 }
