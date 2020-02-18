@@ -84,32 +84,32 @@
 @using (Html.BeginForm("AddTest", "Test", FormMethod.Post))
 {
     @Html.HiddenFor(x => x.Id)
-<div class="form-group" id="myDivContainerTop" style="width: 50%; margin-left: 25%">
+    <div class="form-group" id="myDivContainerTop" style="width: 50%; margin-left: 25%">
 
-    @{
-        if (Model.ShowForm == false)
-        {
-            @Html.TextBoxFor(x => x.Title, new { @class = "form-control", id = "class-textBox", placeholder = "TestName" })
-            @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled" })
+        @{
+            if (Model.ShowForm == false)
+            {
+                @Html.TextBoxFor(x => x.Title, new { @class = "form-control", id = "class-textBox", placeholder = "TestName" })
+                @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled" })
 
 
-            <button class="btn btn-primary" id="buttonCreate" style="margin-left: 45%; margin-top: 10px" >
-                Create
-            </button>
+                <button class="btn btn-primary" id="buttonCreate" style="margin-left: 45%; margin-top: 10px" >
+                    Create
+                </button>
+            }
+            if (Model.ShowForm == true)
+            {
+                @Html.TextBoxFor(x => x.Title, new { @class = "form-control", id = "class-textBox", placeholder = "TestName", disabled="disabled" })
+                @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled" })
+
+
+                <button class="btn btn-primary" id="buttonCreate" disabled style="margin-left: 45%; margin-top: 10px" >
+                    Create
+                </button>
+            }
+
         }
-        if (Model.ShowForm == true)
-        {
-            @Html.TextBoxFor(x => x.Title, new { @class = "form-control", id = "class-textBox", placeholder = "TestName", disabled="disabled" })
-            @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled" })
-
-
-            <button class="btn btn-primary" id="buttonCreate" disabled style="margin-left: 45%; margin-top: 10px" >
-                Create
-            </button>
-        }
-
-    }
-</div>
+    </div>
 
 
 }
