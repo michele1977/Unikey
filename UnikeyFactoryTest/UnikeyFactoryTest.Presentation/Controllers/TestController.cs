@@ -31,6 +31,8 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         // GET: Test
         public ActionResult Index(TestDto model)
         {
+            if ((TestDto)TempData["mod"] != null)
+                model = (TestDto)TempData["mod"];
             if (UserId == 0)
                 UserId = model.UserId;
             try
@@ -97,7 +99,10 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 Logger.Fatal(e, e.Message);
                 throw;
             }
-            return View("Index", returned );
+
+            TempData["mod"] = returned;
+
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
