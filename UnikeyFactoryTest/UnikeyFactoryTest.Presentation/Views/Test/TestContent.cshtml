@@ -26,31 +26,39 @@
         {
             <div class="row testContentRow">
                 <div>
+                    <div>
+                        <strong>Domanda @i</strong>
                         <div>
-                            <strong>Domanda @i</strong>
-                            <div>
-                                @using (Html.BeginForm("EditQuestionsAsync",
-                                    "Test",
-                                    new QuestionEditModel
-                                    {
-                                        Id = question.Id,
-                                        Text = question.Text,
-                                        TestId = question.TestId,
-                                        CorrectAnswerScore = question.CorrectAnswerScore,
-                                        Position = question.Position
-                                    },
-                                    FormMethod.Post,
-                                    null
-                                    ))
+                            @using (Html.BeginForm("EditQuestionsAsync",
+                                "Test",
+                                new QuestionEditModel
                                 {
-                                    <input type="submit" class="btn-info"
-                                       id="editIcon"
-                                       title="Edit"
-                                       src="~/Content/ICONS/editIcon.png" alt="submit" />
-                                }
-                            </div>
-                            
-                            </div>
+                                    Id = question.Id,
+                                    Text = question.Text,
+                                    TestId = question.TestId,
+                                    CorrectAnswerScore = question.CorrectAnswerScore,
+                                    Position = question.Position
+                                },
+                                FormMethod.Post,
+                                null
+                                ))
+                            {
+
+                                <a title="Delete" href='@Url.Action("DeleteQuestion",
+                                                            "Test",
+                                                            new {TestId=question.TestId,
+                                                                PageNumber = @Model.PageNumber,
+                                                                PageSize = @Model.PageSize,
+                                                                Id = question.Id,
+                                                                Text = question.Text,
+                                                                Position = question.Position
+                                                            })'><img id="deleteIcon" src="~/Content/ICONS/deleteIcon.png" alt="delete"></a>
+                                <link href="~/Content/font-awesome.css" rel="stylesheet" />
+                                <button id="editIcon" type="submit" class="fa fa-pencil"></button>
+                            }
+                        </div>
+
+                    </div>
                     <hr />
                     <p>@question.Text</p>
                 </div>
