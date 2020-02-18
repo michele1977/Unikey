@@ -66,4 +66,16 @@ function closeErrorAlert() {
             label.style.display = "none";
         }
 }
+//function getAnswer(Answers) {
+//    function functionOk(resp) {
+//        alert('ok');
+//    }
+//    function functionKo() {
+//        alert('ko');
+//    }
+//    let myurl = "/Test/EditQuestions";
+
+//    $.ajax({ url: myurl, method: "POST", data: Answers }).then(functionOk, functionKo);
+//}
+
 

@@ -173,6 +173,7 @@
     <Compile Include="Models\DTO\AdministratedTestDto.cs" />
     <Compile Include="Models\DTO\AnswerDto.cs" />
     <Compile Include="Models\DTO\QuestionDto.cs" />
+    <Compile Include="Models\DTO\QuestionEditModel.cs" />
     <Compile Include="Models\DTO\TestDto.cs" />
     <Compile Include="Models\DTO\UserDto.cs" />
     <Compile Include="Models\EmailModel.cs" />
@@ -367,6 +368,7 @@
     <Content Include="Views\User\_SigningUpFormPartial.cshtml" />
     <Content Include="Views\ExTest\DetailsTablePartial.cshtml" />
     <Content Include="Views\Test\AdTestsTablePartial.cshtml" />
+    <Content Include="Views\Test\EditQuestionsAsync.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

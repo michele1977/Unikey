@@ -170,7 +170,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             {
                 
             }
-            return PartialView("DetailsTablePartial", testToPass/*,*//*TestVisual*/);
+            return PartialView("DetailsTablePartial", testToPass);
         }
     }
 }
