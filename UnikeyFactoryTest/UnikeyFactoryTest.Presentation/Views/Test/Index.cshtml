@@ -44,23 +44,16 @@
         document.getElementById(id).hidden = false;
     }
 
-    function DisabledButtonCreate(id, idbtn, idTxt) {
-        document.getElementById(id).hidden = false;
-       document.getElementById(idbtn).disabled = true;
-       document.getElementById(idTxt).disabled = true;
+    function ShowAddQuestionPartial(){
+            $("#mydivQuestionForm").load('@Url.Action("GetAddQuestionPartial", "Test",Model)');
+            console.log("ShowAddQuestionPartial activated");
 
-
-    }
-
+        }
 
     function UnloadAddQuestionPartial() {
-        $("#mydivQuestionForm").unload('@Url.Action("GetAddQuestionPartial", "Test",Model)');
+        $("#mydivQuestionForm").unload('@Url.Action("GetAddQuestionPartial", "Test", Convert.ToInt32(Model.Id))');
     }
-    function ShowAddQuestionPartial() {
-        //{ QuestionDto theQuestion = new QuestionDto(); question.TestId = Model.Id;}
-        $("#mydivQuestionForm").load('@Url.Action("GetAddQuestionPartial", "Test",Model)');
 
-    }
     function emptyPartialView() {
 
         $("#mydivQuestionForm").empty();
@@ -91,67 +84,86 @@
 @using (Html.BeginForm("AddTest", "Test", FormMethod.Post))
 {
     @Html.HiddenFor(x => x.Id)
-    <div class="form-group" id="myDivContainerTop" style="width: 50%; margin-left: 25%">
+<div class="form-group" id="myDivContainerTop" style="width: 50%; margin-left: 25%">
 
-        @Html.TextBoxFor(x => x.Title, new { @class = "form-control", id = "class-textBox", placeholder = "TestName" })
-        @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled"})
+    @{
+        if (Model.ShowForm == false)
+        {
+            @Html.TextBoxFor(x => x.Title, new { @class = "form-control", id = "class-textBox", placeholder = "TestName" })
+            @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled" })
 
 
-        <button class="btn btn-primary" id="buttonCreate"  style="margin-left: 45%; margin-top: 10px" onclick="DisabledButtonCreate('myDivContainerDown', 'buttonCreate', 'class-textBox')">
-            Create
-        </button>
-    </div>
+            <button class="btn btn-primary" id="buttonCreate" style="margin-left: 45%; margin-top: 10px" >
+                Create
+            </button>
+        }
+        if (Model.ShowForm == true)
+        {
+            @Html.TextBoxFor(x => x.Title, new { @class = "form-control", id = "class-textBox", placeholder = "TestName", disabled="disabled" })
+            @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled" })
+
+
+            <button class="btn btn-primary" id="buttonCreate" disabled style="margin-left: 45%; margin-top: 10px" >
+                Create
+            </button>
+        }
+
+    }
+</div>
 
 
 }
 
 @if (Model != null)
 {
-    <div class="container" hidden id="myDivContainerDown">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6" id="divList" style="text-align:center;">
-                <table class="table table-bordered">
-                    <tr>
-                        <th>
-                            QuestionText
-                        </th>
-                        <th>
-                            <i class="fa fa-plus btn " onclick="ShowAddQuestionPartial()" title="Add question"></i>
-                        </th>
-                    </tr>
-
-                    @foreach (var Question in Model.Questions)
-                    {
+    if (Model.ShowForm == true)
+    {
+        <div class="container" id="myDivContainerDown">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6" id="divList" style="text-align:center;">
+                    <table class="table table-bordered">
                         <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => Question.Text)
-                            </td>
-
-                            <td>
-                                <a href="@Url.Action("DeleteQuestion", "Test", Question)">
-                                    <i class="fa fa-trash btn" title="Delete"></i> |
-                                </a>
-                                <a href="@Url.Action("QuestionDetails", "Test", Question)">
-                                    <i class="fa fa-edit btn" title="Details"></i>
-                                </a>
-
-                            </td>
+                            <th>
+                                QuestionText
+                            </th>
+                            <th>
+                                <i class="fa fa-plus btn " onclick="ShowAddQuestionPartial()" title="Add question"></i>
+                            </th>
                         </tr>
-                    }
+
+                        @foreach (var Question in Model.Questions)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Question.Text)
+                                </td>
+
+                                <td>
+                                    <a href="@Url.Action("DeleteQuestion", "Test", Question)">
+                                        <i class="fa fa-trash btn" title="Delete"></i> |
+                                    </a>
+                                    <a href="@Url.Action("QuestionDetails", "Test", Question)">
+                                        <i class="fa fa-edit btn" title="Details"></i>
+                                    </a>
+
+                                </td>
+                            </tr>
+                        }
 
 
-                </table>
+                    </table>
 
-                <a href="@Url.Action("TestsList", "Test", new {PageNumber = 1, PageSize = 10})" onclick="DoneBtn()">
-                    <i class="fa fa-check btn" id="doneBtn" style="color: green" title="Done"></i>
-                </a>
+                    <a href="@Url.Action("TestsList", "Test", new { PageNumber = 1, PageSize = 10 })" onclick="DoneBtn()">
+                        <i class="fa fa-check btn" id="doneBtn" style="color: green" title="Done"></i>
+                    </a>
 
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6" id="mydivQuestionForm">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6" id="mydivQuestionForm">
 
+                </div>
             </div>
         </div>
-    </div>
+    }
 }
 
 
