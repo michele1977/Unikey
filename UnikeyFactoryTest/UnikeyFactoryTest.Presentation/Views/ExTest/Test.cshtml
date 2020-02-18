@@ -1,5 +1,10 @@
 ﻿@using UnikeyFactoryTest.Presentation.Controllers
 @model UnikeyFactoryTest.Presentation.Models.AdministratedTestModel
+
+@{
+    Layout = "~/Views/Shared/LayoutFruition.cshtml";
+}
+
 <img src="~/Logos/UnikeyLogo.png" class="logo" />
 <div class="container" style="width:100%;">
 
@@ -78,7 +83,7 @@
             <input type="hidden" name="Surname" value="@Model.Surname" />
             <input type="hidden" name="AdministratedTestId" value="@Model.ActualQuestion.AdministratedTestId" />
             @*<button style="float:left;" class="btn btn-success PreviousButton" formaction="/ExTest/Previous">Previous</button>
-            <button style="text-align: center;" class="btn btn-success CloseButton" formaction="/ExTest/Next">Close</button>*@
+                <button style="text-align: center;" class="btn btn-success CloseButton" formaction="/ExTest/Next">Close</button>*@
 
         }
     </div>
