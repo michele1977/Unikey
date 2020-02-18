@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
 using UnikeyFactoryTest.Context;
+using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.Presentation;
 using UnikeyFactoryTest.Presentation.Models;
 using UnikeyFactoryTest.Service;
@@ -14,6 +15,12 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 {
     public class UserController : Controller
     {
+        private IUserService service;
+
+        public UserController(IUserService value)
+        {
+            service = value;
+        }
         public ActionResult Index()
         {
             var model = new UserModel();
@@ -30,7 +37,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             if (ModelState.IsValid)
             {
                 var user = new User {Username = model.Username, Password = model.Password};
-                var service = new UserService();
 
                 var result = await service.IsUser(user);
 
@@ -63,7 +69,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             {
                 User user = new User() {Username = model.Username, Password = model.Password};
 
-                UserService service = new UserService();
                 service.InsertUser(user);
                 
                 userViewModel.UserState = UserState.RegistrationOk;

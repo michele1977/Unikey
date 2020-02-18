@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service;
 
@@ -11,18 +12,25 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
 {
     public class TestDto
     {
+        private IAdministratedTestService service;
+        private ITestService testService;
         public TestDto()
         {
             Questions = new List<QuestionDto>();
         }
-        
-        public TestDto(TestBusiness test)
+        public TestDto(IAdministratedTestService value)
         {
-            var service = new TestService();
+            Questions = new List<QuestionDto>();
+            service = value;
+        }
+
+        public TestDto(TestBusiness test, ITestService value)
+        {
+            testService = value;
 
             Id = test.Id;
             Title = test.Title;
-            URL = service.GenerateUrl(test.URL);
+            URL = testService.GenerateUrl(test.URL);
             Date = test.Date;
             UserId = test.UserId;
             Title = test.Title;
@@ -41,9 +49,8 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
             AdministratedTests = dtoList;
         }
 
-        private static async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId)
+        private async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId)
         {
-            var service = new AdministratedTestService();
             var listAdTest = await service.GetAdministratedTestsByTestId(testId);
             return listAdTest;
         }

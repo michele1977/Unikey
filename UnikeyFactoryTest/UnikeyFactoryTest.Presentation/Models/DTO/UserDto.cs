@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.IService;
 
 namespace UnikeyFactoryTest.Presentation.Models.DTO
 {
     public class UserDto
     {
+        private ITestService service;
         public UserDto()
         {
 
@@ -18,7 +20,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
             Id = user.Id;
             Username = user.Username;
             Password = user.Password;
-            Tests = user.Tests.Select(t => new TestDto(t));
+            Tests = user.Tests.Select(t => new TestDto(t, service));
         }
 
         public int Id { get; set; }

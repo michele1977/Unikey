@@ -29,12 +29,12 @@ namespace UserTest
 
             };
 
-            TestService testService = new TestService();
+            //TestService testService = new TestService();
 
             question.Answers.Add(answer);
             test.Questions.Add(question);
 
-            var res = Task.Run(() => testService.AddNewTest(test));
+            //var res = Task.Run(() => testService.AddNewTest(test));
         }
     }
 }

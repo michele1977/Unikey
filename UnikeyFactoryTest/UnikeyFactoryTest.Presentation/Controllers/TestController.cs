@@ -11,6 +11,7 @@ using System.Web.WebPages;
 using Microsoft.Ajax.Utilities;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Presentation.Models;
 using UnikeyFactoryTest.Presentation.Models.DTO;
@@ -19,14 +20,28 @@ using UnikeyFactoryTest.Service.Providers.MailProvider;
 
 namespace UnikeyFactoryTest.Presentation.Controllers
 {
+
     public class TestController : Controller
     {
-        
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
+        //private readonly TestService _service = new TestService();
+        //private ITestService service;
         private static int UserId { get; set; }
         private static readonly Test test = new Test();
-        private readonly TestService _service = new TestService();
+        private IAdministratedTestService administratedservice;
+        private ITestService _service;
+
+        public TestController()
+        {
+
+        }
+
+        public TestController(ITestService value, IAdministratedTestService value2)
+        {
+            _service = value;
+            administratedservice = value2;
+        }
 
         // GET: Test
         public ActionResult Index(TestDto model)
@@ -49,7 +64,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult> AddQuestion(QuestionDto model)
         {
-            var returned = new TestDto();
+            var returned = new TestDto(administratedservice);
             try
             {
                 var questionBiz = model.MapToDomain();
@@ -58,7 +73,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
                _service.UpdateTest(test);
               
-                returned = new TestDto(test);
+                returned = new TestDto(test, _service);
              
             }
             catch (ArgumentNullException e)
@@ -159,7 +174,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public async Task<ActionResult> TestsList(TestsListModel testsListModel)
         {
             UserId = System.Convert.ToInt32(HttpContext.Session["UserId"]);
-            testsListModel = testsListModel ?? new TestsListModel();
+            testsListModel = testsListModel ?? new TestsListModel(_service);
 
             try
             {
@@ -203,12 +218,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpPost]
         public async Task<JsonResult> DeleteTest(TestDto test)
         {
-
-            TestService service = new TestService();
-
             try
             {
-                await service.DeleteTest(test.Id);
+                await _service.DeleteTest(test.Id);
                 Logger.Info("Successfully deleted test");
             }
             catch (ArgumentNullException e)
@@ -258,15 +270,14 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpGet]
         public async Task<ActionResult> TestContent(TestDto test)
         {
-            TestService service = new TestService();
-            TestDto testToPass = new TestDto();
+            TestDto testToPass = new TestDto(administratedservice);
 
             try
             {
-                testToPass = new TestDto(await service.GetTestById(test.Id));
+                testToPass = new TestDto(await _service.GetTestById(test.Id), _service);
                 testToPass.PageNumber = test.PageNumber;
                 testToPass.PageSize = test.PageSize;
-                testToPass.URL = service.GenerateUrl(testToPass.URL);
+                testToPass.URL = _service.GenerateUrl(testToPass.URL);
             }
             catch (ArgumentNullException ex)
             {
@@ -292,8 +303,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         {
             try
             {
-                TestService service = new TestService();
-                await service.DeleteQuestionByIdFromTest(question.Id);
+                await _service.DeleteQuestionByIdFromTest(question.Id);
             }
             catch (ArgumentNullException e)
             {
@@ -344,7 +354,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             var tests = await _service.GetTestsByFilter(testsListModel.TextFilter);
 
-            testsListModel.Tests = tests.Select(t => new TestDto(t)).ToList();
+            testsListModel.Tests = tests.Select(t => new TestDto(t, _service)).ToList();
             
 
             testsListModel.PageNumber = 1;
@@ -361,8 +371,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             try
             {
-                TestService service = new TestService();
-                test = await service.GetTestById(emailModel.Id);
+                test = await _service.GetTestById(emailModel.Id);
             }
             catch (ArgumentNullException e)
             {
@@ -401,7 +410,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             }
 
             bool result = false;
-            TestDto sendTest = new TestDto(test);
+            TestDto sendTest = new TestDto(test, _service);
             var URL = sendTest.URL;
             MailProvider provider = new MailProvider();
 

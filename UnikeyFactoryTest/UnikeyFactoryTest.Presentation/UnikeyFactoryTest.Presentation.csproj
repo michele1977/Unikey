@@ -387,9 +387,17 @@
       <Project>{e2f1e71e-9900-4cef-a8ab-0bc152698a47}</Project>
       <Name>UnikeyFactoryTest.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.IService\UnikeyFactoryTest.IService.csproj">
+      <Project>{764F94A0-C26D-45E8-A86C-91EE99D1ACA7}</Project>
+      <Name>UnikeyFactoryTest.IService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UnikeyFactoryTest.Mapper\UnikeyFactoryTest.Mapper.csproj">
       <Project>{d9fa8193-e2c4-4e4d-a41d-7493ba8818a6}</Project>
       <Name>UnikeyFactoryTest.Mapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.NinjectConfiguration\UnikeyFactoryTest.NinjectConfiguration.csproj">
+      <Project>{04C2FC8F-855F-45FF-9BE7-DDBA35197D45}</Project>
+      <Name>UnikeyFactoryTest.NinjectConfiguration</Name>
     </ProjectReference>
     <ProjectReference Include="..\UnikeyFactoryTest.Repository\UnikeyFactoryTest.Repository.csproj">
       <Project>{1AE6EE8E-E465-41C5-A17A-EF35DA1ED082}</Project>

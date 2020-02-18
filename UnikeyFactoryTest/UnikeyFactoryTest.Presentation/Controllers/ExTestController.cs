@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Ninject;
 using UnikeyFactoryTest.Domain.Enums;
+using UnikeyFactoryTest.IService;
+using UnikeyFactoryTest.NinjectConfiguration;
 using UnikeyFactoryTest.Presentation.Models;
 using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service;
@@ -12,16 +15,21 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 {
     public class ExTestController : Controller
     {
-        private AdministratedTestService service = new AdministratedTestService();
-        private TestService testService = new TestService();
-        // GET: AdministratedTest
+        private IAdministratedTestService service;
+        private ITestService testService;
+        //private IKernel kernel;
+        public ExTestController(IAdministratedTestService value, ITestService value2)
+        {
+            service = value;
+            testService = value2;
+        }
 
+        // GET: AdministratedTest
         public ActionResult TestStart(string guid)
         {
             var model = new AdministratedTestModel();
 
             model.Url = guid;
-
 
             return View("TestStart", model);
         }
@@ -72,8 +80,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         {
             testsListModel = testsListModel ?? new AdministratedTestsListModel();
 
-            AdministratedTestService service = new AdministratedTestService();
-
             var tests = await service.GetAdministratedTests();
 
             testsListModel.Tests = testsListModel.Paginate(tests.ToList());
@@ -84,7 +90,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpGet]
         public async Task<ActionResult> AdministratedTestContent(AdministratedTestDto test)
         {
-            AdministratedTestService service = new AdministratedTestService();
             var testToPass = new AdministratedTestDto(await service.GetAdministratedTestById(test.Id));
             testToPass.PageNumber = test.PageNumber;
             testToPass.PageSize = test.PageSize;
@@ -160,7 +165,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpGet]
         public async Task<ActionResult> DetailsTablePartial(int testId)
         {
-            AdministratedTestService service = new AdministratedTestService();
             AdministratedTestDto testToPass = new AdministratedTestDto();
             try
             {
