@@ -54,6 +54,7 @@ namespace UnikeyFactoryTest.Service
                     AdministratedAnswers = q.Answers.Select(a => new AdministratedAnswerBusiness() { Text = a.Text, Score = a.Score, AdministratedQuestionId = a.QuestionId, isCorrect = a.IsCorrect, isSelected = false }).ToList()
                 });
 
+                newAdTest.MaxScore += q.Answers.SingleOrDefault(a => a.IsCorrect == AnswerState.Correct).Score;
             }
 
             return newAdTest;
