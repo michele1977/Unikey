@@ -476,5 +476,38 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var questionDao = new QuestionDto(questionDomain);
             return PartialView("AddQuestionPartial", questionDao);
         }
+        [HttpPost]
+        public async Task<ActionResult> EditQuestionsAsync(QuestionEditModel questionmodel)
+        {
+            try
+            {
+                var s = await _service.GetTestById(questionmodel.TestId);
+                var a = s.Questions.Where(x => x.Id == questionmodel.Id).
+                    SelectMany(x => x.Answers).Select(x => x.Text)
+                    .ToList();
+                questionmodel.Answers = a;
+            }
+            catch (ArgumentNullException ex)
+            {
+                Logger.Error(ex, ex.Message);
+                throw;
+            }
+            catch (InvalidOperationException ex)
+            {
+                Logger.Error(ex, ex.Message);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, ex.Message);
+                throw;
+            }
+            return View(questionmodel);
+        }
+        public ActionResult SaveUpdateQuestion(QuestionEditModel editModel)
+        {
+            //TO IMPLEMENT
+            return View("TestContent");
+        }
     }
 }

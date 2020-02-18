@@ -30,7 +30,8 @@ namespace UnikeyFactoryTest.Repository
 
         public async Task SaveTest(Test test)
         {
-            var myTask = Task.Run(() => {
+            var myTask = Task.Run(() =>
+            {
                 _ctx.Tests.Add(test);
                 _ctx.SaveChanges();
             });
@@ -64,9 +65,9 @@ namespace UnikeyFactoryTest.Repository
 
         public async Task<List<TestBusiness>> GetTests()
         {
-            var returned =  _ctx.Tests.ToList();
+            var returned = _ctx.Tests.ToList();
 
-            var  testListTask = await Task.Run(() => _ctx.Tests.Select(t => new TestBusiness()
+            var testListTask = await Task.Run(() => _ctx.Tests.Select(t => new TestBusiness()
             {
                 Id = t.Id,
                 Title = t.Title,
@@ -79,10 +80,7 @@ namespace UnikeyFactoryTest.Repository
 
         public async Task DeleteTest(int testId)
         {
-            var task = await Task.Run(() =>
-            {
-                return _ctx.Tests.First(t => t.Id == testId);
-            });
+            var task = await Task.Run(() => { return _ctx.Tests.First(t => t.Id == testId); });
 
             _ctx.Tests.Remove(task);
             _ctx.SaveChanges();
@@ -121,7 +119,7 @@ namespace UnikeyFactoryTest.Repository
 
             foreach (var child in toUpdate)
             {
-                var childToUpdate = oldValue.Childs.FirstOrDefault(x=>x.MyId == child.MyId);
+                var childToUpdate = oldValue.Childs.FirstOrDefault(x => x.MyId == child.MyId);
                 NewUpdate(child, childToUpdate);
             }
 
@@ -129,14 +127,12 @@ namespace UnikeyFactoryTest.Repository
         }
         public async Task DeleteQuestionByIdFromTest(int questionId)
         {
-            var question = await Task.Run(() =>
-            {
-                return _ctx.Questions.FirstOrDefault(q => q.Id == questionId);
-            });
+            var question = await Task.Run(() => { return _ctx.Questions.FirstOrDefault(q => q.Id == questionId); });
             if (question == null)
             {
                 throw new NullReferenceException("Question not found ");
             }
+
             _ctx.Questions.Remove(question);
             _ctx.SaveChanges();
         }

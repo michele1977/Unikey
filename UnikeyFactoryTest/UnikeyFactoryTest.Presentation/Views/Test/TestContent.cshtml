@@ -1,5 +1,4 @@
-﻿
-@using UnikeyFactoryTest.Domain.Enums
+﻿@using UnikeyFactoryTest.Domain.Enums
 @using UnikeyFactoryTest.Presentation.Models.DTO
 @model  UnikeyFactoryTest.Presentation.Models.DTO.TestDto
 
@@ -8,8 +7,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@Model.Title</h2>
-<a title="Go Back" href='@Url.Action("TestsList", "Test", new {PageNumber=@Model.PageNumber, PageSize=@Model.PageSize, TextFilter=@Model.TextFilter})'><img id="backIcon" src="~/Content/ICONS/goBackIcon.png" alt="goBack"></a>
+<h2>Test @Model.Id</h2>
+<a title="Go Back" href='@Url.Action("TestsList", "Test", new {Model.PageNumber, Model.PageSize})'><img id="backIcon" src="~/Content/ICONS/goBackIcon.png" alt="goBack"></a>
+@*<h2>@Model.Title</h2>*@
 <hr />
 <br />
 <div id="testContentStats">
@@ -28,25 +28,29 @@
                 <div>
                         <div>
                             <strong>Domanda @i</strong>
-                            <a title="Edit" href='@Url.Action("EditQuestion",
-                                                      "Test",
-                                                      new {TestId=@Model.Id,
-                                                          PageNumber = @Model.PageNumber,
-                                                          PageSize = @Model.PageSize,
-                                                          QuestionId = question.Id,
-                                                          CorrectAnswerScore=question.Answers.Where(a => a.IsCorrect == AnswerState.Correct)
-                                                              .Select(a => a.Score)})'><img id="editIcon" src="~/Content/ICONS/editIcon.png" alt="edit"></a>
-
-                            <a title="Delete" href='@Url.Action("DeleteQuestion",
-                                                      "Test",
-                                                        new {TestId=question.TestId,
-                                                            PageNumber = @Model.PageNumber,
-                                                            PageSize = @Model.PageSize,
-                                                            Id = question.Id,
-                                                            Text = question.Text,
-                                                            Position = question.Position
-                                                        })'><img id="deleteIcon" src="~/Content/ICONS/deleteIcon.png" alt="delete"></a>
-                        </div>
+                            <div>
+                                @using (Html.BeginForm("EditQuestionsAsync",
+                                    "Test",
+                                    new QuestionEditModel
+                                    {
+                                        Id = question.Id,
+                                        Text = question.Text,
+                                        TestId = question.TestId,
+                                        CorrectAnswerScore = question.CorrectAnswerScore,
+                                        Position = question.Position
+                                    },
+                                    FormMethod.Post,
+                                    null
+                                    ))
+                                {
+                                    <input type="submit" class="btn-info"
+                                       id="editIcon"
+                                       title="Edit"
+                                       src="~/Content/ICONS/editIcon.png" alt="submit" />
+                                }
+                            </div>
+                            
+                            </div>
                     <hr />
                     <p>@question.Text</p>
                 </div>
@@ -61,7 +65,7 @@
                 }
             </form>
             <br>
-            ++@i;
+            ++i;
         }
     }
 </div>
