@@ -5,6 +5,7 @@
 @{
     ViewBag.Title = "TestsList";
 }
+<link href="~/Content/font-awesome.css" rel="stylesheet" />
 
 <h2>Tests List</h2>
 
@@ -116,34 +117,16 @@
 <div>
     @if (Model.PageNumber > 1)
     {
-        @Html.ActionLink(
-            "First",
-            "TestsList",
-            "Test",
-            new { PageNumber = 1, Model.PageSize, Model.TextFilter },
-            new { @class = "btn btn-info" })
-        @Html.ActionLink(
-            "Previous",
-            "TestsList",
-            "Test",
-            new { PageNumber = Model.PageNumber - 1, Model.PageSize, Model.TextFilter},
-            new { @class = "btn btn-info" })
+        <a href="@Url.Action("TestsList","Test",new { PageNumber = 1, Model.PageSize, Model.TextFilter })"><i class="fa fa-angle-double-left btn" title="First"></i></a>
+        <a href="@Url.Action("TestsList","Test",new { PageNumber = Model.PageNumber - 1, Model.PageSize, Model.TextFilter})"><i class="fa fa-arrow-left btn" title="Previous"></i></a>
+
     }
     <label>@Model.PageNumber of @Model.LastPage</label>
     @if (@Model.PageNumber != @Model.LastPage)
     {
-        @Html.ActionLink(
-            "Next",
-            "TestsList",
-            "Test",
-            new { PageNumber = Model.PageNumber + 1, Model.PageSize, Model.TextFilter},
-            new { @class = "btn btn-info" })
-        @Html.ActionLink(
-            "Last",
-            "TestsList",
-            "Test",
-            new { PageNumber = Model.LastPage, Model.PageSize, Model.TextFilter},
-            new { @class = "btn btn-info" })
+        <a href="@Url.Action("TestsList","Test",new { PageNumber = Model.PageNumber + 1, Model.PageSize, Model.TextFilter})"><i class="fa fa-arrow-right btn" title="Next"></i></a>
+        <a href="@Url.Action("TestsList","Test",new { PageNumber = Model.LastPage, Model.PageSize, Model.TextFilter})"><i class="fa fa-angle-double-right btn" title="Last"></i></a>
+
     }
 </div>
 
