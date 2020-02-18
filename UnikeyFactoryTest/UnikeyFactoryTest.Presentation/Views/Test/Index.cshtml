@@ -44,41 +44,35 @@
         document.getElementById(id).hidden = false;
     }
 
-    //function DisabledButtonCreate(id, idbtn) {
-    //    document.getElementById(id).removeAttribute("hidden");
-    //    document.getElementById(idbtn).setAttribute("disabled");
+    function DisabledButtonCreate(id, idbtn, idTxt) {
+        document.getElementById(id).hidden = false;
+       document.getElementById(idbtn).disabled = true;
+       document.getElementById(idTxt).disabled = true;
 
 
-    //}
-
+    }
 
 
     function UnloadAddQuestionPartial() {
         $("#mydivQuestionForm").unload('@Url.Action("GetAddQuestionPartial", "Test",Model)');
     }
-
-
     function ShowAddQuestionPartial() {
         $("#mydivQuestionForm").load('@Url.Action("GetAddQuestionPartial", "Test",Model)');
 
     }
-
     function emptyPartialView() {
 
         $("#mydivQuestionForm").empty();
 
     }
-
     function modalOpen() {
         $('#myModal').modal('show');
 
     }
-
     function modalBack() {
         $('#myModal').modal('hide');
 
     }
-
     function modalYes() {
 
         $('#myModal').modal('hide');
@@ -96,28 +90,26 @@
 @using (Html.BeginForm("AddTest", "Test", FormMethod.Post))
 {
     @Html.HiddenFor(x => x.Id)
-    <div class="col-lg-6 col-md-6 col-sm-6" id="myDivContainerTop">
+    <div class="form-group" id="myDivContainerTop" style="width: 50%; margin-left: 25%">
+
         @Html.TextBoxFor(x => x.Title, new { @class = "form-control", id = "class-textBox", placeholder = "TestName" })
-        @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled" })
-        @if (Model.ShowForm)
-        {
-            <button class="btn btn-primary" id="buttonCreate" disabled>Create</button>
-        }
-        @if (!Model.ShowForm)
-        {
-            <button class="btn btn-primary" id="buttonCreate">Create</button>
-        }
+        @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled"})
 
 
+        <button class="btn btn-primary" id="buttonCreate"  style="margin-left: 45%; margin-top: 10px" onclick="DisabledButtonCreate('myDivContainerDown', 'buttonCreate', 'class-textBox')">
+            Create
+        </button>
     </div>
+
+
 }
 
 @if (Model != null)
 {
-    <div class="container" id="myDivContainerDown">
+    <div class="container" hidden id="myDivContainerDown">
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6" id="divList" style="text-align:center;">
-                <table class="table">
+                <table class="table table-bordered">
                     <tr>
                         <th>
                             QuestionText
@@ -139,7 +131,7 @@
                                     <i class="fa fa-trash btn" title="Delete"></i> |
                                 </a>
                                 <a href="@Url.Action("QuestionDetails", "Test", Question)">
-                                <i class="fa fa-edit btn" title="Details"></i>
+                                    <i class="fa fa-edit btn" title="Details"></i>
                                 </a>
 
                             </td>
@@ -148,11 +140,11 @@
 
 
                 </table>
-                
+
                 <a href="@Url.Action("TestsList", "Test", new {PageNumber = 1, PageSize = 10})" onclick="DoneBtn()">
                     <i class="fa fa-check btn" id="doneBtn" style="color: green" title="Done"></i>
                 </a>
-                
+
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6" id="mydivQuestionForm">
 
