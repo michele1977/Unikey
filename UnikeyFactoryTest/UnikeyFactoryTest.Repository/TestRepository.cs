@@ -151,5 +151,25 @@ namespace UnikeyFactoryTest.Repository
             var returned = QuestionMapper.MapDalToBiz(taskQuestion);
             return returned;
         }
+
+        public async Task<Dictionary<int, int>> OpenedTestNumber(IEnumerable<int> TestsId)
+        {
+            var result = await Task.Run(() =>
+            {
+                var returned = new Dictionary<int, int>();
+                foreach (var Id in TestsId)
+                {
+                    var test = _ctx.Tests.FirstOrDefault(t => t.Id == Id);
+                    if (test != null)
+                    {
+                        returned.Add(Id, test.AdministratedTests.Count(a => a.State == 1));
+                    }
+                    else throw new Exception("Test not found");
+                }
+                return returned;
+            });
+
+            return result;
+        }
     }
 }

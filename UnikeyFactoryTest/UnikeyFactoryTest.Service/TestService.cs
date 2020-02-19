@@ -114,5 +114,13 @@ namespace UnikeyFactoryTest.Service
             }
         }
 
+        public async Task<Dictionary<int, int>> OpenedTestNumber(List<int> TestsId)
+        {
+            using (Repo = new TestRepository())
+            {
+                return await Repo.OpenedTestNumber(TestsId);
+            }
+        }
+
     }
 }

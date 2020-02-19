@@ -16,11 +16,11 @@ namespace UnikeyFactoryTest.Presentation.Models
         public int PageSize { get; set; } = 10;
         public int LastPage { get; set; }
         public string TextFilter { get; set; }
-
+        public Dictionary<int, int> AdministratedTestOpen;
         public TestsListModel()
         {
             Tests = new List<TestDto>();
-
+            AdministratedTestOpen = new Dictionary<int, int>();
         }
         public List<TestDto> Tests { get; set; }
 

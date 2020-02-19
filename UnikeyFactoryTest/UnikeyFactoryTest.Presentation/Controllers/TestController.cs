@@ -183,6 +183,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                     await _service.GetTestsByFilter(testsListModel.TextFilter);
 
                 testsListModel.Tests = testsListModel.Paginate(tests);
+                var testsId = (from t in testsListModel.Tests
+                                        select t.Id).ToList();
+                testsListModel.AdministratedTestOpen = await _service.OpenedTestNumber(testsId);
             }
             catch (ArgumentNullException e)
             {
