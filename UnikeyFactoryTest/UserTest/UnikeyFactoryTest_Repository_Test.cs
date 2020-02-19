@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnikeyFactoryTest.Context;
-using UnikeyFactoryTest.Domain;
-using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Repository;
 
 namespace UserTest
@@ -17,8 +13,8 @@ namespace UserTest
         public async Task UserRepository_FindUser_OK()
         {
             User user = new User();
-            user.Username = "Mike";
-            user.Password = "1234";
+            user.Username = "ugo";
+            user.Password = "123";
 
             UserRepository repo = new UserRepository();
             bool result = await repo.FindUser(user);
@@ -30,165 +26,13 @@ namespace UserTest
         public async Task UserRepository_FindUser_KO()
         {
             User user = new User();
-            user.Username = "Mike";
+            user.Username = "ugo";
             user.Password = "1234";
 
             UserRepository repo = new UserRepository();
             bool result = await repo.FindUser(user);
 
             Assert.AreEqual(false, result);
-        }
-
-        [TestMethod]
-        public async Task AdministratedTestRepository_Add_OK()
-        {
-            var myCtx = new TestPlatformDBEntities();
-            var myRepo = new AdministratedTestRepository(myCtx);
-
-            var adTest = new AdministratedTestBusiness
-            {
-                TestId = 1,
-                TestSubject = "",
-                URL = "",
-                AdministratedQuestions = new List<AdministratedQuestionBusiness>
-                    {
-                        new AdministratedQuestionBusiness
-                        {
-                            Text = "",
-                            AdministratedTestId = 986,
-                            AdministratedAnswers = new List<AdministratedAnswerBusiness>
-                            {
-                                new AdministratedAnswerBusiness
-                                {
-                                    Text = "",
-                                    AdministratedQuestionId = 987
-                                }
-                            }
-                        }
-                    }
-            };
-
-            using (myCtx.Database.BeginTransaction())
-            {
-                try
-                {
-                    await myRepo.Add(adTest);
-                }
-                catch
-                {
-                    throw new Exception();
-                }
-
-            }
-
-            var g = 0;
-            try
-            {
-                var test = myCtx.AdministratedTests.FirstOrDefault(t => t.Id == 994);
-
-                if (test is null)
-                    throw new Exception();
-            }
-            catch
-            {
-                g = 1;
-            }
-
-            Assert.AreEqual(0, g);
-        }
-
-        //    [TestMethod]
-        //    public async Task AdministratedTestRepository_UpdateSave_OK()
-        //    {
-        //        var myCtx = new TestPlatformDBEntities();
-        //        var myRepo = new UnikeyFactoryTest_AdministratedTestRepository(myCtx);
-
-        //        var myAdTest = myRepo.GetAdministratedTests().GetAwaiter().GetResult()[0];
-
-        //        myAdTest.AdministratedQuestions.ToList()[0].AdministratedAnswers.ToList()[0].isSelected = true;
-
-        //        using (myCtx.Database.BeginTransaction())
-        //        {
-        //            try
-        //            {
-        //                await myRepo.Update_Save(AdministratedTestMapper.MapDaoToDomain(myAdTest));
-        //            }
-        //            catch
-        //            {
-        //                throw new Exception();
-        //            }
-        //        }
-
-        //        var test = myCtx.AdministratedTests.ToList()[0].AdministratedQuestions.Where(q => q.Id == 16).ToList()[0].AdministratedAnswers.ToList()[0].isSelected;
-
-        //        Assert.IsTrue((bool)test);
-        //    }
-
-        [TestMethod]
-        public void AdministratedTestRepository_DeleteQuestion_OK()
-        {
-            var _ctx = new TestPlatformDBEntities();
-            using (var trans =_ctx.Database.BeginTransaction())
-            {
-                try
-                {
-                    var repo = new TestRepository(_ctx);
-
-                    var User = new User();
-                    
-                    User.Password = "1234";
-                    User.Username = "Develollo";
-                    _ctx.Users.Add(User);
-                    _ctx.SaveChanges();
-
-                    var Test = new Test();
-                    Test.Date = DateTime.Now;
-                    Test.Title = "ProvaTest";
-                    Test.URL = "myURL";
-                    Test.UserId = _ctx.Users.FirstOrDefault(u=> u.Username == "Develollo").Id;
-                    _ctx.Tests.Add(Test);
-                    _ctx.SaveChanges();
-
-                    var question = new Question()
-                    {
-                        Text = "ProvaQuestion",
-                        Position = 1,
-                        TestId = Test.Id,
-                    };
-
-                    Test.Questions.Add(question);
-                    _ctx.SaveChanges();
-
-
-                    Test.Questions.FirstOrDefault().Answers.Add(new Answer()
-                    {
-                        Text = "ProvaAnswer",
-                        IsCorrect = 1,
-                        QuestionId = question.Id,
-                        Score = 30
-                    });
-
-                    _ctx.SaveChanges();
-
-
-                    var result = _ctx.Tests.FirstOrDefault(t => t.Id == Test.Id).Questions.Count;
-                    
-                    repo.DeleteQuestionByIdFromTest(question.Id);
-                    _ctx.SaveChanges();
-
-                    var expected = _ctx.Tests.FirstOrDefault(t => t.Id == Test.Id).Questions.Count;
-
-                    Assert.AreEqual(expected, result - 1);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-                finally
-                {
-                    trans.Rollback();
-                }
-            }
         }
 
         [TestMethod]
@@ -199,6 +43,108 @@ namespace UserTest
             var question = repo.GetQuestionById(807);
 
             Assert.AreEqual("I vecchi cosa ammirano?", question.Result.Text);
+        }
+
+        [TestMethod]
+        public async Task TestRepository_RicorsiveUpdateAndSave_OK()
+        {
+            var _ctx = new TestPlatformDBEntities();
+            var repo = new TestRepository();
+            //var mytest = new TestBusiness();
+
+            //mytest.Id = 60;
+            //mytest.Date = DateTime.Now;
+            //mytest.Title = "AntaniTest";
+            //mytest.Questions.Add(new QuestionBusiness()
+            //{
+            //    Id = 709,
+            //    Text = "Dimmi come ti chiami?",
+            //    TestId = 60,
+                
+            //});
+            //mytest.Questions.Add(new QuestionBusiness()
+            //{
+            //    Id = 710,
+            //    Text = "Da quanti anni sei nato?",
+            //    TestId = 60
+            //});
+            //mytest.Questions.FirstOrDefault(q=>q.Id == 710).Answers.Add(new AnswerBusiness()
+            //{
+            //    Id = 2832,
+            //    Text = "Da più dello scorso anno",
+            //    Score = 100,
+            //    QuestionId = 710,
+            //    IsCorrect = AnswerState.Correct
+            //});
+            //mytest.Questions.FirstOrDefault(q => q.Id == 710).Answers.Add(new AnswerBusiness()
+            //{
+            //    Id = 2833,
+            //    Text = "Da meno di te",
+            //    Score = 1,
+            //    QuestionId = 710,
+            //    IsCorrect = AnswerState.NotCorrect
+            //});
+            //mytest.Questions.FirstOrDefault(q => q.Id == 710).Answers.Add(new AnswerBusiness()
+            //{
+            //    Id = 2834,
+            //    Text = "Da più di mia madre",
+            //    Score = 1,
+            //    QuestionId = 710,
+            //    IsCorrect = AnswerState.NotCorrect
+            //});
+            //mytest.Questions.FirstOrDefault(q => q.Id == 710).Answers.Add(new AnswerBusiness()
+            //{
+            //    Text = "Fatti gli affari tuoi",
+            //    Score = 80,
+            //    QuestionId = 710,
+            //    IsCorrect = AnswerState.NotCorrect
+            //});
+            //mytest.Questions.FirstOrDefault(q => q.Id == 709).Answers.Add(new AnswerBusiness()
+            //{
+            //    Id = 2829,
+            //    Text = "Mi chiamano gli altri",
+            //    Score = 1,
+            //    QuestionId = 709,
+            //    IsCorrect = AnswerState.Correct
+            //});
+            //mytest.Questions.FirstOrDefault(q => q.Id == 709).Answers.Add(new AnswerBusiness()
+            //{
+            //    Id = 2830,
+            //    Text = "Con il mio nome",
+            //    Score = 1,
+            //    QuestionId = 709,
+            //    IsCorrect = AnswerState.NotCorrect
+            //});
+            //mytest.Questions.FirstOrDefault(q => q.Id == 709).Answers.Add(new AnswerBusiness()
+            //{
+            //    Id = 2831,
+            //    Text = "Evidentemente non devi saperlo",
+            //    Score = 1,
+            //    QuestionId = 709,
+            //    IsCorrect = AnswerState.NotCorrect
+            //});
+
+            using(var trans = _ctx.Database.BeginTransaction()) 
+            {
+                try
+                {
+                    var oldTest = await repo.GetTest(60);
+                    var testToUpdate = await repo.GetTest(60);
+                    testToUpdate.Title = "Prova";
+                    repo.UpdateTest(testToUpdate);
+                    var newTest = await repo.GetTest(60);
+
+                    Assert.AreNotEqual(oldTest.Title, newTest.Title);
+                }
+                catch
+                {
+                    throw new Exception();
+                }
+                finally 
+                {
+                    trans.Rollback();
+                }
+            }
         }
     }
 }
