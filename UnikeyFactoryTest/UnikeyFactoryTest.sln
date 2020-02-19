@@ -29,8 +29,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mappers", "Mappers", "{F451
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.Mapper", "UnikeyFactoryTest.Mapper\UnikeyFactoryTest.Mapper.csproj", "{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extension", "Extension\Extension.csproj", "{8CAF7503-8E5C-40E0-9B8A-E050118FA318}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,10 +67,6 @@ Global
 		{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8CAF7503-8E5C-40E0-9B8A-E050118FA318}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8CAF7503-8E5C-40E0-9B8A-E050118FA318}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8CAF7503-8E5C-40E0-9B8A-E050118FA318}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8CAF7503-8E5C-40E0-9B8A-E050118FA318}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
