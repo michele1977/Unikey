@@ -16,5 +16,6 @@ namespace UnikeyFactoryTest.IService
         TestBusiness GetTestByURL(string modelUrl);
         Task DeleteQuestionByIdFromTest(int questionId);
         Task<List<TestBusiness>> GetTestsByFilter(string filter);
+        Task<QuestionBusiness> GetQuestionById(int id);
     }
 }

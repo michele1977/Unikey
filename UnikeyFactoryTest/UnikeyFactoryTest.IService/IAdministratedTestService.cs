@@ -16,5 +16,6 @@ namespace UnikeyFactoryTest.IService
         Task<AdministratedQuestionBusiness> Next(AdministratedTestBusiness administratedTest, int position);
         Task Update_Save_Question(AdministratedQuestionBusiness adQuestion);
         Task<AdministratedQuestionBusiness> Previous(AdministratedTestBusiness administratedTest, int position);
+        Task<List<AdministratedTestBusiness>> GetAdministratedTestsByFilter(string filter);
     }
 }

@@ -35,7 +35,6 @@ namespace UnikeyFactoryTest.Service
 
             }
         }
-
         public async Task <TestBusiness> GetTestById(int testId)
         {
             Repo = new TestRepository();
@@ -46,14 +45,12 @@ namespace UnikeyFactoryTest.Service
 
             return test;
         }
-
         public async Task<List<TestBusiness>> GetTests()
         {
             Repo = new TestRepository();
             var tests =  Repo.GetTests();
             return await tests;
         }
-
         public async Task DeleteTest(int testId)
         {
             using (Repo)
@@ -61,7 +58,6 @@ namespace UnikeyFactoryTest.Service
                 await Repo.DeleteTest(testId);
             }
         }
-         
         public void UpdateTest(TestBusiness test)
         {
             using (Repo)
@@ -70,21 +66,16 @@ namespace UnikeyFactoryTest.Service
                 Repo.UpdateTest(test);
             }
         }
-
-
         public string GenerateGuid()
         {
             return Guid.NewGuid().ToString();
         }
-
         public string GenerateUrl(string guid)
         {
             var baseUrl = ConfigurationManager.AppSettings["baseUrl"];
             return $"{baseUrl}ExTest\\TestStart?guid={guid.ToString()}";
 
         }
-
-
         public TestBusiness GetTestByURL(string modelUrl)
         {
             using (Repo)
@@ -92,7 +83,6 @@ namespace UnikeyFactoryTest.Service
                 return Repo.GetTestByURL(modelUrl);
             }
         }
-
         public async Task DeleteQuestionByIdFromTest(int questionId)
         {
             using (Repo = new TestRepository())
@@ -100,7 +90,6 @@ namespace UnikeyFactoryTest.Service
                 await Repo.DeleteQuestionByIdFromTest(questionId);
             }
         }
-
         public async Task<List<TestBusiness>> GetTestsByFilter(string filter)
         {
             using (Repo = new TestRepository())

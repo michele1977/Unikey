@@ -294,7 +294,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 testToPass = new TestDto(await _service.GetTestById(test.Id), _service);
                 testToPass.PageNumber = test.PageNumber;
                 testToPass.PageSize = test.PageSize;
-                testToPass.URL = service.GenerateUrl(testToPass.URL);
+                testToPass.URL = _service.GenerateUrl(testToPass.URL);
                 testToPass.TextFilter = test.TextFilter;
             }
             catch (ArgumentNullException ex)
@@ -362,7 +362,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
 
             var test = await _service.GetTestById(TestId);
-            returned = new TestDto(test);
+            returned = new TestDto(test, _service);
             returned.ShowForm = true;
             
             return View("Index", returned);
