@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnikeyFactoryTest.Context;
+using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Service;
 
 namespace UserTest
 {
@@ -13,27 +15,55 @@ namespace UserTest
     public class UnikeyFactoryTest
     {
         [TestMethod]
-        public void TextSearch_Ok()
+        public async Task TextSearch_Ok()
         {
             string testName = "RandomTitleToMakeThisTestRunOk";
+
+            string result = "";
+
             using (TestPlatformDBEntities ctx = new TestPlatformDBEntities())
             {
                 using (DbContextTransaction transaction = ctx.Database.BeginTransaction())
                 {
-                    Test test = new Test()
+                    TestBusiness testToAdd = new TestBusiness()
                     {
-                        AdministratedTests = new List<AdministratedTest>(),
+                        AdministratedTests = new List<AdministratedTestBusiness>(),
                         Date = DateTime.Now,
-                        Questions = new List<Question>(),
+                        Questions = new List<QuestionBusiness>(),
                         Title = testName,
                         URL = "randomUrl",
-                        User = null,
-                        UserId = 0
-                    }
+                        UserId = 6
+                    };
+
+                    TestService service = new TestService();
+
+                    await service.AddNewTest(testToAdd);
+
+                    List<TestBusiness> tests = await service.GetTestsByFilter(testName);
+
+                    TestBusiness testToGet = tests.Where(t => t.Title.Contains(testName)).FirstOrDefault();
+
+                    result = testToGet.Title;
 
                     transaction.Rollback();
                 }
             }
+            Assert.AreEqual(testName, result);
         }
+
+        [TestMethod]
+        public async Task TextSearch_Ko()
+        {
+            string testName = "ThisTestTitleDoesNotExist";
+
+            string result = "";
+
+            TestService service = new TestService();
+
+            List<TestBusiness> tests = await service.GetTestsByFilter(testName);
+
+            Assert.AreEqual(0, tests.Count);
+        }
+
     }
 }
