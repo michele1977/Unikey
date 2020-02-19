@@ -52,7 +52,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
             {
                 var answerBiz = new AnswerBusiness
                 {
-                    IsCorrect = answerDto.IsCorrect,
+                    IsCorrect = answerDto.IsCorrectBool ? AnswerState.Correct : AnswerState.NotCorrect,
                     Score = answerDto.Score,
                     Text = answerDto.Text,
                     Id = answerDto.Id,

@@ -11,6 +11,7 @@ using System.Web.WebPages;
 using Microsoft.Ajax.Utilities;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Domain.Enums;
 using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Presentation.Models;
 using UnikeyFactoryTest.Presentation.Models.DTO;
