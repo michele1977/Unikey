@@ -11,6 +11,7 @@ using System.Web.WebPages;
 using Microsoft.Ajax.Utilities;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Domain.Enums;
 using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Presentation.Models;
 using UnikeyFactoryTest.Presentation.Models.DTO;
@@ -56,6 +57,14 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             {
                 var questionBiz = model.MapToDomain();
                 var test = await _service.GetTestById(questionBiz.TestId);
+                if(test.Questions.Count == 0)
+                {
+                    questionBiz.Position = 0;
+                }
+                else
+                {
+                    questionBiz.Position = Convert.ToInt16(test.Questions.Count );
+                }
                 test.Questions.Add(questionBiz);
 
                _service.UpdateTest(test);
