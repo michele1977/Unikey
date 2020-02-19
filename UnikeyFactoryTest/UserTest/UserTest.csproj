@@ -57,6 +57,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UnikeyFactoryTest.TextSearch.UnitTest.cs" />
     <Compile Include="UnikeyFactoryTest_AdministratedTestRepository.cs" />
     <Compile Include="MapperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
