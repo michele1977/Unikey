@@ -4,7 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Ajax.Utilities;
+using Ninject;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.IService;
+using UnikeyFactoryTest.NinjectConfiguration;
 using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service;
 
@@ -16,12 +19,23 @@ namespace UnikeyFactoryTest.Presentation.Models
         public int PageSize { get; set; } = 10;
         public int LastPage { get; set; }
         public string TextFilter { get; set; }
+        [Inject]
+        private ITestService service;
 
+        private IKernel kernel;
         public TestsListModel()
         {
-            Tests = new List<TestDto>();
-
+            kernel = new StandardKernel();
+            kernel.Load(new UnikeyFactoryTestBindings());
+            service = kernel.Get<ITestService>();
         }
+
+        public TestsListModel(ITestService value)
+        {
+            Tests = new List<TestDto>();
+            service = value;
+        }
+
         public List<TestDto> Tests { get; set; }
 
         public List<TestDto> Paginate(List<TestBusiness> tests)
@@ -33,16 +47,16 @@ namespace UnikeyFactoryTest.Presentation.Models
                 PageNumber = LastPage;
             }
 
-            List<TestDto> filteredList = tests.Select(t => new TestDto(t))
-                                .Skip((PageNumber - 1) * PageSize)
-                                .Take(PageSize).ToList();
+            List<TestDto> filteredList = tests.Select(t => new TestDto(t, service))
+                .Skip((PageNumber - 1) * PageSize)
+                .Take(PageSize).ToList();
 
             return filteredList;
         }
 
         public async Task<List<TestDto>> Paginate(List<TestDto> tests)
         {
-            LastPage = (int)Math.Ceiling((float)tests.Count / PageSize);
+            LastPage = (int) Math.Ceiling((float) tests.Count / PageSize);
 
             if (PageNumber > LastPage)
             {
@@ -55,5 +69,6 @@ namespace UnikeyFactoryTest.Presentation.Models
 
             return filteredList;
         }
+
     }
 }

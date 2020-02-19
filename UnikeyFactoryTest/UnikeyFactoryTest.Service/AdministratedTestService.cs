@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Domain.Enums;
 using UnikeyFactoryTest.IRepository;
+using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Repository;
 
 namespace UnikeyFactoryTest.Service
 {
-    public class AdministratedTestService
+    public class AdministratedTestService : IAdministratedTestService
     {
         private IAdministratedTestRepository _repo;
 
@@ -19,10 +20,10 @@ namespace UnikeyFactoryTest.Service
 
         public bool IsLast = false;
 
-        public AdministratedTestService()
-        {
-            _repo = new AdministratedTestRepository();
-        }
+        //public AdministratedTestService()
+        //{
+        //    _repo = new AdministratedTestRepository();
+        //}
 
         public AdministratedTestService(IAdministratedTestRepository repo)
         {

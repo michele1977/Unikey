@@ -17,6 +17,11 @@ namespace UnikeyFactoryTest.Repository
             _context = new TestPlatformDBEntities();
         }
 
+        public UserRepository(TestPlatformDBEntities ctx)
+        {
+            _context = ctx;
+        }
+
 
         //GET
         public async Task<bool> FindUser(User user)

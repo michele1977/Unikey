@@ -6,27 +6,31 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
+using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Repository;
 
 namespace UnikeyFactoryTest.Service
 {
-    public class TestService 
+    public class TestService : ITestService
     {
-        public ITestRepository Repo { get; set; }
-
-        public TestService()
+        private ITestRepository Repo;
+        //public TestService()
+        //{
+        //    Repo = new TestRepository();
+        //}
+        public TestService(ITestRepository value)
         {
-            Repo = new TestRepository();
+            Repo = value;
         }
 
         public async Task AddNewTest(TestBusiness test)
         {
-            using (var _repo = new TestRepository())
+            using (Repo)
             {
                 if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
                 var testDao = TestMapper.MapBizToDal(test);
-                    await _repo.SaveTest(testDao);
+                    await Repo.SaveTest(testDao);
                     test.Id = testDao.Id;
 
             }
@@ -52,7 +56,7 @@ namespace UnikeyFactoryTest.Service
 
         public async Task DeleteTest(int testId)
         {
-            using (Repo = new TestRepository())
+            using (Repo)
             {
                 await Repo.DeleteTest(testId);
             }
@@ -60,10 +64,10 @@ namespace UnikeyFactoryTest.Service
          
         public void UpdateTest(TestBusiness test)
         {
-            using (TestRepository _repo = new TestRepository())
+            using (Repo)
             {
                 if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
-                _repo.UpdateTest(test);
+                Repo.UpdateTest(test);
             }
         }
 
@@ -83,9 +87,9 @@ namespace UnikeyFactoryTest.Service
 
         public TestBusiness GetTestByURL(string modelUrl)
         {
-            using (TestRepository _repo = new TestRepository())
+            using (Repo)
             {
-                return _repo.GetTestByURL(modelUrl);
+                return Repo.GetTestByURL(modelUrl);
             }
         }
 

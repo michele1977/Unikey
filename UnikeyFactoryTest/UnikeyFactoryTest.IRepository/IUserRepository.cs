@@ -7,7 +7,7 @@ using UnikeyFactoryTest.Context;
 
 namespace UnikeyFactoryTest.IRepository
 {
-    public interface IUserRepository
+    public interface IUserRepository : IDisposable
     {
         Task<bool> FindUser(User user);
         Task<int> GetUserIdByUsername(User user);

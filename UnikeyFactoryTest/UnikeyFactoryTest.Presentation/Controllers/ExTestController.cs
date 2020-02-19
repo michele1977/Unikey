@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Ninject;
 using Microsoft.Ajax.Utilities;
 using NLog;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Domain.Enums;
+using UnikeyFactoryTest.IService;
+using UnikeyFactoryTest.NinjectConfiguration;
 using UnikeyFactoryTest.Presentation.Models;
 using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service;
@@ -15,18 +18,21 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 {
     public class ExTestController : Controller
     {
-        private static int UserId { get; set; }
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-        private readonly AdministratedTestService _adTestService = new AdministratedTestService();
-        private readonly TestService _testService = new TestService();
-        // GET: AdministratedTest
+        private IAdministratedTestService service;
+        private ITestService testService;
+        //private IKernel kernel;
+        public ExTestController(IAdministratedTestService value, ITestService value2)
+        {
+            service = value;
+            testService = value2;
+        }
 
+        // GET: AdministratedTest
         public ActionResult TestStart(string guid)
         {
             var model = new AdministratedTestModel();
 
             model.Url = guid;
-
 
             return View("TestStart", model);
         }
@@ -114,7 +120,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpGet]
         public async Task<ActionResult> AdministratedTestContent(AdministratedTestDto test)
         {
-            AdministratedTestService service = new AdministratedTestService();
             var testToPass = new AdministratedTestDto(await service.GetAdministratedTestById(test.Id));
             testToPass.PageNumber = test.PageNumber;
             testToPass.PageSize = test.PageSize;
@@ -191,7 +196,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpGet]
         public async Task<ActionResult> DetailsTablePartial(int testId)
         {
-            AdministratedTestService service = new AdministratedTestService();
             AdministratedTestDto testToPass = new AdministratedTestDto();
             try
             {
