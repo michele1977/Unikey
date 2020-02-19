@@ -190,5 +190,15 @@ namespace UserTest
                 }
             }
         }
+
+        [TestMethod]
+        public void TestRepository_GetQuestionById_OK()
+        {
+            var repo = new TestRepository();
+
+            var question = repo.GetQuestionById(807);
+
+            Assert.AreEqual("I vecchi cosa ammirano?", question.Result.Text);
+        }
     }
 }

@@ -16,8 +16,8 @@ namespace UserTest
         public async Task UserService_IsUser_OK()
         {
             User user = new User();
-            user.Username = "Mike";
-            user.Password = "1234";
+            user.Username = "ugo";
+            user.Password = "123";
 
             UserService service = new UserService();
             bool result = await service.IsUser(user);
@@ -29,7 +29,7 @@ namespace UserTest
         public async Task UserService_IsUser_KO()
         {
             User user = new User();
-            user.Username = "Mike";
+            user.Username = "ugo";
             user.Password = "1234";
 
             UserService service = new UserService();
@@ -38,28 +38,26 @@ namespace UserTest
             Assert.AreEqual(false, result);
         }
 
-        //[TestMethod]
-        //public async Task AdministratedTestService_GetAdministratedTests_OK()
-        //{
-        //    var myCtx = new TestPlatformDBEntities();
-        //    var myRepo = new UnikeyFactoryTest_AdministratedTestRepository(myCtx);
-        //    int count = 0;
+        [TestMethod]
+        public async Task AdministratedTestService_Next_OK()
+        {
+            AdministratedTestService service = new AdministratedTestService();
+            var actualTest = await service.GetAdministratedTestById(1349);
+            var firstQuestion = actualTest.AdministratedQuestions[0];
+            var nextQuestion = await service.Next(actualTest, firstQuestion.Position + 1);
 
-        //    using (myCtx.Database.BeginTransaction())
-        //    {
-        //        try
-        //        {
-        //            var tests = await myRepo.GetAdministratedTests();
-        //            count = tests.Count;
-        //        }
-        //        catch
-        //        {
-        //            throw new Exception();
-        //        }
-        //    }
+            Assert.AreEqual(actualTest.AdministratedQuestions[1], nextQuestion);
+        }
 
-        //    Assert.AreEqual(372, count);
+        [TestMethod]
+        public async Task AdministratedTestService_Previous_OK()
+        {
+            AdministratedTestService service = new AdministratedTestService();
+            var actualTest = await service.GetAdministratedTestById(1349);
+            var secondQuestion = actualTest.AdministratedQuestions[1];
+            var previousQuestion = await service.Previous(actualTest, secondQuestion.Position - 1);
 
-        //}
+            Assert.AreEqual(actualTest.AdministratedQuestions[0], previousQuestion);
+        }
     }
 }
