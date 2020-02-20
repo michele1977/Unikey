@@ -92,6 +92,7 @@
     <Compile Include="AnswerMapper.cs" />
     <Compile Include="AutoMappers\AutoMapperFactory.cs" />
     <Compile Include="AutoMappers\IAutoMapperFactory.cs" />
+    <Compile Include="AutoMappers\ModulesMapping.cs" />
     <Compile Include="AutoMappers\QuestionAutoMapper.cs" />
     <Compile Include="AutoMappers\QuestionAutoMapperLight.cs" />
     <Compile Include="AutoMappers\TestAutoMapper.cs" />

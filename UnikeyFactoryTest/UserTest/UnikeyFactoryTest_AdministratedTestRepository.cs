@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnikeyFactoryTest.Context;
+using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.Repository;
 using UnikeyFactoryTest.Service;
 
@@ -11,6 +12,8 @@ namespace UserTest
     [TestClass]
     public class UnikeyFactoryTest_AdministratedTestRepository
     {
+        private IAdministratedTestRepository repository;
+        private ITestRepository TestRepository;
         [TestMethod]
         public async Task GetState_OK()
         {
@@ -24,8 +27,8 @@ namespace UserTest
         {
             var myCtx = new TestPlatformDBEntities();
             var myRepo = new AdministratedTestRepository(myCtx);
-            var exTestService = new AdministratedTestService();
-            var testService = new TestService();
+            var exTestService = new AdministratedTestService(repository);
+            var testService = new TestService(TestRepository);
 
             var test = await testService.GetTestById(60);
             var exTest = exTestService.AdministratedTest_Builder(test, "andrea bomber");

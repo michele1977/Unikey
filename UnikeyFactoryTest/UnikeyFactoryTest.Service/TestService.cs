@@ -4,6 +4,9 @@ using System.Configuration;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Ninject;
+using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.IService;
@@ -15,6 +18,9 @@ namespace UnikeyFactoryTest.Service
     public class TestService : ITestService
     {
         private ITestRepository Repo;
+        private static readonly BindingsService _bindings = new BindingsService();
+
+        private readonly IKernel Kernel = new StandardKernel(_bindings);
         //public TestService()
         //{
         //    Repo = new TestRepository();
@@ -29,9 +35,11 @@ namespace UnikeyFactoryTest.Service
             using (Repo)
             {
                 if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
-                var testDao = TestMapper.MapBizToDal(test);
-                    await Repo.SaveTest(testDao);
-                    test.Id = testDao.Id;
+                var x = Kernel.Get<IMapper>("Heavy");
+                var testDaoo = x.Map<TestBusiness, Test>(test);
+                //var testDao = TestMapper.MapBizToDal(test);
+                    await Repo.SaveTest(testDaoo);
+                    test.Id = testDaoo.Id;
 
             }
         }

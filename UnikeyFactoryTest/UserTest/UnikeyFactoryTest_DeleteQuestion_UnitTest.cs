@@ -9,18 +9,21 @@ using System.Transactions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.Service;
 
 namespace UserTest
 {
+    
     [TestClass]
     public class UnikeyFactoryTest_DeleteQuestion_UnitTest
     {
+        private ITestRepository TestRepository;
         [TestMethod]
         public async Task DeleteQuestion_Ok()
         {
             TestPlatformDBEntities ctx = new TestPlatformDBEntities();
-            TestService service = new TestService();
+            TestService service = new TestService(TestRepository);
 
             Question resQuestion = new Question();
 
@@ -53,7 +56,7 @@ namespace UserTest
         [ExpectedException(typeof(NullReferenceException))]
         public async Task DeleteQuestion_Ko()
         {
-            TestService service = new TestService();
+            TestService service = new TestService(TestRepository);
 
             await service.DeleteQuestionByIdFromTest(0);
         }
