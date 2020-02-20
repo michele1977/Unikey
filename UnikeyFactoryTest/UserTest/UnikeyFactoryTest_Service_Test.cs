@@ -19,7 +19,7 @@ namespace UserTest
             user.Username = "ugo";
             user.Password = "123";
 
-            UserService service = new UserService();
+            UserService service = new UserService(new UserRepository());
             bool result = await service.IsUser(user);
 
             Assert.AreEqual(true, result);
@@ -32,7 +32,7 @@ namespace UserTest
             user.Username = "ugo";
             user.Password = "1234";
 
-            UserService service = new UserService();
+            UserService service = new UserService(new UserRepository());
             bool result = await service.IsUser(user);
 
             Assert.AreEqual(false, result);

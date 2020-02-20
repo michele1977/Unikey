@@ -64,9 +64,9 @@ namespace UnikeyFactoryTest.Service
             return $"{baseUrl}ExTest\\TestStart?guid={guid.ToString()}";
 
         }
-        public TestBusiness GetTestByURL(string modelUrl)
+        public async Task<TestBusiness> GetTestByURL(string modelUrl)
         {
-            return Repo.GetTestByURL(modelUrl);
+            return await Repo.GetTestByURL(modelUrl);
         }
         public async Task DeleteQuestionByIdFromTest(int questionId)
         {
