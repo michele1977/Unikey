@@ -19,11 +19,7 @@ namespace UnikeyFactoryTest.Repository
         private readonly TestPlatformDBEntities _ctx;
 
         private readonly IKernel Kernel;
-        public AdministratedTestRepository()
-        {
-            _ctx = new TestPlatformDBEntities();
-        }
-
+        
         public AdministratedTestRepository(TestPlatformDBEntities ctx,IKernel kernel)
         {
             Kernel = kernel;

@@ -21,7 +21,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         private IAdministratedTestService _adTestService;
         private ITestService _testService;
         private Logger Logger = LogManager.GetCurrentClassLogger();
-        //private IKernel kernel;
+        private IKernel kernel;
         public ExTestController(IAdministratedTestService value, ITestService value2, IKernel kernel)
         {
             _testService = value2;

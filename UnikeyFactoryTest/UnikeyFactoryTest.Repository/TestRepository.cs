@@ -20,11 +20,7 @@ namespace UnikeyFactoryTest.Repository
     {
         private readonly TestPlatformDBEntities _ctx;
         private IKernel Kernel;
-        public TestRepository()
-        {
-            _ctx = new TestPlatformDBEntities();
-        }
-
+        
         public TestRepository(TestPlatformDBEntities myCtx,IKernel kernel)
         {
             Kernel = kernel;

@@ -18,9 +18,8 @@ namespace UnikeyFactoryTest.Service
     public class TestService : ITestService
     {
         private ITestRepository Repo;
-        //private static readonly BindingsService _bindings = new BindingsService();
 
-        private readonly IKernel Kernel; /*= new StandardKernel(_bindings);*/
+        private readonly IKernel Kernel; 
        
         public TestService(ITestRepository value,IKernel kernel)
         {
