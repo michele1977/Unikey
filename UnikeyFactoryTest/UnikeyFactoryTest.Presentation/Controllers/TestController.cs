@@ -201,6 +201,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                     await _service.GetTestsByFilter(testsListModel.TextFilter);
 
                 testsListModel.Tests = testsListModel.Paginate(tests);
+                var testsId = (from t in testsListModel.Tests
+                                        select t.Id).ToList();
+                testsListModel.AdministratedTestOpen = await _service.OpenedTestNumber(testsId);
             }
             catch (ArgumentNullException e)
             {
@@ -385,6 +388,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             testsListModel.PageSize = 10;
 
             await testsListModel.Paginate(testsListModel.Tests);
+            var testsId = (from t in testsListModel.Tests
+                select t.Id).ToList();
+            testsListModel.AdministratedTestOpen = await _service.OpenedTestNumber(testsId);
 
             return View("TestsList", testsListModel);
         }

@@ -63,7 +63,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public DateTime Date { get; set; } = DateTime.Now;
         public string Title { get; set; }
         public int UserId { get; set; }
-
+        public int NumberOfTest { get; set; }
         public bool ShowForm { get; set; }
 
         public int PageNumber { get; set; } = 1;

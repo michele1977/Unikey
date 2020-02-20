@@ -23,6 +23,7 @@ namespace UnikeyFactoryTest.Presentation.Models
         private ITestService service;
 
         private IKernel kernel;
+        public Dictionary<int, int> AdministratedTestOpen;
         public TestsListModel()
         {
             kernel = new StandardKernel();
@@ -34,6 +35,7 @@ namespace UnikeyFactoryTest.Presentation.Models
         {
             Tests = new List<TestDto>();
             service = value;
+            AdministratedTestOpen = new Dictionary<int, int>();
         }
 
         public List<TestDto> Tests { get; set; }
