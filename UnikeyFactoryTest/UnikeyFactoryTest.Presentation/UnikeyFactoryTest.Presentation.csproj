@@ -156,6 +156,7 @@
     <Compile Include="App_Start\MapConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\RouteConfig2.cs" />
+    <Compile Include="Areas\Authentication\AuthenticationAreaRegistration.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ExTestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -240,6 +241,7 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Areas\Authentication\Views\web.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -382,6 +384,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Authentication\Controllers\" />
+    <Folder Include="Areas\Authentication\Data\" />
+    <Folder Include="Areas\Authentication\Views\Shared\" />
     <Folder Include="Data\" />
     <Folder Include="Views\Error\" />
   </ItemGroup>
