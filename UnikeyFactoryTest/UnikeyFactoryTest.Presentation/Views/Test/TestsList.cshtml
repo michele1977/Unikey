@@ -11,7 +11,6 @@
 
 <script>
     function openModal(Id) {
-
         $('#mailModal').modal("show");
         document.getElementById("selectedTest").value = Id;
 
@@ -37,9 +36,9 @@
     <form action="@Url.Action("TextSearch", "Test")" method="post">
         <div class="btn-group">
             <input id="searchinput" value="@Model.TextFilter" type="search" name="textFilter" class="form-control"
-                   onsearch="@Url.Action("TestsList", "Test", new {TextFilter = ""})">
+                   @*onsearch="@Url.Action("TestsList", "Test", new {TextFilter = ""})"*@>
             <span id="searchclear" class="glyphicon glyphicon-remove-circle"></span>
-            <input type="submit" class="btn btn-primary" value="Search" />
+            <button type="submit" class="btn btn-primary" onclick="showLoadingSpinner()">Search</button>
         </div>
     </form>
 </div>

@@ -1,7 +1,11 @@
 ﻿@model UnikeyFactoryTest.Presentation.Models.UserLoginModel
 
+@{
+    Layout = "~/Views/Shared/LayoutFruition.cshtml";
+}
+
 <div id="logInForm" class="container" style="display: block;padding: 15px; padding-top: 25px;max-width: 500px; border: 2px solid black; border-radius: 10px; background-color: antiquewhite">
-    <form action="/User/CheckData" method="post">
+    <form id="logForm" action="/User/CheckData" method="post">
         <div class="form-group">
             <label for="lbUsername" style="font-family:Verdana, Geneva">Username</label>
             <input type="text" class="form-control" id="lbUsername" name="Username" onkeyup="CheckLogInForm()">
@@ -14,7 +18,7 @@
         </div>
 
         <div style="width: 100%;text-align: right">
-            <button id="btnLogin" type="submit" class="btn btn-primary" disabled="disabled">Log In</button>
+            <button id="btnLogin" class="btn btn-primary" disabled="disabled" onclick="$('#cover-spin').show(0)">Log In</button>
         </div>
         <br>
 
@@ -26,14 +30,14 @@
     <div style="width: 100%; text-align: center">
         <p>Are you not a member? <a onclick="ChangeForm(1)" target="_top" style="color: dodgerblue">Join us!</a></p>
     </div>
-    
-    
+
+
     <script>
         function CheckLogInForm() {
             let firstInput = document.getElementById("lbUsername").value;
             let secondInput = document.getElementById("lbPassword").value;
 
-            if(firstInput !== "" && secondInput !== "") {
+            if (firstInput !== "" && secondInput !== "") {
                 document.getElementById("btnLogin").removeAttribute("disabled");
             } else {
                 document.getElementById("btnLogin").setAttribute("disabled", "true");
