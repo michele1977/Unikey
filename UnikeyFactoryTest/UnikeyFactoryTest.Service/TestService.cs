@@ -26,19 +26,13 @@ namespace UnikeyFactoryTest.Service
 
         public async Task AddNewTest(TestBusiness test)
         {
-            using (Repo)
-            {
-                if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
+            if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
                 var testDao = TestMapper.MapBizToDal(test);
                     await Repo.SaveTest(testDao);
                     test.Id = testDao.Id;
-
-            }
         }
         public async Task <TestBusiness> GetTestById(int testId)
         {
-            Repo = new TestRepository();
-
             TestBusiness test = null;
 
             test = await Repo.GetTest(testId);
@@ -46,25 +40,19 @@ namespace UnikeyFactoryTest.Service
             return test;
         }
         public async Task<List<TestBusiness>> GetTests()
-        {
-            Repo = new TestRepository();
+        { 
             var tests =  Repo.GetTests();
             return await tests;
         }
         public async Task DeleteTest(int testId)
         {
-            using (Repo)
-            {
                 await Repo.DeleteTest(testId);
-            }
         }
         public void UpdateTest(TestBusiness test)
         {
-            using (Repo)
-            {
-                if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
+            if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
                 Repo.UpdateTest(test);
-            }
+            
         }
         public string GenerateGuid()
         {
@@ -78,42 +66,30 @@ namespace UnikeyFactoryTest.Service
         }
         public TestBusiness GetTestByURL(string modelUrl)
         {
-            using (Repo)
-            {
-                return Repo.GetTestByURL(modelUrl);
-            }
+            return Repo.GetTestByURL(modelUrl);
         }
         public async Task DeleteQuestionByIdFromTest(int questionId)
         {
-            using (Repo = new TestRepository())
-            {
-                await Repo.DeleteQuestionByIdFromTest(questionId);
-            }
+            await Repo.DeleteQuestionByIdFromTest(questionId);
         }
         public async Task<List<TestBusiness>> GetTestsByFilter(string filter)
         {
-            using (Repo = new TestRepository())
-            {
-                var res = (await Repo.GetTests()).Where(t => t.Title.ToLower().Contains(filter.ToLower())).ToList();
-                return res;
-            }
+            var res = (await Repo.GetTests()).Where(t => t.Title.ToLower().Contains(filter.ToLower())).ToList();
+            return res;
         }
 
         public async Task<QuestionBusiness> GetQuestionById(int id)
         {
-            using (Repo = new TestRepository())
-            {
-                return await Repo.GetQuestionById(id);
-            }
+            return await Repo.GetQuestionById(id);
         }
 
         public async Task<Dictionary<int, int>> OpenedTestNumber(List<int> TestsId)
         {
-            using (Repo = new TestRepository())
-            {
-                return await Repo.OpenedTestNumber(TestsId);
-            }
+            return await Repo.OpenedTestNumber(TestsId);
         }
-
+        public void Dispose()
+        {
+            Repo.Dispose();
+        }
     }
 }

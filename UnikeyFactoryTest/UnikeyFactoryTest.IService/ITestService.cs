@@ -17,5 +17,7 @@ namespace UnikeyFactoryTest.IService
         Task DeleteQuestionByIdFromTest(int questionId);
         Task<List<TestBusiness>> GetTestsByFilter(string filter);
         Task<QuestionBusiness> GetQuestionById(int id);
+        Task<Dictionary<int, int>> OpenedTestNumber(List<int> TestsId);
+        void Dispose();
     }
 }
