@@ -1,108 +1,71 @@
 ﻿@using UnikeyFactoryTest.Presentation.Models.DTO
-@model UnikeyFactoryTest.Presentation.Models.DTO.QuestionEditModel
+@model UnikeyFactoryTest.Presentation.Models.DTO.QuestionDto
 
 @{
     ViewBag.Title = "EditQuestionsAsync";
 }
 
-<h2>EditQuestionsAsync</h2>
+<h2>Edit Question</h2>
 
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>QuestionEditModel</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TestId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TestId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TestId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PageNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PageNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PageNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PageSize, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PageSize, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PageSize, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CorrectAnswerScore, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CorrectAnswerScore, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CorrectAnswerScore, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Position, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Position, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-    foreach (var answer in Model.Answers)
+<div class="container">
+    @using (Html.BeginForm("SaveUpdateQuestion", "Test", FormMethod.Post))
     {
-        <div class="form-group">
-            @Html.LabelFor(model => answer, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => answer, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                @Html.Label("Question Text", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10" style="text-align:center">
+                    @Html.TextAreaFor(model => model.Text, new { @class = "required", style = "max-width: 100%;width: 100%; border-radius: 5px; border: 1px solid black;", @rows = 5 })
+                    @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Question Score", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CorrectAnswerScore, new { @class = "form-control", type = "number" })
+                    @Html.ValidationMessageFor(model => model.CorrectAnswerScore, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
-    }
-}
 
-    @using (Html.BeginForm(
-        "SaveUpdateQuestion",
-        "Test",
-        routeValues: Model
-        //routeValues: new QuestionEditModel
-        //{
-        //    Id = Model.Id,
-        //    Text = Model.Text,
-        //    Position = Model.Position,
-        //    CorrectAnswerScore = Model.CorrectAnswerScore,
-        //    PageNumber = Model.PageNumber,
-        //    PageSize = Model.PageSize,
-        //    TestId = Model.TestId,
-        //    Answers = Model.Answers
-
-        //}
-        ))
-    {
+        for (int i = 0; i < Model.Answers.Count; i++)
+        {
+            <h3>Answer @i</h3>
+            <div class="form-group">
+                @Html.Label("Answer Text", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => Model.Answers[i].Text, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Check if it's the correct answer", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => Model.Answers[i].IsCorrectBool, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Answer Score", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => Model.Answers[i].Score, new { htmlAttributes = new { @class = "form-control", type = "number" } })
+                    @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" class="btn-info" id="checkout" title="Save"/>
+                <input type="submit" class="btn-info" id="checkout" title="Save" />
             </div>
         </div>
     }
-
+</div>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

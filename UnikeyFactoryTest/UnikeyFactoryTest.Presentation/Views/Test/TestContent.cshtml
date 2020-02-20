@@ -31,14 +31,7 @@
                         <div>
                             @using (Html.BeginForm("EditQuestionsAsync",
                                 "Test",
-                                new QuestionEditModel
-                                {
-                                    Id = question.Id,
-                                    Text = question.Text,
-                                    TestId = question.TestId,
-                                    CorrectAnswerScore = question.CorrectAnswerScore,
-                                    Position = question.Position
-                                },
+                                question,
                                 FormMethod.Post,
                                 null
                                 ))
