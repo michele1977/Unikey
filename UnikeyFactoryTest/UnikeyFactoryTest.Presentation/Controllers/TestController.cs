@@ -84,7 +84,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
                _service.UpdateTest(test);
               
-                returned = new TestDto(test, _service);
+                returned = new TestDto(await _service.GetTestById(test.Id), _service);
              
 
               
