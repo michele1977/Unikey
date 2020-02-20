@@ -63,6 +63,8 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public int PageSize { get; set; } = 10;
         public string TextFilter { get; set; }
         public int NumQuestions { get; set; }
+        public bool isValid { get; set; }
+
 
         public decimal? MaxScore
         {

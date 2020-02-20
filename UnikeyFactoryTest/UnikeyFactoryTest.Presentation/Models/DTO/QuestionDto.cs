@@ -36,7 +36,6 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public short Position { get; set; }
 
 
-
         public QuestionBusiness MapToDomain()
         {
             var returned = new QuestionBusiness

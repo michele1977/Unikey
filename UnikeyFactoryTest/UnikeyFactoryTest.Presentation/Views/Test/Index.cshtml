@@ -78,7 +78,6 @@
         alert("The test has been saved");
     }
 
-
 </script>
 
 @using (Html.BeginForm("AddTest", "Test", FormMethod.Post))
@@ -90,8 +89,10 @@
         if (Model.ShowForm == false)
         {
             @Html.TextBoxFor(x => x.Title, new { @class = "form-control", id = "class-textBox", placeholder = "TestName" })
-            @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled" })
+            @Html.ValidationMessageFor(x => x.Title,"",new {@class = "text-danger"})
 
+            
+            @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled" })
 
             <button class="btn btn-primary" id="buttonCreate" style="margin-left: 45%; margin-top: 10px" >
                 Create
@@ -100,8 +101,10 @@
         if (Model.ShowForm == true)
         {
             @Html.TextBoxFor(x => x.Title, new { @class = "form-control", id = "class-textBox", placeholder = "TestName", disabled="disabled" })
-            @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled" })
+            @Html.ValidationMessageFor(x => x.Title,"",new {@class = "text-danger"})
 
+            
+            @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled" })
 
             <button class="btn btn-primary" id="buttonCreate" disabled style="margin-left: 45%; margin-top: 10px" >
                 Create
@@ -158,9 +161,22 @@
                     </a>
 
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6" id="mydivQuestionForm">
+                @if (Model.isValid == true)
+                {
+                    <div class="col-lg-6 col-md-6 col-sm-6" id="mydivQuestionForm">
 
-                </div>
+                    </div>
+                }
+                @if (Model.isValid == false)
+                {
+                    <div class="col-lg-6 col-md-6 col-sm-6" id="mydivQuestionForm">
+                        @{
+                            var myModel = new QuestionDto();
+                            myModel.TestId = Model.Id;
+                        }
+                        @Html.Partial("AddQuestionPartial", myModel)
+                    </div>
+                }
             </div>
         </div>
     }
