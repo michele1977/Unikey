@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="IAdministratedTestService.cs" />
     <Compile Include="ITestService.cs" />
+    <Compile Include="IUserRegistrationService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -55,6 +56,9 @@
       <Project>{E2F1E71E-9900-4CEF-A8AB-0BC152698A47}</Project>
       <Name>UnikeyFactoryTest.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

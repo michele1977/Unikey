@@ -17,7 +17,7 @@ namespace UnikeyFactoryTest.Mapper
                 Id = user.Id,
                 Tests = user.Tests.Select(TestMapper.MapDalToBizLight).ToList(),
                 Password = user.Password,
-                Username = user.Username
+                UserName = user.Username
             };
 
             return returned;
@@ -30,7 +30,7 @@ namespace UnikeyFactoryTest.Mapper
                 Id = user.Id,
                 Tests = user.Tests.Select(TestMapper.MapBizToDal).ToList(),
                 Password = user.Password,
-                Username = user.Username
+                Username = user.UserName
             };
 
             return returned;

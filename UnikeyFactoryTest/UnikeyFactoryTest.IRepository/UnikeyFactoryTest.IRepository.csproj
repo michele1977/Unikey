@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="IAdministratedTestRepository.cs" />
     <Compile Include="ITestRepository.cs" />
+    <Compile Include="IUserRegistrationRepository.cs" />
     <Compile Include="IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
