@@ -7,6 +7,8 @@ using System.Data.Entity.Core.Common.CommandTrees;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using Ninject;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
@@ -17,14 +19,15 @@ namespace UnikeyFactoryTest.Repository
     public class TestRepository : ITestRepository
     {
         private readonly TestPlatformDBEntities _ctx;
-
+        private IKernel Kernel;
         public TestRepository()
         {
             _ctx = new TestPlatformDBEntities();
         }
 
-        public TestRepository(TestPlatformDBEntities myCtx)
+        public TestRepository(TestPlatformDBEntities myCtx,IKernel kernel)
         {
+            Kernel = kernel;
             _ctx = myCtx;
         }
 
@@ -39,16 +42,17 @@ namespace UnikeyFactoryTest.Repository
         }
 
 
-        public TestBusiness GetTestByURL(string URL)
+        public async Task<TestBusiness> GetTestByURL(string URL)
         {
-            var result = _ctx.Tests.First(x => x.URL.Equals(URL));
+            var result = await _ctx.Tests.FirstAsync(x => x.URL.Equals(URL));
 
             if (result == null)
             {
                 throw new Exception($"Test not found at specified URL ({URL})");
             }
 
-            return TestMapper.MapDalToBizHeavy(result);
+            var mapper = Kernel.Get<IMapper>("Heavy");
+            return mapper.Map<Test, TestBusiness>(result);
         }
 
         public async Task<TestBusiness> GetTest(int testId)
@@ -59,8 +63,8 @@ namespace UnikeyFactoryTest.Repository
             {
                 throw new Exception($"Test not found at specified id ({testId})");
             }
-
-            return TestMapper.MapDalToBizHeavy(myTask);
+            var mapper = Kernel.Get<IMapper>("Heavy");
+            return mapper.Map<Test, TestBusiness>(myTask);
         }
 
         public async Task<List<TestBusiness>> GetTests()
@@ -100,7 +104,8 @@ namespace UnikeyFactoryTest.Repository
 
         public void UpdateTest(TestBusiness test)
         {
-            var newValue = TestMapper.MapBizToDal(test);
+            var mapper = Kernel.Get<IMapper>("Heavy");
+            var newValue = mapper.Map<TestBusiness, Test>(test);
             var oldValue = (EntityExtension) (_ctx.Tests.FirstOrDefault(x => x.Id == test.Id));
             NewUpdate(newValue, oldValue);
         }
@@ -147,9 +152,47 @@ namespace UnikeyFactoryTest.Repository
             {
                 return _ctx.Questions.FirstOrDefault(q => q.Id == id);
             });
-
-            var returned = QuestionMapper.MapDalToBiz(taskQuestion);
+            var mapper = Kernel.Get<IMapper>("Heavy");
+            var returned = mapper.Map<Question, QuestionBusiness>(taskQuestion);
             return returned;
+        }
+
+        public async Task<Dictionary<int, int>> OpenedTestNumber(IEnumerable<int> TestsId)
+        {
+            var result = await Task.Run(() =>
+            {
+                var returned = new Dictionary<int, int>();
+                foreach (var Id in TestsId)
+                {
+                    var test = _ctx.Tests.FirstOrDefault(t => t.Id == Id);
+                    if (test != null)
+                    {
+                        returned.Add(Id, test.AdministratedTests.Count(a => a.State == 1));
+                    }
+                    else throw new Exception("Test not found");
+                }
+                return returned;
+            });
+
+            return result;
+        }
+
+
+        public Dictionary<int,int> GetClosedTests(int pageNum, int pageSize)
+        {
+            var testIdList = _ctx.Tests.OrderBy(t => t.Id).Skip((pageNum - 1) * pageSize).Take(pageSize).Select(t => t.Id).ToList();
+
+            Dictionary<int, int> numClosedAdTestsDictionary= new Dictionary<int, int>();
+
+            foreach (var id in testIdList)
+            {
+                var numClosedTests = _ctx.AdministratedTests.Count(adT => adT.TestId == id && adT.State == 3);
+
+                numClosedAdTestsDictionary.Add(id, numClosedTests);
+
+            }
+
+            return numClosedAdTestsDictionary;
         }
     }
 }

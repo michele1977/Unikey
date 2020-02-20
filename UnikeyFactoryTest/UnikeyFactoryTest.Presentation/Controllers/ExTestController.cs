@@ -22,9 +22,10 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         private ITestService _testService;
         private Logger Logger = LogManager.GetCurrentClassLogger();
         //private IKernel kernel;
-        public ExTestController(IAdministratedTestService value, ITestService value2)
+        public ExTestController(IAdministratedTestService value, ITestService value2, IKernel kernel)
         {
             _testService = value2;
+            this.kernel = kernel;
             _adTestService = value;
         }
 
@@ -42,10 +43,10 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public async Task<ActionResult> BeginTest(AdministratedTestModel model)
         {
             var subject = model.Name + " " + model.Surname;
-            var test = _testService.GetTestByURL(model.Url);
+            var test = await _testService.GetTestByURL(model.Url);
             var newExecutionTest = _adTestService.AdministratedTest_Builder(test, subject);
             newExecutionTest.State = AdministratedTestState.Started;
-            var savedTest = await _adTestService.Add(newExecutionTest);
+            var savedTest = _adTestService.Add(newExecutionTest);
             model.NumQuestion = test.Questions.Count;
             model.ActualQuestion = savedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == 0);
             model.AdministratedTestId = savedTest.Id;
@@ -133,7 +134,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 actualQuestion.AdministratedAnswers.FirstOrDefault(a => a.Id == System.Convert.ToInt32(value)).isSelected = true;
                 await _adTestService.Update_Save_Question(actualQuestion);
             }
-            model.ActualQuestion = await _adTestService.Next(administratedTest, model.ActualPosition + 1);
+            model.ActualQuestion = _adTestService.Next(administratedTest, model.ActualPosition + 1);
             return View("Test", model);
         }
 
@@ -178,7 +179,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 actualQuestion.AdministratedAnswers.FirstOrDefault(a => a.Id == System.Convert.ToInt32(value)).isSelected = true;
                 await _adTestService.Update_Save_Question(actualQuestion);
             }
-            model.ActualQuestion = await _adTestService.Previous(administratedTest, model.ActualPosition - 1);
+            model.ActualQuestion = _adTestService.Previous(administratedTest, model.ActualPosition - 1);
             return View("Test", model);
         }
         [HttpGet]

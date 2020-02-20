@@ -8,6 +8,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
+<<<<<<< HEAD
+=======
+using UnikeyFactoryTest.Repository;
+>>>>>>> f8a69651fe1ec26ef34f38fb20e2f259e47258ac
 using UnikeyFactoryTest.Service;
 
 namespace UserTest
@@ -37,7 +41,11 @@ namespace UserTest
                         UserId = 6
                     };
 
+<<<<<<< HEAD
                     TestService service = new TestService(TestRepository);
+=======
+                    TestService service = new TestService(new TestRepository());
+>>>>>>> f8a69651fe1ec26ef34f38fb20e2f259e47258ac
 
                     await service.AddNewTest(testToAdd);
 
@@ -60,7 +68,11 @@ namespace UserTest
 
             string result = "";
 
+<<<<<<< HEAD
             TestService service = new TestService(TestRepository);
+=======
+            TestService service = new TestService(new TestRepository());
+>>>>>>> f8a69651fe1ec26ef34f38fb20e2f259e47258ac
 
             List<TestBusiness> tests = await service.GetTestsByFilter(testName);
 

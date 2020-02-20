@@ -22,7 +22,11 @@ namespace UserTest
             user.Username = "ugo";
             user.Password = "123";
 
+<<<<<<< HEAD
             UserService service = new UserService(services);
+=======
+            UserService service = new UserService(new UserRepository());
+>>>>>>> f8a69651fe1ec26ef34f38fb20e2f259e47258ac
             bool result = await service.IsUser(user);
 
             Assert.AreEqual(true, result);
@@ -35,7 +39,11 @@ namespace UserTest
             user.Username = "ugo";
             user.Password = "1234";
 
+<<<<<<< HEAD
             UserService service = new UserService(services);
+=======
+            UserService service = new UserService(new UserRepository());
+>>>>>>> f8a69651fe1ec26ef34f38fb20e2f259e47258ac
             bool result = await service.IsUser(user);
 
             Assert.AreEqual(false, result);

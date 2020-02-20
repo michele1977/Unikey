@@ -18,15 +18,13 @@ namespace UnikeyFactoryTest.Service
     public class TestService : ITestService
     {
         private ITestRepository Repo;
-        private static readonly BindingsService _bindings = new BindingsService();
+        //private static readonly BindingsService _bindings = new BindingsService();
 
-        private readonly IKernel Kernel = new StandardKernel(_bindings);
-        //public TestService()
-        //{
-        //    Repo = new TestRepository();
-        //}
-        public TestService(ITestRepository value)
+        private readonly IKernel Kernel; /*= new StandardKernel(_bindings);*/
+       
+        public TestService(ITestRepository value,IKernel kernel)
         {
+            Kernel = kernel;
             Repo = value;
         }
 
@@ -35,18 +33,15 @@ namespace UnikeyFactoryTest.Service
             using (Repo)
             {
                 if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
-                var x = Kernel.Get<IMapper>("Heavy");
-                var testDaoo = x.Map<TestBusiness, Test>(test);
-                //var testDao = TestMapper.MapBizToDal(test);
-                    await Repo.SaveTest(testDaoo);
+                var mapper = Kernel.Get<IMapper>("Heavy");
+                var testDaoo = mapper.Map<TestBusiness, Test>(test);
+                await Repo.SaveTest(testDaoo);
                     test.Id = testDaoo.Id;
 
             }
         }
         public async Task <TestBusiness> GetTestById(int testId)
         {
-            Repo = new TestRepository();
-
             TestBusiness test = null;
 
             test = await Repo.GetTest(testId);
@@ -54,25 +49,19 @@ namespace UnikeyFactoryTest.Service
             return test;
         }
         public async Task<List<TestBusiness>> GetTests()
-        {
-            Repo = new TestRepository();
+        { 
             var tests =  Repo.GetTests();
             return await tests;
         }
         public async Task DeleteTest(int testId)
         {
-            using (Repo)
-            {
                 await Repo.DeleteTest(testId);
-            }
         }
         public void UpdateTest(TestBusiness test)
         {
-            using (Repo)
-            {
-                if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
+            if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
                 Repo.UpdateTest(test);
-            }
+            
         }
         public string GenerateGuid()
         {
@@ -84,35 +73,40 @@ namespace UnikeyFactoryTest.Service
             return $"{baseUrl}ExTest\\TestStart?guid={guid.ToString()}";
 
         }
-        public TestBusiness GetTestByURL(string modelUrl)
+        public async Task<TestBusiness> GetTestByURL(string modelUrl)
         {
-            using (Repo)
-            {
-                return Repo.GetTestByURL(modelUrl);
-            }
+            return await Repo.GetTestByURL(modelUrl);
         }
         public async Task DeleteQuestionByIdFromTest(int questionId)
         {
-            using (Repo = new TestRepository())
-            {
-                await Repo.DeleteQuestionByIdFromTest(questionId);
-            }
+            await Repo.DeleteQuestionByIdFromTest(questionId);
         }
         public async Task<List<TestBusiness>> GetTestsByFilter(string filter)
         {
-            using (Repo = new TestRepository())
-            {
-                var res = (await Repo.GetTests()).Where(t => t.Title.ToLower().Contains(filter.ToLower())).ToList();
-                return res;
-            }
+            var res = (await Repo.GetTests()).Where(t => t.Title.ToLower().Contains(filter.ToLower())).ToList();
+            return res;
         }
 
         public async Task<QuestionBusiness> GetQuestionById(int id)
         {
-            using (Repo = new TestRepository())
-            {
-                return await Repo.GetQuestionById(id);
-            }
+            return await Repo.GetQuestionById(id);
+        }
+
+        public async Task<Dictionary<int, int>> OpenedTestNumber(List<int> TestsId)
+        {
+            return await Repo.OpenedTestNumber(TestsId);
+        }
+        public void Dispose()
+        {
+            Repo.Dispose();
+        }
+
+
+        public Dictionary<int, int> GetClosedTests(int pageNum, int pageSize)
+        {
+            var result = Repo.GetClosedTests(pageNum,pageSize);
+
+            return result;
         }
 
     }

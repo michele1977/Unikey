@@ -26,11 +26,11 @@ namespace UnikeyFactoryTest.Service
             Kernel.Bind<MapperConfiguration>().ToConstant(ModulesMapping.GetConfiguration());
 
             Kernel.Bind<IMapper>().ToMethod(ctx =>
-                new global::AutoMapper.Mapper(ModulesMapping.GetConfiguration(),
+                new global::AutoMapper.Mapper(ModuleMapping.GetConfiguration(),
                     type => Kernel.GetType())).Named("Heavy");
 
             Kernel.Bind<IMapper>().ToMethod(ctx =>
-                new global::AutoMapper.Mapper(ModulesMapping.GetConfigurationLight(),
+                new global::AutoMapper.Mapper(ModuleMapping.GetConfigurationLight(),
                     type => Kernel.GetType())).Named("Light");
         }
     }

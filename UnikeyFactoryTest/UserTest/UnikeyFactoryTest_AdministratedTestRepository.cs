@@ -27,8 +27,13 @@ namespace UserTest
         {
             var myCtx = new TestPlatformDBEntities();
             var myRepo = new AdministratedTestRepository(myCtx);
+<<<<<<< HEAD
             var exTestService = new AdministratedTestService(repository);
             var testService = new TestService(TestRepository);
+=======
+            var exTestService = new AdministratedTestService(myRepo);
+            var testService = new TestService(new TestRepository());
+>>>>>>> f8a69651fe1ec26ef34f38fb20e2f259e47258ac
 
             var test = await testService.GetTestById(60);
             var exTest = exTestService.AdministratedTest_Builder(test, "andrea bomber");
@@ -60,7 +65,7 @@ namespace UserTest
             {
                 try
                 {
-                    await myRepo.Add(exTest);
+                    myRepo.Add(exTest);
                     var testAdded = myCtx.AdministratedTests.FirstOrDefault(t => t.TestSubject == "andrea bomber");
                     Assert.AreEqual(exTest.URL, testAdded.URL);
                 }

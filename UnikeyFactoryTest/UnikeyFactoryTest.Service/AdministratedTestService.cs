@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Ninject;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Mvc.Html;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Domain.Enums;
 using UnikeyFactoryTest.IRepository;
@@ -20,17 +22,9 @@ namespace UnikeyFactoryTest.Service
 
         public bool IsLast = false;
 
-        //public AdministratedTestService()
-        //{
-        //    _repo = new AdministratedTestRepository();
-        //}
-
         public AdministratedTestService(IAdministratedTestRepository repo)
         {
-            if (repo is null)
-                _repo = new AdministratedTestRepository();
-            else
-                _repo = repo;
+            _repo = repo;
         }
 
         public AdministratedTestBusiness AdministratedTest_Builder(TestBusiness test, string subject)
@@ -63,16 +57,13 @@ namespace UnikeyFactoryTest.Service
 
         public async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByFilter(string textFilter)
         {
-            using (_repo = new AdministratedTestRepository())
-            {
-                var res = (await _repo.GetAdministratedTests()).Where(t => t.TestSubject.ToLower().Contains(textFilter.ToLower())).ToList();
-                return res;
-            }
+            var res = (await _repo.GetAdministratedTests()).Where(t => t.TestSubject.ToLower().Contains(textFilter.ToLower())).ToList();
+            return res;
         }
 
-        public async Task<AdministratedTestBusiness> Add(AdministratedTestBusiness adTest)
+        public AdministratedTestBusiness Add(AdministratedTestBusiness adTest)
         {
-            return await _repo.Add(adTest);
+            return _repo.Add(adTest);
         }
 
         public async Task Update_Save(AdministratedTestBusiness adTest)
@@ -94,20 +85,16 @@ namespace UnikeyFactoryTest.Service
 
         public async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId)
         {
-            _repo = new AdministratedTestRepository();
             var myTask = Task.Run(() => _repo.GetAdministratedTestsByTestId(testId));
             return await myTask;
         }
 
         public async Task DeleteAdministratedTest(int administratedTestId)
         {
-            using (_repo = new AdministratedTestRepository())
-            {
-                await _repo.DeleteAdministratedTest(administratedTestId);
-            }
+            await _repo.DeleteAdministratedTest(administratedTestId);
         }
 
-        public async Task<AdministratedQuestionBusiness> Next(AdministratedTestBusiness administratedTest, int position)
+        public AdministratedQuestionBusiness Next(AdministratedTestBusiness administratedTest, int position)
         {
 
             return administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
@@ -117,9 +104,14 @@ namespace UnikeyFactoryTest.Service
         {
             await _repo.Update_Save_Question(adQuestion);
         }
-        public async Task<AdministratedQuestionBusiness> Previous(AdministratedTestBusiness administratedTest, int position)
+        public AdministratedQuestionBusiness Previous(AdministratedTestBusiness administratedTest, int position)
         {
             return administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
+        }
+
+        public void Dispose()
+        {
+            _repo.Dispose();
         }
     }
 }

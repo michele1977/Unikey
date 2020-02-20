@@ -1,22 +1,21 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnikeyFactoryTest.Mapper.AutoMappers;
+using AutoMapper;
 
-namespace UnikeyFactoryTest.AutoMapper
+namespace UnikeyFactoryTest.Mapper.AutoMappers
 {
-    public class ModulesMapping
+    public class ModuleMapping
     {
         private IMapper Mapper { get; set; }
 
-        public ModulesMapping(IMapper mapper)
+        public ModuleMapping(IMapper mapper)
         {
             Mapper = mapper;
         }
-        public ModulesMapping()
+        public ModuleMapping()
         {
 
         }

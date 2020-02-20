@@ -74,7 +74,10 @@
     </div>
     @foreach (var test in Model.Tests)
     {
+        test.NumberOfTest = Model.AdministratedTestOpen.FirstOrDefault(x => x.Key == test.Id).Value;
+        test.ClosedTestNumber = Model.ClosedTestsNumberPerTest[test.Id];
         Html.RenderPartial("TestsTablePartial", test);
+
     }
 
 </table>

@@ -12,7 +12,7 @@ namespace UnikeyFactoryTest.IRepository
     public interface IAdministratedTestRepository : IDisposable
     {
         Task Update_Save(AdministratedTestBusiness adTest);
-        Task<AdministratedTestBusiness> Add(AdministratedTestBusiness adTest);
+        AdministratedTestBusiness Add(AdministratedTestBusiness adTest);
         Task<AdministratedTestBusiness> GetAdministratedTestById(int adTestId);
         Task<List<AdministratedTestBusiness>> GetAdministratedTests();
         Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId);
