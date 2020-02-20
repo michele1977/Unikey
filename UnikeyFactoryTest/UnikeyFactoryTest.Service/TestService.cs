@@ -4,6 +4,9 @@ using System.Configuration;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Ninject;
+using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.IService;
@@ -15,22 +18,28 @@ namespace UnikeyFactoryTest.Service
     public class TestService : ITestService
     {
         private ITestRepository Repo;
-        //public TestService()
-        //{
-        //    Repo = new TestRepository();
-        //}
-        public TestService(ITestRepository value)
+
+        private readonly IKernel Kernel; 
+       
+        public TestService(ITestRepository value,IKernel kernel)
         {
+            Kernel = kernel;
             Repo = value;
         }
 
         public void AddNewTest(TestBusiness test)
         {
-            if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
-            var testDao = TestMapper.MapBizToDal(test);
-            Repo.SaveTest(testDao);
-            test.Id = testDao.Id;
+            using (Repo)
+            {
+                if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
+                var mapper = Kernel.Get<IMapper>("Heavy");
+                var testDaoo = mapper.Map<TestBusiness, Test>(test);
+                Repo.SaveTest(testDaoo);
+                    test.Id = testDaoo.Id;
+
+            }
         }
+        
 
         public async Task <TestBusiness> GetTestById(int testId)
         {
@@ -43,7 +52,7 @@ namespace UnikeyFactoryTest.Service
 
         public async Task<List<TestBusiness>> GetTests()
         { 
-            var tests = Repo.GetTests();
+            var tests =  Repo.GetTests();
             return await tests;
         }
 
@@ -51,14 +60,12 @@ namespace UnikeyFactoryTest.Service
         {
                 await Repo.DeleteTest(testId);
         }
-
         public void UpdateTest(TestBusiness test)
         {
             if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
                 Repo.UpdateTest(test);
             
         }
-
         public string GenerateGuid()
         {
             return Guid.NewGuid().ToString();

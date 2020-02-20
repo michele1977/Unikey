@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
+using AutoMapper;
 using Microsoft.Ajax.Utilities;
+using Ninject;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IService;
@@ -32,14 +34,17 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         private static readonly Test test = new Test();
         private IAdministratedTestService administratedservice;
         private ITestService _service;
+        private readonly IKernel Kernel;
+
 
         public TestController()
         {
 
         }
 
-        public TestController(ITestService value, IAdministratedTestService value2)
+        public TestController(ITestService value, IAdministratedTestService value2,IKernel kernel)
         {
+            Kernel = kernel;
             _service = value;
             administratedservice = value2;
         }
@@ -142,7 +147,8 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 test.UserId = UserId;
                 test.URL = _service.GenerateGuid();
                 test.Date = model.Date;
-                var testDomain = TestMapper.MapDalToBizHeavy(test);
+                var mapper = Kernel.Get<IMapper>("Heavy");
+                var testDomain = mapper.Map<Test, TestBusiness>(test);
                 _service.AddNewTest(testDomain);
                 model.Id = testDomain.Id;
 
@@ -390,6 +396,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             testsListModel.PageSize = 10;
 
             await testsListModel.Paginate(testsListModel.Tests);
+            var testsId = (from t in testsListModel.Tests
+                select t.Id).ToList();
+            testsListModel.AdministratedTestOpen = await _service.OpenedTestNumber(testsId);
 
             testsListModel.ClosedTestsNumberPerTest = await _service.GetClosedTests(testsListModel.PageNumber, testsListModel.PageSize, testsListModel.TextFilter);
 

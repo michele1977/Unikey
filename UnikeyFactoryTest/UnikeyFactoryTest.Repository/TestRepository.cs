@@ -7,6 +7,8 @@ using System.Data.Entity.Core.Common.CommandTrees;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using Ninject;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
@@ -17,14 +19,11 @@ namespace UnikeyFactoryTest.Repository
     public class TestRepository : ITestRepository
     {
         private readonly TestPlatformDBEntities _ctx;
-
-        public TestRepository()
+        private IKernel Kernel;
+        
+        public TestRepository(TestPlatformDBEntities myCtx,IKernel kernel)
         {
-            _ctx = new TestPlatformDBEntities();
-        }
-
-        public TestRepository(TestPlatformDBEntities myCtx)
-        {
+            Kernel = kernel;
             _ctx = myCtx;
         }
 
@@ -44,7 +43,8 @@ namespace UnikeyFactoryTest.Repository
                 throw new Exception($"Test not found at specified URL ({URL})");
             }
 
-            return TestMapper.MapDalToBizHeavy(result);
+            var mapper = Kernel.Get<IMapper>("Heavy");
+            return mapper.Map<Test, TestBusiness>(result);
         }
 
         public async Task<TestBusiness> GetTest(int testId)
@@ -55,8 +55,8 @@ namespace UnikeyFactoryTest.Repository
             {
                 throw new Exception($"Test not found at specified id ({testId})");
             }
-
-            return TestMapper.MapDalToBizHeavy(myTask);
+            var mapper = Kernel.Get<IMapper>("Heavy");
+            return mapper.Map<Test, TestBusiness>(myTask);
         }
 
         public async Task<List<TestBusiness>> GetTests()
@@ -94,8 +94,9 @@ namespace UnikeyFactoryTest.Repository
 
         public async Task UpdateTest(TestBusiness test)
         {
-            var newValue = TestMapper.MapBizToDal(test);
-            var oldValue = (EntityExtension) (await _ctx.Tests.FirstOrDefaultAsync(x => x.Id == test.Id));
+            var mapper = Kernel.Get<IMapper>("Heavy");
+            var newValue = mapper.Map<TestBusiness, Test>(test);
+            var oldValue = (EntityExtension) (_ctx.Tests.FirstOrDefault(x => x.Id == test.Id));
             NewUpdate(newValue, oldValue);
         }
 
@@ -137,11 +138,15 @@ namespace UnikeyFactoryTest.Repository
 
         public async Task<QuestionBusiness> GetQuestionById(int id)
         {
+            
+                
             var taskQuestion = await _ctx.Questions.FirstOrDefaultAsync(q => q.Id == id);
-
-            var returned = QuestionMapper.MapDalToBiz(taskQuestion);
+            var mapper = Kernel.Get<IMapper>("Heavy");
+            var returned = mapper.Map<Question, QuestionBusiness>(taskQuestion);
             return returned;
         }
+            
+
 
         public async Task<Dictionary<int, int>> OpenedTestNumber(IEnumerable<int> TestsId)
         {
