@@ -22,6 +22,8 @@ namespace UnikeyFactoryTest.Presentation.Models
         [Inject]
         private ITestService service;
 
+        public Dictionary<int,int> ClosedTestsNumberPerTest { get; set; }
+
         private IKernel kernel;
         public Dictionary<int, int> AdministratedTestOpen;
         public TestsListModel()

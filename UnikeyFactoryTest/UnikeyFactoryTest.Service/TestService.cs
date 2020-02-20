@@ -91,5 +91,14 @@ namespace UnikeyFactoryTest.Service
         {
             Repo.Dispose();
         }
+
+
+        public Dictionary<int, int> GetClosedTests(int pageNum, int pageSize)
+        {
+            var result = Repo.GetClosedTests(pageNum,pageSize);
+
+            return result;
+        }
+
     }
 }

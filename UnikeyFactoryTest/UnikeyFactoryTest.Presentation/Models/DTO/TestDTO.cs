@@ -71,6 +71,8 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public string TextFilter { get; set; }
         public int NumQuestions { get; set; }
 
+        public int ClosedTestNumber { get; set; }
+
         public decimal? MaxScore
         {
             get => Questions.Sum(q => q.CorrectAnswerScore);
