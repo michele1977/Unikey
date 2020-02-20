@@ -18,5 +18,7 @@ namespace UnikeyFactoryTest.IRepository
         Task DeleteTest(int testId);
         Task DeleteQuestionByIdFromTest(int questionId);
         Task<QuestionBusiness> GetQuestionById(int id);
-    } 
+        Dictionary<int, int> GetClosedTests(int pageNum, int pageSize);
+
+    }
 }

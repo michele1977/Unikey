@@ -17,6 +17,8 @@ namespace UnikeyFactoryTest.Presentation.Models
         public int LastPage { get; set; }
         public string TextFilter { get; set; }
 
+        public Dictionary<int,int> ClosedTestsNumberPerTest { get; set; }
+
         public TestsListModel()
         {
             Tests = new List<TestDto>();

@@ -70,7 +70,9 @@
     </div>
     @foreach (var test in Model.Tests)
     {
+        test.ClosedTestNumber = Model.ClosedTestsNumberPerTest[test.Id];
         Html.RenderPartial("TestsTablePartial", test);
+
     }
 
 </table>

@@ -170,6 +170,13 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                     await _service.GetTestsByFilter(testsListModel.TextFilter);
 
                 testsListModel.Tests = testsListModel.Paginate(tests);
+
+                testsListModel.ClosedTestsNumberPerTest = _service.GetClosedTests(testsListModel.PageNumber, testsListModel.PageSize);
+                //var listClosedTestNumber = new List<int>();
+                //foreach (var num in testsListModel.ClosedTestsNumberPerTest)
+                //{
+                //    listClosedTestNumber.Add(num.Value);
+                //}
             }
             catch (ArgumentNullException e)
             {

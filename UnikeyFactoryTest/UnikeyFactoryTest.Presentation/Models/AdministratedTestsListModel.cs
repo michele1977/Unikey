@@ -13,7 +13,8 @@ namespace UnikeyFactoryTest.Presentation.Models
         public int PageSize { get; set; } = 10;
         public string TextFilter { get; set; }
         public int LastPage { get; set; }
-
+        
+        public Dictionary<int, int> ClosedTestsNumberPerTest { get; set; }
         public AdministratedTestsListModel()
         {
             Tests = new List<AdministratedTestDto>();

@@ -123,5 +123,14 @@ namespace UnikeyFactoryTest.Service
                 return await Repo.GetQuestionById(id);
             }
         }
+
+
+        public Dictionary<int, int> GetClosedTests(int pageNum, int pageSize)
+        {
+            var result = Repo.GetClosedTests(pageNum,pageSize);
+
+            return result;
+        }
+
     }
 }
