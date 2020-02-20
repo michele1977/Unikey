@@ -39,9 +39,9 @@ namespace UnikeyFactoryTest.Repository
         }
 
 
-        public TestBusiness GetTestByURL(string URL)
+        public async Task<TestBusiness> GetTestByURL(string URL)
         {
-            var result = _ctx.Tests.First(x => x.URL.Equals(URL));
+            var result = await _ctx.Tests.FirstAsync(x => x.URL.Equals(URL));
 
             if (result == null)
             {

@@ -11,7 +11,7 @@ namespace UnikeyFactoryTest.IRepository
     public interface ITestRepository : IDisposable
     {
         Task SaveTest(Test test);
-        TestBusiness GetTestByURL(string URL);
+        Task<TestBusiness> GetTestByURL(string URL);
         Task <TestBusiness> GetTest(int testId);
         Task<List<TestBusiness>> GetTests();
         void UpdateTest(TestBusiness test);

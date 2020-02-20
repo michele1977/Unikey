@@ -65,9 +65,9 @@ namespace UnikeyFactoryTest.Service
             return res;
         }
 
-        public async Task<AdministratedTestBusiness> Add(AdministratedTestBusiness adTest)
+        public AdministratedTestBusiness Add(AdministratedTestBusiness adTest)
         {
-            return await _repo.Add(adTest);
+            return _repo.Add(adTest);
         }
 
         public async Task Update_Save(AdministratedTestBusiness adTest)
@@ -98,7 +98,7 @@ namespace UnikeyFactoryTest.Service
             await _repo.DeleteAdministratedTest(administratedTestId);
         }
 
-        public async Task<AdministratedQuestionBusiness> Next(AdministratedTestBusiness administratedTest, int position)
+        public AdministratedQuestionBusiness Next(AdministratedTestBusiness administratedTest, int position)
         {
 
             return administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
@@ -108,7 +108,7 @@ namespace UnikeyFactoryTest.Service
         {
             await _repo.Update_Save_Question(adQuestion);
         }
-        public async Task<AdministratedQuestionBusiness> Previous(AdministratedTestBusiness administratedTest, int position)
+        public AdministratedQuestionBusiness Previous(AdministratedTestBusiness administratedTest, int position)
         {
             return administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
         }

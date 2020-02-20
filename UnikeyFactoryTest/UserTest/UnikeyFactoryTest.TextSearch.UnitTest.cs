@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.IRepository;
+using UnikeyFactoryTest.Repository;
 using UnikeyFactoryTest.Service;
 
 namespace UserTest
@@ -35,7 +37,7 @@ namespace UserTest
                         UserId = 6
                     };
 
-                    TestService service = new TestService();
+                    TestService service = new TestService(new TestRepository());
 
                     await service.AddNewTest(testToAdd);
 
@@ -58,7 +60,7 @@ namespace UserTest
 
             string result = "";
 
-            TestService service = new TestService();
+            TestService service = new TestService(new TestRepository());
 
             List<TestBusiness> tests = await service.GetTestsByFilter(testName);
 
