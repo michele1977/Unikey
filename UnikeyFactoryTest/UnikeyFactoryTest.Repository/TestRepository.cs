@@ -28,14 +28,10 @@ namespace UnikeyFactoryTest.Repository
             _ctx = myCtx;
         }
 
-        public async Task SaveTest(Test test)
+        public void SaveTest(Test test)
         {
-            var myTask = Task.Run(() =>
-            {
-                _ctx.Tests.Add(test);
-                _ctx.SaveChanges();
-            });
-            await myTask;
+            _ctx.Tests.Add(test);
+            _ctx.SaveChanges();
         }
 
 
@@ -53,7 +49,7 @@ namespace UnikeyFactoryTest.Repository
 
         public async Task<TestBusiness> GetTest(int testId)
         {
-            var myTask = await Task.Run(() => _ctx.Tests.First(t => t.Id == testId));
+            var myTask = await _ctx.Tests.FirstAsync(t => t.Id == testId);
 
             if (myTask == null)
             {
@@ -65,22 +61,20 @@ namespace UnikeyFactoryTest.Repository
 
         public async Task<List<TestBusiness>> GetTests()
         {
-            var returned = _ctx.Tests.ToList();
-
-            var testListTask = await Task.Run(() => _ctx.Tests.Select(t => new TestBusiness()
+            var testListTask = await _ctx.Tests.Select(t => new TestBusiness()
             {
                 Id = t.Id,
                 Title = t.Title,
                 URL = t.URL,
                 Date = t.Date,
-            }).ToList());
+            }).ToListAsync();
 
             return testListTask;
         }
 
         public async Task DeleteTest(int testId)
         {
-            var task = await Task.Run(() => { return _ctx.Tests.First(t => t.Id == testId); });
+            var task = await _ctx.Tests.FirstAsync(t => t.Id == testId);
 
             _ctx.Tests.Remove(task);
             _ctx.SaveChanges();
@@ -98,10 +92,10 @@ namespace UnikeyFactoryTest.Repository
         //    NewUpdate(newValue, oldValue);
         //}
 
-        public void UpdateTest(TestBusiness test)
+        public async Task UpdateTest(TestBusiness test)
         {
             var newValue = TestMapper.MapBizToDal(test);
-            var oldValue = (EntityExtension) (_ctx.Tests.FirstOrDefault(x => x.Id == test.Id));
+            var oldValue = (EntityExtension) (await _ctx.Tests.FirstOrDefaultAsync(x => x.Id == test.Id));
             NewUpdate(newValue, oldValue);
         }
 
@@ -126,7 +120,7 @@ namespace UnikeyFactoryTest.Repository
         }
         public async Task DeleteQuestionByIdFromTest(int questionId)
         {
-            var question = await Task.Run(() => { return _ctx.Questions.FirstOrDefault(q => q.Id == questionId); });
+            var question = await _ctx.Questions.FirstOrDefaultAsync(q => q.Id == questionId);
             if (question == null)
             {
                 throw new NullReferenceException("Question not found ");
@@ -143,10 +137,7 @@ namespace UnikeyFactoryTest.Repository
 
         public async Task<QuestionBusiness> GetQuestionById(int id)
         {
-            var taskQuestion = await Task.Run(() => 
-            {
-                return _ctx.Questions.FirstOrDefault(q => q.Id == id);
-            });
+            var taskQuestion = await _ctx.Questions.FirstOrDefaultAsync(q => q.Id == id);
 
             var returned = QuestionMapper.MapDalToBiz(taskQuestion);
             return returned;
@@ -154,34 +145,39 @@ namespace UnikeyFactoryTest.Repository
 
         public async Task<Dictionary<int, int>> OpenedTestNumber(IEnumerable<int> TestsId)
         {
-            var result = await Task.Run(() =>
+            var returned = new Dictionary<int, int>();
+            foreach (var Id in TestsId)
             {
-                var returned = new Dictionary<int, int>();
-                foreach (var Id in TestsId)
+                var test = await _ctx.Tests.FirstOrDefaultAsync(t => t.Id == Id);
+                if (test != null)
                 {
-                    var test = _ctx.Tests.FirstOrDefault(t => t.Id == Id);
-                    if (test != null)
-                    {
-                        returned.Add(Id, test.AdministratedTests.Count(a => a.State == 1));
-                    }
-                    else throw new Exception("Test not found");
+                    returned.Add(Id, test.AdministratedTests.Count(a => a.State == 1));
                 }
-                return returned;
-            });
+                else throw new Exception("Test not found");
+            }
 
-            return result;
+            return returned;
         }
 
 
-        public Dictionary<int,int> GetClosedTests(int pageNum, int pageSize)
+        public async Task<Dictionary<int,int>> GetClosedTests(int pageNum, int pageSize, string filter)
         {
-            var testIdList = _ctx.Tests.OrderBy(t => t.Id).Skip((pageNum - 1) * pageSize).Take(pageSize).Select(t => t.Id).ToList();
+            List<int> idList;
+
+            if (!String.IsNullOrWhiteSpace(filter))
+            {
+                idList = await _ctx.Tests.Where(t => t.Title.ToLower().Contains(filter.ToLower())).OrderBy(t => t.Id).Skip((pageNum - 1) * pageSize).Take(pageSize).Select(t => t.Id).ToListAsync();
+            }
+            else
+            {
+                idList = await _ctx.Tests.OrderBy(t => t.Id).Skip((pageNum - 1) * pageSize).Take(pageSize).Select(t => t.Id).ToListAsync();
+            }
 
             Dictionary<int, int> numClosedAdTestsDictionary= new Dictionary<int, int>();
 
-            foreach (var id in testIdList)
+            foreach (var id in idList)
             {
-                var numClosedTests = _ctx.AdministratedTests.Count(adT => adT.TestId == id && adT.State == 3);
+                var numClosedTests = await _ctx.AdministratedTests.CountAsync(adT => adT.TestId == id && adT.State == 3);
 
                 numClosedAdTestsDictionary.Add(id, numClosedTests);
 

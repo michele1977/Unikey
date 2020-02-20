@@ -133,7 +133,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddTest(TestDto model)
+        public ActionResult AddTest(TestDto model)
         {
             try
             {
@@ -143,7 +143,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 test.URL = _service.GenerateGuid();
                 test.Date = model.Date;
                 var testDomain = TestMapper.MapDalToBizHeavy(test);
-                await _service.AddNewTest(testDomain);
+                _service.AddNewTest(testDomain);
                 model.Id = testDomain.Id;
 
                 model.ShowForm = true;
@@ -202,7 +202,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
                 testsListModel.Tests = testsListModel.Paginate(tests);
 
-                testsListModel.ClosedTestsNumberPerTest = _service.GetClosedTests(testsListModel.PageNumber, testsListModel.PageSize);
+                testsListModel.ClosedTestsNumberPerTest = await _service.GetClosedTests(testsListModel.PageNumber, testsListModel.PageSize, testsListModel.TextFilter);
                 var testsId = (from t in testsListModel.Tests
                                         select t.Id).ToList();
                 testsListModel.AdministratedTestOpen = await _service.OpenedTestNumber(testsId);
@@ -390,6 +390,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             testsListModel.PageSize = 10;
 
             await testsListModel.Paginate(testsListModel.Tests);
+
+            testsListModel.ClosedTestsNumberPerTest = await _service.GetClosedTests(testsListModel.PageNumber, testsListModel.PageSize, testsListModel.TextFilter);
+
             var testsId = (from t in testsListModel.Tests
                 select t.Id).ToList();
             testsListModel.AdministratedTestOpen = await _service.OpenedTestNumber(testsId);

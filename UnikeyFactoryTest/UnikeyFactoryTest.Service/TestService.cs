@@ -24,13 +24,14 @@ namespace UnikeyFactoryTest.Service
             Repo = value;
         }
 
-        public async Task AddNewTest(TestBusiness test)
+        public void AddNewTest(TestBusiness test)
         {
             if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
-                var testDao = TestMapper.MapBizToDal(test);
-                    await Repo.SaveTest(testDao);
-                    test.Id = testDao.Id;
+            var testDao = TestMapper.MapBizToDal(test);
+            Repo.SaveTest(testDao);
+            test.Id = testDao.Id;
         }
+
         public async Task <TestBusiness> GetTestById(int testId)
         {
             TestBusiness test = null;
@@ -39,39 +40,47 @@ namespace UnikeyFactoryTest.Service
 
             return test;
         }
+
         public async Task<List<TestBusiness>> GetTests()
         { 
-            var tests =  Repo.GetTests();
+            var tests = Repo.GetTests();
             return await tests;
         }
+
         public async Task DeleteTest(int testId)
         {
                 await Repo.DeleteTest(testId);
         }
+
         public void UpdateTest(TestBusiness test)
         {
             if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
                 Repo.UpdateTest(test);
             
         }
+
         public string GenerateGuid()
         {
             return Guid.NewGuid().ToString();
         }
+
         public string GenerateUrl(string guid)
         {
             var baseUrl = ConfigurationManager.AppSettings["baseUrl"];
             return $"{baseUrl}ExTest\\TestStart?guid={guid.ToString()}";
 
         }
+
         public async Task<TestBusiness> GetTestByURL(string modelUrl)
         {
             return await Repo.GetTestByURL(modelUrl);
         }
+
         public async Task DeleteQuestionByIdFromTest(int questionId)
         {
             await Repo.DeleteQuestionByIdFromTest(questionId);
         }
+
         public async Task<List<TestBusiness>> GetTestsByFilter(string filter)
         {
             var res = (await Repo.GetTests()).Where(t => t.Title.ToLower().Contains(filter.ToLower())).ToList();
@@ -87,15 +96,15 @@ namespace UnikeyFactoryTest.Service
         {
             return await Repo.OpenedTestNumber(TestsId);
         }
+
         public void Dispose()
         {
             Repo.Dispose();
         }
 
-
-        public Dictionary<int, int> GetClosedTests(int pageNum, int pageSize)
+        public async Task<Dictionary<int, int>> GetClosedTests(int pageNum, int pageSize, string filter)
         {
-            var result = Repo.GetClosedTests(pageNum,pageSize);
+            var result = await Repo.GetClosedTests(pageNum,pageSize,filter);
 
             return result;
         }
