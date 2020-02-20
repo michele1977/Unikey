@@ -160,13 +160,13 @@ namespace UnikeyFactoryTest.Repository
 
         public Dictionary<int,int> GetClosedTests(int pageNum, int pageSize)
         {
-            var testIdList = _ctx.Tests.OrderBy(t => t.Id).Skip((pageSize - 1) * pageNum).Take(pageSize).Select(t => t.Id).ToList();
+            var testIdList = _ctx.Tests.OrderBy(t => t.Id).Skip((pageNum - 1) * pageSize).Take(pageSize).Select(t => t.Id).ToList();
 
             Dictionary<int, int> numClosedAdTestsDictionary= new Dictionary<int, int>();
 
             foreach (var id in testIdList)
             {
-                var numClosedTests = _ctx.AdministratedTests.Where(adT => adT.TestId == id && adT.State == 3).Count();
+                var numClosedTests = _ctx.AdministratedTests.Count(adT => adT.TestId == id && adT.State == 3);
 
                 numClosedAdTestsDictionary.Add(id, numClosedTests);
 
