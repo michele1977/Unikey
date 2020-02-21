@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Core.Common.CommandTrees;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -185,7 +186,6 @@ namespace UnikeyFactoryTest.Repository
                 var numClosedTests = await _ctx.AdministratedTests.CountAsync(adT => adT.TestId == id && adT.State == 3);
 
                 numClosedAdTestsDictionary.Add(id, numClosedTests);
-
             }
 
             return numClosedAdTestsDictionary;
