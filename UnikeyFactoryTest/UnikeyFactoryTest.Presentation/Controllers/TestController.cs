@@ -402,10 +402,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             testsListModel.ClosedTestsNumberPerTest = await _service.GetClosedTests(testsListModel.PageNumber, testsListModel.PageSize, testsListModel.TextFilter);
 
-            var testsId = (from t in testsListModel.Tests
-                select t.Id).ToList();
-            testsListModel.AdministratedTestOpen = await _service.OpenedTestNumber(testsId);
-
             return View("TestsList", testsListModel);
         }
 

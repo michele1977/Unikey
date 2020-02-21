@@ -27,29 +27,27 @@ namespace Extension
         }.ToArray());
 
         [TestMethod]
-        public void UserRegistrationRepository_Injection_OK()
+        public async Task UserRegistrationRepository_Injection_OK()
         {
             //var userRepository = Kernel.Get<IUserRepository>();
             //Assert.ThrowsException<NotImplementedException>(() => userRepository.CreateAsync(new UserBusiness()));
 
             var userService = Kernel.Get<UserManager<UserBusiness,int>>();
-
+            var marione = await Task.Run(() => userService.FindByNameAsync("Marione"));
+            int g = 0;
         }
 
         [TestMethod]
         public async Task UserService_CreateAsync_OK()
         {
-            //var service = Kernel.Get<UserManager<UserBusiness, int>>();
-            var ctx = new TestPlatformDBEntities();
-            var store = new UserRepository(ctx, Kernel);
-            var service = new UserService(store);
+            var service = Kernel.Get<UserManager<UserBusiness, int>>();
             var user = new UserBusiness()
             {
-                UserName = "Marione",
-                Password = "Unikey1!"
+                UserName = "Danielone",
+                Password = "Unikey11!"
             };
 
-            var porcoddio = service.CreateAsync(user);
+            var result = await Task.Run(() => service.CreateAsync(user));
             int g = 0;
         }
     }

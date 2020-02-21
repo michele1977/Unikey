@@ -23,11 +23,11 @@ namespace UnikeyFactoryTest.NinjectConfiguration
             Bind<IAdministratedTestRepository>().To<AdministratedTestRepository>();
             Bind<ITestRepository>().To<TestRepository>();
             Bind<ITestService>().To<TestService>();
-            Bind(typeof(IUser<>)).To<UserBusiness>();
+            Bind<IUser<int>>().To<UserBusiness>();
             Bind<DbContext>().To<TestPlatformDBEntities>();
             Bind<IUserRepository>().To<UserRepository>();
             Bind<IUserStore<UserBusiness, int>>().To<UserRepository>();
-            Bind(typeof(UserManager<>)).To<UserService>();
+            Bind<UserManager<UserBusiness, int>>().To<UserService>();
         }
     }
 }

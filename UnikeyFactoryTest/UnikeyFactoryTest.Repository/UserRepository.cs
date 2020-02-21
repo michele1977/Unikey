@@ -58,9 +58,8 @@ namespace UnikeyFactoryTest.Repository
         //Da rendere async
         public async Task<UserBusiness> FindByNameAsync(string userName)
         {
-            var result = Mapper.Map<UserBusiness>(
-                await _ctx.Users.FirstOrDefaultAsync(u => u.Username.Equals(userName)));
-
+            var user = await _ctx.Users.FirstOrDefaultAsync(u => u.Username.Equals(userName));
+            var result = Mapper.Map<UserBusiness>(user);
             return result;
         }
         #endregion
