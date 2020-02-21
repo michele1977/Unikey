@@ -99,6 +99,7 @@
     <Compile Include="AutoMappers\TestAutoMapper.cs" />
     <Compile Include="AutoMappers\TestAutoMapperLight.cs" />
     <Compile Include="AutoMappers\UserAutoMapper.cs" />
+    <Compile Include="AutoMappers\UserAutomapperLight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuestionMapper.cs" />
     <Compile Include="TestMapper.cs" />

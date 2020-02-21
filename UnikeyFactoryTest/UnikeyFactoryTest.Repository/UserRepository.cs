@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using Ninject;
+using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
 
@@ -12,6 +16,16 @@ namespace UnikeyFactoryTest.Repository
     public class UserRepository :
         IUserRepository
     {
+        public TestPlatformDBEntities _ctx { get; set; }
+        public IMapper Mapper { get; set; }
+        public IKernel Kernel { get; set; }
+
+        public UserRepository(TestPlatformDBEntities ctx, IKernel kernel)
+        {
+            _ctx = ctx;
+            Kernel = kernel;
+            Mapper = kernel.Get<IMapper>("Light");
+        }
 
         public void Dispose()
         {
@@ -19,9 +33,11 @@ namespace UnikeyFactoryTest.Repository
         }
 
         #region CRUD
-        public Task CreateAsync(UserBusiness user)
+        public async Task CreateAsync(UserBusiness userBusiness)
         {
-            throw new NotImplementedException();
+            var user = Mapper.Map<User>(userBusiness);
+            _ctx.Users.Add(user);
+            await _ctx.SaveChangesAsync();
         }
 
         public Task UpdateAsync(UserBusiness user)
@@ -39,9 +55,13 @@ namespace UnikeyFactoryTest.Repository
             throw new NotImplementedException();
         }
 
-        public Task<UserBusiness> FindByNameAsync(string userName)
+        //Da rendere async
+        public async Task<UserBusiness> FindByNameAsync(string userName)
         {
-            throw new NotImplementedException();
+            var result = Mapper.Map<UserBusiness>(
+                await _ctx.Users.FirstOrDefaultAsync(u => u.Username.Equals(userName)));
+
+            return result;
         }
         #endregion
         #region Password

@@ -96,7 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdministratedTestService.cs" />
-    <Compile Include="BindingsService.cs" />
+    <Compile Include="AutoMapperBindingsService.cs" />
     <Compile Include="Providers\MailProvider\IMailProvider.cs" />
     <Compile Include="Providers\MailProvider\IMailTools.cs" />
     <Compile Include="Providers\MailProvider\MailProvider.cs" />

@@ -37,7 +37,8 @@ namespace UnikeyFactoryTest.Mapper.AutoMappers
                     new TestAutoMapper(),
                     new AdministratedTestAutoMapper(),
                     new AdministratedQuestionAutoMapper(),
-                    new AdministratedAnswerAutoMapper()
+                    new AdministratedAnswerAutoMapper(),
+                    new UserAutoMapper()
                 }));
             return ModelConfig;
         }
@@ -51,7 +52,8 @@ namespace UnikeyFactoryTest.Mapper.AutoMappers
                     new TestAutoMapperLight(),
                     new AdministratedTestAutoMapperLight(),
                     new AdministratedQuestionAutoMapperLight(),
-                    new AdministratedAnswerAutoMapperLight()
+                    new AdministratedAnswerAutoMapperLight(),
+                    new UserAutomapperLight()
                 }));
 
             return mapperConfig;

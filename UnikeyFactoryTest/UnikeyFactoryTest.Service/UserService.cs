@@ -14,5 +14,21 @@ namespace UnikeyFactoryTest.Service
         public UserService(IUserStore<UserBusiness, int> store) : base(store)
         {
         }
+
+        public override async Task<IdentityResult> CreateAsync(UserBusiness user)
+        {
+            try
+            {
+                await Store.CreateAsync(user);
+                return new IdentityResult();
+            }
+            catch (Exception exc)
+            {
+                return new IdentityResult(exc.Message);
+            }
+            
+            
+        }
+
     }
 }

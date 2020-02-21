@@ -8,6 +8,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using AutoMapper;
 using Ninject;
+using Ninject.Modules;
 using Ninject.Web.Common.WebHost;
 using UnikeyFactoryTest.Mapper.AutoMappers;
 using UnikeyFactoryTest.NinjectConfiguration;
@@ -37,7 +38,11 @@ namespace UnikeyFactoryTest.Presentation
         private void RegisterServices(IKernel kernel)
         {
             kernel.Load(Assembly.GetExecutingAssembly());
-            kernel.Load(new BindingsService());
+            kernel.Load(new List<INinjectModule>
+            {
+                new AutoMapperBindingsService(),
+                new UnikeyFactoryTestBindings()
+            });
         }
     }
 }

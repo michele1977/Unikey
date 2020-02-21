@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Ninject.Modules;
+using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.IService;
@@ -22,6 +24,7 @@ namespace UnikeyFactoryTest.NinjectConfiguration
             Bind<ITestRepository>().To<TestRepository>();
             Bind<ITestService>().To<TestService>();
             Bind(typeof(IUser<>)).To<UserBusiness>();
+            Bind<DbContext>().To<TestPlatformDBEntities>();
             Bind<IUserRepository>().To<UserRepository>();
             Bind<IUserStore<UserBusiness, int>>().To<UserRepository>();
             Bind(typeof(UserManager<>)).To<UserService>();
