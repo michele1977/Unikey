@@ -4,6 +4,9 @@ using System.Configuration;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Ninject;
+using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.IService;
@@ -15,22 +18,29 @@ namespace UnikeyFactoryTest.Service
     public class TestService : ITestService
     {
         private ITestRepository Repo;
-        //public TestService()
-        //{
-        //    Repo = new TestRepository();
-        //}
-        public TestService(ITestRepository value)
+
+        private readonly IKernel Kernel; 
+       
+        public TestService(ITestRepository value,IKernel kernel)
         {
+            Kernel = kernel;
             Repo = value;
         }
 
-        public async Task AddNewTest(TestBusiness test)
+        public void AddNewTest(TestBusiness test)
         {
-            if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
-                var testDao = TestMapper.MapBizToDal(test);
-                    await Repo.SaveTest(testDao);
-                    test.Id = testDao.Id;
+            using (Repo)
+            {
+                if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
+                var mapper = Kernel.Get<IMapper>("Heavy");
+                var testDaoo = mapper.Map<TestBusiness, Test>(test);
+                Repo.SaveTest(testDaoo);
+                    test.Id = testDaoo.Id;
+
+            }
         }
+        
+
         public async Task <TestBusiness> GetTestById(int testId)
         {
             TestBusiness test = null;
@@ -39,11 +49,13 @@ namespace UnikeyFactoryTest.Service
 
             return test;
         }
+
         public async Task<List<TestBusiness>> GetTests()
         { 
             var tests =  Repo.GetTests();
             return await tests;
         }
+
         public async Task DeleteTest(int testId)
         {
                 await Repo.DeleteTest(testId);
@@ -58,20 +70,24 @@ namespace UnikeyFactoryTest.Service
         {
             return Guid.NewGuid().ToString();
         }
+
         public string GenerateUrl(string guid)
         {
             var baseUrl = ConfigurationManager.AppSettings["baseUrl"];
             return $"{baseUrl}ExTest\\TestStart?guid={guid.ToString()}";
 
         }
+
         public async Task<TestBusiness> GetTestByURL(string modelUrl)
         {
             return await Repo.GetTestByURL(modelUrl);
         }
+
         public async Task DeleteQuestionByIdFromTest(int questionId)
         {
             await Repo.DeleteQuestionByIdFromTest(questionId);
         }
+
         public async Task<List<TestBusiness>> GetTestsByFilter(string filter)
         {
             var res = (await Repo.GetTests()).Where(t => t.Title.ToLower().Contains(filter.ToLower())).ToList();
@@ -87,15 +103,15 @@ namespace UnikeyFactoryTest.Service
         {
             return await Repo.OpenedTestNumber(TestsId);
         }
+
         public void Dispose()
         {
             Repo.Dispose();
         }
 
-
-        public Dictionary<int, int> GetClosedTests(int pageNum, int pageSize)
+        public async Task<Dictionary<int, int>> GetClosedTests(int pageNum, int pageSize, string filter)
         {
-            var result = Repo.GetClosedTests(pageNum,pageSize);
+            var result = await Repo.GetClosedTests(pageNum,pageSize,filter);
 
             return result;
         }

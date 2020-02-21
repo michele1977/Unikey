@@ -39,7 +39,7 @@ namespace UserTest
 
                     TestService service = new TestService(new TestRepository());
 
-                    await service.AddNewTest(testToAdd);
+                    service.AddNewTest(testToAdd);
 
                     List<TestBusiness> tests = await service.GetTestsByFilter(testName);
 

@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
+using AutoMapper;
 using Microsoft.Ajax.Utilities;
+using Ninject;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IService;
@@ -32,14 +34,17 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         private static readonly Test test = new Test();
         private IAdministratedTestService administratedservice;
         private ITestService _service;
+        private readonly IKernel Kernel;
+
 
         public TestController()
         {
 
         }
 
-        public TestController(ITestService value, IAdministratedTestService value2)
+        public TestController(ITestService value, IAdministratedTestService value2,IKernel kernel)
         {
+            Kernel = kernel;
             _service = value;
             administratedservice = value2;
         }
@@ -84,7 +89,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
                _service.UpdateTest(test);
               
-                returned = new TestDto(test, _service);
+                returned = new TestDto(await _service.GetTestById(test.Id), _service);
              
 
               
@@ -133,7 +138,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddTest(TestDto model)
+        public ActionResult AddTest(TestDto model)
         {
             try
             {
@@ -142,8 +147,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 test.UserId = UserId;
                 test.URL = _service.GenerateGuid();
                 test.Date = model.Date;
-                var testDomain = TestMapper.MapDalToBizHeavy(test);
-                await _service.AddNewTest(testDomain);
+                var mapper = Kernel.Get<IMapper>("Heavy");
+                var testDomain = mapper.Map<Test, TestBusiness>(test);
+                _service.AddNewTest(testDomain);
                 model.Id = testDomain.Id;
 
                 model.ShowForm = true;
@@ -202,7 +208,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
                 testsListModel.Tests = testsListModel.Paginate(tests);
 
-                testsListModel.ClosedTestsNumberPerTest = _service.GetClosedTests(testsListModel.PageNumber, testsListModel.PageSize);
+                testsListModel.ClosedTestsNumberPerTest = await _service.GetClosedTests(testsListModel.PageNumber, testsListModel.PageSize, testsListModel.TextFilter);
                 var testsId = (from t in testsListModel.Tests
                                         select t.Id).ToList();
                 testsListModel.AdministratedTestOpen = await _service.OpenedTestNumber(testsId);
@@ -390,6 +396,12 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             testsListModel.PageSize = 10;
 
             await testsListModel.Paginate(testsListModel.Tests);
+            var testsId = (from t in testsListModel.Tests
+                select t.Id).ToList();
+            testsListModel.AdministratedTestOpen = await _service.OpenedTestNumber(testsId);
+
+            testsListModel.ClosedTestsNumberPerTest = await _service.GetClosedTests(testsListModel.PageNumber, testsListModel.PageSize, testsListModel.TextFilter);
+
             var testsId = (from t in testsListModel.Tests
                 select t.Id).ToList();
             testsListModel.AdministratedTestOpen = await _service.OpenedTestNumber(testsId);

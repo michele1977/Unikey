@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ninject;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -20,11 +21,6 @@ namespace UnikeyFactoryTest.Service
         public int QuestionPosition = 0;
 
         public bool IsLast = false;
-
-        //public AdministratedTestService()
-        //{
-        //    _repo = new AdministratedTestRepository();
-        //}
 
         public AdministratedTestService(IAdministratedTestRepository repo)
         {

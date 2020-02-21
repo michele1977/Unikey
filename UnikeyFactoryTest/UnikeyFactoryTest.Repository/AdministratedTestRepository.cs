@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Ninject;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.UI;
+using AutoMapper;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Domain.Enums;
@@ -16,13 +18,11 @@ namespace UnikeyFactoryTest.Repository
     {
         private readonly TestPlatformDBEntities _ctx;
 
-        public AdministratedTestRepository()
+        private readonly IKernel Kernel;
+        
+        public AdministratedTestRepository(TestPlatformDBEntities ctx,IKernel kernel)
         {
-            _ctx = new TestPlatformDBEntities();
-        }
-
-        public AdministratedTestRepository(TestPlatformDBEntities ctx)
-        {
+            Kernel = kernel;
             _ctx = ctx;
         }
 
@@ -30,10 +30,11 @@ namespace UnikeyFactoryTest.Repository
         {
             try
             {
-                var newAdTestDb = AdministratedTestMapper.MapDomainToDao(adTest);
+                var mapper = Kernel.Get<IMapper>("Heavy");
+                var newAdTestDb = mapper.Map<AdministratedTestBusiness, AdministratedTest>(adTest);
                 _ctx.AdministratedTests.Add(newAdTestDb);
                 _ctx.SaveChanges();
-                adTest = AdministratedTestMapper.MapDaoToDomainHeavy(newAdTestDb);
+                adTest = mapper.Map<AdministratedTest, AdministratedTestBusiness>(newAdTestDb);
                 return adTest;
             }
             catch 
@@ -50,7 +51,8 @@ namespace UnikeyFactoryTest.Repository
             {
                 throw new Exception("Not valid id");
             }
-            var result = AdministratedTestMapper.MapDaoToDomainHeavy(task);
+            var mapper = Kernel.Get<IMapper>("Heavy");
+            var result = mapper.Map<AdministratedTest, AdministratedTestBusiness>(task);
             return result;
         }
 
@@ -71,7 +73,8 @@ namespace UnikeyFactoryTest.Repository
         public async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId)
         { 
             var adTestList = await _ctx.AdministratedTests.Where(t => t.TestId == testId).ToListAsync();
-            var filteredList2 = adTestList.Select(AdministratedTestMapper.MapDaoToDomainLight).ToList();
+            var mapper = Kernel.Get<IMapper>("Heavy");
+            var filteredList2 = mapper.Map<List<AdministratedTest>, List<AdministratedTestBusiness>>(adTestList);
             return filteredList2;
         }
 
@@ -119,7 +122,8 @@ namespace UnikeyFactoryTest.Repository
 
             try
             {
-                var newValue = (EntityExtension) AdministratedTestMapper.MapDomainToDao(test);
+                var mapper = Kernel.Get<IMapper>("Heavy");
+                var newValue = (EntityExtension) mapper.Map<AdministratedTestBusiness, AdministratedTest>(test);
                 var oldValue = await _ctx.AdministratedTests.FirstOrDefaultAsync(x => x.Id == newValue.MyId);
                 NewUpdate(newValue, oldValue);
             }
@@ -162,7 +166,8 @@ namespace UnikeyFactoryTest.Repository
         }
         public async Task Update_Save_Question(AdministratedQuestionBusiness adQuestion)
         {
-            var newQuestion = (EntityExtension)AdministratedQuestionMapper.MapDomainToDao(adQuestion);
+            var mapper = Kernel.Get<IMapper>("Heavy");
+            var newQuestion = (EntityExtension)mapper.Map<AdministratedQuestionBusiness, AdministratedQuestion>(adQuestion);
             var oldQuestion = await _ctx.AdministratedQuestions.FirstOrDefaultAsync(x=>x.Id == adQuestion.Id);
             NewUpdate(newQuestion, oldQuestion);
         }
