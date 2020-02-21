@@ -207,7 +207,8 @@ hr {
 
 .myLabel {
     width: 100px;
-    text-align: right;
+    text-align: left;
+    margin-bottom: 17px;
 }
 
 .myForm {
