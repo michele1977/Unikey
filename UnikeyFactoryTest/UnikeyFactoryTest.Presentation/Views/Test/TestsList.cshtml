@@ -7,7 +7,15 @@
 }
 <link href="~/Content/font-awesome.css" rel="stylesheet" />
 
-<h2>Tests List</h2>
+<div style="display: flex; ">
+    <div style="float: left;">
+        <h2>Tests List</h2>
+    </div>
+
+    <div style="float: right; margin-left: auto;">
+        <a class="btn btn-success" style="float: right;" title="Create Test" onclick="showLoadingSpinner()" href='@Url.Action("Index", "Test")'>Add</a>
+    </div>
+</div>
 
 <script>
     function openModal(Id) {
@@ -30,44 +38,39 @@
     </button>
 </div>
 
-<hr/>
+<hr />
 
-<div class="container">
-    <div class="row">
-        <div class="col-3">
-            <form action="@Url.Action("TextSearch", "Test")" method="post">
+<div style="display: flex; ">
+    <div style="float: left; ">
+            <form style="margin-bottom: 10px;" action="@Url.Action("TextSearch", "Test")" method="post">
                 <div class="btn-group">
                     <input id="searchinput" value="@Model.TextFilter" type="search" name="textFilter" class="form-control" />
                     <span id="searchclear" class="glyphicon glyphicon-remove-circle"></span>
                     <button type="submit" onclick="showLoadingSpinner()" class="btn btn-primary" onclick="showLoadingSpinner()">Search</button>
                 </div>
             </form>
-        </div>
-        <div class="col-3">
-        </div>
-        <div class="col-3">
-        </div>
-        <div class="col-3">
-            <button class="btn btn-success" style="float: right;" title="Create Test" onclick="showLoadingSpinner()" href='@Url.Action("Index", "Test")'>Create</button>
+    </div>
+    
+
+    <div id="pageSizeDropDownList" style="float: right; margin-left: auto;">
+        <div style="margin-top: 5px;">
+            @Html.Label("Elements per page")
+            <select name="PageSizeSelection" onchange="resizePage(this.value, @Model.PageNumber, '/Test/TestsList?TextFilter=@Model.TextFilter&PageSize=');">
+                <option value="@Model.PageSize" selected="selected">@Model.PageSize</option>
+                @for (int i = 10; i <= 161; i *= 2)
+                {
+                    if (Model.PageSize != i)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                }
+            </select>
         </div>
     </div>
 </div>
 
 
-<div id="pageSizeDropDownList">
-    @Html.Label("Elements per page")
-    <select name="PageSizeSelection" onchange="resizePage(this.value, @Model.PageNumber, '/Test/TestsList?TextFilter=@Model.TextFilter&PageSize=');">
-        <option value="@Model.PageSize" selected="selected">@Model.PageSize</option>
-        @for (int i = 10; i <= 161; i *= 2)
-        {
-            if (Model.PageSize != i)
-            {
-                <option value="@i">@i</option>
-            }
 
-        }
-    </select>
-</div>
 
 <table class="table">
     <tr>
@@ -77,6 +80,7 @@
         <th>URL</th>
         <th>Number of tests</th>
         <th>Number of tests opened</th>
+        <th></th>
         <th>Actions</th>
     </tr>
     <div id="myrender">
