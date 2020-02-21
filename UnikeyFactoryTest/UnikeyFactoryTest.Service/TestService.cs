@@ -52,10 +52,10 @@ namespace UnikeyFactoryTest.Service
                 await Repo.DeleteTest(testId);
         }
 
-        public void UpdateTest(TestBusiness test)
+        public async Task UpdateTest(TestBusiness test)
         {
             if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
-                Repo.UpdateTest(test);
+                await Repo.UpdateTest(test);
             
         }
 
@@ -109,5 +109,9 @@ namespace UnikeyFactoryTest.Service
             return result;
         }
 
+        public async Task UpdateQuestion(QuestionBusiness updateQuestion)
+        {
+            await Repo.UpdateQuestion(updateQuestion);
+        }
     }
 }

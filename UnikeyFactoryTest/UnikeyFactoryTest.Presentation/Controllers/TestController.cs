@@ -299,7 +299,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 testToPass = new TestDto(await _service.GetTestById(test.Id), _service);
                 testToPass.PageNumber = test.PageNumber;
                 testToPass.PageSize = test.PageSize;
-                testToPass.URL = _service.GenerateUrl(testToPass.URL);
                 testToPass.TextFilter = test.TextFilter;
             }
             catch (ArgumentNullException ex)
@@ -542,10 +541,13 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveUpdateQuestion(QuestionDto editModel)
+        public async Task <ActionResult> SaveUpdateQuestion(QuestionDto questionModel)
         {
-            //TO IMPLEMENT
-            return View("TestContent");
+            var questionBusiness = questionModel.MapToDomain();
+            await _service.UpdateQuestion(questionBusiness);
+            var testDTO = new TestDto(await _service.GetTestById(questionModel.TestId), _service);
+
+            return View("TestContent", testDTO);
         }
     }
 }

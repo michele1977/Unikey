@@ -5,69 +5,72 @@
     ViewBag.Title = "EditQuestionsAsync";
 }
 
-<h2>Edit Question</h2>
-
 <div class="container">
     @using (Html.BeginForm("SaveUpdateQuestion", "Test", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
+            <h2>Edit Question</h2>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.TestId)
+            @Html.HiddenFor(model => model.Position)
 
             <div class="form-group">
-                @Html.Label("Question Text", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10" style="text-align:center">
-                    @Html.TextAreaFor(model => model.Text, new { @class = "required", style = "max-width: 100%;width: 100%; border-radius: 5px; border: 1px solid black;", @rows = 5 })
+                <b>@Html.Label("Question Text:", new { @class = "control-label col-md-12" })</b>
+                <div class="col-md-12" style="text-align:center">
+                    @Html.TextAreaFor(model => model.Text, new { @class = "form-control", style = "max-width: 100%;width: 100%; border-radius: 5px; border: 1px solid black;", @rows = 5 })
                     @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.Label("Question Score", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.CorrectAnswerScore, new { @class = "form-control", type = "number" })
-                    @Html.ValidationMessageFor(model => model.CorrectAnswerScore, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
 
+        <h2>Edit Answer</h2>
+
         for (int i = 0; i < Model.Answers.Count; i++)
         {
-            <h3>Answer @i</h3>
+
+            @Html.HiddenFor(model => model.Answers[i].Id)
+            @Html.HiddenFor(model => model.Answers[i].QuestionId)
+
+            <hr />
             <div class="form-group">
-                @Html.Label("Answer Text", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => Model.Answers[i].Text, new { htmlAttributes = new { @class = "form-control" } })
+                <h4>Answer @i</h4>
+                <b>@Html.Label("Answer Text:", htmlAttributes: new { @class = "control-label col-md-12" })</b>
+                <div class="col-md-12" style="text-align:center">
+                    @Html.TextAreaFor(model => Model.Answers[i].Text, new { @class = "form-control", style = "max-width: 100%;width: 100%; border-radius: 5px; border: 1px solid black;", @rows = 5 })
                     @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="form-group">
-                @Html.Label("Check if it's the correct answer", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+            <div class="row form-group">
+                <div class="col-4" style="margin-top:7px">
+                    <b>@Html.Label("Check if it's the correct answer:", new { @class = "control-label col-md-12" })</b>
+                </div>
+                <div class="col-8">
                     @Html.EditorFor(model => Model.Answers[i].IsCorrectBool, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="form-group">
-                @Html.Label("Answer Score", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => Model.Answers[i].Score, new { htmlAttributes = new { @class = "form-control", type = "number" } })
+            <div class="row form-group">
+                <div class="col-2" style="margin-top:7px">
+                    <b>@Html.Label("Answer Score:", new { @class = "control-label col-md-12" })</b>
+                </div>
+                <div class="col-10">
+                    @Html.TextBoxFor(model => Model.Answers[i].Score, new { @class = "form-control", type = "number" })
                     @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
                 </div>
             </div>
         }
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" class="btn-info" id="checkout" title="Save" />
-            </div>
+        <div class="form-group" style="text-align:right">
+            <button type="submit" class="btn btn-info" id="checkout" title="Save">Update Question</button>
         </div>
     }
-</div>
-<div>
-    @Html.ActionLink("Back to List", "Index")
+
+    <div>
+        @Html.ActionLink("Back to List", "TestContent", new { Id = Model.TestId})
+    </div>
 </div>
 
 @section Scripts {
