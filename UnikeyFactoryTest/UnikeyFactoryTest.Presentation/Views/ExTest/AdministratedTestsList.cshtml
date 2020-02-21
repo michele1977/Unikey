@@ -13,10 +13,9 @@
 <div>
     <form action="@Url.Action("TextSearch", "ExTest")" method="post">
         <div class="btn-group">
-            <input id="searchinput" value="@Model.TextFilter" type="search" name="textFilter" class="form-control"
-                   onsearch="@Url.Action("AdministratedTestsList", "ExTest", new {TextFilter = ""})">
+            <input id="searchinput" value="@Model.TextFilter" type="search" name="textFilter" class="form-control"/>
             <span id="searchclear" class="glyphicon glyphicon-remove-circle"></span>
-            <input type="submit" class="btn btn-primary" value="Search" />
+            <input type="submit" onclick="showLoadingSpinner()" class="btn btn-primary" value="Search" />
         </div>
     </form>
 </div>
@@ -63,7 +62,7 @@
                     "AdministratedTestContent",
                     "ExTest",
                     new { @item.Id, @Model.PageNumber, @Model.PageSize, @Model.TextFilter },
-                    new { @class = "btn btn-info" })
+                    new { @class = "btn btn-info", onclick="showLoadingSpinner()" })
             </td>
         </tr>
     }
