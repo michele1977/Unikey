@@ -78,13 +78,13 @@
             "AdministratedTestsList",
             "ExTest",
             new { PageNumber = 1, Model.PageSize, Model.TextFilter },
-            new { @class = "btn btn-info" })
+            new { @class = "btn btn-info", onclick="showLoadingSpinner()" })
         @Html.ActionLink(
             "Previous",
             "AdministratedTestsList",
             "ExTest",
             new { PageNumber = Model.PageNumber - 1, Model.PageSize, Model.TextFilter },
-            new { @class = "btn btn-info" })
+            new { @class = "btn btn-info", onclick="showLoadingSpinner()" })
     }
     <label>@Model.PageNumber of @Model.LastPage</label>
     @if (@Model.PageNumber != @Model.LastPage)
@@ -94,13 +94,13 @@
             "AdministratedTestsList",
             "ExTest",
             new { PageNumber = Model.PageNumber + 1, Model.PageSize, Model.TextFilter },
-            new { @class = "btn btn-info" })
+            new { @class = "btn btn-info" , onclick="showLoadingSpinner()"})
         @Html.ActionLink(
             "Last",
             "AdministratedTestsList",
             "ExTest",
             new { PageNumber = Model.LastPage, Model.PageSize, Model.TextFilter },
-            new { @class = "btn btn-info" })
+            new { @class = "btn btn-info", onclick="showLoadingSpinner()" })
     }
 </div>
 

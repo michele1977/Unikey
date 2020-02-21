@@ -12,6 +12,8 @@ $(document).ready(function () {
     });
 });
 
+//$('#delIcolink').click(showLoadingSpinner());
+
 function showLoadingSpinner() {
     $('#cover-spin').show();
 }

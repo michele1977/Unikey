@@ -8,7 +8,7 @@
 }
 
 <h2>Test @Model.Id</h2>
-<a title="Go Back" href='@Url.Action("TestsList", "Test", new {Model.PageNumber, Model.PageSize})'><img id="backIcon" src="~/Content/ICONS/goBackIcon.png" alt="goBack"></a>
+<a title="Go Back" onclick="showLoadingSpinner" href='@Url.Action("TestsList", "Test", new {Model.PageNumber, Model.PageSize})'><img id="backIcon" src="~/Content/ICONS/goBackIcon.png" alt="goBack"></a>
 @*<h2>@Model.Title</h2>*@
 <hr />
 <br />
@@ -26,7 +26,7 @@
         {
             <div class="row testContentRow">
                 <div>
-                    <div>
+                    <div id="divQuestionForm">
                         <strong>Domanda @i</strong>
                         <div>
                             @using (Html.BeginForm("EditQuestionsAsync",
@@ -40,21 +40,21 @@
                                     Position = question.Position
                                 },
                                 FormMethod.Post,
-                                null
+                                new { id = "questionForm" }
                                 ))
                             {
 
-                                <a title="Delete" href='@Url.Action("DeleteQuestion",
-                                                            "Test",
-                                                            new {TestId=question.TestId,
-                                                                PageNumber = @Model.PageNumber,
-                                                                PageSize = @Model.PageSize,
-                                                                Id = question.Id,
-                                                                Text = question.Text,
-                                                                Position = question.Position
-                                                            })'><img id="deleteIcon" src="~/Content/ICONS/deleteIcon.png" alt="delete"></a>
                                 <link href="~/Content/font-awesome.css" rel="stylesheet" />
-                                <button id="editIcon" type="submit" class="fa fa-pencil"></button>
+                                <button id="editIcon" type="submit" class="fa fa-pencil" onclick="showLoadingSpinner()"></button>
+                                <a id="delIcolink" title="Delete" onclick="showLoadingSpinner()" href='@Url.Action("DeleteQuestion",
+                                                                "Test",
+                                                                new {TestId=question.TestId,
+                                                                    PageNumber = @Model.PageNumber,
+                                                                    PageSize = @Model.PageSize,
+                                                                    Id = question.Id,
+                                                                    Text = question.Text,
+                                                                    Position = question.Position
+                                                                })'><img id="deleteIcon" src="~/Content/ICONS/deleteIcon.png" alt="delete"></a>
                             }
                         </div>
 

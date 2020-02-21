@@ -286,3 +286,16 @@ hr {
     -webkit-animation: spin .8s linear infinite;
     animation: spin .8s linear infinite;
 }
+
+#editIcon {
+    background-color: transparent;
+    border: none;
+}
+
+#divQuestionForm {
+    display: flex;
+}
+
+#questionForm {
+    text-align: right;
+}
