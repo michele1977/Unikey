@@ -305,7 +305,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 testToPass = new TestDto(await _service.GetTestById(test.Id), _service);
                 testToPass.PageNumber = test.PageNumber;
                 testToPass.PageSize = test.PageSize;
-                testToPass.URL = _service.GenerateUrl(testToPass.URL);
                 testToPass.TextFilter = test.TextFilter;
             }
             catch (ArgumentNullException ex)
@@ -519,15 +518,15 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             return PartialView("Index", questionDao);
         }
         [HttpPost]
-        public async Task<ActionResult> EditQuestionsAsync(QuestionEditModel questionmodel)
+        public async Task<ActionResult> EditQuestionsAsync(QuestionDto questionmodel)
         {
             try
             {
-                var s = await _service.GetTestById(questionmodel.TestId);
-                var a = s.Questions.Where(x => x.Id == questionmodel.Id).
-                    SelectMany(x => x.Answers).Select(x => x.Text)
-                    .ToList();
-                questionmodel.Answers = a;
+                var testBusiness = await _service.GetTestById(questionmodel.TestId);
+                var testDTO = new TestDto(testBusiness, _service);
+                var AnswerDTO = testDTO.Questions.Where(x => x.Id == questionmodel.Id).
+                    SelectMany(x => x.Answers).ToList();
+                questionmodel.Answers = AnswerDTO;
             }
             catch (ArgumentNullException ex)
             {
@@ -544,12 +543,17 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 Logger.Error(ex, ex.Message);
                 throw;
             }
-            return View(questionmodel);
+            return View("EditQuestionsAsync", questionmodel);
         }
-        public ActionResult SaveUpdateQuestion(QuestionEditModel editModel)
+
+        [HttpPost]
+        public async Task <ActionResult> SaveUpdateQuestion(QuestionDto questionModel)
         {
-            //TO IMPLEMENT
-            return View("TestContent");
+            var questionBusiness = questionModel.MapToDomain();
+            await _service.UpdateQuestion(questionBusiness);
+            var testDTO = new TestDto(await _service.GetTestById(questionModel.TestId), _service);
+
+            return View("TestContent", testDTO);
         }
     }
 }

@@ -10,7 +10,8 @@ namespace UnikeyFactoryTest.IService
         Task <TestBusiness> GetTestById(int testId);
         Task<List<TestBusiness>> GetTests();
         Task DeleteTest(int testId);
-        void UpdateTest(TestBusiness test);
+        Task UpdateTest(TestBusiness test);
+        Task UpdateQuestion(QuestionBusiness updateQuestion);
         string GenerateGuid();
         string GenerateUrl(string guid);
         Task<TestBusiness> GetTestByURL(string modelUrl);

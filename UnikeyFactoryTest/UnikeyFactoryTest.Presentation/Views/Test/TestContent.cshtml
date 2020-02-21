@@ -8,7 +8,7 @@
 }
 
 <h2>Test @Model.Id</h2>
-<a title="Go Back" onclick="showLoadingSpinner()" href='@Url.Action("TestsList", "Test", new {Model.PageNumber, Model.PageSize})'><img id="backIcon" src="~/Content/ICONS/goBackIcon.png" alt="goBack"></a>
+<a title="Go Back" href='@Url.Action("TestsList", "Test", new {Model.PageNumber, Model.PageSize, Model.TextFilter})'><img id="backIcon" src="~/Content/ICONS/goBackIcon.png" alt="goBack"></a>
 @*<h2>@Model.Title</h2>*@
 <hr />
 <br />
@@ -22,7 +22,7 @@
     @{
         int i = 1;
 
-        foreach (QuestionDto question in Model.Questions)
+        foreach (QuestionDto question in Model.Questions.OrderBy(q => q.Position))
         {
             <div class="row testContentRow">
                 <div>
@@ -31,14 +31,7 @@
                         <div>
                             @using (Html.BeginForm("EditQuestionsAsync",
                                 "Test",
-                                new QuestionEditModel
-                                {
-                                    Id = question.Id,
-                                    Text = question.Text,
-                                    TestId = question.TestId,
-                                    CorrectAnswerScore = question.CorrectAnswerScore,
-                                    Position = question.Position
-                                },
+                                question,
                                 FormMethod.Post,
                                 new { id = "questionForm" }
                                 ))

@@ -166,7 +166,7 @@ namespace UnikeyFactoryTest.Repository
         }
 
 
-        public async Task<Dictionary<int,int>> GetClosedTests(int pageNum, int pageSize, string filter)
+        public async Task<Dictionary<int, int>> GetClosedTests(int pageNum, int pageSize, string filter)
         {
             List<int> idList;
 
@@ -179,7 +179,7 @@ namespace UnikeyFactoryTest.Repository
                 idList = await _ctx.Tests.OrderBy(t => t.Id).Skip((pageNum - 1) * pageSize).Take(pageSize).Select(t => t.Id).ToListAsync();
             }
 
-            Dictionary<int, int> numClosedAdTestsDictionary= new Dictionary<int, int>();
+            Dictionary<int, int> numClosedAdTestsDictionary = new Dictionary<int, int>();
 
             foreach (var id in idList)
             {
@@ -189,6 +189,13 @@ namespace UnikeyFactoryTest.Repository
             }
 
             return numClosedAdTestsDictionary;
+        }
+
+        public async Task UpdateQuestion(QuestionBusiness updateQuestion)
+        {
+            var newQuestion = (EntityExtension)QuestionMapper.MapBizToDal(updateQuestion);
+            var oldQuestion = await _ctx.Questions.FirstOrDefaultAsync(q => q.Id == updateQuestion.Id);
+            NewUpdate(newQuestion, oldQuestion);
         }
     }
 }

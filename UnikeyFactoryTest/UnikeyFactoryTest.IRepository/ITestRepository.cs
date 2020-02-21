@@ -15,6 +15,7 @@ namespace UnikeyFactoryTest.IRepository
         Task <TestBusiness> GetTest(int testId);
         Task<List<TestBusiness>> GetTests();
         Task UpdateTest(TestBusiness test);
+        Task UpdateQuestion(QuestionBusiness updateQuestion);
         Task DeleteTest(int testId);
         Task DeleteQuestionByIdFromTest(int questionId);
         Task<QuestionBusiness> GetQuestionById(int id);
