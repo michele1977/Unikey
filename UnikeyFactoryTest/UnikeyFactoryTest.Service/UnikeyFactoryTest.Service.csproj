@@ -102,7 +102,6 @@
     <Compile Include="Providers\MailProvider\MailTools.cs" />
     <Compile Include="TestService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserRegistrationService.cs" />
     <Compile Include="UserService.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,43 +1,18 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnikeyFactoryTest.Context;
-using UnikeyFactoryTest.IRepository;
+using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IService;
-using UnikeyFactoryTest.Repository;
 
 namespace UnikeyFactoryTest.Service
 {
-    public class UserService : IUserService
+    public class UserService : UserManager<UserBusiness, int>
     {
-        private IUserRepository Repo;
-
-        public UserService(IUserRepository value)
+        public UserService(IUserStore<UserBusiness, int> store) : base(store)
         {
-            Repo = value;
         }
-
-        public async Task<bool> IsUser(User user)
-        {
-            return await Repo.FindUser(user);
-        }
-
-        public async Task<int> GetUserIdByUsername(User user)
-        {
-            return await Repo.GetUserIdByUsername(user);
-        }
-
-        public void InsertUser(User user)
-        {
-            Repo.InsertUser(user);
-        }
-
-        public void Dispose()
-        {
-            Repo.Dispose();
-        }
-
     }
 }

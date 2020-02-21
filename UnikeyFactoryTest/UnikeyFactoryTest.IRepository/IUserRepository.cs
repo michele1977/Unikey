@@ -1,16 +1,18 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnikeyFactoryTest.Context;
+using UnikeyFactoryTest.Domain;
 
 namespace UnikeyFactoryTest.IRepository
 {
-    public interface IUserRepository : IDisposable
+    public interface IUserRepository : 
+        IUserStore<UserBusiness,int>,
+        IUserPasswordStore<UserBusiness,int>,
+        IUserLockoutStore<UserBusiness,int>,
+        IUserRoleStore<UserBusiness,int>
     {
-        Task<bool> FindUser(User user);
-        Task<int> GetUserIdByUsername(User user);
-        void InsertUser(User user);
     }
 }
