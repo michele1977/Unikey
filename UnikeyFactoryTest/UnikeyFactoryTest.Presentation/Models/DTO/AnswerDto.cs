@@ -18,18 +18,17 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         {
             Id = answer.Id;
             Text = answer.Text;
-            IsCorrect = answer.IsCorrect;
+            IsCorrectBool = answer.IsCorrect == AnswerState.Correct ? true : false;
+            //IsCorrect = answer.IsCorrect;
             QuestionId = answer.QuestionId;
             Score = answer.Score;
         }
 
         public int Id { get; set; }
         public string Text { get; set; }
-        public AnswerState IsCorrect { get; set; }
-        public bool IsCorrectBool
-        {
-            get => IsCorrect == AnswerState.Correct ? true : false;
-        }
+       // public AnswerState IsCorrect { get; set; }
+        public bool IsCorrectBool { get; set; }
+        
         public int QuestionId { get; set; }
         public decimal Score { get; set; }
     }

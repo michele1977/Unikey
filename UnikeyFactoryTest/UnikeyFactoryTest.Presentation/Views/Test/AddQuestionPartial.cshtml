@@ -5,14 +5,14 @@
 @model UnikeyFactoryTest.Presentation.Models.DTO.QuestionDto
 
 
-@using (Html.BeginForm("AddQuestion", "Test", FormMethod.Post, new {id = "myForm"}))
+@using (Html.BeginForm("AddQuestion", "Test", FormMethod.Post))
 {
     @Html.HiddenFor(x => x.TestId)
     @*@Html.HiddenFor(x => x.Id)*@
-    <input type="hidden" value="@Model.Id" name="Id"/>
+    <input type="hidden" value="@Model.Id" name="Id" />
 
-    @Html.TextAreaFor(m => m.Text, new {@class = "required", id = "txt_QuestionText", style = "max-width: 100%;width: 100%; border-radius: 5px; border: 1px solid black;", @rows = 5, placeholder = "Enter the question "})
-    @Html.ValidationMessageFor(x => x.Text, "", new {@class = "alert-danger"})
+    @Html.TextAreaFor(m => m.Text, new { @class = "required", id = "txt_QuestionText", style = "max-width: 100%;width: 100%; border-radius: 5px; border: 1px solid black;", @rows = 5, placeholder = "Enter the question " })
+    @Html.ValidationMessageFor(x => x.Text, "", new { @class = "alert-danger" })
     <div class="form-group">
 
         @for (var i = 0; i < 4; i++)
@@ -20,27 +20,26 @@
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
-                        @Html.CheckBoxFor(x => x.Answers[i].IsCorrectBool, new {id = "check" + i, onclick = "CorrectAnswer('check" + i + "','txt_AnswerText" + i + "','txt_Score" + i + "')"})
-                        @Html.ValidationMessageFor(x => x.Answers[i].IsCorrect, "", new {@class = "alert-danger"})
+                        @Html.CheckBoxFor(x => x.Answers[i].IsCorrectBool, new {id = "check" + i, onclick = "CorrectAnswer('check" + i + "','txt_AnswerText" + i + "','txt_Score" + i + "','btnSaveQuestion')"})
+                        <br/>
+                        @Html.ValidationMessageFor(x => x.Answers[i].IsCorrectBool, "", new {@class = "text-danger"})
 
                     </div>
                 </div>
-                @Html.TextBoxFor(x => x.Answers[i].Text, new {@class = "form-control", style = "max-width: 100%;width: 70%;", id = "txt_AnswerText" + i, placeholder = "Enter the answer "})
-                @Html.ValidationMessageFor(x => x.Answers[i].Text, "", new {@class = "alert-danger"})
-
-
-                @Html.TextBoxFor(x => x.Answers[i].Score, new {type = "number", id = "txt_Score" + i, @class = "class-mymarginleft", style = "width: 80px", step = "0.5", placeholder = "Score", @hidden = "hidden"})
-                @Html.ValidationMessageFor(x => x.Answers[i].Score, "", new {@class = "alert-danger"})
+                @Html.TextBoxFor(x => x.Answers[i].Text, new { @class = "form-control", style = "max-width: 100%;width: 70%;", id = "txt_AnswerText" + i, placeholder = "Enter the answer " })
+                @Html.ValidationMessageFor(x => x.Answers[i].Text, "", new { @class = "text-danger", style = "display: block" })
+                
+                @Html.TextBoxFor(x => x.Answers[i].Score, new {type = "number", id = "txt_Score" + i, @class = "class-mymarginleft", style = "width: 80px", step = "0.5", placeholder = "Score", @hidden = "hidden" })
+                @Html.ValidationMessageFor(x => x.Answers[i].Score, "", new { @class = "text-danger" })
 
             </div>
         }
 
     </div>
 
-    <button class="btn btn-success" style="margin-left: 64%" onclick="UnloadAddQuestionPartial()">SaveQuestion</button>
+    <button class="btn btn-success" style="margin-left: 64%" onclick="UnloadAddQuestionPartial()" id="btnSaveQuestion" disabled="disabled" >SaveQuestion</button>
     <button class="btn btn-danger" type="button" onclick="modalOpen()" formaction="">Back</button>
 }
-
 
 
 

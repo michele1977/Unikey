@@ -31,7 +31,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         private readonly TestService _service = new TestService();
 
         // GET: Test
-        public ActionResult Index(TestDto model)
+        public ActionResult Index(TestLigthDto model)
         {
             if (UserId == 0)
                 UserId = model.UserId;
@@ -51,7 +51,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult> AddQuestion(QuestionDto model)
         {
-            var returned = new TestDto();
+            var returned = new TestLigthDto();
 
             QuestionValidation val = new QuestionValidation();
             ValidationResult res = val.Validate(model);
@@ -64,11 +64,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 }
 
                 returned.Id = model.TestId;
-                returned = new TestDto(await _service.GetTestById(returned.Id));
+                returned = new TestLigthDto(await _service.GetTestById(returned.Id));
                 returned.ShowForm = true;
                 returned.isValid = false;
-
-                // return PartialView("AddQuestionPartial", model);
 
             }
             else
@@ -81,7 +79,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
                     _service.UpdateTest(test);
 
-                    returned = new TestDto(await _service.GetTestById(test.Id));
+                    returned = new TestLigthDto(await _service.GetTestById(test.Id));
                     returned.ShowForm = true;
                     returned.isValid = true;
                 }
@@ -121,6 +119,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                     throw;
                 }
 
+                
+
+                var c = ModelState.Keys;
             }
 
             return View("Index", returned);
@@ -128,7 +129,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddTest(TestDto model)
+        public async Task<ActionResult> AddTest(TestLigthDto model)
         {
             TestValidation validation = new TestValidation();
             ValidationResult result = validation.Validate(model);
@@ -139,7 +140,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                     ModelState.AddModelError(err.PropertyName, err.ErrorMessage);
 
                 }
-
 
             }
             else
@@ -196,6 +196,8 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 }
 
             }
+
+            var c = ModelState.Keys;
             return View("index", model);
 
         }
@@ -384,6 +386,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var test = await _service.GetTestById(TestId);
             returned = new TestDto(test);
             returned.ShowForm = true;
+            returned.isValid = true;
 
             return View("Index", returned);
         }

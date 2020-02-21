@@ -13,37 +13,22 @@ namespace UnikeyFactoryTest.Presentation.CustomValidators
         public QuestionValidation()
         {
        
-            RuleFor(x => x.Text).NotEmpty().WithMessage("You must write the question");
-            RuleForEach(x => x.Answers).Where(d=> d.IsCorrectBool == true).ChildRules(a =>
+            RuleFor(question => question.Text).NotEmpty().WithMessage("You must write the question");
+            RuleForEach(question => question.Answers).ChildRules(a =>
             {
-                a.RuleFor(x => x.Score).NotEmpty().WithMessage("You must write answers");
-                RuleFor(x => x.Answers).Must(c => c.Count > 0).WithMessage("chek  a correct question");
+                a.RuleFor(answer => answer.Text).NotEmpty().WithMessage("You must write answers");
+                //a.RuleFor(answer => answer.Score)
+                //    .NotEmpty()
+                //    //.NotNull()
+                //   // .GreaterThan(0)
+                //    .When(answer => answer.IsCorrectBool, ApplyConditionTo.CurrentValidator)
+                //    .WithMessage("Score field is required for correct answer");
 
             });
-            RuleForEach(x => x.Answers).ChildRules(a =>
-            {
-                a.RuleFor(x => x.Text).NotEmpty().WithMessage("You must write answers");
-            });
-         
+            
 
         }
 
-        //private bool CheckScore()
-        //{
-        //    QuestionDto question = new QuestionDto();
-        //     var res = (question.Answers.Where(x => x.IsCorrect == AnswerState.Correct)).Count();
-
-        //    if (res > 0)
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
     }
-
     
-
 }

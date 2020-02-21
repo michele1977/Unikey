@@ -9,7 +9,7 @@ using UnikeyFactoryTest.Presentation.Models.DTO;
 
 namespace UnikeyFactoryTest.Presentation.CustomValidators
 {
-    public class TestValidation : AbstractValidator<TestDto>
+    public class TestValidation : AbstractValidator<TestLigthDto>
     {
         public TestValidation()
         {

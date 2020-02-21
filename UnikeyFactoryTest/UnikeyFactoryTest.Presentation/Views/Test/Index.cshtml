@@ -1,5 +1,5 @@
 ﻿@using UnikeyFactoryTest.Presentation.Models.DTO
-@model UnikeyFactoryTest.Presentation.Models.DTO.TestDto
+@model UnikeyFactoryTest.Presentation.Models.DTO.TestLigthDto
 
 <link href="~/Content/font-awesome.css" rel="stylesheet" />
 <style>
@@ -28,17 +28,22 @@
 </style>
 
 <script>
-    function CorrectAnswer(id, idchk, idtxt) {
+    function CorrectAnswer(id, idchk, idtxt, idbtn) {
         var isChecked = document.getElementById(id).checked
         if (isChecked == true) {
             document.getElementById(idchk).classList.add("class-selected");
             document.getElementById(idtxt).hidden = false;
+            document.getElementById(idbtn).disabled = false;
+
         }
         else {
             document.getElementById(idchk).classList.remove("class-selected");
             document.getElementById(idtxt).hidden = true;
+            document.getElementById(idbtn).disabled = "disabled";
+
         }
     }
+
 
     function EnableDiv(id) {
         document.getElementById(id).hidden = false;
@@ -52,6 +57,7 @@
 
     function UnloadAddQuestionPartial() {
         $("#mydivQuestionForm").unload('@Url.Action("GetAddQuestionPartial", "Test", Convert.ToInt32(Model.Id))');
+
     }
 
     function emptyPartialView() {
@@ -157,7 +163,7 @@
                     </table>
 
                     <a href="@Url.Action("TestsList", "Test", new { PageNumber = 1, PageSize = 10 })" onclick="DoneBtn()">
-                        <i class="fa fa-check btn" id="doneBtn" style="color: green" title="Done"></i>
+                        <i class="fa fa-check btn btn-outline-success" id="doneBtn" style="color: green">Done</i>
                     </a>
 
                 </div>
