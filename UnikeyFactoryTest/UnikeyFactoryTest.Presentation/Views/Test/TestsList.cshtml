@@ -35,9 +35,9 @@
 <div>
     <form action="@Url.Action("TextSearch", "Test")" method="post">
         <div class="btn-group">
-            <input id="searchinput" value="@Model.TextFilter" type="search" name="textFilter" class="form-control"/>
+            <input id="searchinput" value="@Model.TextFilter" type="search" name="textFilter" class="form-control" />
             <span id="searchclear" class="glyphicon glyphicon-remove-circle"></span>
-            <button type="submit" onclick="showLoadingSpinner()" class="btn btn-primary" onclick="showLoadingSpinner()">Search</button>
+            <button type="submit" onclick="showLoadingSpinner()" class="btn btn-primary">Search</button>
         </div>
     </form>
 </div>
@@ -117,14 +117,14 @@
 </div>
 
 
-<div>
+<div class="text-center">
     @if (Model.PageNumber > 1)
     {
         <a onclick="showLoadingSpinner()" href="@Url.Action("TestsList","Test",new { PageNumber = 1, Model.PageSize, Model.TextFilter })"><i class="fa fa-angle-double-left btn" title="First"></i></a>
         <a onclick="showLoadingSpinner()" href="@Url.Action("TestsList","Test",new { PageNumber = Model.PageNumber - 1, Model.PageSize, Model.TextFilter})"><i class="fa fa-arrow-left btn" title="Previous"></i></a>
 
     }
-    <label>@Model.PageNumber of @Model.LastPage</label>
+    <strong><label>@Model.PageNumber of @Model.LastPage</label></strong>
     @if (@Model.PageNumber != @Model.LastPage)
     {
         <a onclick="showLoadingSpinner()" href="@Url.Action("TestsList","Test",new { PageNumber = Model.PageNumber + 1, Model.PageSize, Model.TextFilter})"><i class="fa fa-arrow-right btn" title="Next"></i></a>

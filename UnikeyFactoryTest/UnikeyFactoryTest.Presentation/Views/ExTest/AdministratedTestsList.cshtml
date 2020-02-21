@@ -5,6 +5,7 @@
     ViewBag.Title = "TestsList";
 }
 
+<link href="~/Content/font-awesome.css" rel="stylesheet" />
 
 <h2>AdministratedTests List</h2>
 
@@ -13,7 +14,7 @@
 <div>
     <form action="@Url.Action("TextSearch", "ExTest")" method="post">
         <div class="btn-group">
-            <input id="searchinput" value="@Model.TextFilter" type="search" name="textFilter" class="form-control"/>
+            <input id="searchinput" value="@Model.TextFilter" type="search" name="textFilter" class="form-control" />
             <span id="searchclear" class="glyphicon glyphicon-remove-circle"></span>
             <input type="submit" onclick="showLoadingSpinner()" class="btn btn-primary" value="Search" />
         </div>
@@ -37,69 +38,44 @@
 
 <table class="table">
     <tr>
-        <th>Full Name</th>
+        <th class="text-center">Full Name</th>
         @*<th>Test title</th>*@
-        <th>Date</th>
-        <th>Total Score/Max Score</th>
-        <th>Actions</th>
+        <th class="text-center">Date</th>
+        <th class="text-center">Total Score/Max Score</th>
+        <th class="text-center">Actions</th>
     </tr>
 
     @foreach (AdministratedTestDto item in Model.Tests)
     {
         <tr>
-            <td>
+            <td class="text-center">
                 @item.TestSubject
             </td>
-            <td>
+            <td class="text-center">
                 @item.Date
             </td>
-            <td>
+            <td class="text-center">
                 @item.ResultScore/@item.TotalScore
             </td>
-            <td>
-                @Html.ActionLink(
-                    "See test",
-                    "AdministratedTestContent",
-                    "ExTest",
-                    new { @item.Id, @Model.PageNumber, @Model.PageSize, @Model.TextFilter },
-                    new { @class = "btn btn-info", onclick="showLoadingSpinner()" })
+            <td class="text-center">
+                <a id="testContentButt" onclick="showLoadingSpinner()" href="@Url.Action("AdministratedTestContent","ExTest",new { @item.Id, @Model.PageNumber, @Model.PageSize, @Model.TextFilter })"><i class="fa fa-info btn" title="Content"></i></a>
             </td>
         </tr>
     }
 
 </table>
 
-<div>
+<div class="text-center">
     @if (Model.PageNumber > 1)
     {
-        @Html.ActionLink(
-            "First",
-            "AdministratedTestsList",
-            "ExTest",
-            new { PageNumber = 1, Model.PageSize, Model.TextFilter },
-            new { @class = "btn btn-info", onclick="showLoadingSpinner()" })
-        @Html.ActionLink(
-            "Previous",
-            "AdministratedTestsList",
-            "ExTest",
-            new { PageNumber = Model.PageNumber - 1, Model.PageSize, Model.TextFilter },
-            new { @class = "btn btn-info", onclick="showLoadingSpinner()" })
+        <a id="testFirstButt" onclick="showLoadingSpinner()" href="@Url.Action("AdministratedTestsList","ExTest",new { PageNumber = 1, Model.PageSize, Model.TextFilter })"><i class="fa fa-angle-double-left btn" title="First"></i></a>
+        <a id="testPreviousButt" onclick="showLoadingSpinner()" href="@Url.Action("AdministratedTestsList","ExTest",new { PageNumber = Model.PageNumber - 1, Model.PageSize, Model.TextFilter })"><i class="fa fa-arrow-left btn" title="Previous"></i></a>
     }
-    <label>@Model.PageNumber of @Model.LastPage</label>
+    <strong><label>@Model.PageNumber of @Model.LastPage</label></strong>
     @if (@Model.PageNumber != @Model.LastPage)
     {
-        @Html.ActionLink(
-            "Next",
-            "AdministratedTestsList",
-            "ExTest",
-            new { PageNumber = Model.PageNumber + 1, Model.PageSize, Model.TextFilter },
-            new { @class = "btn btn-info" , onclick="showLoadingSpinner()"})
-        @Html.ActionLink(
-            "Last",
-            "AdministratedTestsList",
-            "ExTest",
-            new { PageNumber = Model.LastPage, Model.PageSize, Model.TextFilter },
-            new { @class = "btn btn-info", onclick="showLoadingSpinner()" })
+        <a id="testNextButt" onclick="showLoadingSpinner()" href="@Url.Action("AdministratedTestsList","ExTest",new { PageNumber = Model.PageNumber + 1, Model.PageSize, Model.TextFilter })"><i class="fa fa-arrow-right btn" title="Next"></i></a>
+        <a id="testLastButt" onclick="showLoadingSpinner()" href="@Url.Action("AdministratedTestsList","ExTest",new { PageNumber = Model.LastPage, Model.PageSize, Model.TextFilter })"><i class="fa fa-angle-double-right btn" title="Last"></i></a>
     }
 </div>
 
