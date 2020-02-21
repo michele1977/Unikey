@@ -12,6 +12,7 @@ using AutoMapper;
 using Ninject;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Domain.Enums;
 using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.Mapper;
 
@@ -147,55 +148,27 @@ namespace UnikeyFactoryTest.Repository
             return returned;
         }
             
-
-
-        public async Task<Dictionary<int, int>> OpenedTestNumber(IEnumerable<int> TestsId)
-        {
-            var returned = new Dictionary<int, int>();
-            foreach (var Id in TestsId)
-            {
-                var test = await _ctx.Tests.FirstOrDefaultAsync(t => t.Id == Id);
-                if (test != null)
-                {
-                    returned.Add(Id, test.AdministratedTests.Count(a => a.State == 1));
-                }
-                else throw new Exception("Test not found");
-            }
-
-            return returned;
-        }
-
-
-        public async Task<Dictionary<int, int>> GetClosedTests(int pageNum, int pageSize, string filter)
-        {
-            List<int> idList;
-
-            if (!String.IsNullOrWhiteSpace(filter))
-            {
-                idList = await _ctx.Tests.Where(t => t.Title.ToLower().Contains(filter.ToLower())).OrderBy(t => t.Id).Skip((pageNum - 1) * pageSize).Take(pageSize).Select(t => t.Id).ToListAsync();
-            }
-            else
-            {
-                idList = await _ctx.Tests.OrderBy(t => t.Id).Skip((pageNum - 1) * pageSize).Take(pageSize).Select(t => t.Id).ToListAsync();
-            }
-
-            Dictionary<int, int> numClosedAdTestsDictionary = new Dictionary<int, int>();
-
-            foreach (var id in idList)
-            {
-                var numClosedTests = await _ctx.AdministratedTests.CountAsync(adT => adT.TestId == id && adT.State == 3);
-
-                numClosedAdTestsDictionary.Add(id, numClosedTests);
-            }
-
-            return numClosedAdTestsDictionary;
-        }
-
         public async Task UpdateQuestion(QuestionBusiness updateQuestion)
         {
             var newQuestion = (EntityExtension)QuestionMapper.MapBizToDal(updateQuestion);
             var oldQuestion = await _ctx.Questions.FirstOrDefaultAsync(q => q.Id == updateQuestion.Id);
             NewUpdate(newQuestion, oldQuestion);
+        }
+
+        public async Task<Dictionary<int, int>> GetExTestCountByState(IEnumerable<int> testsIds, AdministratedTestState state)
+        {
+            var returned = new Dictionary<int, int>();
+            foreach (var Id in testsIds)
+            {
+                var test = await _ctx.Tests.FirstOrDefaultAsync(t => t.Id == Id);
+                if (test != null)
+                {
+                    returned.Add(Id, test.AdministratedTests.Count(a => a.State == (byte)state));
+                }
+                else throw new Exception("Test not found");
+            }
+
+            return returned;
         }
     }
 }

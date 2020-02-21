@@ -7,7 +7,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Test @Model.Id</h2>
+<h2>Test @Model.Title</h2>
 <a title="Go Back" href='@Url.Action("TestsList", "Test", new {Model.PageNumber, Model.PageSize, Model.TextFilter})'><img id="backIcon" src="~/Content/ICONS/goBackIcon.png" alt="goBack"></a>
 @*<h2>@Model.Title</h2>*@
 <hr />

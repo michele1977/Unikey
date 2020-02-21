@@ -22,7 +22,7 @@ namespace UnikeyFactoryTest.Presentation.Models
         [Inject]
         private ITestService service;
 
-        public Dictionary<int,int> ClosedTestsNumberPerTest { get; set; }
+        public Dictionary<int, int> ClosedTestsNumberPerTest { get; set; }
 
         private IKernel kernel;
         public Dictionary<int, int> AdministratedTestOpen;
@@ -44,7 +44,7 @@ namespace UnikeyFactoryTest.Presentation.Models
 
         public List<TestDto> Paginate(List<TestBusiness> tests)
         {
-            LastPage = (int) Math.Ceiling((float) tests.Count / PageSize);
+            LastPage = (int)Math.Ceiling((float)tests.Count / PageSize);
 
             if (PageNumber > LastPage)
             {
@@ -60,16 +60,13 @@ namespace UnikeyFactoryTest.Presentation.Models
 
         public async Task<List<TestDto>> Paginate(List<TestDto> tests)
         {
-            LastPage = (int) Math.Ceiling((float) tests.Count / PageSize);
+            LastPage = (int)Math.Ceiling((float)tests.Count / PageSize);
 
-            if (PageNumber > LastPage)
-            {
-                PageNumber = LastPage;
-            }
+            List<TestDto> filteredList = await  Task.Run(() =>tests
+                            .Skip((PageNumber - 1) * PageSize)
+                            .Take(PageSize).ToList());
 
-            List<TestDto> filteredList = tests
-                .Skip((PageNumber - 1) * PageSize)
-                .Take(PageSize).ToList();
+            PageNumber = PageNumber > LastPage ? LastPage : PageNumber;
 
             return filteredList;
         }
