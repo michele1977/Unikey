@@ -484,11 +484,11 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> QuestionDetails(QuestionDto question)
+        public async Task<ActionResult> QuestionDetails(int questionId)
         {
-            var questionDomain = await _service.GetQuestionById(question.Id);
+            var questionDomain = await _service.GetQuestionById(questionId);
             var questionDao = new QuestionDto(questionDomain);
-            return PartialView("Index", questionDao);
+            return PartialView("QuestionDetailPartial", questionDao);
         }
         [HttpPost]
         public async Task<ActionResult> EditQuestionsAsync(QuestionEditModel questionmodel)
@@ -522,6 +522,16 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         {
             //TO IMPLEMENT
             return View("TestContent");
+        }
+        [HttpPost]
+        public async Task<ActionResult> UpdateQuestion(QuestionDto question)
+        {
+            var questionBusiness = question.MapToDomain();
+            _service.UpdateQuestion(questionBusiness);
+            var testToModel = await _service.GetTestById(question.TestId);
+            var model = new TestDto(testToModel);
+            model.ShowForm = true;
+            return View("index",model);
         }
     }
 }

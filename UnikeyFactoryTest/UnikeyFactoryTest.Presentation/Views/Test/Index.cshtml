@@ -44,7 +44,8 @@
         document.getElementById(id).hidden = false;
     }
 
-    function ShowAddQuestionPartial(){
+    function ShowAddQuestionPartial() {
+            $('#mydivQuestionForm').empty();
             $("#mydivQuestionForm").load('@Url.Action("GetAddQuestionPartial", "Test",Model)');
             console.log("ShowAddQuestionPartial activated");
 
@@ -77,7 +78,18 @@
     function DoneBtn() {
         alert("The test has been saved");
     }
-
+    function ShowDetails(id) {
+        $.ajax({
+            type: "GET",
+            url: "/Test/QuestionDetails?questionId=" + id,
+            dataType: "html",
+            success: function (data) {
+                $('#mydivQuestionForm').empty();
+                $('#mydivQuestionForm').html(data);
+            }
+            
+        });
+    }
 
 </script>
 
@@ -142,7 +154,7 @@
                                     <a href="@Url.Action("DeleteQuestion", "Test", Question)">
                                         <i class="fa fa-trash btn" title="Delete"></i> |
                                     </a>
-                                    <a href="@Url.Action("QuestionDetails", "Test", Question)">
+                                    <a onclick="ShowDetails(@Question.Id)">
                                         <i class="fa fa-edit btn" title="Details"></i>
                                     </a>
 
@@ -159,6 +171,9 @@
 
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6" id="mydivQuestionForm">
+
+                </div>
+                <div class="col-6" id="QuestionDetails">
 
                 </div>
             </div>

@@ -18,5 +18,6 @@ namespace UnikeyFactoryTest.IRepository
         Task DeleteTest(int testId);
         Task DeleteQuestionByIdFromTest(int questionId);
         Task<QuestionBusiness> GetQuestionById(int id);
+        void UpdateQuestion(QuestionBusiness question);
     } 
 }

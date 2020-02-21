@@ -113,6 +113,13 @@ namespace UnikeyFactoryTest.Service
                 return await Repo.GetQuestionById(id);
             }
         }
+        public void UpdateQuestion(QuestionBusiness question)
+        {
+            using (Repo = new TestRepository())
+            {
+                Repo.UpdateQuestion(question);
+            }
+        }
 
     }
 }
