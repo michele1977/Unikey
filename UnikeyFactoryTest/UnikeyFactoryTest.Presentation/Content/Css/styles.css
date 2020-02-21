@@ -21,26 +21,32 @@
     left: 0;
     background-color: #2F00FC;
     overflow-x: hidden;
-    transition: 0.5s;
+    
 }
 
 .sidenav a {
-    padding: 5% 8% 50% 32%;
+    padding: 5% 8% 0% 32%;
+    margin-bottom: 50%;
     position: relative;
-    font-size: 25px;
     color: #818181;
     display: block;
     transition: 0.3s;
 }
 
+#homeLogo {
+    padding: 5% 8% 0% 5%;
+    margin-bottom: 25%;
+}
+
 .sidenav a:hover {
+    transition: 0.5s;
     color: #f1f1f1;
 }
 
 #unikeyLogo {
     max-width: 100%;
     height: auto;
-    margin-bottom: 30%;
+    /*margin-bottom: 30%;*/
 }
 
 #logOut {
