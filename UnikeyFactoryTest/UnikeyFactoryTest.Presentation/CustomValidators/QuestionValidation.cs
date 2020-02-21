@@ -17,12 +17,10 @@ namespace UnikeyFactoryTest.Presentation.CustomValidators
             RuleForEach(question => question.Answers).ChildRules(a =>
             {
                 a.RuleFor(answer => answer.Text).NotEmpty().WithMessage("You must write answers");
-                //a.RuleFor(answer => answer.Score)
-                //    .NotEmpty()
-                //    //.NotNull()
-                //   // .GreaterThan(0)
-                //    .When(answer => answer.IsCorrectBool, ApplyConditionTo.CurrentValidator)
-                //    .WithMessage("Score field is required for correct answer");
+                a.RuleFor(answer => answer.Score)
+                    .NotEmpty()
+                    .When(answer => answer.IsCorrectBool, ApplyConditionTo.CurrentValidator)
+                    .WithMessage("Score field is required for correct answer");
 
             });
             
