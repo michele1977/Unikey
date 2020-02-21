@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Core.Common.CommandTrees;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -173,18 +174,26 @@ namespace UnikeyFactoryTest.Repository
         }
 
 
-        public Dictionary<int,int> GetClosedTests(int pageNum, int pageSize)
+        public Dictionary<int,int> GetClosedTests(int pageNum, int pageSize, string filter)
         {
-            var testIdList = _ctx.Tests.OrderBy(t => t.Id).Skip((pageNum - 1) * pageSize).Take(pageSize).Select(t => t.Id).ToList();
+            List<int> idsList = new List<int>();
+
+            if (!string.IsNullOrWhiteSpace(filter))
+            {
+                idsList = _ctx.Tests.Where(t => t.Title.ToLower().Contains(filter.ToLower())).OrderBy(t => t.Id).Skip((pageNum - 1) * pageSize).Take(pageSize).Select(t => t.Id).ToList();
+            }
+            else
+            {
+                idsList = _ctx.Tests.OrderBy(t => t.Id).Skip((pageNum - 1) * pageSize).Take(pageSize).Select(t => t.Id).ToList();
+            }
 
             Dictionary<int, int> numClosedAdTestsDictionary= new Dictionary<int, int>();
 
-            foreach (var id in testIdList)
+            foreach (var id in idsList)
             {
                 var numClosedTests = _ctx.AdministratedTests.Count(adT => adT.TestId == id && adT.State == 3);
 
                 numClosedAdTestsDictionary.Add(id, numClosedTests);
-
             }
 
             return numClosedAdTestsDictionary;

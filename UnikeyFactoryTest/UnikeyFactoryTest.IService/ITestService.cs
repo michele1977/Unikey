@@ -18,7 +18,7 @@ namespace UnikeyFactoryTest.IService
         Task<List<TestBusiness>> GetTestsByFilter(string filter);
         Task<QuestionBusiness> GetQuestionById(int id);
         Task<Dictionary<int, int>> OpenedTestNumber(List<int> TestsId);
-        Dictionary<int, int> GetClosedTests(int pageNum, int pageSize);
+        Dictionary<int, int> GetClosedTests(int pageNum, int pageSize, string filter);
         void Dispose();
     }
 }

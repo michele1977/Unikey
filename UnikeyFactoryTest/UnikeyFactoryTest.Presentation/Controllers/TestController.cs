@@ -202,7 +202,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
                 testsListModel.Tests = testsListModel.Paginate(tests);
 
-                testsListModel.ClosedTestsNumberPerTest = _service.GetClosedTests(testsListModel.PageNumber, testsListModel.PageSize);
+                testsListModel.ClosedTestsNumberPerTest = _service.GetClosedTests(testsListModel.PageNumber, testsListModel.PageSize, testsListModel.TextFilter);
                 var testsId = (from t in testsListModel.Tests
                                         select t.Id).ToList();
                 testsListModel.AdministratedTestOpen = await _service.OpenedTestNumber(testsId);
@@ -381,15 +381,16 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 return RedirectToAction("TestsList", testsListModel);
             }
 
-            var tests = await _service.GetTestsByFilter(testsListModel.TextFilter);
-
-            testsListModel.Tests = tests.Select(t => new TestDto(t, _service)).ToList();
-            
+            testsListModel.Tests = (await _service.GetTestsByFilter(testsListModel.TextFilter))
+                .Select(t => new TestDto(t, _service)).ToList();
 
             testsListModel.PageNumber = 1;
             testsListModel.PageSize = 10;
 
-            await testsListModel.Paginate(testsListModel.Tests);
+            testsListModel.Tests = await testsListModel.Paginate(testsListModel.Tests);
+
+            testsListModel.ClosedTestsNumberPerTest = _service.GetClosedTests(testsListModel.PageNumber, testsListModel.PageSize, testsListModel.TextFilter);
+            
             var testsId = (from t in testsListModel.Tests
                 select t.Id).ToList();
             testsListModel.AdministratedTestOpen = await _service.OpenedTestNumber(testsId);

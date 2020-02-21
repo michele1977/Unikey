@@ -93,9 +93,9 @@ namespace UnikeyFactoryTest.Service
         }
 
 
-        public Dictionary<int, int> GetClosedTests(int pageNum, int pageSize)
+        public Dictionary<int, int> GetClosedTests(int pageNum, int pageSize, string filter)
         {
-            var result = Repo.GetClosedTests(pageNum,pageSize);
+            var result = Repo.GetClosedTests(pageNum,pageSize, filter);
 
             return result;
         }

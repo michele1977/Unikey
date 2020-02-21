@@ -209,7 +209,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             adTestsListModel.Tests = tests.Select(t => new AdministratedTestDto(t)).ToList();
 
-
             adTestsListModel.PageNumber = 1;
             adTestsListModel.PageSize = 10;
 
