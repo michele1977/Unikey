@@ -30,17 +30,29 @@
     </button>
 </div>
 
-<hr />
+<hr/>
 
-<div>
-    <form action="@Url.Action("TextSearch", "Test")" method="post">
-        <div class="btn-group">
-            <input id="searchinput" value="@Model.TextFilter" type="search" name="textFilter" class="form-control"/>
-            <span id="searchclear" class="glyphicon glyphicon-remove-circle"></span>
-            <button type="submit" onclick="showLoadingSpinner()" class="btn btn-primary" onclick="showLoadingSpinner()">Search</button>
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <form action="@Url.Action("TextSearch", "Test")" method="post">
+                <div class="btn-group">
+                    <input id="searchinput" value="@Model.TextFilter" type="search" name="textFilter" class="form-control" />
+                    <span id="searchclear" class="glyphicon glyphicon-remove-circle"></span>
+                    <button type="submit" onclick="showLoadingSpinner()" class="btn btn-primary" onclick="showLoadingSpinner()">Search</button>
+                </div>
+            </form>
         </div>
-    </form>
+        <div class="col-3">
+        </div>
+        <div class="col-3">
+        </div>
+        <div class="col-3">
+            <button class="btn btn-success" style="float: right;" title="Create Test" onclick="showLoadingSpinner()" href='@Url.Action("Index", "Test")'>Create</button>
+        </div>
+    </div>
 </div>
+
 
 <div id="pageSizeDropDownList">
     @Html.Label("Elements per page")
