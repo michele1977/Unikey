@@ -45,12 +45,11 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var subject = model.Name + " " + model.Surname;
             var test = await _testService.GetTestByURL(model.Url);
             var newExecutionTest = _adTestService.AdministratedTest_Builder(test, subject);
-            newExecutionTest.State = AdministratedTestState.Started;
+            newExecutionTest.State = AdministratedTestState.Open;
             var savedTest = _adTestService.Add(newExecutionTest);
             model.NumQuestion = test.Questions.Count;
             model.ActualQuestion = savedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == 0);
             model.AdministratedTestId = savedTest.Id;
-            //await service.ChangeAdministratedTestStateToStarted(savedTest.Id);
             return View("Test", model);
         }
 
@@ -137,31 +136,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             model.ActualQuestion = _adTestService.Next(administratedTest, model.ActualPosition + 1);
             return View("Test", model);
         }
-
-        [HttpPost]
-        public async Task<ActionResult> Close(AdministratedTestModel model, FormCollection form)
-        {
-            var administratedTest = await _adTestService.GetAdministratedTestById(model.AdministratedTestId);
-            var actualQuestion = administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == model.ActualPosition);
-
-            if (Request.Form[actualQuestion.Id.ToString()] != null)
-            {
-                var value = Request.Form[actualQuestion.Id.ToString()];
-                foreach (var administratedAnswer in actualQuestion.AdministratedAnswers)
-                {
-                    if (administratedAnswer.isSelected)
-                    {
-                        administratedAnswer.isSelected = false;
-                    }
-                }
-                actualQuestion.AdministratedAnswers.FirstOrDefault(a => a.Id == System.Convert.ToInt32(value)).isSelected = true;
-                await _adTestService.Update_Save_Question(actualQuestion);
-            }
-
-            administratedTest.State = AdministratedTestState.Open;
-            await _adTestService.Update_Save(administratedTest);
-            return View("TestEnded");
-        }
+      
         public async Task<ActionResult> Previous(AdministratedTestModel model, FormCollection form)
         {
             var administratedTest = await _adTestService.GetAdministratedTestById(model.AdministratedTestId);
