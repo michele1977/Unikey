@@ -44,7 +44,7 @@
         document.getElementById(id).hidden = false;
     }
 
-    function ShowAddQuestionPartial(){
+    function ShowAddQuestionPartial() {
             $("#mydivQuestionForm").load('@Url.Action("GetAddQuestionPartial", "Test",Model)');
             console.log("ShowAddQuestionPartial activated");
 
@@ -103,7 +103,7 @@
                 @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled" })
 
 
-                <button class="btn btn-primary" id="buttonCreate" disabled style="margin-left: 45%; margin-top: 10px" >
+                <button class="btn btn-primary" onclick="showLoadingSpinner()" id="buttonCreate" disabled style="margin-left: 45%; margin-top: 10px" >
                     Create
                 </button>
             }
