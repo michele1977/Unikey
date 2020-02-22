@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Domain.Enums;
 
 namespace UnikeyFactoryTest.IService
 {
@@ -18,8 +19,7 @@ namespace UnikeyFactoryTest.IService
         Task DeleteQuestionByIdFromTest(int questionId);
         Task<List<TestBusiness>> GetTestsByFilter(string filter);
         Task<QuestionBusiness> GetQuestionById(int id);
-        Task<Dictionary<int, int>> OpenedTestNumber(List<int> TestsId);
-        Task<Dictionary<int, int>> GetClosedTests(int pageNum, int pageSize, string filter);
+        Task<Dictionary<int, int>> GetExTestCountByState(IEnumerable<int> testsIds, AdministratedTestState state);
         void Dispose();
     }
 }

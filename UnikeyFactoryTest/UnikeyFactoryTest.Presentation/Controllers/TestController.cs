@@ -199,19 +199,21 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             UserId = System.Convert.ToInt32(HttpContext.Session["UserId"]);
             testsListModel = testsListModel ?? new TestsListModel(_service);
 
+            List<TestBusiness> tests = new List<TestBusiness>();
+            
             try
             {
-                List<TestBusiness> tests = new List<TestBusiness>();
-
                 tests = testsListModel.TextFilter.IsNullOrWhiteSpace() ? await _service.GetTests() :
                     await _service.GetTestsByFilter(testsListModel.TextFilter);
 
                 testsListModel.Tests = testsListModel.Paginate(tests);
 
-                testsListModel.ClosedTestsNumberPerTest = await _service.GetClosedTests(testsListModel.PageNumber, testsListModel.PageSize, testsListModel.TextFilter);
-                var testsId = (from t in testsListModel.Tests
-                                        select t.Id).ToList();
-                testsListModel.AdministratedTestOpen = await _service.OpenedTestNumber(testsId);
+                var testIds = testsListModel.Tests.Select(t => t.Id).ToList();
+
+                testsListModel.ClosedTestsNumberPerTest = await _service.GetExTestCountByState(testIds, AdministratedTestState.Closed);
+
+                testsListModel.AdministratedTestOpen = await _service.GetExTestCountByState(testIds, AdministratedTestState.Open);
+
             }
             catch (ArgumentNullException e)
             {
@@ -389,18 +391,13 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             testsListModel.Tests = (await _service.GetTestsByFilter(testsListModel.TextFilter))
                 .Select(t => new TestDto(t, _service)).ToList();
 
-            testsListModel.PageNumber = 1;
-            testsListModel.PageSize = 10;
-
             testsListModel.Tests = await testsListModel.Paginate(testsListModel.Tests);
 
-            testsListModel.ClosedTestsNumberPerTest = await _service.GetClosedTests(testsListModel.PageNumber, testsListModel.PageSize, testsListModel.TextFilter);
-            
-            var testsId = (from t in testsListModel.Tests
-                select t.Id).ToList();
-            testsListModel.AdministratedTestOpen = await _service.OpenedTestNumber(testsId);
+            var testIds = testsListModel.Tests.Select(t => t.Id).ToList();
 
-            testsListModel.ClosedTestsNumberPerTest = await _service.GetClosedTests(testsListModel.PageNumber, testsListModel.PageSize, testsListModel.TextFilter);
+            testsListModel.ClosedTestsNumberPerTest = await _service.GetExTestCountByState(testIds, AdministratedTestState.Closed);
+
+            testsListModel.AdministratedTestOpen = await _service.GetExTestCountByState(testIds, AdministratedTestState.Open);
 
             return View("TestsList", testsListModel);
         }

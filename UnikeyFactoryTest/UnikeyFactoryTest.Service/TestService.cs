@@ -8,6 +8,7 @@ using AutoMapper;
 using Ninject;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Domain.Enums;
 using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.Mapper;
@@ -100,26 +101,20 @@ namespace UnikeyFactoryTest.Service
             return await Repo.GetQuestionById(id);
         }
 
-        public async Task<Dictionary<int, int>> OpenedTestNumber(List<int> TestsId)
-        {
-            return await Repo.OpenedTestNumber(TestsId);
-        }
-
         public void Dispose()
         {
             Repo.Dispose();
         }
 
-        public async Task<Dictionary<int, int>> GetClosedTests(int pageNum, int pageSize, string filter)
-        {
-            var result = await Repo.GetClosedTests(pageNum,pageSize,filter);
-
-            return result;
-        }
 
         public async Task UpdateQuestion(QuestionBusiness updateQuestion)
         {
             await Repo.UpdateQuestion(updateQuestion);
+        }
+
+        public async Task<Dictionary<int, int>> GetExTestCountByState(IEnumerable<int> testsIds, AdministratedTestState state)
+        {
+            return await Repo.GetExTestCountByState(testsIds, state);
         }
     }
 }
