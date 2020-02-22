@@ -6,6 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h1>@Model.TestSubject</h1>
+<h3>Score: @Model.ResultScore</h3>
 <a title="Go Back" onclick="showLoadingSpinner()" href='@Url.Action("AdministratedTestsList", "ExTest", new {PageNumber=@Model.PageNumber, PageSize=@Model.PageSize, TextFilter = @Model.TextFilter})'><img id="backIcon" src="~/Content/ICONS/goBackIcon.png" alt="goBack"></a>
 <hr />
 <br />
@@ -14,7 +15,6 @@
 
     @{
         int i = 1;
-
         foreach (AdministratedQuestionDto question in Model.AdministratedQuestions)
         {
             <div class="row testContentRow">
@@ -22,27 +22,28 @@
                     <div>
                         <strong>Domanda @i</strong>
                     </div>
+                    <div>
+                        <strong>
+                            Score: @question.AdministratedAnswers.Where(a => a.IsSelected).Sum(a => a.Score) /
+                            @question.AdministratedAnswers.Where(a => a.IsCorrect == 1).Sum(a => a.Score)
+                        </strong>
+                    </div>
                     <hr />
                     <p>@question.Text</p>
                 </div>
             </div>
             <br>
             <form>
-                    @for(int index = 0; index < question.AdministratedAnswers.Count; ++index)
+                @foreach (var answer in question.AdministratedAnswers)
+                {
                     {
-                        
-                        Html.RenderPartial("AdministratedAnswerPartial", question.AdministratedAnswers[index]);
-                        
+                        Html.RenderPartial("AdministratedAnswerPartial", answer);
                     }
+                }
             </form>
-            //foreach(var answer in question.AdministratedAnswers)
-            //{
-            //    {
-            //        Html.RenderPartial("AdministratedAnswerPartial", answer);
-            //    }
-            //}
+
             <br>
-        ++@i;
+            ++i;
         }
     }
 </div>

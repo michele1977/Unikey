@@ -40,18 +40,19 @@
                                 <link href="~/Content/font-awesome.css" rel="stylesheet" />
                                 <button id="editIcon" type="submit" class="fa fa-pencil" onclick="showLoadingSpinner()"></button>
                                 <a id="delIcolink" title="Delete" onclick="showLoadingSpinner()" href='@Url.Action("DeleteQuestion",
-                                                                "Test",
-                                                                new {TestId=question.TestId,
-                                                                    PageNumber = @Model.PageNumber,
-                                                                    PageSize = @Model.PageSize,
-                                                                    Id = question.Id,
-                                                                    Text = question.Text,
-                                                                    Position = question.Position
-                                                                })'><img id="deleteIcon" src="~/Content/ICONS/deleteIcon.png" alt="delete"></a>
+                                                                                                           "Test",
+                                                                                                           new {TestId=question.TestId,
+                                                                                                               PageNumber = @Model.PageNumber,
+                                                                                                               PageSize = @Model.PageSize,
+                                                                                                               Id = question.Id,
+                                                                                                               Text = question.Text,
+                                                                                                               Position = question.Position
+                                                                                                           })'><img id="deleteIcon" src="~/Content/ICONS/deleteIcon.png" alt="delete"></a>
                             }
                         </div>
 
                     </div>
+                    <strong>Max Score: @question.Answers.Where(a => a.IsCorrectBool).Sum(a => a.Score)</strong>
                     <hr />
                     <p>@question.Text</p>
                 </div>
