@@ -11,7 +11,7 @@ using UnikeyFactoryTest.Repository;
 
 namespace UnikeyFactoryTest.Service
 {
-    public class TestService 
+    public class TestService
     {
         public ITestRepository Repo { get; set; }
 
@@ -26,13 +26,13 @@ namespace UnikeyFactoryTest.Service
             {
                 if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
                 var testDao = TestMapper.MapBizToDal(test);
-                    await _repo.SaveTest(testDao);
-                    test.Id = testDao.Id;
+                await _repo.SaveTest(testDao);
+                test.Id = testDao.Id;
 
             }
         }
 
-        public async Task <TestBusiness> GetTestById(int testId)
+        public async Task<TestBusiness> GetTestById(int testId)
         {
             Repo = new TestRepository();
 
@@ -46,7 +46,7 @@ namespace UnikeyFactoryTest.Service
         public async Task<List<TestBusiness>> GetTests()
         {
             Repo = new TestRepository();
-            var tests =  Repo.GetTests();
+            var tests = Repo.GetTests();
             return await tests;
         }
 
@@ -57,7 +57,7 @@ namespace UnikeyFactoryTest.Service
                 await Repo.DeleteTest(testId);
             }
         }
-         
+
         public void UpdateTest(TestBusiness test)
         {
             using (TestRepository _repo = new TestRepository())
@@ -118,6 +118,33 @@ namespace UnikeyFactoryTest.Service
             using (Repo = new TestRepository())
             {
                 Repo.UpdateQuestion(question);
+            }
+        }
+        public async void AddOrUpdateQuestion(QuestionBusiness question)
+        {
+            using (Repo = new TestRepository())
+            {
+                //se id = allora devo aggiungere la domanda
+                if (question.Id == 0)
+                {
+                    var test = await GetTestById(question.TestId);
+                    if (test.Questions.Count == 0)
+                    {
+                        question.Position = 0;
+                    }
+                    else
+                    {
+                        question.Position = Convert.ToInt16(test.Questions.Count);
+                    }
+                    test.Questions.Add(question);
+
+                    UpdateTest(test);
+                }
+                //Se id != 0 allora devo aggiornare la domanda
+                if (question.Id != 0)
+                {
+                    UpdateQuestion(question);
+                }
             }
         }
 

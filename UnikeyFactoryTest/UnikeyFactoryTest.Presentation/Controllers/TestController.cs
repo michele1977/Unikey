@@ -488,7 +488,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         {
             var questionDomain = await _service.GetQuestionById(questionId);
             var questionDao = new QuestionDto(questionDomain);
-            return PartialView("QuestionDetailPartial", questionDao);
+            return PartialView("AddQuestionPartial", questionDao);
         }
         [HttpPost]
         public async Task<ActionResult> EditQuestionsAsync(QuestionEditModel questionmodel)
@@ -533,5 +533,21 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             model.ShowForm = true;
             return View("index",model);
         }
+        [HttpPost]
+        public async Task<ActionResult> AddOrUpdateQuestion(QuestionDto question)
+        {
+            foreach(var answer in question.Answers)
+            {
+                if (answer.IsCorrectBool == false)
+                    answer.Score = 0;
+            }
+            var questionBusiness = question.MapToDomain();
+            _service.AddOrUpdateQuestion(questionBusiness);
+            var testToModel = await _service.GetTestById(question.TestId);
+            var model = new TestDto(testToModel);
+            model.ShowForm = true;
+            return View("index", model);
+        }
+
     }
 }
