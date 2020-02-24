@@ -20,9 +20,9 @@ namespace UnikeyFactoryTest.Service
     {
         private ITestRepository Repo;
 
-        private readonly IKernel Kernel; 
-       
-        public TestService(ITestRepository value,IKernel kernel)
+        private readonly IKernel Kernel;
+
+        public TestService(ITestRepository value, IKernel kernel)
         {
             Kernel = kernel;
             Repo = value;
@@ -36,13 +36,13 @@ namespace UnikeyFactoryTest.Service
                 var mapper = Kernel.Get<IMapper>("Heavy");
                 var testDaoo = mapper.Map<TestBusiness, Test>(test);
                 Repo.SaveTest(testDaoo);
-                    test.Id = testDaoo.Id;
+                test.Id = testDaoo.Id;
 
             }
         }
-        
 
-        public async Task <TestBusiness> GetTestById(int testId)
+
+        public async Task<TestBusiness> GetTestById(int testId)
         {
             TestBusiness test = null;
 
@@ -52,21 +52,21 @@ namespace UnikeyFactoryTest.Service
         }
 
         public async Task<List<TestBusiness>> GetTests()
-        { 
-            var tests =  Repo.GetTests();
+        {
+            var tests = Repo.GetTests();
             return await tests;
         }
 
         public async Task DeleteTest(int testId)
         {
-                await Repo.DeleteTest(testId);
+            await Repo.DeleteTest(testId);
         }
 
         public async Task UpdateTest(TestBusiness test)
         {
             if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
-                await Repo.UpdateTest(test);
-            
+            await Repo.UpdateTest(test);
+
         }
         public string GenerateGuid()
         {
@@ -112,31 +112,29 @@ namespace UnikeyFactoryTest.Service
             await Repo.UpdateQuestion(updateQuestion);
         }
 
-        public async void AddOrUpdateQuestion(QuestionBusiness question)
+        public async Task AddOrUpdateQuestion(QuestionBusiness question)
         {
-            using (Repo = new TestRepository())
-            {
-                //se id = allora devo aggiungere la domanda
-                if (question.Id == 0)
-                {
-                    var test = await GetTestById(question.TestId);
-                    if (test.Questions.Count == 0)
-                    {
-                        question.Position = 0;
-                    }
-                    else
-                    {
-                        question.Position = Convert.ToInt16(test.Questions.Count);
-                    }
-                    test.Questions.Add(question);
 
-                    UpdateTest(test);
-                }
-                //Se id != 0 allora devo aggiornare la domanda
-                if (question.Id != 0)
+            //se id = allora devo aggiungere la domanda
+            if (question.Id == 0)
+            {
+                var test = await GetTestById(question.TestId);
+                if (test.Questions.Count == 0)
                 {
-                    UpdateQuestion(question);
+                    question.Position = 0;
                 }
+                else
+                {
+                    question.Position = Convert.ToInt16(test.Questions.Count);
+                }
+                test.Questions.Add(question);
+
+                await UpdateTest(test);
+            }
+            //Se id != 0 allora devo aggiornare la domanda
+            if (question.Id != 0)
+            {
+                await UpdateQuestion(question);
             }
         }
 

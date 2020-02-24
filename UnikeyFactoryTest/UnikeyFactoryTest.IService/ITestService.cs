@@ -20,6 +20,7 @@ namespace UnikeyFactoryTest.IService
         Task<List<TestBusiness>> GetTestsByFilter(string filter);
         Task<QuestionBusiness> GetQuestionById(int id);
         Task<Dictionary<int, int>> GetExTestCountByState(IEnumerable<int> testsIds, AdministratedTestState state);
+        Task AddOrUpdateQuestion(QuestionBusiness question);
         void Dispose();
     }
 }

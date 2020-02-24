@@ -552,16 +552,16 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             return View("TestContent", testDTO);
         }
-        [HttpPost]
-        public async Task<ActionResult> UpdateQuestion(QuestionDto question)
-        {
-            var questionBusiness = question.MapToDomain();
-            _service.UpdateQuestion(questionBusiness);
-            var testToModel = await _service.GetTestById(question.TestId);
-            var model = new TestDto(testToModel);
-            model.ShowForm = true;
-            return View("index",model);
-        }
+        //[HttpPost]
+        //public async Task<ActionResult> UpdateQuestion(QuestionDto question)
+        //{
+        //    var questionBusiness = question.MapToDomain();
+        //    await _service.UpdateQuestion(questionBusiness);
+        //    var testToModel = await _service.GetTestById(question.TestId);
+        //    var model = new TestDto(testToModel, _service);
+        //    model.ShowForm = true;
+        //    return View("index",model);
+        //}
         [HttpPost]
         public async Task<ActionResult> AddOrUpdateQuestion(QuestionDto question)
         {
@@ -571,9 +571,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                     answer.Score = 0;
             }
             var questionBusiness = question.MapToDomain();
-            _service.AddOrUpdateQuestion(questionBusiness);
+            await _service.AddOrUpdateQuestion(questionBusiness);
             var testToModel = await _service.GetTestById(question.TestId);
-            var model = new TestDto(testToModel);
+            var model = new TestDto(testToModel, _service);
             model.ShowForm = true;
             return View("index", model);
         }

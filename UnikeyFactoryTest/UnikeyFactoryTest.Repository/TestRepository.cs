@@ -22,8 +22,8 @@ namespace UnikeyFactoryTest.Repository
     {
         private readonly TestPlatformDBEntities _ctx;
         private IKernel Kernel;
-        
-        public TestRepository(TestPlatformDBEntities myCtx,IKernel kernel)
+
+        public TestRepository(TestPlatformDBEntities myCtx, IKernel kernel)
         {
             Kernel = kernel;
             _ctx = myCtx;
@@ -98,25 +98,26 @@ namespace UnikeyFactoryTest.Repository
         {
             var mapper = Kernel.Get<IMapper>("Heavy");
             var newValue = mapper.Map<TestBusiness, Test>(test);
-            var oldValue = (EntityExtension) (_ctx.Tests.FirstOrDefault(x => x.Id == test.Id));
-            NewUpdate(newValue, oldValue);
+            var oldValue = (EntityExtension)(_ctx.Tests.FirstOrDefault(x => x.Id == test.Id));
+            await NewUpdate(newValue, oldValue);
         }
 
-        public void NewUpdate(EntityExtension newValue, EntityExtension oldValue)
+        public async Task NewUpdate(EntityExtension newValue, EntityExtension oldValue)
         {
             oldValue.SetFlatProperty(newValue);
             var toRemove = oldValue.Childs.Where(x => newValue.Childs.All(y => y.MyId != x.MyId)).ToList();
             var toAdd = newValue.Childs.Where(x => oldValue.Childs.All(y => y.MyId != x.MyId)).ToList();
             var toUpdate = newValue.Childs.Where(x => oldValue.Childs.Any(y => y.MyId == x.MyId)).ToList();
+            await Task.Run(() =>
+            {
+                foreach (var child in toRemove) oldValue.RemoveChild(child, _ctx);
 
-            foreach (var child in toRemove) oldValue.RemoveChild(child, _ctx);
-
-            foreach (var child in toAdd) oldValue.AddChild(child, _ctx);
-
+                foreach (var child in toAdd) oldValue.AddChild(child, _ctx);
+            });
             foreach (var child in toUpdate)
             {
                 var childToUpdate = oldValue.Childs.FirstOrDefault(x => x.MyId == child.MyId);
-                NewUpdate(child, childToUpdate);
+                await NewUpdate(child, childToUpdate);
             }
 
             _ctx.SaveChanges();
@@ -140,19 +141,19 @@ namespace UnikeyFactoryTest.Repository
 
         public async Task<QuestionBusiness> GetQuestionById(int id)
         {
-            
-                
+
+
             var taskQuestion = await _ctx.Questions.FirstOrDefaultAsync(q => q.Id == id);
             var mapper = Kernel.Get<IMapper>("Heavy");
             var returned = mapper.Map<Question, QuestionBusiness>(taskQuestion);
             return returned;
         }
-            
+
         public async Task UpdateQuestion(QuestionBusiness updateQuestion)
         {
             var newQuestion = (EntityExtension)QuestionMapper.MapBizToDal(updateQuestion);
             var oldQuestion = await _ctx.Questions.FirstOrDefaultAsync(q => q.Id == updateQuestion.Id);
-            NewUpdate(newQuestion, oldQuestion);
+            await NewUpdate(newQuestion, oldQuestion);
         }
 
         public async Task<Dictionary<int, int>> GetExTestCountByState(IEnumerable<int> testsIds, AdministratedTestState state)
