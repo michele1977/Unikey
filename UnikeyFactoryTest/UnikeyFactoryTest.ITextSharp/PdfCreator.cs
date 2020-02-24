@@ -43,28 +43,21 @@ namespace UnikeyFactoryTest.ITextSharp
 
                     int questionNum = 1;
                     string[] indexes = { "a)", "b)", "c)", "d)" };
-
                     StringBuilder builder = new StringBuilder("");
 
                     foreach (var question in test.Questions)
                     {
-                        //doc.Add(new Paragraph($"{questionNum}. {question.Text}\n \n"));
                         builder.Append($"{questionNum}. {question.Text}\n \n");
 
                         for (int i = 0; i < question.Answers.Count; ++i)
                         {
                             builder.Append($"{indexes[i]} {question.Answers[i].Text}\n");
-                            //doc.Add(new Phrase($"{indexes[i]} {question.Answers[i].Text}\n"));
                         }
 
                         builder.Append("\n");
-
-                        //doc.Add(new Phrase("\n"));
-
                         res = doc.Add(new Paragraph(builder.ToString()));
 
                         builder.Clear();
-
                         ++questionNum;
                     }
 
@@ -74,7 +67,6 @@ namespace UnikeyFactoryTest.ITextSharp
                 {
                     return false;
                 }
-
             }
 
             return res;
