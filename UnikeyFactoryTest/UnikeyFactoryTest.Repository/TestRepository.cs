@@ -170,12 +170,5 @@ namespace UnikeyFactoryTest.Repository
 
             return returned;
         }
-        public void UpdateQuestion(QuestionBusiness question)
-        {
-            var newQuestion = QuestionMapper.MapBizToDal(question);
-            var oldQuestion = (EntityExtension) _ctx.Questions.FirstOrDefault(x => x.Id == newQuestion.Id);
-
-            NewUpdate(newQuestion, oldQuestion);
-        }
     }
 }
