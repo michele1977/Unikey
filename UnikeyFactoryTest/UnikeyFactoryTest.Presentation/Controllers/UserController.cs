@@ -82,12 +82,9 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 userViewModel.UserState = UserState.RegistrationOk;
                 return View("Index", userViewModel);
             }
-            else
-            {
-                userViewModel.UserState = UserState.RegistrationKo;
-                return View("Index", userViewModel);
-            }
-            
+
+            userViewModel.UserState = UserState.RegistrationKo;
+            return View("Index", userViewModel);
         }
 
 

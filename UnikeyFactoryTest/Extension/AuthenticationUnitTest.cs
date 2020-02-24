@@ -43,12 +43,20 @@ namespace Extension
             var service = Kernel.Get<UserManager<UserBusiness, int>>();
             var user = new UserBusiness()
             {
-                UserName = "Danielone",
+                UserName = "Hendrichone",
                 Password = "Unikey11!"
             };
 
             var result = await Task.Run(() => service.CreateAsync(user));
             int g = 0;
+        }
+        
+        [TestMethod]
+        public void HashPassword_OK()
+        {
+            var service = Kernel.Get<UserManager<UserBusiness, int>>();
+            var pw = service.PasswordHasher.HashPassword("Unikey01!");
+            var res = service.PasswordHasher.VerifyHashedPassword("AHBCqrpP9EJ2CX9PcCx1Gtbw5JxkA9Cm5pzbEaTa2/UnbRXk0VcFfyLaNJW37lrgmg==", "Unikey01!");
         }
     }
 }

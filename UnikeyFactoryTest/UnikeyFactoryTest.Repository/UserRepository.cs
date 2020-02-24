@@ -29,6 +29,7 @@ namespace UnikeyFactoryTest.Repository
 
         public void Dispose()
         {
+            //_ctx.Dispose();
             throw new NotImplementedException();
         }
 
@@ -55,7 +56,6 @@ namespace UnikeyFactoryTest.Repository
             throw new NotImplementedException();
         }
 
-        //Da rendere async
         public async Task<UserBusiness> FindByNameAsync(string userName)
         {
             var user = await _ctx.Users.FirstOrDefaultAsync(u => u.Username.Equals(userName));

@@ -4,14 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Helpers;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.IService;
 
 namespace UnikeyFactoryTest.Service
 {
     public class UserService : UserManager<UserBusiness, int>
     {
-        public UserService(IUserStore<UserBusiness, int> store) : base(store)
+        public UserService(IUserRepository store) : base(store)
         {
             this.PasswordValidator = new PasswordValidator()
             {
@@ -21,6 +23,8 @@ namespace UnikeyFactoryTest.Service
                 RequireNonLetterOrDigit = true,
                 RequireDigit = true
             };
+
+            this.PasswordHasher = new PasswordHasher();
         }
 
         public override async Task<IdentityResult> CreateAsync(UserBusiness user)
@@ -35,7 +39,9 @@ namespace UnikeyFactoryTest.Service
                 
                 if (!this.PasswordValidator.ValidateAsync(user.Password).Result.Succeeded)
                     throw new Exception("Not valid password");
-                
+
+                user.Password = this.PasswordHasher.HashPassword(user.Password);
+
                 await Store.CreateAsync(user);
                 return result;
             }

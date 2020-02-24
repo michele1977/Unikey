@@ -8,9 +8,7 @@
         <EntityTypeShape EntityType="TestPlatformDBModel.AdministratedQuestion" Width="1.5" PointX="7.5" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="TestPlatformDBModel.Question" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TestPlatformDBModel.Test" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestPlatformDBModel.User" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
         <AssociationConnector Association="TestPlatformDBModel.FK_Question_Test" ManuallyRouted="false" />
-        <AssociationConnector Association="TestPlatformDBModel.FK_Test_User" ManuallyRouted="false" />
         <EntityTypeShape EntityType="TestPlatformDBModel.AdministratedTest" Width="1.5" PointX="5.25" PointY="0.75" />
         <AssociationConnector Association="TestPlatformDBModel.FK_administratedquestion_administratedtest" />
         <AssociationConnector Association="TestPlatformDBModel.FK_AdministratedTest_test" />
@@ -18,6 +16,8 @@
         <AssociationConnector Association="TestPlatformDBModel.FK_administratedanswer_administratedquestion" />
         <EntityTypeShape EntityType="TestPlatformDBModel.Answer" Width="1.5" PointX="7.5" PointY="4.625" />
         <AssociationConnector Association="TestPlatformDBModel.FK_answer_question" />
+        <EntityTypeShape EntityType="TestPlatformDBModel.User" Width="1.5" PointX="0.75" PointY="3.125" />
+        <AssociationConnector Association="TestPlatformDBModel.FK_test_user" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

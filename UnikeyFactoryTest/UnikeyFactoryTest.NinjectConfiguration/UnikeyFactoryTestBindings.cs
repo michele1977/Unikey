@@ -26,7 +26,6 @@ namespace UnikeyFactoryTest.NinjectConfiguration
             Bind<IUser<int>>().To<UserBusiness>();
             Bind<DbContext>().To<TestPlatformDBEntities>();
             Bind<IUserRepository>().To<UserRepository>();
-            Bind<IUserStore<UserBusiness, int>>().To<UserRepository>();
             Bind<UserManager<UserBusiness, int>>().To<UserService>();
         }
     }
