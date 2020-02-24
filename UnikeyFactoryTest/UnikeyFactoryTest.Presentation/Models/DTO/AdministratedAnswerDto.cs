@@ -28,6 +28,6 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public byte IsCorrect { get; set; }
         public bool IsSelected { get; set; }
         public int AdministratedQuestionId { get; set; }
-        public decimal Score { get; set; }
+        public int Score { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace UnikeyFactoryTest.Context
         public byte isCorrect { get; set; }
         public bool isSelected { get; set; }
         public int AdministratedQuestionId { get; set; }
-        public decimal Score { get; set; }
+        public int Score { get; set; }
     
         public virtual AdministratedQuestion AdministratedQuestion { get; set; }
     }

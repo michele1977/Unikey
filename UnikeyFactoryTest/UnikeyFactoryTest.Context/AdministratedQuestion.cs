@@ -25,8 +25,8 @@ namespace UnikeyFactoryTest.Context
         public int AdministratedTestId { get; set; }
         public short Position { get; set; }
     
-        public virtual AdministratedTest AdministratedTest { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AdministratedAnswer> AdministratedAnswers { get; set; }
+        public virtual AdministratedTest AdministratedTest { get; set; }
     }
 }

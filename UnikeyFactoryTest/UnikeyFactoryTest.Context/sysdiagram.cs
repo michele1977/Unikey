@@ -12,14 +12,12 @@ namespace UnikeyFactoryTest.Context
     using System;
     using System.Collections.Generic;
     
-    public partial class Answer
+    public partial class sysdiagram
     {
-        public int Id { get; set; }
-        public string Text { get; set; }
-        public byte IsCorrect { get; set; }
-        public int QuestionId { get; set; }
-        public int Score { get; set; }
-    
-        public virtual Question Question { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

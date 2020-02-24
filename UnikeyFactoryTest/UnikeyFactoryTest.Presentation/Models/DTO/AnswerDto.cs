@@ -27,6 +27,6 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public string Text { get; set; }
         public bool IsCorrectBool { get; set; }
         public int QuestionId { get; set; }
-        public decimal Score { get; set; }
+        public int Score { get; set; }
     }
 }

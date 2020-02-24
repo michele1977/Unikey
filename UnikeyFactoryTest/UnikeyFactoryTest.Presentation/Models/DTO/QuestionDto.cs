@@ -30,7 +30,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public int TestId { get; set; }
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
-        public decimal CorrectAnswerScore { get; set; }
+        public int CorrectAnswerScore { get; set; }
 
         public List<AnswerDto> Answers { get; set; }
         public short Position { get; set; }

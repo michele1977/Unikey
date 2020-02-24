@@ -28,14 +28,14 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
 
         public int Id { get; set; }
         public string URL { get; set; }
-        public decimal TotalScore { get; set; }
+        public int TotalScore { get; set; }
         public int? TestId { get; set; }
         public string TestSubject { get; set; }
         public DateTime Date { get; set; }
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public string TextFilter { get; set; }
-        public decimal ResultScore { get; set; }
+        public int ResultScore { get; set; }
        
         public List<AdministratedQuestionDto> AdministratedQuestions { get; set; }
         public List<AdministratedTestBusiness> AdministratedTests { get; set; }
