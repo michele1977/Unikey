@@ -112,6 +112,34 @@ namespace UnikeyFactoryTest.Service
             await Repo.UpdateQuestion(updateQuestion);
         }
 
+        public async void AddOrUpdateQuestion(QuestionBusiness question)
+        {
+            using (Repo = new TestRepository())
+            {
+                //se id = allora devo aggiungere la domanda
+                if (question.Id == 0)
+                {
+                    var test = await GetTestById(question.TestId);
+                    if (test.Questions.Count == 0)
+                    {
+                        question.Position = 0;
+                    }
+                    else
+                    {
+                        question.Position = Convert.ToInt16(test.Questions.Count);
+                    }
+                    test.Questions.Add(question);
+
+                    UpdateTest(test);
+                }
+                //Se id != 0 allora devo aggiornare la domanda
+                if (question.Id != 0)
+                {
+                    UpdateQuestion(question);
+                }
+            }
+        }
+
         public async Task<Dictionary<int, int>> GetExTestCountByState(IEnumerable<int> testsIds, AdministratedTestState state)
         {
             return await Repo.GetExTestCountByState(testsIds, state);

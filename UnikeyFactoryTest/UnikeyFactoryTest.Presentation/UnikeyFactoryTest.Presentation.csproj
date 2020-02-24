@@ -379,6 +379,7 @@
     <Content Include="Views\Test\AdTestsTablePartial.cshtml" />
     <Content Include="Views\Test\EditQuestionsAsync.cshtml" />
     <Content Include="Views\Shared\LayoutFruition.cshtml" />
+    <Content Include="Views\Test\QuestionDetailPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

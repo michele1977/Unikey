@@ -9,35 +9,72 @@
 
 </script>
 
-@using (Html.BeginForm("AddQuestion", "Test", FormMethod.Post))
+@using (Html.BeginForm("AddOrUpdateQuestion", "Test", FormMethod.Post))
 {
     @Html.HiddenFor(x => x.TestId)
-    @*@Html.HiddenFor(x => x.Id)*@
+    @Html.HiddenFor(x => x.Position, new { value = $"{Model.Position}"})
     <input type="hidden" value="@Model.Id" name="Id" />
 
     @Html.TextAreaFor(m => m.Text, new { @class = "required", id = "txt_QuestionText", style = "max-width: 100%;width: 100%; border-radius: 5px; border: 1px solid black;", @rows = 5, placeholder = "Enter the question " })
     @Html.ValidationMessageFor(x => x.Text, null, new { @class = "alert-danger" })
     <div class="form-group">
-
-        @for (var i = 0; i < 4; i++)
+        @if (Model.Answers != null)
         {
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        @Html.CheckBoxFor(x => x.Answers[i].IsCorrectBool, new { id = "check" + i, onclick = "CorrectAnswer('check" + i + "','txt_AnswerText" + i + "','txt_Score" + i + "')" })
+            for (var i = 0; i < Model.Answers.Count; i++)
+            {
+                @Html.HiddenFor(x => x.Answers[i].Id, new { value = $"{Model.Answers[i].Id}" })
+                @Html.HiddenFor(x => x.Answers[i].QuestionId, new { value = $"{Model.Id}" })
+                <input type="hidden" name="Id" value="@Model.Answers[i].Id" />
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            @Html.CheckBoxFor(x => x.Answers[i].IsCorrectBool, new { id = "check" + i, onclick = "CorrectAnswer('check" + i + "','txt_AnswerText" + i + "','txt_Score" + i + "')" })
+                        </div>
                     </div>
-                </div>
-                @Html.TextBoxFor(x => x.Answers[i].Text, new { @class = "form-control", style = "max-width: 100%;width: 70%;", id = "txt_AnswerText" + i, placeholder = "Enter the answer " })
+                    @if (Model.Answers[i].IsCorrectBool == true)
+                    {
+                        @Html.TextBoxFor(x => x.Answers[i].Text, new { @class = "form-control class-selected", style = "max-width: 100%;width: 70%;", id = "txt_AnswerText" + i, placeholder = "Enter the answer " })
 
-                @Html.TextBoxFor(x => x.Answers[i].Score, new { type = "number", id = "txt_Score" + i, @class = "class-mymarginleft", style = "width: 80px", placeholder = "Score", @hidden = "hidden" })
-            </div>
+                    }
+                    @if (Model.Answers[i].IsCorrectBool == false)
+                    {
+                        @Html.TextBoxFor(x => x.Answers[i].Text, new { @class = "form-control", style = "max-width: 100%;width: 70%;", id = "txt_AnswerText" + i, placeholder = "Enter the answer " })
+
+                    }
+                    @if (Model.Answers[i].IsCorrectBool == false)
+                    {
+                        @Html.TextBoxFor(x => x.Answers[i].Score, new { type = "decimal", id = "txt_Score" + i, @class = "class-mymarginleft", style = "width: 80px", step = "0.5", placeholder = "Score", @hidden = "hidden", value = "0"})
+                    }
+                    @if (Model.Answers[i].IsCorrectBool == true)
+                    {
+                        @Html.TextBoxFor(x => x.Answers[i].Score, new { type = "decimal", id = "txt_Score" + i, @class = "class-mymarginleft", style = "width: 80px", step = "0.5", placeholder = "Score", value = $"{Model.Answers[i].Score}" })
+                    }
+                </div>
+        }
+    }
+        @if (Model.Answers == null)
+        {
+            for (var i = 0; i < 4; i++)
+            {
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            @Html.CheckBoxFor(x => x.Answers[i].IsCorrectBool, new { id = "check" + i, onclick = "CorrectAnswer('check" + i + "','txt_AnswerText" + i + "','txt_Score" + i + "')" })
+                        </div>
+                    </div>
+                    @Html.TextBoxFor(x => x.Answers[i].Text, new { @class = "form-control", style = "max-width: 100%;width: 70%;", id = "txt_AnswerText" + i, placeholder = "Enter the answer " })
+
+                    @Html.TextBoxFor(x => x.Answers[i].Score, new { type = "number", id = "txt_Score" + i, @class = "class-mymarginleft", style = "width: 80px", step = "0.5", placeholder = "Score", @hidden = "hidden" })
+                </div>
+            }
         }
 
-    </div>
 
-    <button class="btn btn-success" style="margin-left: 64%" onclick="UnloadAddQuestionPartial()">SaveQuestion</button>
-    <button class="btn btn-danger" type="button" onclick="modalOpen()"  formaction="">Back</button>
-}
+        </div>
+
+        <button class="btn btn-success" style="margin-left: 64%" onclick="UnloadAddQuestionPartial()">SaveQuestion</button>
+        <button class="btn btn-danger" type="button" onclick="modalOpen()" formaction="">Back</button>
+    }
 
 
 
