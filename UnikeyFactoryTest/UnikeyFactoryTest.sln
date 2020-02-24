@@ -37,6 +37,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.NinjectCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.AutoMapper", "UnikeyFactoryTest.AutoMapper\UnikeyFactoryTest.AutoMapper.csproj", "{CC8ACD51-AC4B-4A5B-9017-A20E0331C4C3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{09D42ECA-6C4D-46E2-A1EA-6649872BB0B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.ITextSharp", "UnikeyFactoryTest.ITextSharp\UnikeyFactoryTest.ITextSharp.csproj", "{59D33D86-3D79-4332-BC47-CEB98CE35CA6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +95,10 @@ Global
 		{CC8ACD51-AC4B-4A5B-9017-A20E0331C4C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC8ACD51-AC4B-4A5B-9017-A20E0331C4C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC8ACD51-AC4B-4A5B-9017-A20E0331C4C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59D33D86-3D79-4332-BC47-CEB98CE35CA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59D33D86-3D79-4332-BC47-CEB98CE35CA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59D33D86-3D79-4332-BC47-CEB98CE35CA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59D33D86-3D79-4332-BC47-CEB98CE35CA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,6 +114,7 @@ Global
 		{F4512DB7-BE86-4310-83A9-166B39A25F22} = {0591EEC8-E5A8-45F4-80AD-BD56EBC7D550}
 		{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6} = {F4512DB7-BE86-4310-83A9-166B39A25F22}
 		{764F94A0-C26D-45E8-A86C-91EE99D1ACA7} = {09DA4313-D100-4588-9275-535B046748E7}
+		{59D33D86-3D79-4332-BC47-CEB98CE35CA6} = {09D42ECA-6C4D-46E2-A1EA-6649872BB0B0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {16A85E8B-7001-49BB-8ABA-4B835045F2E7}

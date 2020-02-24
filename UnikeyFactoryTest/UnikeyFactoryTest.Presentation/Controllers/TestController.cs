@@ -15,7 +15,9 @@ using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.Domain.Enums;
+using UnikeyFactoryTest.ITextSharp;
 using UnikeyFactoryTest.Mapper;
+using UnikeyFactoryTest.Mapper.AutoMappers;
 using UnikeyFactoryTest.Presentation.Models;
 using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service;
@@ -514,6 +516,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var questionDao = new QuestionDto(questionDomain);
             return PartialView("Index", questionDao);
         }
+
         [HttpPost]
         public async Task<ActionResult> EditQuestionsAsync(QuestionDto questionmodel)
         {
@@ -551,6 +554,18 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var testDTO = new TestDto(await _service.GetTestById(questionModel.TestId), _service);
 
             return View("TestContent", testDTO);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> DownloadPdf(TestDto test)
+        {
+            PdfCreator creator = new PdfCreator();
+
+            var testBusiness = await  Kernel.Get<ITestService>().GetTestById(test.Id); // TODO add TestDto to TestBusiness mapping
+
+            creator.CreatePdf(testBusiness);
+
+            return RedirectToAction("TestContent", test);
         }
     }
 }

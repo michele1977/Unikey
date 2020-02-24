@@ -403,6 +403,10 @@
       <Project>{764F94A0-C26D-45E8-A86C-91EE99D1ACA7}</Project>
       <Name>UnikeyFactoryTest.IService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.ITextSharp\UnikeyFactoryTest.ITextSharp.csproj">
+      <Project>{59d33d86-3d79-4332-bc47-ceb98ce35ca6}</Project>
+      <Name>UnikeyFactoryTest.ITextSharp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UnikeyFactoryTest.Mapper\UnikeyFactoryTest.Mapper.csproj">
       <Project>{d9fa8193-e2c4-4e4d-a41d-7493ba8818a6}</Project>
       <Name>UnikeyFactoryTest.Mapper</Name>
