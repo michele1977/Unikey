@@ -12,6 +12,7 @@ namespace UnikeyFactoryTest.IRepository
         IUserStore<UserBusiness,int>,
         IUserPasswordStore<UserBusiness,int>,
         IUserLockoutStore<UserBusiness,int>,
+        IUserTwoFactorStore<UserBusiness,int>,
         IUserRoleStore<UserBusiness,int>
     {
     }

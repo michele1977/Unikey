@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
+using Microsoft.AspNet.Identity.Owin;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IService;
@@ -63,6 +65,12 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         //    }
         //}
 
+        public async Task<ActionResult> LogIn(UserLoginModel model)
+        {
+            var SignInManager = HttpContext.GetOwinContext().Get<SignInManager<UserBusiness, int>>();
+            var signInStatus = await SignInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
+            return Redirect("https://www.pornhub.com");
+        }
 
         public async Task<ActionResult> Subscribe(UserSigningUpModel model)
         {

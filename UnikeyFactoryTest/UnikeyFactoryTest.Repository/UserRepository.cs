@@ -29,8 +29,7 @@ namespace UnikeyFactoryTest.Repository
 
         public void Dispose()
         {
-            //_ctx.Dispose();
-            throw new NotImplementedException();
+            _ctx.Dispose();
         }
 
         #region CRUD
@@ -41,9 +40,18 @@ namespace UnikeyFactoryTest.Repository
             await _ctx.SaveChangesAsync();
         }
 
-        public Task UpdateAsync(UserBusiness user)
+        public async Task UpdateAsync(UserBusiness userBusiness)
         {
-            throw new NotImplementedException();
+            var user = Mapper.Map<User>(userBusiness);
+            var userDal = await _ctx.Users.FirstOrDefaultAsync(u => u.Id == userBusiness.Id);
+            
+            if(userDal is null)
+                throw new Exception("Invalid User Id");
+
+            userDal.Username = user.Username;
+            userDal.Password = user.Password;
+
+            await _ctx.SaveChangesAsync();
         }
 
         public Task DeleteAsync(UserBusiness user)
@@ -51,9 +59,11 @@ namespace UnikeyFactoryTest.Repository
             throw new NotImplementedException();
         }
 
-        public Task<UserBusiness> FindByIdAsync(int userId)
+        public async Task<UserBusiness> FindByIdAsync(int userId)
         {
-            throw new NotImplementedException();
+           var user = await _ctx.Users.FindAsync(userId);
+           var result = Mapper.Map<UserBusiness>(user);
+           return result;
         }
 
         public async Task<UserBusiness> FindByNameAsync(string userName)
@@ -69,9 +79,18 @@ namespace UnikeyFactoryTest.Repository
             throw new NotImplementedException();
         }
 
-        public Task<string> GetPasswordHashAsync(UserBusiness user)
+        public async Task<string> GetPasswordHashAsync(UserBusiness user)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var userDal = await _ctx.Users.FindAsync(user.Id);
+                return userDal.Password;
+            }
+            catch (Exception ex)
+            {
+            }
+
+            return string.Empty;
         }
 
         public Task<bool> HasPasswordAsync(UserBusiness user)
@@ -80,9 +99,11 @@ namespace UnikeyFactoryTest.Repository
         }
         #endregion
         #region Lockout
+
+        // da implementare
         public Task<DateTimeOffset> GetLockoutEndDateAsync(UserBusiness user)
         {
-            throw new NotImplementedException();
+            return Task.Run(() => new DateTimeOffset(DateTime.Now));
         }
 
         public Task SetLockoutEndDateAsync(UserBusiness user, DateTimeOffset lockoutEnd)
@@ -95,19 +116,22 @@ namespace UnikeyFactoryTest.Repository
             throw new NotImplementedException();
         }
 
+        // da implementare
         public Task ResetAccessFailedCountAsync(UserBusiness user)
         {
-            throw new NotImplementedException();
+            return Task.Run(() => 0);
         }
 
+        // da implementare
         public Task<int> GetAccessFailedCountAsync(UserBusiness user)
         {
-            throw new NotImplementedException();
+            return Task.Run(() => 1);
         }
 
+        // da implementare
         public Task<bool> GetLockoutEnabledAsync(UserBusiness user)
         {
-            throw new NotImplementedException();
+            return Task.Run(() => true);
         }
 
         public Task SetLockoutEnabledAsync(UserBusiness user, bool enabled)
@@ -128,12 +152,24 @@ namespace UnikeyFactoryTest.Repository
 
         public Task<IList<string>> GetRolesAsync(UserBusiness user)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public Task<bool> IsInRoleAsync(UserBusiness user, string roleName)
         {
             throw new NotImplementedException();
+        }
+        #endregion
+        #region TwoFactor
+        public Task SetTwoFactorEnabledAsync(UserBusiness user, bool enabled)
+        {
+            throw new NotImplementedException();
+        }
+
+        // da implementare
+        public Task<bool> GetTwoFactorEnabledAsync(UserBusiness user)
+        {
+            return Task.Run(() => false);
         }
         #endregion
     }

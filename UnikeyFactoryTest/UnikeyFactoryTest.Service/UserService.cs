@@ -29,7 +29,6 @@ namespace UnikeyFactoryTest.Service
 
         public override async Task<IdentityResult> CreateAsync(UserBusiness user)
         {
-            var result = new IdentityResult();
             try
             {
                 var userBusiness = await Store.FindByNameAsync(user.UserName);
@@ -43,7 +42,7 @@ namespace UnikeyFactoryTest.Service
                 user.Password = this.PasswordHasher.HashPassword(user.Password);
 
                 await Store.CreateAsync(user);
-                return result;
+                return new IdentityResult();
             }
             catch (Exception exc)
             {
@@ -54,6 +53,20 @@ namespace UnikeyFactoryTest.Service
         public override async Task<UserBusiness> FindByNameAsync(string userName)
         {
             return await Store.FindByNameAsync(userName);
+        }
+
+        public override async Task<IdentityResult> UpdateAsync(UserBusiness user)
+        {
+            try
+            {
+                user.Password = this.PasswordHasher.HashPassword(user.Password);
+                await Store.UpdateAsync(user);
+                return new IdentityResult();
+            }
+            catch (Exception ex)
+            {
+                return new IdentityResult(ex.Message);
+            }
         }
     }
 }
