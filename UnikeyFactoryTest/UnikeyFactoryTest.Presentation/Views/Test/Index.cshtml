@@ -45,14 +45,17 @@
     }
 
     function ShowAddQuestionPartial() {
-            $('#mydivQuestionForm').empty();
-            $("#mydivQuestionForm").load('@Url.Action("GetAddQuestionPartial", "Test",Model)');
-            console.log("ShowAddQuestionPartial activated");
+        showLoadingSpinner();
+        $('#mydivQuestionForm').empty();
+        $("#mydivQuestionForm").load('@Url.Action("GetAddQuestionPartial", "Test",Model)');
+        hideLoadingSpinner();
 
-        }
+    }
 
     function UnloadAddQuestionPartial() {
+        showLoadingSpinner();
         $("#mydivQuestionForm").unload('@Url.Action("GetAddQuestionPartial", "Test", Convert.ToInt32(Model.Id))');
+        hideLoadingSpinner();
     }
 
     function emptyPartialView() {
@@ -79,6 +82,7 @@
         alert("The test has been saved");
     }
     function ShowDetails(id) {
+        showLoadingSpinner();
         $.ajax({
             type: "GET",
             url: "/Test/QuestionDetails?questionId=" + id,
@@ -86,6 +90,7 @@
             success: function (data) {
                 $('#mydivQuestionForm').empty();
                 $('#mydivQuestionForm').html(data);
+                hideLoadingSpinner();
             }
             
         });
@@ -105,7 +110,7 @@
                 @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled" })
 
 
-                <button class="btn btn-primary" id="buttonCreate" style="margin-left: 45%; margin-top: 10px" >
+                <button class="btn btn-primary" id="buttonCreate" style="margin-left: 45%; margin-top: 10px" onclick="showLoadingSpinner();" >
                     Create
                 </button>
             }
@@ -152,7 +157,7 @@
 
                                 <td>
                                     <a href="@Url.Action("DeleteQuestion", "Test", Question)">
-                                        <i class="fa fa-trash btn" title="Delete"></i> |
+                                        <i class="fa fa-trash btn" title="Delete" onclick="showLoadingSpinner();"></i> |
                                     </a>
                                     <a onclick="ShowDetails(@Question.Id)">
                                         <i class="fa fa-edit btn" title="Details"></i>
