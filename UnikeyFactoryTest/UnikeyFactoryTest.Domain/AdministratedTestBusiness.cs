@@ -17,9 +17,9 @@ namespace UnikeyFactoryTest.Domain
         public string TestSubject { get; set; } = "";
         public DateTime Date { get; set; }
         public string Title { get; set; }
-        public decimal MaxScore { get; set; }
+        public int MaxScore { get; set; }
         public AdministratedTestState State { get; set; }
-        public decimal Score { get; set; }
+        public int Score { get; set; }
         public virtual List<AdministratedQuestionBusiness> AdministratedQuestions { get; set; }
     }
 }

@@ -116,7 +116,7 @@ namespace UnikeyFactoryTest.Repository
                 throw new Exception("No test to update");
             }
 
-            decimal score = 0;
+            int score = 0;
             test.Date = DateTime.Today;
             test.Score = GetScore(test, score);
 
@@ -154,7 +154,7 @@ namespace UnikeyFactoryTest.Repository
             _ctx.SaveChanges();
         }
 
-        private static decimal GetScore(AdministratedTestBusiness newTest, decimal score)
+        private static int GetScore(AdministratedTestBusiness newTest, int score)
         {
             foreach (var q in newTest.AdministratedQuestions)
             {

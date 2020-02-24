@@ -29,7 +29,7 @@
                 </div>
                 @Html.TextBoxFor(x => x.Answers[i].Text, new { @class = "form-control", style = "max-width: 100%;width: 70%;", id = "txt_AnswerText" + i, placeholder = "Enter the answer " })
 
-                @Html.TextBoxFor(x => x.Answers[i].Score, new { type = "number", id = "txt_Score" + i, @class = "class-mymarginleft", style = "width: 80px", step = "0.5", placeholder = "Score", @hidden = "hidden" })
+                @Html.TextBoxFor(x => x.Answers[i].Score, new { type = "number", id = "txt_Score" + i, @class = "class-mymarginleft", style = "width: 80px", placeholder = "Score", @hidden = "hidden" })
             </div>
         }
 
