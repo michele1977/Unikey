@@ -12,7 +12,8 @@ namespace UnikeyFactoryTest.Presentation.Models
         WaitingFor,
         IsNotAUser,
         RegistrationOk,
-        RegistrationKo
+        RegistrationKo1,
+        RegistrationKo2
     }
 
     public class UserModel

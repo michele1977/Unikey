@@ -98,7 +98,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
                 if(result.Errors.Count() != 0)
                 {
-                    userViewModel.UserState = UserState.RegistrationKo;
+                    userViewModel.UserState = UserState.RegistrationKo2;
                     return View("Index", userViewModel);
                 }
 
@@ -106,7 +106,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 return View("Index", userViewModel);
             }
 
-            userViewModel.UserState = UserState.RegistrationKo;
+            userViewModel.UserState = UserState.RegistrationKo1;
             return View("Index", userViewModel);
         }
 

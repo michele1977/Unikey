@@ -22,7 +22,7 @@
                 <div style="text-align: center; padding-top: 80px">
                     <img src="~/Logos/assestmentImage.png" />
                 </div>
-                <br/>
+                <br />
                 <div style="text-align: center">
                     <img style="height: 65px;width: 10%" src="~/Logos/Unikey.png" />
                 </div>
@@ -31,7 +31,7 @@
                 <div style="text-align: center">
                     <h2 style="color: aliceblue">Welcome</h2>
                 </div>
-                <br/>
+                <br />
                 @Html.Partial("_LoginFormPartial", Model.LoginModel)
 
                 @Html.Partial("_SigningUpFormPartial", Model.SigningUpModel)
@@ -56,11 +56,19 @@
             document.getElementById("signingUpOk").style.display = "block";
         </script>
     }
-    else if(Model.UserState == UserState.RegistrationKo)
+    else if (Model.UserState == UserState.RegistrationKo1)
     {
         <script>
             document.getElementById("logInForm").style.display = "none";
             document.getElementById("signingUpForm").style.display = "block";
+        </script>
+    }
+    else if (Model.UserState == UserState.RegistrationKo2)
+    {
+        <script>
+            document.getElementById("logInForm").style.display = "none";
+            document.getElementById("signingUpForm").style.display = "block";
+            document.getElementById("notValidUser").style.display = "block";
         </script>
     }
 
