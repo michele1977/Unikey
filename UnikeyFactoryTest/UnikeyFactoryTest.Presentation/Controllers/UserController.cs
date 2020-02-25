@@ -67,9 +67,24 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
         public async Task<ActionResult> LogIn(UserLoginModel model)
         {
-            var SignInManager = HttpContext.GetOwinContext().Get<SignInManager<UserBusiness, int>>();
-            var signInStatus = await SignInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
-            return Redirect("https://www.pornhub.com");
+            var userViewModel = new UserModel();
+            if (ModelState.IsValid)
+            {
+                var signInManager = HttpContext.GetOwinContext().Get<SignInManager<UserBusiness, int>>();
+                var signInStatus = await signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
+                if (signInStatus == SignInStatus.Success)
+                {
+                    return RedirectToAction("TestsList", "Test");
+                }
+
+                userViewModel.UserState = UserState.IsNotAUser;
+                return View("Index", userViewModel);
+
+            }
+
+            userViewModel.UserState = UserState.WaitingFor;
+            return View("Index", userViewModel);
+
         }
 
         public async Task<ActionResult> Subscribe(UserSigningUpModel model)

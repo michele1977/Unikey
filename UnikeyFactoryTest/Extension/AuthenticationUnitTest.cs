@@ -51,7 +51,7 @@ namespace Extension
             var service = Kernel.Get<UserManager<UserBusiness, int>>();
             var user = new UserBusiness()
             {
-                UserName = "Hendrichone",
+                UserName = "Hendriccione",
                 Password = "Unikey11!"
             };
 
@@ -80,6 +80,15 @@ namespace Extension
             var service = Kernel.Get<UserManager<UserBusiness, int>>();
             var pw = service.PasswordHasher.HashPassword("Unikey01!");
             var res = service.PasswordHasher.VerifyHashedPassword("AEP+CotwBszffjMdSyl3/W1rgZa8X/9jG7MrVT9ucmqGHdGPZ0KT4wcnPZsRWH6jqQ==", "Unikey01!");
+        }
+        
+        [TestMethod]
+        public async Task GetRolesAsync_OK()
+        {
+            var repo = Kernel.Get<IUserRepository>();
+            var res = Task.Run(() => repo.GetRolesAsync(new UserBusiness()));
+            var res2 = await res;
+            int g = 0;
         }
     }
 }

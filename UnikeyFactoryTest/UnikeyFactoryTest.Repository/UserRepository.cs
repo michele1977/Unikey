@@ -98,12 +98,13 @@ namespace UnikeyFactoryTest.Repository
             throw new NotImplementedException();
         }
         #endregion
+
+        // non implementato
         #region Lockout
 
-        // da implementare
         public Task<DateTimeOffset> GetLockoutEndDateAsync(UserBusiness user)
         {
-            return Task.Run(() => new DateTimeOffset(DateTime.Now));
+            return null;
         }
 
         public Task SetLockoutEndDateAsync(UserBusiness user, DateTimeOffset lockoutEnd)
@@ -116,22 +117,19 @@ namespace UnikeyFactoryTest.Repository
             throw new NotImplementedException();
         }
 
-        // da implementare
         public Task ResetAccessFailedCountAsync(UserBusiness user)
         {
-            return Task.Run(() => 0);
+            return null;
         }
 
-        // da implementare
         public Task<int> GetAccessFailedCountAsync(UserBusiness user)
         {
-            return Task.Run(() => 1);
+            return Task.FromResult(0);
         }
 
-        // da implementare
         public Task<bool> GetLockoutEnabledAsync(UserBusiness user)
         {
-            return Task.Run(() => true);
+            return Task.FromResult(false);
         }
 
         public Task SetLockoutEnabledAsync(UserBusiness user, bool enabled)
@@ -152,7 +150,8 @@ namespace UnikeyFactoryTest.Repository
 
         public Task<IList<string>> GetRolesAsync(UserBusiness user)
         {
-            return null;
+            var list = new List<string>();
+            return Task.Run<IList<string>>(() => list);
         }
 
         public Task<bool> IsInRoleAsync(UserBusiness user, string roleName)
@@ -166,10 +165,9 @@ namespace UnikeyFactoryTest.Repository
             throw new NotImplementedException();
         }
 
-        // da implementare
         public Task<bool> GetTwoFactorEnabledAsync(UserBusiness user)
         {
-            return Task.Run(() => false);
+            return Task.FromResult(false);
         }
         #endregion
     }

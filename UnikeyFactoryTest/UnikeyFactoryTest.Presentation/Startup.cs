@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
@@ -41,7 +42,10 @@ namespace UnikeyFactoryTest.Presentation
                     ctx.Authentication));
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                AuthenticationMode = AuthenticationMode.Active,
+                ExpireTimeSpan = TimeSpan.FromMinutes(1),
+                LoginPath = new PathString("/User/Index"),
             });
         }
     }
