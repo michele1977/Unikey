@@ -27,7 +27,7 @@ namespace UnikeyFactoryTest.ITextSharp
                     doc.Open();
 
                     res = doc.Add(new Paragraph("\n\n\n"));
-                    Image logo = Image.GetInstance(@"D:\Contents\UnikeyLogo.png");
+                    Image logo = Image.GetInstance(AppDomain.CurrentDomain.BaseDirectory + $@"\Logos\UnikeyLogo.png");
                     logo.Alignment = Element.ALIGN_CENTER;
 
                     doc.Add(logo);
