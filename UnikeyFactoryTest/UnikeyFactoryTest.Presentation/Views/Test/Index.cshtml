@@ -171,7 +171,7 @@
                     </table>
 
                     <a href="@Url.Action("TestsList", "Test", new { PageNumber = 1, PageSize = 10 })" onclick="DoneBtn()">
-                        <i class="fa fa-check btn" id="doneBtn" style="color: green" title="Done"></i>
+                        <i class="fa fa-check btn" id="doneBtn" style="color: green" title="Done" onclick="showLoadingSpinner();"></i>
                     </a>
 
                 </div>
