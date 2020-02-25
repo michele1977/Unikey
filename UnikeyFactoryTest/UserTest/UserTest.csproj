@@ -40,24 +40,43 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.3.2\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.3.2\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.3.0\lib\net45\Ninject.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common.WebHost, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.WebHost.3.3.0\lib\net45\Ninject.Web.Common.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutomapperConfigurator.cs" />
+    <Compile Include="AutoMappers\AutoMapperFactory.cs" />
+    <Compile Include="AutoMappers\KernelBuilder.cs" />
+    <Compile Include="AutoMappers\ModuleMapping.cs" />
+    <Compile Include="AutoMappers\ModulesMapping.cs" />
     <Compile Include="UnikeyFactoryTest.TextSearch.UnitTest.cs" />
     <Compile Include="UnikeyFactoryTest_AdministratedTestRepository.cs" />
     <Compile Include="MapperTest.cs" />
@@ -84,9 +103,17 @@
       <Project>{06E5E146-DF6E-4BC6-9339-1D68BEA1B996}</Project>
       <Name>UnikeyFactoryTest.IRepository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.IService\UnikeyFactoryTest.IService.csproj">
+      <Project>{764F94A0-C26D-45E8-A86C-91EE99D1ACA7}</Project>
+      <Name>UnikeyFactoryTest.IService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UnikeyFactoryTest.Mapper\UnikeyFactoryTest.Mapper.csproj">
       <Project>{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6}</Project>
       <Name>UnikeyFactoryTest.Mapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.Presentation\UnikeyFactoryTest.Presentation.csproj">
+      <Project>{9BC92D83-2295-40F9-A86B-E54C6BD8454F}</Project>
+      <Name>UnikeyFactoryTest.Presentation</Name>
     </ProjectReference>
     <ProjectReference Include="..\UnikeyFactoryTest.Repository\UnikeyFactoryTest.Repository.csproj">
       <Project>{1AE6EE8E-E465-41C5-A17A-EF35DA1ED082}</Project>

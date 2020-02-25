@@ -7,21 +7,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Ninject;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.Repository;
 using UnikeyFactoryTest.Service;
+using UserTest.AutoMappers;
 
 namespace UserTest
 {
     [TestClass]
     public class UnikeyFactoryTest_DeleteQuestion_UnitTest
     {
+        private TestPlatformDBEntities GetContext()
+        {
+            return new TestPlatformDBEntities();
+        }
         [TestMethod]
         public async Task DeleteQuestion_Ok()
         {
-            TestPlatformDBEntities ctx = new TestPlatformDBEntities();
-            TestService service = new TestService(new TestRepository(ctx));
+            TestPlatformDBEntities ctx = GetContext();
+            var kernel = KernelBuilder.Build();
+            var service = kernel.Get<ITestService>();
 
             Question resQuestion = new Question();
 
@@ -54,8 +62,8 @@ namespace UserTest
         [ExpectedException(typeof(NullReferenceException))]
         public async Task DeleteQuestion_Ko()
         {
-            TestPlatformDBEntities ctx = new TestPlatformDBEntities();
-            TestService service = new TestService(new TestRepository(ctx));
+            var kernel = KernelBuilder.Build();
+            var service = kernel.Get<ITestService>();
 
             await service.DeleteQuestionByIdFromTest(0);
         }

@@ -30,15 +30,11 @@ namespace UnikeyFactoryTest.Service
 
         public void AddNewTest(TestBusiness test)
         {
-            using (Repo)
-            {
-                if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
-                var mapper = Kernel.Get<IMapper>("Heavy");
-                var testDaoo = mapper.Map<TestBusiness, Test>(test);
-                Repo.SaveTest(testDaoo);
-                test.Id = testDaoo.Id;
-
-            }
+            if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
+            var mapper = Kernel.Get<IMapper>("Heavy");
+            var testDaoo = mapper.Map<TestBusiness, Test>(test);
+            Repo.SaveTest(testDaoo);
+            test.Id = testDaoo.Id;
         }
 
 
