@@ -16,69 +16,67 @@
 </head>
 
 <body>
-    <div class="container" style="height:700px;">
-        <div class="row" style="height:700px;padding-top: 40px;">
+    <div class="container" style="height: 700px;">
+        <div class="row" style="height: 700px; padding-top: 40px;">
+
             <div class="col-8" style="background-color: white;">
                 <div style="text-align: center; padding-top: 80px">
                     <img src="~/Logos/assestmentImage.png" />
                 </div>
                 <br />
+
                 <div style="text-align: center">
-                    <img style="height: 65px;width: 10%" src="~/Logos/Unikey.png" />
+                    <img style="height: 65px; width: 10%" src="~/Logos/Unikey.png" />
                 </div>
             </div>
+
             <div class="col-4" style="padding-top: 70px; background-color: rgb(0, 132, 255);">
                 <div style="text-align: center">
                     <h2 style="color: aliceblue">Welcome</h2>
                 </div>
                 <br />
-                @Html.Partial("_LoginFormPartial", Model.LoginModel)
 
-                @Html.Partial("_SigningUpFormPartial", Model.SigningUpModel)
+                <div id="partials">
+
+                </div>
             </div>
         </div>
     </div>
 
 
-    @if (Model.UserState == UserState.IsNotAUser)
-    {
-        <script>
-            let myDiv = document.getElementById("logInFailed");
-            myDiv.style.display = "block";
-        </script>
-    }
 
-    @if (Model.UserState == UserState.RegistrationOk)
+
+
+    @if (Model.AreThereMessages == false)
     {
         <script>
-            document.getElementById("logInForm").style.display = "none";
-            document.getElementById("signingUpForm").style.display = "block";
-            document.getElementById("signingUpOk").style.display = "block";
+            $("#partials").load('@Url.Action("GetLoginPartial", "User")');
         </script>
     }
-    else if (Model.UserState == UserState.RegistrationKo)
+    else if (Model.AreThereMessages == true && Model.ToForm == ToForm.LoginForm)
     {
         <script>
-            document.getElementById("logInForm").style.display = "none";
-            document.getElementById("signingUpForm").style.display = "block";
+            $("#partials").load('@Url.Action("GetLoginPartial", "User", Model.LoginModel)');
+        </script>
+    }
+    else if (Model.AreThereMessages == true && Model.ToForm == ToForm.SigningUpForm)
+    {
+        <script>
+            $("#partials").load('@Url.Action("GetSignUpPartial", "User", Model.SigningUpModel)');
         </script>
     }
 
     <script>
         function ChangeForm(process) {
             if (process === 1) {
-                document.getElementById("logInForm").style.display = "none";
-                document.getElementById("signingUpForm").style.display = "block";
-            }
-            else if (process === 2) {
-                document.getElementById("signingUpForm").style.display = "none";
-                document.getElementById("logInForm").style.display = "block";
+                $("#partials").load('@Url.Action("GetLoginPartial", "User")');
+            } else if (process === 2) {
+                $("#partials").load('@Url.Action("GetSignUpPartial", "User")');
             }
         }
     </script>
 
-
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </body>

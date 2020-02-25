@@ -117,7 +117,6 @@ namespace UnikeyFactoryTest.Repository
             }
 
             int score = 0;
-            test.Date = DateTime.Today;
             test.Score = GetScore(test, score);
 
             try

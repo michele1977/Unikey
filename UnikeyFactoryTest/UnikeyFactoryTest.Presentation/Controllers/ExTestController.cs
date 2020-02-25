@@ -46,6 +46,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var test = await _testService.GetTestByURL(model.Url);
             var newExecutionTest = _adTestService.AdministratedTest_Builder(test, subject);
             newExecutionTest.State = AdministratedTestState.Open;
+            newExecutionTest.Date = DateTime.Now;
             var savedTest = _adTestService.Add(newExecutionTest);
             model.NumQuestion = test.Questions.Count;
             model.ActualQuestion = savedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == 0);
@@ -75,7 +76,10 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             administratedTest.State = AdministratedTestState.Closed;
             await _adTestService.Update_Save(administratedTest);
-            return View("TestEnded");
+            var administratedTestDTO = new AdministratedTestDto(administratedTest);
+            var dateFinish = DateTime.Now;
+            administratedTestDTO.Timer = dateFinish - administratedTestDTO.Date;
+            return View("TestEnded", administratedTestDTO);
         }
 
         [HttpGet]

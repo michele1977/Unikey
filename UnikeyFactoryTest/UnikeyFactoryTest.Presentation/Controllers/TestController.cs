@@ -42,7 +42,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
         }
 
-        public TestController(ITestService value, IAdministratedTestService value2,IKernel kernel)
+        public TestController(ITestService value, IAdministratedTestService value2, IKernel kernel)
         {
             Kernel = kernel;
             _service = value;
@@ -77,22 +77,22 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             {
                 var questionBiz = model.MapToDomain();
                 var test = await _service.GetTestById(questionBiz.TestId);
-                if(test.Questions.Count == 0)
+                if (test.Questions.Count == 0)
                 {
                     questionBiz.Position = 0;
                 }
                 else
                 {
-                    questionBiz.Position = Convert.ToInt16(test.Questions.Count );
+                    questionBiz.Position = Convert.ToInt16(test.Questions.Count);
                 }
                 test.Questions.Add(questionBiz);
 
-               await _service.UpdateTest(test);
-              
-                returned = new TestDto(await _service.GetTestById(test.Id), _service);
-             
+                await _service.UpdateTest(test);
 
-              
+                returned = new TestDto(await _service.GetTestById(test.Id), _service);
+
+
+
                 //returned = new TestDto(await _service.GetTestById(test.Id));
                 //returned.ShowForm = true;
             }
@@ -200,7 +200,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             testsListModel = testsListModel ?? new TestsListModel(_service);
 
             List<TestBusiness> tests = new List<TestBusiness>();
-            
+
             try
             {
                 tests = testsListModel.TextFilter.IsNullOrWhiteSpace() ? await _service.GetTests() :
@@ -376,7 +376,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var test = await _service.GetTestById(TestId);
             returned = new TestDto(test, _service);
             returned.ShowForm = true;
-            
+
             return View("Index", returned);
         }
 
@@ -544,28 +544,24 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task <ActionResult> SaveUpdateQuestion(QuestionDto questionModel)
+        public async Task<ActionResult> SaveUpdateQuestion(QuestionDto questionModel)
         {
+            foreach (var answer in questionModel.Answers)
+            {
+                if (answer.IsCorrectBool == false)
+                    answer.Score = 0;
+            }
             var questionBusiness = questionModel.MapToDomain();
             await _service.UpdateQuestion(questionBusiness);
             var testDTO = new TestDto(await _service.GetTestById(questionModel.TestId), _service);
 
             return View("TestContent", testDTO);
         }
-        //[HttpPost]
-        //public async Task<ActionResult> UpdateQuestion(QuestionDto question)
-        //{
-        //    var questionBusiness = question.MapToDomain();
-        //    await _service.UpdateQuestion(questionBusiness);
-        //    var testToModel = await _service.GetTestById(question.TestId);
-        //    var model = new TestDto(testToModel, _service);
-        //    model.ShowForm = true;
-        //    return View("index",model);
-        //}
+
         [HttpPost]
         public async Task<ActionResult> AddOrUpdateQuestion(QuestionDto question)
         {
-            foreach(var answer in question.Answers)
+            foreach (var answer in question.Answers)
             {
                 if (answer.IsCorrectBool == false)
                     answer.Score = 0;
