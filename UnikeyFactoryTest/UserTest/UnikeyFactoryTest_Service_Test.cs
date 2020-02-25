@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Ninject;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.Repository;
 using UnikeyFactoryTest.Service;
+using UserTest.AutoMappers;
 
 namespace UserTest
 {
@@ -15,11 +18,14 @@ namespace UserTest
         [TestMethod]
         public async Task UserService_IsUser_OK()
         {
+            
             User user = new User();
             user.Username = "ugo";
             user.Password = "123";
 
-            UserService service = new UserService(new UserRepository());
+            var kernel = KernelBuilder.Build();
+            var service = kernel.Get<IUserService>();
+
             bool result = await service.IsUser(user);
 
             Assert.AreEqual(true, result);
@@ -32,7 +38,8 @@ namespace UserTest
             user.Username = "ugo";
             user.Password = "1234";
 
-            UserService service = new UserService(new UserRepository());
+            var kernel = KernelBuilder.Build();
+            var service = kernel.Get<IUserService>();
             bool result = await service.IsUser(user);
 
             Assert.AreEqual(false, result);
