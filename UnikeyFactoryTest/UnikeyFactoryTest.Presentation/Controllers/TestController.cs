@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
 using AutoMapper;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.Ajax.Utilities;
 using Ninject;
 using UnikeyFactoryTest.Context;
@@ -16,6 +18,7 @@ using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.Domain.Enums;
 using UnikeyFactoryTest.Mapper;
+using UnikeyFactoryTest.Presentation.CustomValidators;
 using UnikeyFactoryTest.Presentation.Models;
 using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service;
@@ -34,6 +37,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         private static readonly Test test = new Test();
         private IAdministratedTestService administratedservice;
         private ITestService _service;
+        private IValidatorFactory _validatorFactory;
         private readonly IKernel Kernel;
 
 
@@ -42,20 +46,34 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
         }
 
-        public TestController(ITestService value, IAdministratedTestService value2,IKernel kernel)
+        public TestController(ITestService value, IAdministratedTestService value2,IKernel kernel, IValidatorFactory validatorFactory)
         {
             Kernel = kernel;
             _service = value;
             administratedservice = value2;
+            _validatorFactory = validatorFactory;
         }
 
         // GET: Test
-        public ActionResult Index(TestDto model)
+        public async Task<ActionResult> Index(TestDto model)
         {
             if ((TestDto)TempData["mod"] != null)
                 model = (TestDto)TempData["mod"];
+
             if (UserId == 0)
                 UserId = model.UserId;
+
+            var testValidator = _validatorFactory.GetValidator(typeof(TestValidator));
+            var validationResult = await  testValidator.ValidateAsync(model);
+
+            if (!validationResult.IsValid)
+            {
+                foreach (ValidationFailure failer in validationResult.Errors)
+                {
+                    ModelState.AddModelError(failer.PropertyName, failer.ErrorMessage);
+                }
+            }
+
             try
             {
                 ModelState.Clear();
