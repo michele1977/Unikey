@@ -110,7 +110,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             return View("Index", userViewModel);
         }
 
-
+        [Authorize]
         [HttpGet]
         public ActionResult Logout()
         {
