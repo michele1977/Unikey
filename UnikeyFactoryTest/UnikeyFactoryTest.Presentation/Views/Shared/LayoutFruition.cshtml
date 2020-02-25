@@ -12,6 +12,9 @@
 <body>
     <div id="renderDiv" class="container body-content">
         <div id="cover-spin"></div>
+        <div id="mySidenav" class="sidenav">
+            <a id="homeLogo"><img id="unikeyLogo" src="~/Content/ICONS/unikeyLogo.png" alt="UnikeyLogo"></a>
+        </div>
         @RenderBody()
         <br />
         <hr />
@@ -20,8 +23,8 @@
         </footer>
     </div>
 
-@*@Scripts.Render("~/bundles/jquery")*@
-@Scripts.Render("~/bundles/bootstrap")
-@RenderSection("scripts", required: false)
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </body>
 </html>

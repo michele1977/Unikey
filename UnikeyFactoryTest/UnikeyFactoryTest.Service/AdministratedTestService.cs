@@ -31,7 +31,7 @@ namespace UnikeyFactoryTest.Service
         {
             var newAdTest = new AdministratedTestBusiness
             {
-                Date = DateTime.Today,
+                Date = DateTime.Now,
                 URL = test.URL,
                 TestId = test.Id,
                 TestSubject = subject,
