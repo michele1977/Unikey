@@ -1,10 +1,11 @@
-﻿@model UnikeyFactoryTest.Presentation.Models.UserSigningUpModel
+﻿@using UnikeyFactoryTest.Presentation.Models
+@model UnikeyFactoryTest.Presentation.Models.UserSigningUpModel
 
 @{
     Layout = "~/Views/Shared/LayoutFruition.cshtml";
 }
 
-<div id="signingUpForm" class="container" style="display: none;padding: 15px; padding-top: 25px;max-width: 500px; border: 2px solid black; border-radius: 10px; background-color: antiquewhite">
+<div id="signingUpForm" class="container" style="display: block;padding: 15px; padding-top: 25px;max-width: 500px; border: 2px solid black; border-radius: 10px; background-color: antiquewhite">
     <form action="/User/Subscribe" method="post">
         <div class="form-group">
             <label for="lbSUsername" style="font-family:Verdana, Geneva">Username</label>
@@ -31,10 +32,17 @@
         <div class="container alert alert-success" role="alert" style="display: none;width: 100%" id="signingUpOk">
             Congratulations, registration succeeded
         </div>
+
+        <div class="container alert alert-danger" role="alert" style="display: none;width: 100%" id="signingUpKo">
+            Data not valid. Try again.
+        </div>
     </form>
 
     <div style="width: 100%; text-align: center">
-        <a onclick="ChangeForm(2)" target="_top" style="color: dodgerblue">Go to LogIn</a>
+        <button style="background: none !important; border: none; padding: 0 !important; font-family: arial, sans-serif; color: dodgerblue; text-decoration: underline; cursor: pointer;"
+                onclick="ChangeForm(1)" target="_top">
+            Go to LogIn
+        </button>
     </div>
 
 
@@ -52,4 +60,20 @@
             }
         }
     </script>
+
+
+    @if (Model.UserState == UserState.RegistrationOk)
+    {
+        <script>
+            let myDiv = document.getElementById("signingUpOk");
+            myDiv.style.display = "block";
+        </script>
+    }
+    else if (Model.UserState == UserState.RegistrationKo)
+    {
+        <script>
+            let myDiv = document.getElementById("signingUpKo");
+            myDiv.style.display = "block";
+        </script>
+    }
 </div>

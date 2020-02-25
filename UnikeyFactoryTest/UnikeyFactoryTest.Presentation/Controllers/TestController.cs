@@ -393,11 +393,25 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             testsListModel.Tests = await testsListModel.Paginate(testsListModel.Tests);
 
+<<<<<<< HEAD
             var testIds = testsListModel.Tests.Select(t => t.Id).ToList();
+=======
+            //testsListModel.ClosedTestsNumberPerTest = _service.GetClosedTests(testsListModel.PageNumber, testsListModel.PageSize, testsListModel.TextFilter);
+            
+            var testsId = (from t in testsListModel.Tests
+                select t.Id).ToList();
+            testsListModel.AdministratedTestOpen = await _service.OpenedTestNumber(testsId);
+>>>>>>> feature/FixSignUp
 
             testsListModel.ClosedTestsNumberPerTest = await _service.GetExTestCountByState(testIds, AdministratedTestState.Closed);
 
+<<<<<<< HEAD
             testsListModel.AdministratedTestOpen = await _service.GetExTestCountByState(testIds, AdministratedTestState.Open);
+=======
+            //var testsId = (from t in testsListModel.Tests
+            //    select t.Id).ToList();
+            //testsListModel.AdministratedTestOpen = await _service.OpenedTestNumber(testsId);
+>>>>>>> feature/FixSignUp
 
             return View("TestsList", testsListModel);
         }

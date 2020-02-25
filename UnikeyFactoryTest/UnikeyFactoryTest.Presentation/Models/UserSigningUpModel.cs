@@ -19,6 +19,7 @@ namespace UnikeyFactoryTest.Presentation.Models
         [Required(ErrorMessage = "Please retype the password")]
         [RetypedPassword("Password", ErrorMessage = "The passwords don't match")]
         public string RetypedPassword { get; set; }
+        public UserState UserState { get; set; }
 
         public UserSigningUpModel()
         {
