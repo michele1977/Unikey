@@ -115,6 +115,12 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         public ActionResult Logout()
         {
             var model = new UserModel();
+            if (Request.Cookies[".AspNet.ApplicationCookie"] != null)
+            {
+                HttpCookie myCookie = new HttpCookie(".AspNet.ApplicationCookie");
+                myCookie.Expires = DateTime.Now.AddDays(-1d);
+                Response.Cookies.Add(myCookie);
+            }
             model.UserState = UserState.WaitingFor;
             return View("Index", model);
         }

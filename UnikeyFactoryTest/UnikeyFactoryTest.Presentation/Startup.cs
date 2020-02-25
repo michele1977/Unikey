@@ -36,15 +36,18 @@ namespace UnikeyFactoryTest.Presentation
         {
             app.CreatePerOwinContext(() => Kernel.Get<UserManager<UserBusiness, int>>());
             app.CreatePerOwinContext(() => Kernel.Get<IUserRepository>());
+
             app.CreatePerOwinContext<SignInManager<UserBusiness, int>>((opt, ctx) =>
                 new SignInManager<UserBusiness, int>(
                     ctx.Get<UserManager<UserBusiness, int>>(),
                     ctx.Authentication));
+            
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 AuthenticationMode = AuthenticationMode.Active,
-                ExpireTimeSpan = TimeSpan.FromMinutes(1),
+                ExpireTimeSpan = TimeSpan.FromHours(1),
+                SlidingExpiration = true,
                 LoginPath = new PathString("/User/Index"),
             });
         }

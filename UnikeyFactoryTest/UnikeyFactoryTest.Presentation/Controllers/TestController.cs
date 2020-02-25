@@ -23,6 +23,7 @@ using UnikeyFactoryTest.Service.Providers.MailProvider;
 
 namespace UnikeyFactoryTest.Presentation.Controllers
 {
+    [Authorize]
     public class TestController : Controller
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
@@ -47,7 +48,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             _service = value;
             administratedservice = value2;
         }
-        [Authorize]
         // GET: Test
         public ActionResult Index(TestDto model)
         {
@@ -67,7 +67,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             model.ShowForm = false;
             return View(model);
         }
-        [Authorize]
         [HttpPost]
         public async Task<ActionResult> AddQuestion(QuestionDto model)
         {
@@ -135,7 +134,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             return RedirectToAction("Index");
         }
-        [Authorize]
         [HttpPost]
         public ActionResult AddTest(TestDto model)
         {
@@ -191,7 +189,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             return View("index", model);
         }
-        [Authorize]
         [HttpGet]
         public async Task<ActionResult> TestsList(TestsListModel testsListModel)
         {
@@ -241,7 +238,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         //    }, JsonRequestBehavior.AllowGet);
 
         //}
-        [Authorize]
         [HttpPost]
         public async Task<JsonResult> DeleteTest(TestDto test)
         {
@@ -293,7 +289,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                     new { PageNumber = test.PageNumber, PageSize = test.PageSize })
             });
         }
-        [Authorize]
         [HttpGet]
         public async Task<ActionResult> TestContent(TestDto test)
         {
@@ -325,7 +320,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             return View(testToPass);
         }
-        [Authorize]
         [HttpGet]
         public async Task<ActionResult> DeleteQuestion(QuestionDto question, int TestId)
         {
@@ -377,7 +371,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             
             return View("Index", returned);
         }
-        [Authorize]
         [HttpPost]
         public async Task<ActionResult> TextSearch(TestsListModel testsListModel)
         {
@@ -403,7 +396,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             return View("TestsList", testsListModel);
         }
-        [Authorize]
         public async Task<JsonResult> SendMail(EmailModel emailModel)
         {
             TestBusiness test;
@@ -501,14 +493,12 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             return Json(new { result = result });
         }
-        [Authorize]
         public ActionResult GetAddQuestionPartial(TestDto model)
         {
             var myModel = new QuestionDto();
             myModel.TestId = model.Id;
             return PartialView("AddQuestionPartial", myModel);
         }
-        [Authorize]
         [HttpGet]
         public async Task<ActionResult> QuestionDetails(QuestionDto question)
         {
@@ -516,7 +506,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var questionDao = new QuestionDto(questionDomain);
             return PartialView("Index", questionDao);
         }
-        [Authorize]
         [HttpPost]
         public async Task<ActionResult> EditQuestionsAsync(QuestionEditModel questionmodel)
         {
@@ -545,7 +534,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             }
             return View(questionmodel);
         }
-        [Authorize]
         public ActionResult SaveUpdateQuestion(QuestionEditModel editModel)
         {
             //TO IMPLEMENT
