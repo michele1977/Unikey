@@ -565,7 +565,8 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             creator.CreatePdf(testBusiness);
 
-            return RedirectToAction("TestContent", test);
+            return File(output, "text/excel", "file.xls");
+            //return RedirectToAction("TestContent", test);
         }
     }
 }
