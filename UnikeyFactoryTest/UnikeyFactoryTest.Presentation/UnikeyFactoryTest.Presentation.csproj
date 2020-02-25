@@ -176,7 +176,6 @@
     <Compile Include="CustomValidators\QuestionValidator.cs" />
     <Compile Include="CustomValidators\RetypePasswordValidator.cs" />
     <Compile Include="CustomValidators\StrongPassword.cs" />
-    <Compile Include="CustomValidators\NinjectValidatorsFactory.cs" />
     <Compile Include="CustomValidators\TestValidator.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

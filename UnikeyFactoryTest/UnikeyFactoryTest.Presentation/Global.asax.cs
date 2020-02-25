@@ -14,6 +14,7 @@ using Ninject.Web.Common.WebHost;
 using UnikeyFactoryTest.Mapper.AutoMappers;
 using UnikeyFactoryTest.NinjectConfiguration;
 using UnikeyFactoryTest.Presentation.CustomValidators;
+using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service;
 
 namespace UnikeyFactoryTest.Presentation
@@ -28,10 +29,6 @@ namespace UnikeyFactoryTest.Presentation
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             var mapConfig = new MapConfig();
             mapConfig.RegisterMap(CreateKernel());
-
-            FluentValidationModelValidatorProvider.Configure(provider => {
-                provider.ValidatorFactory = new NinjectValidatorFactory();
-            });
         }
 
         protected override IKernel CreateKernel()
@@ -45,7 +42,8 @@ namespace UnikeyFactoryTest.Presentation
         {
             kernel.Load(Assembly.GetExecutingAssembly());
             kernel.Load(new BindingsService());
-            kernel.Bind<IValidatorFactory>().To<NinjectValidatorFactory>();
+            kernel.Bind<IValidator<TestDto>>().To<TestValidator>();
+            kernel.Bind<IValidator<QuestionDto>>().To<QuestionValidator>();
         }
     }
 }

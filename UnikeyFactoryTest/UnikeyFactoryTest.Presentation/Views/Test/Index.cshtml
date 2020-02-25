@@ -98,7 +98,6 @@
 
 </script>
 
-@Html.ValidationSummary(true)
 @using (Html.BeginForm("AddTest", "Test", FormMethod.Post))
 {
     @Html.HiddenFor(x => x.Id)
@@ -117,7 +116,7 @@
                 Create
             </button>
         }
-        if (Model.ShowForm == true)
+        if (Model.ShowForm)
         {
             @Html.TextBoxFor(x => x.Title, new { @class = "form-control", id = "class-textBox", placeholder = "TestName", disabled = "disabled" })
             @Html.ValidationMessageFor(x => x.Title, "", new { @class = "text-danger" })
@@ -138,7 +137,7 @@
 
 @if (Model != null)
 {
-    if (Model.Title != null)
+    if (Model.ShowForm)
     {
         <div class="container" id="myDivContainerDown">
             <div class="row">
@@ -152,7 +151,7 @@
                                 <i class="fa fa-plus btn " onclick="ShowAddQuestionPartial()" title="Add question"></i>
                             </th>
                         </tr>
-                        
+
                         @foreach (var Question in Model.Questions)
                         {
                             <tr>
@@ -180,12 +179,22 @@
                     </a>
 
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6" id="mydivQuestionForm">
+                @if (Model.IsValid)
+                {
+                    <div class="col-lg-6 col-md-6 col-sm-6" id="mydivQuestionForm">
 
-                </div>
-                <div class="col-6" id="QuestionDetails">
-
-                </div>
+                    </div>
+                }
+                @if (Model.IsValid == false)
+                {
+                    <div class="col-lg-6 col-md-6 col-sm-6" id="mydivQuestionForm">
+                        @{
+                            var myModel = new QuestionDto();
+                            myModel.TestId = Model.Id;
+                        }
+                        @Html.Partial("AddQuestionPartial", myModel)
+                    </div>
+                }
             </div>
         </div>
     }

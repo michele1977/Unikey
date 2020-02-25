@@ -12,7 +12,6 @@ namespace UnikeyFactoryTest.Presentation.CustomValidators
         public TestValidator()
         {
             RuleFor(x => x.Title).NotEmpty().WithMessage("Test {PropertyName} is required");
-
         }
     }
 }

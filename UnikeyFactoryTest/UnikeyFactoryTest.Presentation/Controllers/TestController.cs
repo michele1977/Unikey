@@ -37,7 +37,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         private static readonly Test test = new Test();
         private IAdministratedTestService administratedservice;
         private ITestService _service;
-        private IValidatorFactory _validatorFactory;
         private readonly IKernel Kernel;
 
 
@@ -46,33 +45,21 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
         }
 
-        public TestController(ITestService value, IAdministratedTestService value2,IKernel kernel, IValidatorFactory validatorFactory)
+        public TestController(ITestService value, IAdministratedTestService value2, IKernel kernel)
         {
             Kernel = kernel;
             _service = value;
             administratedservice = value2;
-            _validatorFactory = validatorFactory;
         }
 
         // GET: Test
-        public async Task<ActionResult> Index(TestDto model)
+        public ActionResult Index(TestDto model)
         {
             if ((TestDto)TempData["mod"] != null)
                 model = (TestDto)TempData["mod"];
 
             if (UserId == 0)
                 UserId = model.UserId;
-
-            var testValidator = _validatorFactory.GetValidator(typeof(TestValidator));
-            var validationResult = await  testValidator.ValidateAsync(model);
-
-            if (!validationResult.IsValid)
-            {
-                foreach (ValidationFailure failer in validationResult.Errors)
-                {
-                    ModelState.AddModelError(failer.PropertyName, failer.ErrorMessage);
-                }
-            }
 
             try
             {
@@ -95,22 +82,22 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             {
                 var questionBiz = model.MapToDomain();
                 var test = await _service.GetTestById(questionBiz.TestId);
-                if(test.Questions.Count == 0)
+                if (test.Questions.Count == 0)
                 {
                     questionBiz.Position = 0;
                 }
                 else
                 {
-                    questionBiz.Position = Convert.ToInt16(test.Questions.Count );
+                    questionBiz.Position = Convert.ToInt16(test.Questions.Count);
                 }
                 test.Questions.Add(questionBiz);
 
-               _service.UpdateTest(test);
-              
-                returned = new TestDto(await _service.GetTestById(test.Id), _service);
-             
+                _service.UpdateTest(test);
 
-              
+                returned = new TestDto(await _service.GetTestById(test.Id), _service);
+
+
+
                 //returned = new TestDto(await _service.GetTestById(test.Id));
                 //returned.ShowForm = true;
             }
@@ -156,56 +143,70 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddTest(TestDto model)
+        public async Task<ActionResult> AddTest(TestDto model)
         {
-            try
-            {
-                test.Id = model.Id;
-                test.Title = model.Title;
-                test.UserId = UserId;
-                test.URL = _service.GenerateGuid();
-                test.Date = model.Date;
-                var mapper = Kernel.Get<IMapper>("Heavy");
-                var testDomain = mapper.Map<Test, TestBusiness>(test);
-                _service.AddNewTest(testDomain);
-                model.Id = testDomain.Id;
+            var testValidator = Kernel.Get<IValidator<TestDto>>();
 
-                model.ShowForm = true;
-            }
-            catch (ArgumentNullException e)
+            var validationResult = await testValidator.ValidateAsync(model);
+
+            if (!validationResult.IsValid)
             {
-                Logger.Fatal(e, e.Message);
-                throw;
+                foreach (ValidationFailure failer in validationResult.Errors)
+                {
+                    ModelState.AddModelError(failer.PropertyName, failer.ErrorMessage);
+                }
             }
-            catch (InvalidOperationException e)
+            else
             {
-                Logger.Fatal(e, e.Message);
-                throw;
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                Logger.Fatal(e, e.Message);
-                throw;
-            }
-            catch (DbEntityValidationException e)
-            {
-                Logger.Fatal(e, e.Message);
-                throw;
-            }
-            catch (DbUpdateException e)
-            {
-                Logger.Fatal(e, e.Message);
-                throw;
-            }
-            catch (NotSupportedException e)
-            {
-                Logger.Fatal(e, e.Message);
-                throw;
-            }
-            catch (Exception e)
-            {
-                Logger.Fatal(e, e.Message);
-                throw;
+                try
+                {
+                    test.Id = model.Id;
+                    test.Title = model.Title;
+                    test.UserId = UserId;
+                    test.URL = _service.GenerateGuid();
+                    test.Date = model.Date;
+                    var mapper = Kernel.Get<IMapper>("Heavy");
+                    var testDomain = mapper.Map<Test, TestBusiness>(test);
+                    _service.AddNewTest(testDomain);
+                    model.Id = testDomain.Id;
+
+                    model.ShowForm = true;
+                }
+                catch (ArgumentNullException e)
+                {
+                    Logger.Fatal(e, e.Message);
+                    throw;
+                }
+                catch (InvalidOperationException e)
+                {
+                    Logger.Fatal(e, e.Message);
+                    throw;
+                }
+                catch (DbUpdateConcurrencyException e)
+                {
+                    Logger.Fatal(e, e.Message);
+                    throw;
+                }
+                catch (DbEntityValidationException e)
+                {
+                    Logger.Fatal(e, e.Message);
+                    throw;
+                }
+                catch (DbUpdateException e)
+                {
+                    Logger.Fatal(e, e.Message);
+                    throw;
+                }
+                catch (NotSupportedException e)
+                {
+                    Logger.Fatal(e, e.Message);
+                    throw;
+                }
+                catch (Exception e)
+                {
+                    Logger.Fatal(e, e.Message);
+                    throw;
+                }
             }
 
             return View("index", model);
@@ -218,11 +219,11 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             testsListModel = testsListModel ?? new TestsListModel(_service);
 
             List<TestBusiness> tests = new List<TestBusiness>();
-            
+
             try
             {
                 tests = testsListModel.TextFilter.IsNullOrWhiteSpace() ? await _service.GetTests() :
-                    await _service.GetTestsByFilter(testsListModel.TextFilter);
+                    await _service.GetTestsByFilter(testsListModel.TextFilter);                                                                                                                                                                         
 
                 testsListModel.Tests = testsListModel.Paginate(tests);
 
@@ -394,7 +395,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var test = await _service.GetTestById(TestId);
             returned = new TestDto(test, _service);
             returned.ShowForm = true;
-            
+
             return View("Index", returned);
         }
 
@@ -562,7 +563,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task <ActionResult> SaveUpdateQuestion(QuestionDto questionModel)
+        public async Task<ActionResult> SaveUpdateQuestion(QuestionDto questionModel)
         {
             var questionBusiness = questionModel.MapToDomain();
             await _service.UpdateQuestion(questionBusiness);
@@ -581,19 +582,77 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         //    return View("index",model);
         //}
         [HttpPost]
-        public async Task<ActionResult> AddOrUpdateQuestion(QuestionDto question)
+        public async Task<ActionResult> AddOrUpdateQuestion(QuestionDto model)
         {
-            foreach(var answer in question.Answers)
+            var returned = new TestDto();
+
+            QuestionValidator val = new QuestionValidator();
+            ValidationResult res = val.Validate(model);
+
+            if (!res.IsValid)
             {
-                if (answer.IsCorrectBool == false)
-                    answer.Score = 0;
+                foreach (ValidationFailure err in res.Errors)
+                {
+                    ModelState.AddModelError(err.PropertyName, err.ErrorMessage);
+
+                }
+
+                returned.Id = model.TestId;
+                returned = new TestDto(await _service.GetTestById(returned.Id), _service);
+                returned.ShowForm = true;
+                returned.IsValid = false;
             }
-            var questionBusiness = question.MapToDomain();
-            await _service.AddOrUpdateQuestion(questionBusiness);
-            var testToModel = await _service.GetTestById(question.TestId);
-            var model = new TestDto(testToModel, _service);
-            model.ShowForm = true;
-            return View("index", model);
+            else
+            {
+                try
+                {
+                    var questionBiz = model.MapToDomain();
+                    var test = await _service.GetTestById(questionBiz.TestId);
+                    test.Questions.Add(questionBiz);
+
+                    returned = new TestDto(await _service.GetTestById(test.Id), _service);
+                    returned.ShowForm = true;
+                    returned.IsValid = true;
+                }
+                catch (ArgumentNullException e)
+                {
+                    Logger.Fatal(e, e.Message);
+                    throw;
+                }
+                catch (InvalidOperationException e)
+                {
+                    Logger.Fatal(e, e.Message);
+                    throw;
+                }
+                catch (DbUpdateConcurrencyException e)
+                {
+                    Logger.Fatal(e, e.Message);
+                    throw;
+                }
+                catch (DbEntityValidationException e)
+                {
+                    Logger.Fatal(e, e.Message);
+                    throw;
+                }
+                catch (DbUpdateException e)
+                {
+                    Logger.Fatal(e, e.Message);
+                    throw;
+                }
+                catch (NotSupportedException e)
+                {
+                    Logger.Fatal(e, e.Message);
+                    throw;
+                }
+                catch (Exception e)
+                {
+                    Logger.Fatal(e, e.Message);
+                    throw;
+                }
+
+            }
+
+            return View("Index", returned);
         }
 
     }
