@@ -66,13 +66,20 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
                 if(result.Errors.Count() != 0)
                 {
-                    userViewModel.AreThereMessages = false;
+                    userViewModel.AreThereMessages = true;
                     userViewModel.ToForm = ToForm.SigningUpForm;
                     userViewModel.SigningUpModel.UserState = UserState.RegistrationKo2;
+                    return View("Index", userViewModel);
                 }
+
+                userViewModel.AreThereMessages = true;
+                userViewModel.ToForm = ToForm.LoginForm;
+                userViewModel.SigningUpModel.UserState = UserState.RegistrationOk;
                 return View("Index", userViewModel);
             }
 
+            userViewModel.AreThereMessages = true;
+            userViewModel.ToForm = ToForm.SigningUpForm;
             userViewModel.SigningUpModel.UserState = UserState.RegistrationKo1;
             return View("Index", userViewModel);
         }
