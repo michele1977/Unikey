@@ -23,7 +23,7 @@ using UnikeyFactoryTest.Service.Providers.MailProvider;
 
 namespace UnikeyFactoryTest.Presentation.Controllers
 {
-
+    [Authorize]
     public class TestController : Controller
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
@@ -48,7 +48,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             _service = value;
             administratedservice = value2;
         }
-
         // GET: Test
         public ActionResult Index(TestDto model)
         {
@@ -68,7 +67,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             model.ShowForm = false;
             return View(model);
         }
-
         [HttpPost]
         public async Task<ActionResult> AddQuestion(QuestionDto model)
         {
@@ -136,7 +134,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             return RedirectToAction("Index");
         }
-
         [HttpPost]
         public ActionResult AddTest(TestDto model)
         {
@@ -192,7 +189,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             return View("index", model);
         }
-
         [HttpGet]
         public async Task<ActionResult> TestsList(TestsListModel testsListModel)
         {
@@ -244,7 +240,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         //    }, JsonRequestBehavior.AllowGet);
 
         //}
-
         [HttpPost]
         public async Task<JsonResult> DeleteTest(TestDto test)
         {
@@ -296,7 +291,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                     new { PageNumber = test.PageNumber, PageSize = test.PageSize })
             });
         }
-
         [HttpGet]
         public async Task<ActionResult> TestContent(TestDto test)
         {
@@ -327,7 +321,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             return View(testToPass);
         }
-
         [HttpGet]
         public async Task<ActionResult> DeleteQuestion(QuestionDto question, int TestId)
         {
@@ -379,7 +372,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             return View("Index", returned);
         }
-
         [HttpPost]
         public async Task<ActionResult> TextSearch(TestsListModel testsListModel)
         {
@@ -401,7 +393,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             return View("TestsList", testsListModel);
         }
-
         public async Task<JsonResult> SendMail(EmailModel emailModel)
         {
             TestBusiness test;
@@ -499,14 +490,12 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             return Json(new { result = result });
         }
-
         public ActionResult GetAddQuestionPartial(TestDto model)
         {
             var myModel = new QuestionDto();
             myModel.TestId = model.Id;
             return PartialView("AddQuestionPartial", myModel);
         }
-
         [HttpGet]
         public async Task<ActionResult> QuestionDetails(int questionId)
         {

@@ -21,11 +21,11 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         private IAdministratedTestService _adTestService;
         private ITestService _testService;
         private Logger Logger = LogManager.GetCurrentClassLogger();
-        private IKernel kernel;
-        public ExTestController(IAdministratedTestService value, ITestService value2, IKernel kernel)
+        private IKernel _kernel;
+        public ExTestController(IAdministratedTestService value, ITestService testService, IKernel kernel)
         {
-            _testService = value2;
-            this.kernel = kernel;
+            _testService = testService;
+            _kernel = kernel;
             _adTestService = value;
         }
 
@@ -82,6 +82,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             return View("TestEnded", administratedTestDTO);
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult> AdministratedTestsList(AdministratedTestsListModel adTestsListModel)
         {
@@ -109,6 +110,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult> AdministratedTestContent(AdministratedTestDto test)
         {
@@ -161,6 +163,8 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             model.ActualQuestion = _adTestService.Previous(administratedTest, model.ActualPosition - 1);
             return View("Test", model);
         }
+        
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult> DetailsTablePartial(int testId)
         {
@@ -177,6 +181,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             return PartialView("DetailsTablePartial", testToPass);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> TextSearch(AdministratedTestsListModel adTestsListModel)
         {

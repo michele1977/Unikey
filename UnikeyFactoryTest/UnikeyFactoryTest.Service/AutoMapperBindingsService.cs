@@ -12,16 +12,10 @@ using UnikeyFactoryTest.Repository;
 
 namespace UnikeyFactoryTest.Service
 {
-    public class BindingsService : NinjectModule
+    public class AutoMapperBindingsService : NinjectModule
     {
         public override void Load()
         {
-            Bind<IAdministratedTestService>().To<AdministratedTestService>();
-            Bind<IAdministratedTestRepository>().To<AdministratedTestRepository>();
-            Bind<ITestRepository>().To<TestRepository>();
-            Bind<ITestService>().To<TestService>();
-            Bind<IUserRepository>().To<UserRepository>();
-            Bind<IUserService>().To<UserService>();
             Bind<MapperConfiguration>().ToConstant(ModulesMapping.GetConfiguration());
 
             Bind<IMapper>().ToMethod(ctx =>

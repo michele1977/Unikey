@@ -7,7 +7,9 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using AutoMapper;
+using Microsoft.Owin.Builder;
 using Ninject;
+using Ninject.Modules;
 using Ninject.Web.Common.WebHost;
 using UnikeyFactoryTest.Mapper.AutoMappers;
 using UnikeyFactoryTest.NinjectConfiguration;
@@ -17,6 +19,7 @@ namespace UnikeyFactoryTest.Presentation
 {
     public class MvcApplication : NinjectHttpApplication
     {
+        private IKernel kernel;
         protected override void OnApplicationStarted()
         {
             AreaRegistration.RegisterAllAreas();
@@ -29,7 +32,7 @@ namespace UnikeyFactoryTest.Presentation
 
         protected override IKernel CreateKernel()
         {
-            var kernel = new StandardKernel();
+            kernel = new StandardKernel();
             RegisterServices(kernel);
             return kernel;
         }
@@ -37,7 +40,11 @@ namespace UnikeyFactoryTest.Presentation
         private void RegisterServices(IKernel kernel)
         {
             kernel.Load(Assembly.GetExecutingAssembly());
-            kernel.Load(new BindingsService());
+            kernel.Load(new List<INinjectModule>
+            {
+                new AutoMapperBindingsService(),
+                new UnikeyFactoryTestBindings()
+            });
         }
     }
 }

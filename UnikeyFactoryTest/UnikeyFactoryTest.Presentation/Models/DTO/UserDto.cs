@@ -12,13 +12,12 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         private ITestService service;
         public UserDto()
         {
-
         }
 
         public UserDto(UserBusiness user)
         {
             Id = user.Id;
-            Username = user.Username;
+            Username = user.UserName;
             Password = user.Password;
             Tests = user.Tests.Select(t => new TestDto(t, service));
         }

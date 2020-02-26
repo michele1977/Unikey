@@ -47,19 +47,19 @@
 
 
 
-    @if (Model.AreThereMessages == false)
+    @if (Model.AreThereMessages is false)
     {
         <script>
             $("#partials").load('@Url.Action("GetLoginPartial", "User")');
         </script>
     }
-    else if (Model.AreThereMessages == true && Model.ToForm == ToForm.LoginForm)
+    else if (Model.AreThereMessages is true && Model.ToForm == ToForm.LoginForm)
     {
         <script>
             $("#partials").load('@Url.Action("GetLoginPartial", "User", Model.LoginModel)');
         </script>
     }
-    else if (Model.AreThereMessages == true && Model.ToForm == ToForm.SigningUpForm)
+    else if (Model.AreThereMessages is true && Model.ToForm == ToForm.SigningUpForm)
     {
         <script>
             $("#partials").load('@Url.Action("GetSignUpPartial", "User", Model.SigningUpModel)');

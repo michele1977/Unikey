@@ -6,7 +6,7 @@
 }
 
     <div id="logInForm" class="container" style="display: block;padding: 15px; padding-top: 25px;max-width: 500px; border: 2px solid black; border-radius: 10px; background-color: antiquewhite">
-        <form id="logForm" action="/User/CheckData" method="post">
+        <form id="logForm" action="/User/LogIn" method="post">
             <div class="form-group">
                 <label for="lbUsername" style="font-family:Verdana, Geneva">Username</label>
                 <input type="text" class="form-control" id="lbUsername" name="Username" onkeyup="CheckLogInForm()">
@@ -25,6 +25,11 @@
 
             <div class="container alert alert-danger" role="alert" style="display: none;width: 100%" id="logInFailed">
                 Username or password invalid
+            </div>
+            <br>            
+            
+            <div class="container alert alert-success" role="alert" style="display: none;width: 100%" id="subscribeSuccess">
+                Registration Successful!
             </div>
             <br>
         </form>
@@ -50,6 +55,13 @@
         {
             <script>
                 let myDiv = document.getElementById("logInFailed");
+                myDiv.style.display = "block";
+            </script>
+        }        
+        @if (Model.UserState == UserState.RegistrationOk)
+        {
+            <script>
+                let myDiv = document.getElementById("subscribeSuccess");
                 myDiv.style.display = "block";
             </script>
         }
