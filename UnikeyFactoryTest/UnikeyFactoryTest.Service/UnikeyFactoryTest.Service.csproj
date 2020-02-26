@@ -101,8 +101,8 @@
     <Compile Include="Providers\MailProvider\IMailTools.cs" />
     <Compile Include="Providers\MailProvider\MailProvider.cs" />
     <Compile Include="Providers\MailProvider\MailTools.cs" />
-    <Compile Include="TestService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestService.cs" />
     <Compile Include="UserService.cs" />
   </ItemGroup>
   <ItemGroup>
