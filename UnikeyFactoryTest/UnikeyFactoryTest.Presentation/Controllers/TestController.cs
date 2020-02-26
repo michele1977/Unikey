@@ -531,8 +531,19 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         {
             var questionDomain = await _service.GetQuestionById(questionId);
             var questionDao = new QuestionDto(questionDomain);
+
+            if (questionDao.Answers.Count < 4)
+            {
+                int ansCount = questionDao.Answers.Count;
+                for (int i = 0; i < 4 - ansCount; ++i)
+                {
+                    questionDao.Answers.Add(new AnswerDto());
+                }
+            }
+
             return PartialView("AddQuestionPartial", questionDao);
         }
+
         [HttpPost]
         public async Task<ActionResult> EditQuestionsAsync(QuestionDto questionmodel)
         {
@@ -589,7 +600,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             QuestionValidator val = new QuestionValidator();
             ValidationResult res = val.Validate(model);
 
-            if (!res.IsValid)
+            if (!res.IsValid ||)
             {
                 foreach (ValidationFailure err in res.Errors)
                 {
@@ -597,22 +608,31 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
                 }
 
+                
+                //for (int i = 0; i < model.Answers.Count; ++i)
+                //{
+                //    if (ModelState.ContainsKey($"Answers[{i}].Score"))
+                //        ModelState[$"Answers[{i}].Score"].Errors.Clear();
+                //}
                 returned.Id = model.TestId;
                 returned = new TestDto(await _service.GetTestById(returned.Id), _service);
                 returned.ShowForm = true;
-                returned.IsValid = false;
+                returned.ShowPartial = true;
             }
             else
             {
                 try
                 {
                     var questionBiz = model.MapToDomain();
-                    var test = await _service.GetTestById(questionBiz.TestId);
-                    test.Questions.Add(questionBiz);
 
-                    returned = new TestDto(await _service.GetTestById(test.Id), _service);
+                    questionBiz.Answers.RemoveAll(a => { return a.IsCorrect == AnswerState.NotCorrect && (a.Text.IsNullOrWhiteSpace()); });
+
+                    await _service.AddOrUpdateQuestion(questionBiz);
+                    var test = await _service.GetTestById(questionBiz.TestId);
+
+                    returned = new TestDto(test, _service);
                     returned.ShowForm = true;
-                    returned.IsValid = true;
+                    returned.ShowPartial= false;
                 }
                 catch (ArgumentNullException e)
                 {

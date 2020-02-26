@@ -29,14 +29,25 @@
 
 <script>
     function CorrectAnswer(id, idchk, idtxt) {
-        var isChecked = document.getElementById(id).checked
+        var isChecked = document.getElementById(id).checked;
+        var targetInput = document.getElementById(idtxt);
         if (isChecked == true) {
             document.getElementById(idchk).classList.add("class-selected");
-            document.getElementById(idtxt).hidden = false;
+            //document.getElementById(idtxt).hidden = false;
+
+            targetInput.removeAttribute("hidden");
+            targetInput.setAttribute("required", "required");
+
+            //$(divId)
+            //    .html(
+            //        "<input value='0' class = 'form-control' id='txt_Score'" + ind + " name='Answers[" + ind + "].Score' placeholder='Score' style='width: 80px;' type='number' required>");
         }
         else {
             document.getElementById(idchk).classList.remove("class-selected");
-            document.getElementById(idtxt).hidden = true;
+            targetInput.setAttribute("hidden", true);
+            targetInput.removeAttribute("required");
+            //document.getElementById(idtxt).hidden = true;
+
         }
     }
 
@@ -92,7 +103,7 @@
                 $('#mydivQuestionForm').html(data);
                 hideLoadingSpinner();
             }
-            
+
         });
     }
 
@@ -101,36 +112,36 @@
 @using (Html.BeginForm("AddTest", "Test", FormMethod.Post))
 {
     @Html.HiddenFor(x => x.Id)
-<div class="form-group" id="myDivContainerTop" style="width: 50%; margin-left: 25%">
+    <div class="form-group" id="myDivContainerTop" style="width: 50%; margin-left: 25%">
 
-    @{
-        if (Model.ShowForm == false)
-        {
-            @Html.TextBoxFor(x => x.Title, new { @class = "form-control", id = "class-textBox", placeholder = "TestName" })
-            @Html.ValidationMessageFor(x => x.Title, "", new { @class = "text-danger" })
-            
-            @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled" })
+        @{
+            if (Model.ShowForm == false)
+            {
+                @Html.TextBoxFor(x => x.Title, new { @class = "form-control", id = "class-textBox", placeholder = "TestName" })
+                @Html.ValidationMessageFor(x => x.Title, "", new { @class = "text-danger" })
+
+                @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled" })
 
 
-            <button class="btn btn-primary" id="buttonCreate" style="margin-left: 45%; margin-top: 10px" onclick="showLoadingSpinner();">
-                Create
-            </button>
+                <button class="btn btn-primary" id="buttonCreate" style="margin-left: 45%; margin-top: 10px" onclick="showLoadingSpinner();">
+                    Create
+                </button>
+            }
+            if (Model.ShowForm)
+            {
+                @Html.TextBoxFor(x => x.Title, new { @class = "form-control", id = "class-textBox", placeholder = "TestName", disabled = "disabled" })
+                @Html.ValidationMessageFor(x => x.Title, "", new { @class = "text-danger" })
+
+                @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled" })
+
+
+                <button class="btn btn-primary" id="buttonCreate" disabled style="margin-left: 45%; margin-top: 10px">
+                    Create
+                </button>
+            }
+
         }
-        if (Model.ShowForm)
-        {
-            @Html.TextBoxFor(x => x.Title, new { @class = "form-control", id = "class-textBox", placeholder = "TestName", disabled = "disabled" })
-            @Html.ValidationMessageFor(x => x.Title, "", new { @class = "text-danger" })
-
-            @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled" })
-
-
-            <button class="btn btn-primary" id="buttonCreate" disabled style="margin-left: 45%; margin-top: 10px">
-                Create
-            </button>
-        }
-
-    }
-</div>
+    </div>
 
 
 }
@@ -179,22 +190,16 @@
                     </a>
 
                 </div>
-                @if (Model.IsValid)
+                
+                <div class="col-lg-6 col-md-6 col-sm-6" id="mydivQuestionForm">
+                @if (Model.ShowPartial)
                 {
-                    <div class="col-lg-6 col-md-6 col-sm-6" id="mydivQuestionForm">
+                    var myModel = new QuestionDto() {TestId = Model.Id,};
+               
+                    @Html.Partial("AddQuestionPartial", myModel);
+                }
+                    </div>
 
-                    </div>
-                }
-                @if (Model.IsValid == false)
-                {
-                    <div class="col-lg-6 col-md-6 col-sm-6" id="mydivQuestionForm">
-                        @{
-                            var myModel = new QuestionDto();
-                            myModel.TestId = Model.Id;
-                        }
-                        @Html.Partial("AddQuestionPartial", myModel)
-                    </div>
-                }
             </div>
         </div>
     }
