@@ -74,7 +74,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
                 userViewModel.AreThereMessages = true;
                 userViewModel.ToForm = ToForm.LoginForm;
-                userViewModel.SigningUpModel.UserState = UserState.RegistrationOk;
+                userViewModel.LoginModel.UserState = UserState.RegistrationOk;
                 return View("Index", userViewModel);
             }
 
