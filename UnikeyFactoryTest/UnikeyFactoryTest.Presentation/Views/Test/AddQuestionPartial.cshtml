@@ -5,9 +5,6 @@
 @model UnikeyFactoryTest.Presentation.Models.DTO.QuestionDto
 
 
-<script>
-
-</script>
 
 @using (Html.BeginForm("AddOrUpdateQuestion", "Test", FormMethod.Post))
 {
@@ -57,21 +54,21 @@
         {
             for (var i = 0; i < 4; i++)
             {
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <div class="input-group-text">
-                @Html.CheckBoxFor(x => x.Answers[i].IsCorrectBool, new { id = "check" + i, onclick = "CorrectAnswer('check" + i + "','txt_AnswerText" + i + "','txt_Score" + i + "')" })
-            </div>
-        </div>
-        <div>
-            @Html.TextBoxFor(x => x.Answers[i].Text, new { @class = "form-control", style = "max-width: 100%;width: 70%;", id = "txt_AnswerText" + i, placeholder = "Enter the answer " })
-        </div>
-        <div class="error-container"> @Html.ValidationMessageFor(x => x.Answers[i].Text, "", new { @class = "text-danger" })</div>
-        <div class="error-container"> @Html.ValidationMessageFor(x => x.Answers[i].Score, "", new { @class = "text-danger" })</div>
-        <div>
-            @Html.TextBoxFor(x => x.Answers[i].Score, new { type = "number", id = "txt_Score" + i, @class = "class-mymarginleft", style = "width: 80px", step = "0.5", placeholder = "Score", @hidden = "hidden" })
-        </div>
-    </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            @Html.CheckBoxFor(x => x.Answers[i].IsCorrectBool, new { id = "check" + i, onclick = "CorrectAnswer('check" + i + "','txt_AnswerText" + i + "','txt_Score" + i + "')" })
+                        </div>
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(x => x.Answers[i].Text, new { @class = "form-control", style = "max-width: 100%;width: 70%;", id = "txt_AnswerText" + i, placeholder = "Enter the answer " })
+                    </div>
+                    @Html.ValidationMessageFor(x => x.Answers[i].Text, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(x => x.Answers[i].Score, "", new { @class = "text-danger" })
+                    <div>
+                        @Html.TextBoxFor(x => x.Answers[i].Score, new { type = "number", id = "txt_Score" + i, @class = "class-mymarginleft", style = "width: 80px", step = "0.5", placeholder = "Score", @hidden = "hidden", value = "0" })
+                    </div>
+                </div>
             }
         }
 

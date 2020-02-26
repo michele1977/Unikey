@@ -649,9 +649,8 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                     Logger.Fatal(e, e.Message);
                     throw;
                 }
-
+                
             }
-
             return View("Index", returned);
         }
 
