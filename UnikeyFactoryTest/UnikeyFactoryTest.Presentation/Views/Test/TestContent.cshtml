@@ -8,6 +8,28 @@
 }
 
 <link href="~/Content/font-awesome.css" rel="stylesheet" />
+
+<script>
+    @*function downloadPdf() {
+
+        $.ajax({
+            url: "/Test/DownloadPdf",
+            data: @Html.Raw(Json.Encode(Model)),
+            method: "POST"
+        }).then(function(response) {
+            console.log("OK"), console.log("KO");
+        });
+    }*@
+
+</script>
+
+<div style="display: flex;">
+    <h2>Test @Model.Title &nbsp;</h2>
+    <a href="@Url.Action("DownloadPdf", new{ testId = Model.Id } )" title="Download Pdf" onclick="downloadPdf()"><i class="fa fa-file-pdf-o" style="font-size: 24px;color:red" aria-hidden="true"></i></a>
+</div>
+@*<button class="btn btn-danger" onclick="downloadPdf()">Donwload Pdf</button>*@
+
+<link href="~/Content/font-awesome.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 

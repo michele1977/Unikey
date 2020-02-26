@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -15,9 +16,14 @@ using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.Domain.Enums;
+using UnikeyFactoryTest.ITextSharp;
+using UnikeyFactoryTest.Mapper;
+using UnikeyFactoryTest.Mapper.AutoMappers;
 using UnikeyFactoryTest.Presentation.Models;
 using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service.Providers.MailProvider;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace UnikeyFactoryTest.Presentation.Controllers
 {
@@ -480,6 +486,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var questionDao = new QuestionDto(questionDomain);
             return PartialView("AddQuestionPartial", questionDao);
         }
+
         [HttpPost]
         public async Task<ActionResult> EditQuestionsAsync(QuestionDto questionmodel)
         {
@@ -522,6 +529,17 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var testDTO = new TestDto(await _service.GetTestById(questionModel.TestId), _service);
 
             return View("TestContent", testDTO);
+        }
+
+        public async Task<ActionResult> DownloadPdf(int testId)
+        {
+            PdfCreator creator = new PdfCreator();
+
+            var testBusiness = await  Kernel.Get<ITestService>().GetTestById(testId); // TODO add TestDto to TestBusiness mapping
+
+            var memoryStream = creator.CreatePdf(testBusiness);
+
+            return File(memoryStream, "application/pdf", $"{testBusiness.Title}.pdf");
         }
 
         [HttpPost]
