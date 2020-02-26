@@ -19,7 +19,7 @@
             </div>
 
             <div style="width: 100%;text-align: right">
-                <button id="btnLogin" class="btn btn-primary" disabled="disabled" onclick="$('#cover-spin').show(0)">Log In</button>
+                <button id="btnLogin" class="btn btn-primary" disabled="disabled" onclick="showLoadingSpinner()">Log In</button>
             </div>
             <br>
 
@@ -39,6 +39,10 @@
 
 
         <script>
+            $(document).ready(function() {
+                CheckLogInForm();
+            });
+
             function CheckLogInForm() {
                 let firstInput = document.getElementById("lbUsername").value;
                 let secondInput = document.getElementById("lbPassword").value;
@@ -49,6 +53,8 @@
                     document.getElementById("btnLogin").setAttribute("disabled", "true");
                 }
             }
+
+
         </script>
 
         @if (Model.UserState == UserState.IsNotAUser)
