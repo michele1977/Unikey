@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.Domain.Enums;
@@ -22,5 +23,7 @@ namespace UnikeyFactoryTest.IService
         Task<Dictionary<int, int>> GetExTestCountByState(IEnumerable<int> testsIds, AdministratedTestState state);
         Task AddOrUpdateQuestion(QuestionBusiness question);
         void Dispose();
+        StringBuilder TextBuilder(QuestionBusiness question, StringBuilder sb, int position);
+        void ClipBoardMethod(StringBuilder sb);
     }
 }

@@ -90,6 +90,7 @@
     <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -193,6 +194,7 @@
     <Content Include="Content\Css\styles.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Icons\copy_image.png" />
     <Content Include="Content\Icons\createIcon.png" />
     <Content Include="Content\Icons\deleteIcon.png" />
     <Content Include="Content\Icons\editIcon.png" />

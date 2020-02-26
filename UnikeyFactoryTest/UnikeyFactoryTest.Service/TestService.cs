@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using AutoMapper;
 using Ninject;
 using UnikeyFactoryTest.Context;
@@ -137,6 +140,32 @@ namespace UnikeyFactoryTest.Service
         public async Task<Dictionary<int, int>> GetExTestCountByState(IEnumerable<int> testsIds, AdministratedTestState state)
         {
             return await Repo.GetExTestCountByState(testsIds, state);
+        }
+
+        public StringBuilder TextBuilder(QuestionBusiness question, StringBuilder sb, int position)
+        {
+            sb.Append($"{position}." + question.Text + "\n\n");
+
+            char[] array = {'a', 'b', 'c', 'd'};
+            int i = 0;
+
+            foreach (var answer in question.Answers)
+            {
+                sb.Append($"{array[i]}) " + answer.Text + "\n");
+                i++;
+            }
+
+            sb.Append("\n");
+
+            return sb;
+        }
+
+        public void ClipBoardMethod(StringBuilder sb)
+        {
+            Thread thread = new Thread(() => Clipboard.SetText(sb.ToString()));
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            thread.Join();
         }
     }
 }

@@ -4,10 +4,10 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.WebPages;
 using AutoMapper;
 using Microsoft.Ajax.Utilities;
 using Ninject;
@@ -15,10 +15,8 @@ using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.Domain.Enums;
-using UnikeyFactoryTest.Mapper;
 using UnikeyFactoryTest.Presentation.Models;
 using UnikeyFactoryTest.Presentation.Models.DTO;
-using UnikeyFactoryTest.Service;
 using UnikeyFactoryTest.Service.Providers.MailProvider;
 
 namespace UnikeyFactoryTest.Presentation.Controllers
@@ -90,11 +88,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 await _service.UpdateTest(test);
 
                 returned = new TestDto(await _service.GetTestById(test.Id), _service);
-
-
-
-                //returned = new TestDto(await _service.GetTestById(test.Id));
-                //returned.ShowForm = true;
             }
             catch (ArgumentNullException e)
             {
@@ -227,23 +220,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             return View(testsListModel);
         }
-
-        //[HttpGet]
-        //public async Task<ActionResult> TestsListJson(TestsListModel testsListModel)
-        //{
-        //    testsListModel = testsListModel ?? new TestsListModel();
-
-        //    TestService service = new TestService();
-
-        //    testsListModel.Tests = testsListModel.Paginate(await service.GetTests());
-
-        //    return Json(new
-        //    {
-        //        redirectUrl = Url.Action("TestsList",
-        //            new { PageNumber = testsListModel.PageNumber, PageSize = testsListModel.PageSize })
-        //    }, JsonRequestBehavior.AllowGet);
-
-        //}
 
         [HttpPost]
         public async Task<JsonResult> DeleteTest(TestDto test)
@@ -574,5 +550,23 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             return View("index", model);
         }
 
+        [HttpGet]
+        [STAThread]
+        public async Task<EmptyResult> CopyTest(TestDto model)
+        { 
+            TestBusiness testBusiness = await _service.GetTestById(model.Id);
+            StringBuilder sb = new StringBuilder("Test Name: " + testBusiness.Title + "\n\n");
+            int i = 1;
+
+            foreach (var question in testBusiness.Questions)
+            {
+                sb = _service.TextBuilder(question, sb, i);
+                i++;
+            }
+
+            _service.ClipBoardMethod(sb);
+
+            return new EmptyResult();
+        }
     }
 }
