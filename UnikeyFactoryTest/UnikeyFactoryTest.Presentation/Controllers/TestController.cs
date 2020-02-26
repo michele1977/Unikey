@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -22,6 +24,8 @@ using UnikeyFactoryTest.Presentation.Models;
 using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service;
 using UnikeyFactoryTest.Service.Providers.MailProvider;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace UnikeyFactoryTest.Presentation.Controllers
 {
@@ -556,17 +560,15 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             return View("TestContent", testDTO);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> DownloadPdf(TestDto test)
+        public async Task<ActionResult> DownloadPdf(int testId)
         {
             PdfCreator creator = new PdfCreator();
 
-            var testBusiness = await  Kernel.Get<ITestService>().GetTestById(test.Id); // TODO add TestDto to TestBusiness mapping
+            var testBusiness = await  Kernel.Get<ITestService>().GetTestById(testId); // TODO add TestDto to TestBusiness mapping
 
-            creator.CreatePdf(testBusiness);
+            var memoryStream = creator.CreatePdf(testBusiness);
 
-            return File(output, "text/excel", "file.xls");
-            //return RedirectToAction("TestContent", test);
+            return File(memoryStream, "application/pdf", $"{testBusiness.Title}.pdf");
         }
     }
 }
