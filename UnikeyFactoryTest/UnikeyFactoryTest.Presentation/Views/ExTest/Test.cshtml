@@ -9,7 +9,7 @@
 <div class="container" style="width:100%;">
 
     <h2 class="Title">Assessment of @Model.Name @Model.Surname</h2>
-    <div class="QuestionContainer" style="position:relative">
+    <div class="QuestionContainer" style="position:relative;padding-top:17px">
         @using (Html.BeginForm("SaveTest", "ExTest"))
         {
             <input type="hidden" value="@Model.Url" name="Url" />
@@ -31,7 +31,7 @@
                 @foreach (var answer in Model.ActualQuestion.AdministratedAnswers)
                 {
 
-                    <div class="answer" onclick="selected(@answer.Id);">
+                    <div class="answer" onclick="selected(@answer.Id);" style="margin-bottom:17px">
                         <div class="form-check">
                             <label class="AnswerLabel">@answer.Text</label>
                             <span class="RadioInput">
@@ -50,49 +50,32 @@
                 }
 
             </div>
-            <div><button type="submit" class="btn btn-success SaveButton" formaction="/ExTest/SaveTest">Save Test</button></div>
-            <div class="row">
-                <div class="col-4">
-                    @if (Model.ActualQuestion.Position > 0)
-                    {
-                        <button style="float:left;" class="btn btn-success PreviousButton" formaction="/ExTest/Previous">Previous</button>
-                    }
-                </div>
-                <div class="col-4">
-                    <button style="text-align:center" class="btn btn-success CloseButton" formaction="/ExTest/Close">Close</button>
-                </div>
-                <div class="col-4">
-                    @if (Model.ActualQuestion.Position < Model.NumQuestion - 1)
-                    {
-                        <button class="btn btn-success NextButton" style="float:right" formaction="/ExTest/Next">Next</button>
-                    }
+            <hr />
+            <div class="container">
+                <div class="row">
+                    <div class="col-4" style="text-align:right">
+                        @if (Model.ActualQuestion.Position > 0)
+                        {
+                            <button class="btn btn-success PreviousButton" style="float:left" formaction="/ExTest/Previous">Previous</button>
+                        }
+                    </div>
+                    <div class="col-4"></div>
+                    <div class="col-4">
+                        @if (Model.ActualQuestion.Position < Model.NumQuestion - 1)
+                        {
+                            <button class="btn btn-success NextButton" style="float:right" formaction="/ExTest/Next">Next</button>
+                        }
+                        @if (Model.ActualQuestion.Position == Model.NumQuestion - 1)
+                        {
+                            <button type="submit" class="btn btn-success SaveButton" style="float:right" formaction="/ExTest/SaveTest">Finish Test</button>
+                        }
+                    </div>
                 </div>
             </div>
-        }
-
-
-
-
-
-
-        @using (Html.BeginForm("Next", "ExTest", FormMethod.Post))
-        {
-            <input type="hidden" name="NumQuestion" value="@Model.NumQuestion" />
-            <input type="hidden" name="ActualPosition" value="@Model.ActualQuestion.Position" />
-            <input type="hidden" name="Name" value="@Model.Name" />
-            <input type="hidden" name="Surname" value="@Model.Surname" />
-            <input type="hidden" name="AdministratedTestId" value="@Model.ActualQuestion.AdministratedTestId" />
-            @*<button style="float:left;" class="btn btn-success PreviousButton" formaction="/ExTest/Previous">Previous</button>
-                <button style="text-align: center;" class="btn btn-success CloseButton" formaction="/ExTest/Next">Close</button>*@
-
         }
     </div>
 
     <script type="text/javascript">
-        //window.addEventListener('beforeunload', function (e) {
-        //    e.preventDefault();
-        //    e.returnValue = '';
-        //});
         function selected(data) {
             let isCheked = document.getElementById(data).checked;
             if (isCheked == false) {

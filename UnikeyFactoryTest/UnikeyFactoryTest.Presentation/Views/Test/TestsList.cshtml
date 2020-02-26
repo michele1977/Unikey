@@ -7,11 +7,18 @@
 }
 <link href="~/Content/font-awesome.css" rel="stylesheet" />
 
-<h2>Tests List</h2>
+<div style="display: flex; ">
+    <div style="float: left;">
+        <h2>Tests List</h2>
+    </div>
+
+    <div style="margin-left: 20px;">
+        <a class="btn btn-success" style="float: left;" title="Create Test" onclick="showLoadingSpinner()" href='@Url.Action("Index", "Test")'><i class="fa fa-plus"></i></a>
+    </div>
+</div>
 
 <script>
     function openModal(Id) {
-
         $('#mailModal').modal("show");
         document.getElementById("selectedTest").value = Id;
 
@@ -33,41 +40,48 @@
 
 <hr />
 
-<div>
-    <form action="@Url.Action("TextSearch", "Test")" method="post">
-        <div class="btn-group">
-            <input id="searchinput" value="@Model.TextFilter" type="search" name="textFilter" class="form-control"
-                   onsearch="@Url.Action("TestsList", "Test", new {TextFilter = ""})">
-            <span id="searchclear" class="glyphicon glyphicon-remove-circle"></span>
-            <input type="submit" class="btn btn-primary" value="Search" />
+<div style="display: flex; ">
+    <div style="float: left; ">
+            <form style="margin-bottom: 10px;" action="@Url.Action("TextSearch", "Test")" method="post">
+                <div class="btn-group">
+                    <input id="searchinput" value="@Model.TextFilter" type="search" name="textFilter" class="form-control" />
+                    <span id="searchclear" class="glyphicon glyphicon-remove-circle"></span>
+                    <button type="submit" class="btn btn-primary" onclick="showLoadingSpinner()">Search</button>
+                </div>
+            </form>
+    </div>
+    
+
+    <div id="pageSizeDropDownList" style="float: right; margin-left: auto;">
+        <div style="margin-top: 5px;">
+            @Html.Label("Elements per page")
+            <select name="PageSizeSelection" onchange="resizePage(this.value, @Model.PageNumber, '/Test/TestsList?TextFilter=@Model.TextFilter&PageSize=');">
+                <option value="@Model.PageSize" selected="selected">@Model.PageSize</option>
+                @for (int i = 10; i <= 161; i *= 2)
+                {
+                    if (Model.PageSize != i)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                }
+            </select>
         </div>
-    </form>
+    </div>
 </div>
 
-<div id="pageSizeDropDownList">
-    @Html.Label("Elements per page")
-    <select name="PageSizeSelection" onchange="resizePage(this.value, @Model.PageNumber, '/Test/TestsList?TextFilter=@Model.TextFilter&PageSize=');">
-        <option value="@Model.PageSize" selected="selected">@Model.PageSize</option>
-        @for (int i = 10; i <= 161; i *= 2)
-        {
-            if (Model.PageSize != i)
-            {
-                <option value="@i">@i</option>
-            }
 
-        }
-    </select>
-</div>
+
 
 <table class="table">
     <tr>
-        <th>Id</th>
-        <th>Title</th>
-        <th>Date</th>
-        <th>URL</th>
-        <th>Number of tests</th>
-        <th>Number of tests opened</th>
-        <th>Actions</th>
+        <th class="text-center">Id</th>
+        <th class="text-center">Title</th>
+        <th class="text-center">Date</th>
+        <th class="text-center">URL</th>
+        <th class="text-center">Number of tests</th>
+        <th class="text-center">Number of tests opened</th>
+        <th class="text-center"></th>
+        <th class="text-center">Actions</th>
     </tr>
     <div id="myrender">
 
@@ -119,18 +133,18 @@
 </div>
 
 
-<div>
+<div class="text-center">
     @if (Model.PageNumber > 1)
     {
-        <a href="@Url.Action("TestsList","Test",new { PageNumber = 1, Model.PageSize, Model.TextFilter })"><i class="fa fa-angle-double-left btn" title="First"></i></a>
-        <a href="@Url.Action("TestsList","Test",new { PageNumber = Model.PageNumber - 1, Model.PageSize, Model.TextFilter})"><i class="fa fa-arrow-left btn" title="Previous"></i></a>
+        <a onclick="showLoadingSpinner()" href="@Url.Action("TestsList","Test",new { PageNumber = 1, Model.PageSize, Model.TextFilter })"><i class="fa fa-angle-double-left btn" title="First"></i></a>
+        <a onclick="showLoadingSpinner()" href="@Url.Action("TestsList","Test",new { PageNumber = Model.PageNumber - 1, Model.PageSize, Model.TextFilter})"><i class="fa fa-arrow-left btn" title="Previous"></i></a>
 
     }
-    <label>@Model.PageNumber of @Model.LastPage</label>
+    <strong><label>@Model.PageNumber of @Model.LastPage</label></strong>
     @if (@Model.PageNumber != @Model.LastPage)
     {
-        <a href="@Url.Action("TestsList","Test",new { PageNumber = Model.PageNumber + 1, Model.PageSize, Model.TextFilter})"><i class="fa fa-arrow-right btn" title="Next"></i></a>
-        <a href="@Url.Action("TestsList","Test",new { PageNumber = Model.LastPage, Model.PageSize, Model.TextFilter})"><i class="fa fa-angle-double-right btn" title="Last"></i></a>
+        <a onclick="showLoadingSpinner()" href="@Url.Action("TestsList","Test",new { PageNumber = Model.PageNumber + 1, Model.PageSize, Model.TextFilter})"><i class="fa fa-arrow-right btn" title="Next"></i></a>
+        <a onclick="showLoadingSpinner()" href="@Url.Action("TestsList","Test",new { PageNumber = Model.LastPage, Model.PageSize, Model.TextFilter})"><i class="fa fa-angle-double-right btn" title="Last"></i></a>
 
     }
 </div>

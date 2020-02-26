@@ -116,8 +116,7 @@ namespace UnikeyFactoryTest.Repository
                 throw new Exception("No test to update");
             }
 
-            decimal score = 0;
-            test.Date = DateTime.Today;
+            int score = 0;
             test.Score = GetScore(test, score);
 
             try
@@ -154,7 +153,7 @@ namespace UnikeyFactoryTest.Repository
             _ctx.SaveChanges();
         }
 
-        private static decimal GetScore(AdministratedTestBusiness newTest, decimal score)
+        private static int GetScore(AdministratedTestBusiness newTest, int score)
         {
             foreach (var q in newTest.AdministratedQuestions)
             {
@@ -164,6 +163,7 @@ namespace UnikeyFactoryTest.Repository
 
             return score;
         }
+
         public async Task Update_Save_Question(AdministratedQuestionBusiness adQuestion)
         {
             var mapper = Kernel.Get<IMapper>("Heavy");

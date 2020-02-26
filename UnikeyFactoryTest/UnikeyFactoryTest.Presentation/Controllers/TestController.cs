@@ -42,7 +42,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
         }
 
-        public TestController(ITestService value, IAdministratedTestService value2,IKernel kernel)
+        public TestController(ITestService value, IAdministratedTestService value2, IKernel kernel)
         {
             Kernel = kernel;
             _service = value;
@@ -75,22 +75,22 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             {
                 var questionBiz = model.MapToDomain();
                 var test = await _service.GetTestById(questionBiz.TestId);
-                if(test.Questions.Count == 0)
+                if (test.Questions.Count == 0)
                 {
                     questionBiz.Position = 0;
                 }
                 else
                 {
-                    questionBiz.Position = Convert.ToInt16(test.Questions.Count );
+                    questionBiz.Position = Convert.ToInt16(test.Questions.Count);
                 }
                 test.Questions.Add(questionBiz);
 
-               _service.UpdateTest(test);
-              
-                returned = new TestDto(await _service.GetTestById(test.Id), _service);
-             
+                await _service.UpdateTest(test);
 
-              
+                returned = new TestDto(await _service.GetTestById(test.Id), _service);
+
+
+
                 //returned = new TestDto(await _service.GetTestById(test.Id));
                 //returned.ShowForm = true;
             }
@@ -195,19 +195,21 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             UserId = System.Convert.ToInt32(HttpContext.Session["UserId"]);
             testsListModel = testsListModel ?? new TestsListModel(_service);
 
+            List<TestBusiness> tests = new List<TestBusiness>();
+
             try
             {
-                List<TestBusiness> tests = new List<TestBusiness>();
-
                 tests = testsListModel.TextFilter.IsNullOrWhiteSpace() ? await _service.GetTests() :
                     await _service.GetTestsByFilter(testsListModel.TextFilter);
 
                 testsListModel.Tests = testsListModel.Paginate(tests);
 
-                testsListModel.ClosedTestsNumberPerTest = await _service.GetClosedTests(testsListModel.PageNumber, testsListModel.PageSize, testsListModel.TextFilter);
-                var testsId = (from t in testsListModel.Tests
-                                        select t.Id).ToList();
-                testsListModel.AdministratedTestOpen = await _service.OpenedTestNumber(testsId);
+                var testIds = testsListModel.Tests.Select(t => t.Id).ToList();
+
+                testsListModel.ClosedTestsNumberPerTest = await _service.GetExTestCountByState(testIds, AdministratedTestState.Closed);
+
+                testsListModel.AdministratedTestOpen = await _service.GetExTestCountByState(testIds, AdministratedTestState.Open);
+
             }
             catch (ArgumentNullException e)
             {
@@ -299,7 +301,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 testToPass = new TestDto(await _service.GetTestById(test.Id), _service);
                 testToPass.PageNumber = test.PageNumber;
                 testToPass.PageSize = test.PageSize;
-                testToPass.URL = _service.GenerateUrl(testToPass.URL);
                 testToPass.TextFilter = test.TextFilter;
             }
             catch (ArgumentNullException ex)
@@ -368,7 +369,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var test = await _service.GetTestById(TestId);
             returned = new TestDto(test, _service);
             returned.ShowForm = true;
-            
+
             return View("Index", returned);
         }
         [HttpPost]
@@ -379,20 +380,16 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 return RedirectToAction("TestsList", testsListModel);
             }
 
-            var tests = await _service.GetTestsByFilter(testsListModel.TextFilter);
+            testsListModel.Tests = (await _service.GetTestsByFilter(testsListModel.TextFilter))
+                .Select(t => new TestDto(t, _service)).ToList();
 
-            testsListModel.Tests = tests.Select(t => new TestDto(t, _service)).ToList();
-            
+            testsListModel.Tests = await testsListModel.Paginate(testsListModel.Tests);
 
-            testsListModel.PageNumber = 1;
-            testsListModel.PageSize = 10;
+            var testIds = testsListModel.Tests.Select(t => t.Id).ToList();
 
-            await testsListModel.Paginate(testsListModel.Tests);
-            var testsId = (from t in testsListModel.Tests
-                select t.Id).ToList();
-            testsListModel.AdministratedTestOpen = await _service.OpenedTestNumber(testsId);
+            testsListModel.ClosedTestsNumberPerTest = await _service.GetExTestCountByState(testIds, AdministratedTestState.Closed);
 
-            testsListModel.ClosedTestsNumberPerTest = await _service.GetClosedTests(testsListModel.PageNumber, testsListModel.PageSize, testsListModel.TextFilter);
+            testsListModel.AdministratedTestOpen = await _service.GetExTestCountByState(testIds, AdministratedTestState.Open);
 
             return View("TestsList", testsListModel);
         }
@@ -500,22 +497,22 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             return PartialView("AddQuestionPartial", myModel);
         }
         [HttpGet]
-        public async Task<ActionResult> QuestionDetails(QuestionDto question)
+        public async Task<ActionResult> QuestionDetails(int questionId)
         {
-            var questionDomain = await _service.GetQuestionById(question.Id);
+            var questionDomain = await _service.GetQuestionById(questionId);
             var questionDao = new QuestionDto(questionDomain);
-            return PartialView("Index", questionDao);
+            return PartialView("AddQuestionPartial", questionDao);
         }
         [HttpPost]
-        public async Task<ActionResult> EditQuestionsAsync(QuestionEditModel questionmodel)
+        public async Task<ActionResult> EditQuestionsAsync(QuestionDto questionmodel)
         {
             try
             {
-                var s = await _service.GetTestById(questionmodel.TestId);
-                var a = s.Questions.Where(x => x.Id == questionmodel.Id).
-                    SelectMany(x => x.Answers).Select(x => x.Text)
-                    .ToList();
-                questionmodel.Answers = a;
+                var testBusiness = await _service.GetTestById(questionmodel.TestId);
+                var testDTO = new TestDto(testBusiness, _service);
+                var AnswerDTO = testDTO.Questions.Where(x => x.Id == questionmodel.Id).
+                    SelectMany(x => x.Answers).ToList();
+                questionmodel.Answers = AnswerDTO;
             }
             catch (ArgumentNullException ex)
             {
@@ -532,12 +529,39 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                 Logger.Error(ex, ex.Message);
                 throw;
             }
-            return View(questionmodel);
+            return View("EditQuestionsAsync", questionmodel);
         }
-        public ActionResult SaveUpdateQuestion(QuestionEditModel editModel)
+
+        [HttpPost]
+        public async Task<ActionResult> SaveUpdateQuestion(QuestionDto questionModel)
         {
-            //TO IMPLEMENT
-            return View("TestContent");
+            foreach (var answer in questionModel.Answers)
+            {
+                if (answer.IsCorrectBool == false)
+                    answer.Score = 0;
+            }
+            var questionBusiness = questionModel.MapToDomain();
+            await _service.UpdateQuestion(questionBusiness);
+            var testDTO = new TestDto(await _service.GetTestById(questionModel.TestId), _service);
+
+            return View("TestContent", testDTO);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> AddOrUpdateQuestion(QuestionDto question)
+        {
+            foreach (var answer in question.Answers)
+            {
+                if (answer.IsCorrectBool == false)
+                    answer.Score = 0;
+            }
+            var questionBusiness = question.MapToDomain();
+            await _service.AddOrUpdateQuestion(questionBusiness);
+            var testToModel = await _service.GetTestById(question.TestId);
+            var model = new TestDto(testToModel, _service);
+            model.ShowForm = true;
+            return View("index", model);
+        }
+
     }
 }

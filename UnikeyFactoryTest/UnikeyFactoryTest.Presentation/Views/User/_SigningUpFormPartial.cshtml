@@ -1,56 +1,79 @@
-﻿@model UnikeyFactoryTest.Presentation.Models.UserSigningUpModel
+﻿@using UnikeyFactoryTest.Presentation.Models
+@model UnikeyFactoryTest.Presentation.Models.UserSigningUpModel
 
-    <div id="signingUpForm" class="container" style="display: none;padding: 15px; padding-top: 25px;max-width: 500px; border: 2px solid black; border-radius: 10px; background-color: antiquewhite">
-        <form action="/User/Subscribe" method="post">
-            <div class="form-group">
-                <label for="lbSUsername" style="font-family:Verdana, Geneva">Username</label>
-                <input type="text" class="form-control" id="lbSUsername" name="Username" onkeyup="CheckSignUpForm()">
-                @Html.ValidationMessageFor(x => x.Username, null, new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                <label for="lbSPassword" style="font-family:Verdana, Geneva">Password</label>
-                <input type="password" class="form-control" id="lbSPassword" name="Password" aria-describedby="passwordHelp" onkeyup="CheckSignUpForm()">
-                @Html.ValidationMessageFor(x => x.Password, null, new { @class = "text-danger" })
-                <small id="passwordHelp" class="form-text text-muted">La password deve contenere almeno 6 caratteri e massimo 50, almeno un carattere maiuscolo, uno minuscolo, uno speciale e almeno un valore numerico</small>
-            </div>
-            <div class="form-group">
-                <label for="lbRetypedPassword" style="font-family:Verdana, Geneva">Retype Password</label>
-                <input type="password" class="form-control" id="lbRetypedPassword" name="RetypedPassword" onkeyup="CheckSignUpForm()">
-                @Html.ValidationMessageFor(x => x.RetypedPassword, null, new { @class = "text-danger" })
-            </div>
+@{
+    Layout = "~/Views/Shared/LayoutFruition.cshtml";
+}
 
-            <div style="width: 100%;text-align: right">
-                <button id="btnSignUp" type="submit" class="btn btn-primary" disabled="disabled">Sign Up</button>
-            </div>
-            <br>
-
-            <div class="container alert alert-success" role="alert" style="display: none;width: 100%" id="signingUpOk">
-                Congratulations, registration succeeded
-            </div>
-
-
-            <div class="container alert alert-danger" role="alert" style="display: none;width: 100%" id="notValidUser">
-                The user already exists
-            </div>
-        </form>
-
-        <div style="width: 100%; text-align: center">
-            <a onclick="ChangeForm(2)" target="_top" style="color: dodgerblue">Go to LogIn</a>
+<div id="signingUpForm" class="container" style="display: block;padding: 15px; padding-top: 25px;max-width: 500px; border: 2px solid black; border-radius: 10px; background-color: antiquewhite">
+    <form action="/User/Subscribe" method="post">
+        <div class="form-group">
+            <label for="lbSUsername" style="font-family:Verdana, Geneva">Username</label>
+            <input type="text" class="form-control" id="lbSUsername" name="Username" onkeyup="CheckSignUpForm()">
+            @Html.ValidationMessageFor(x => x.Username, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            <label for="lbSPassword" style="font-family:Verdana, Geneva">Password</label>
+            <input type="password" class="form-control" id="lbSPassword" name="Password" aria-describedby="passwordHelp" onkeyup="CheckSignUpForm()">
+            @Html.ValidationMessageFor(x => x.Password, null, new { @class = "text-danger" })
+            <small id="passwordHelp" class="form-text text-muted">La password deve contenere almeno 6 caratteri e massimo 50, almeno un carattere maiuscolo, uno minuscolo, uno speciale e almeno un valore numerico</small>
+        </div>
+        <div class="form-group">
+            <label for="lbRetypedPassword" style="font-family:Verdana, Geneva">Retype Password</label>
+            <input type="password" class="form-control" id="lbRetypedPassword" name="RetypedPassword" onkeyup="CheckSignUpForm()">
+            @Html.ValidationMessageFor(x => x.RetypedPassword, null, new { @class = "text-danger" })
         </div>
 
+        <div style="width: 100%;text-align: right">
+            <button id="btnSignUp" type="submit" class="btn btn-primary" disabled="disabled">Sign Up</button>
+        </div>
+        <br>
 
+        <div class="container alert alert-success" role="alert" style="display: none;width: 100%" id="signingUpOk">
+            Congratulations, registration succeeded
+        </div>
 
-        <script>
-            function CheckSignUpForm() {
-                let firstInput = document.getElementById("lbSUsername").value;
-                let secondInput = document.getElementById("lbSPassword").value;
-                let thirdInput = document.getElementById("lbRetypedPassword").value;
+        <div class="container alert alert-danger" role="alert" style="display: none;width: 100%" id="signingUpKo">
+            Data not valid. Try again.
+        </div>
+    </form>
 
-                if (firstInput !== "" && secondInput !== "" && thirdInput !== "") {
-                    document.getElementById("btnSignUp").removeAttribute("disabled");
-                } else {
-                    document.getElementById("btnSignUp").setAttribute("disabled", "true");
-                }
-            }
-        </script>
+    <div style="width: 100%; text-align: center">
+        <button style="background: none !important; border: none; padding: 0 !important; font-family: arial, sans-serif; color: dodgerblue; text-decoration: underline; cursor: pointer;"
+                onclick="ChangeForm(1)" target="_top">
+            Go to LogIn
+        </button>
     </div>
+
+
+
+    <script>
+        function CheckSignUpForm() {
+            let firstInput = document.getElementById("lbSUsername").value;
+            let secondInput = document.getElementById("lbSPassword").value;
+            let thirdInput = document.getElementById("lbRetypedPassword").value;
+
+            if (firstInput !== "" && secondInput !== "" && thirdInput !== "") {
+                document.getElementById("btnSignUp").removeAttribute("disabled");
+            } else {
+                document.getElementById("btnSignUp").setAttribute("disabled", "true");
+            }
+        }
+    </script>
+
+
+    @if (Model.UserState == UserState.RegistrationOk)
+    {
+        <script>
+            let myDiv = document.getElementById("signingUpOk");
+            myDiv.style.display = "block";
+        </script>
+    }
+    else if (Model.UserState == UserState.RegistrationKo)
+    {
+        <script>
+            let myDiv = document.getElementById("signingUpKo");
+            myDiv.style.display = "block";
+        </script>
+    }
+</div>

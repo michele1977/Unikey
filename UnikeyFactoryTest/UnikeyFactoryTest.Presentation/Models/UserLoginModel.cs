@@ -14,6 +14,8 @@ namespace UnikeyFactoryTest.Presentation.Models
         [Required(ErrorMessage = "Please enter a password")]
         public string Password { get; set; }
 
+        public UserState UserState { get; set; }
+
         public UserLoginModel()
         {
             

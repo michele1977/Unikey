@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Domain.Enums;
 
 namespace UnikeyFactoryTest.IRepository
 {
@@ -15,11 +16,11 @@ namespace UnikeyFactoryTest.IRepository
         Task <TestBusiness> GetTest(int testId);
         Task<List<TestBusiness>> GetTests();
         Task UpdateTest(TestBusiness test);
+        Task UpdateQuestion(QuestionBusiness updateQuestion);
         Task DeleteTest(int testId);
         Task DeleteQuestionByIdFromTest(int questionId);
         Task<QuestionBusiness> GetQuestionById(int id);
-        Task<Dictionary<int, int>> OpenedTestNumber(IEnumerable<int> TestsId);
-        Task<Dictionary<int, int>> GetClosedTests(int pageNum, int pageSize, string filter);
+        Task<Dictionary<int, int>> GetExTestCountByState(IEnumerable<int> testsIds, AdministratedTestState state);
     } 
 
 }

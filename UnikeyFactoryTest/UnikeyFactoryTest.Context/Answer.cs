@@ -18,7 +18,7 @@ namespace UnikeyFactoryTest.Context
         public string Text { get; set; }
         public byte IsCorrect { get; set; }
         public int QuestionId { get; set; }
-        public decimal Score { get; set; }
+        public int Score { get; set; }
     
         public virtual Question Question { get; set; }
     }

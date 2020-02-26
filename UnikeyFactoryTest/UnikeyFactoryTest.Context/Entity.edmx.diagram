@@ -5,18 +5,19 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="30d2239a73de4efa82e45741d50786cb" Name="Diagram1">
-        <EntityTypeShape EntityType="TestPlatformDBModel.AdministratedQuestion" Width="1.5" PointX="7.5" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestPlatformDBModel.Question" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestPlatformDBModel.Test" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
-        <AssociationConnector Association="TestPlatformDBModel.FK_Question_Test" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="TestPlatformDBModel.AdministratedTest" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="TestPlatformDBModel.AdministratedAnswer" Width="1.5" PointX="9.75" PointY="4.375" />
+        <EntityTypeShape EntityType="TestPlatformDBModel.AdministratedQuestion" Width="1.5" PointX="7.5" PointY="4.5" />
+        <EntityTypeShape EntityType="TestPlatformDBModel.AdministratedTest" Width="1.5" PointX="5.25" PointY="4" />
+        <EntityTypeShape EntityType="TestPlatformDBModel.Answer" Width="1.5" PointX="7.5" PointY="1.125" />
+        <EntityTypeShape EntityType="TestPlatformDBModel.Question" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="TestPlatformDBModel.sysdiagram" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="TestPlatformDBModel.Test" Width="1.5" PointX="3" PointY="2.875" />
+        <EntityTypeShape EntityType="TestPlatformDBModel.User" Width="1.5" PointX="0.75" PointY="3.25" />
+        <AssociationConnector Association="TestPlatformDBModel.FK_administratedanswer_administratedquestion" />
         <AssociationConnector Association="TestPlatformDBModel.FK_administratedquestion_administratedtest" />
         <AssociationConnector Association="TestPlatformDBModel.FK_AdministratedTest_test" />
-        <EntityTypeShape EntityType="TestPlatformDBModel.AdministratedAnswer" Width="1.5" PointX="9.75" PointY="1.375" />
-        <AssociationConnector Association="TestPlatformDBModel.FK_administratedanswer_administratedquestion" />
-        <EntityTypeShape EntityType="TestPlatformDBModel.Answer" Width="1.5" PointX="7.5" PointY="4.625" />
         <AssociationConnector Association="TestPlatformDBModel.FK_answer_question" />
-        <EntityTypeShape EntityType="TestPlatformDBModel.User" Width="1.5" PointX="0.75" PointY="3.125" />
+        <AssociationConnector Association="TestPlatformDBModel.FK_question_test" />
         <AssociationConnector Association="TestPlatformDBModel.FK_test_user" />
       </Diagram>
     </edmx:Diagrams>

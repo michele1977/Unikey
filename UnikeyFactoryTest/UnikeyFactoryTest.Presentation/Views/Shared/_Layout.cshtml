@@ -4,27 +4,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/css/styles.css")
     @Scripts.Render("~/Content/Scripts/scripts.js")
-    <script src="https://code.jquery.com/jquery-3.4.1.js"
-            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-            crossorigin="anonymous"></script>
-    <script>
-        
-    </script>
 </head>
 <body>
-<div id="mySidenav" class="sidenav">
-    <img id="unikeyLogo" src="~/Content/ICONS/unikeyLogo.png" alt="UnikeyLogo">
-    <a title="Create Test" href='@Url.Action("Index", "Test")'><img id="create" class="sidebarIcon" src="~/Content/ICONS/createIcon.png" alt="create"></a>
-    <a title="Manage tests" href='@Url.Action("TestsList", "Test", new {PageNumber = 1, PageSize = 10})'><img id="manage" class="sidebarIcon" src="~/Content/ICONS/manageIcon.png" alt="manage"></a>
-    <a title="Tests results" href='@Url.Action("AdministratedTestsList", "ExTest")'><img id="results" class="sidebarIcon" src="~/Content/ICONS/results.png" alt="results"></a>
-    <a title="Log out" href='@Url.Action("Logout", "User")'><img id="logOut" class="sidebarIcon" src="~/Content/ICONS/logOut.png" alt="logOut"></a>
-</div>
+<div id="cover-spin"></div>
 <div id="renderDiv" class="container body-content">
+    <div id="mySidenav" class="sidenav">
+        <a id="homeLogo" href="@Url.Action("TestsList", "Test")"><img id="unikeyLogo" src="~/Content/ICONS/unikeyLogo.png" alt="UnikeyLogo"></a>
+        <a title="Manage tests" onclick="showLoadingSpinner()" href='@Url.Action("TestsList", "Test", new {PageNumber = 1, PageSize = 10})'><img id="manage" class="sidebarIcon" src="~/Content/ICONS/manageIcon.png" alt="manage"></a>
+        <a title="Tests results" onclick="showLoadingSpinner()" href='@Url.Action("AdministratedTestsList", "ExTest")'><img id="results" class="sidebarIcon" src="~/Content/ICONS/results.png" alt="results"></a>
+        <a title="Log out" href='@Url.Action("Logout", "User")'><img id="logOut" class="sidebarIcon" src="~/Content/ICONS/logOut.png" alt="logOut"></a>
+    </div>
     @RenderBody()
-    <hr />
+    <hr/>
     <footer>
         <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
     </footer>

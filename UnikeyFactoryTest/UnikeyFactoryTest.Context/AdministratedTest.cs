@@ -23,12 +23,12 @@ namespace UnikeyFactoryTest.Context
         public int Id { get; set; }
         public string URL { get; set; }
         public string Title { get; set; }
-        public decimal MaxScore { get; set; }
+        public int MaxScore { get; set; }
         public Nullable<int> TestId { get; set; }
         public string TestSubject { get; set; }
         public System.DateTime Date { get; set; }
         public byte State { get; set; }
-        public decimal Score { get; set; }
+        public int Score { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AdministratedQuestion> AdministratedQuestions { get; set; }

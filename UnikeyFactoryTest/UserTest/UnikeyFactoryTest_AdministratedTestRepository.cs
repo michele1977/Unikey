@@ -1,20 +1,30 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Ninject;
 using UnikeyFactoryTest.Context;
+using UnikeyFactoryTest.IRepository;
+using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.Repository;
 using UnikeyFactoryTest.Service;
+using UserTest.AutoMappers;
 
 namespace UserTest
 {
     [TestClass]
     public class UnikeyFactoryTest_AdministratedTestRepository
     {
+        private TestPlatformDBEntities GetContext()
+        {
+            return new TestPlatformDBEntities();
+        }
         [TestMethod]
         public async Task GetState_OK()
         {
-            AdministratedTestRepository testRepository = new AdministratedTestRepository();
+            //Non è presente il metodo get state nell'interfaccia del repository, quindi non è possibile fare la dependency injection
+            AdministratedTestRepository testRepository = new AdministratedTestRepository(GetContext(), KernelBuilder.Build());
             var x = await testRepository.GetState(2);
             Assert.AreEqual(1,  x);
         }
@@ -22,43 +32,23 @@ namespace UserTest
         [TestMethod]
         public async Task AdministratedTestRepository_Add_OK()
         {
-            var myCtx = new TestPlatformDBEntities();
-            var myRepo = new AdministratedTestRepository(myCtx);
-            var exTestService = new AdministratedTestService(myRepo);
-            var testService = new TestService(new TestRepository());
+            var kernel = KernelBuilder.Build();
 
-            var test = await testService.GetTestById(60);
-            var exTest = exTestService.AdministratedTest_Builder(test, "andrea bomber");
+            var exTestService = kernel.Get<IAdministratedTestService>();
+            var exTestRepository = kernel.Get<IAdministratedTestRepository>();
+            var testService = kernel.Get<ITestService>();
+            var testRepository = kernel.Get<ITestRepository>();
+            var test = await testService.GetTestById(58);
 
-            //var adTest = new AdministratedTestBusiness
-            //{
-            //    TestId = 1,
-            //    TestSubject = "",
-            //    URL = "",
-            //    AdministratedQuestions = new List<AdministratedQuestionBusiness>
-            //    {
-            //        new AdministratedQuestionBusiness
-            //        {
-            //            Text = "",
-            //            AdministratedTestId = 986,
-            //            AdministratedAnswers = new List<AdministratedAnswerBusiness>
-            //            {
-            //                new AdministratedAnswerBusiness
-            //                {
-            //                    Text = "",
-            //                    AdministratedQuestionId = 987
-            //                }
-            //            }
-            //        }
-            //    }
-            //};
+            var exTest = exTestService.AdministratedTest_Builder(test, "Unit Test");
 
-            using (var trans = myCtx.Database.BeginTransaction())
+            using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 try
                 {
-                    myRepo.Add(exTest);
-                    var testAdded = myCtx.AdministratedTests.FirstOrDefault(t => t.TestSubject == "andrea bomber");
+                    var myCtx = GetContext();
+                    exTestRepository.Add(exTest);
+                    var testAdded = myCtx.AdministratedTests.FirstOrDefault(t => t.TestSubject == "Unit Test");
                     Assert.AreEqual(exTest.URL, testAdded.URL);
                 }
                 catch
@@ -67,36 +57,22 @@ namespace UserTest
                 }
                 finally
                 {
-                    trans.Rollback();
+                    transaction.Dispose();
                 }
 
             }
-
-            //var g = 0;
-            //try
-            //{
-                
-
-            //    if (test is null)
-            //        throw new Exception();
-            //}
-            //catch
-            //{
-            //    g = 1;
-            //}
-
-            //Assert.AreEqual(0, g);
         }
 
         [TestMethod]
         public async Task AdministratedTestRepository_DeleteQuestion_OK()
         {
-            var _ctx = new TestPlatformDBEntities();
-            using (var trans =_ctx.Database.BeginTransaction())
+            var _ctx = GetContext();
+            using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 try
                 {
-                    var repo = new TestRepository(_ctx);
+                    var kernel = KernelBuilder.Build();
+                    var repo = kernel.Get<ITestRepository>();
 
                     var User = new User();
                     
@@ -150,7 +126,7 @@ namespace UserTest
                 }
                 finally
                 {
-                    trans.Rollback();
+                    transaction.Dispose();
                 }
             }
         }

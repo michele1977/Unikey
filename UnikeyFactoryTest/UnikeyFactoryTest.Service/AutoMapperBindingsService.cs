@@ -16,14 +16,19 @@ namespace UnikeyFactoryTest.Service
     {
         public override void Load()
         {
-            if (Kernel == null) return;
-            Kernel.Bind<MapperConfiguration>().ToConstant(ModulesMapping.GetConfiguration());
+            Bind<IAdministratedTestService>().To<AdministratedTestService>();
+            Bind<IAdministratedTestRepository>().To<AdministratedTestRepository>();
+            Bind<ITestRepository>().To<TestRepository>();
+            Bind<ITestService>().To<TestService>();
+            Bind<IUserRepository>().To<UserRepository>();
+            Bind<IUserService>().To<UserService>();
+            Bind<MapperConfiguration>().ToConstant(ModulesMapping.GetConfiguration());
 
-            Kernel.Bind<IMapper>().ToMethod(ctx =>
+            Bind<IMapper>().ToMethod(ctx =>
                 new global::AutoMapper.Mapper(ModuleMapping.GetConfiguration(),
                     type => Kernel.GetType())).Named("Heavy");
 
-            Kernel.Bind<IMapper>().ToMethod(ctx =>
+            Bind<IMapper>().ToMethod(ctx =>
                 new global::AutoMapper.Mapper(ModuleMapping.GetConfigurationLight(),
                     type => Kernel.GetType())).Named("Light");
         }

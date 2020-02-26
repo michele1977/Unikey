@@ -44,14 +44,18 @@
         document.getElementById(id).hidden = false;
     }
 
-    function ShowAddQuestionPartial(){
-            $("#mydivQuestionForm").load('@Url.Action("GetAddQuestionPartial", "Test",Model)');
-            console.log("ShowAddQuestionPartial activated");
+    function ShowAddQuestionPartial() {
+        showLoadingSpinner();
+        $('#mydivQuestionForm').empty();
+        $("#mydivQuestionForm").load('@Url.Action("GetAddQuestionPartial", "Test",Model)');
+        hideLoadingSpinner();
 
-        }
+    }
 
     function UnloadAddQuestionPartial() {
+        showLoadingSpinner();
         $("#mydivQuestionForm").unload('@Url.Action("GetAddQuestionPartial", "Test", Convert.ToInt32(Model.Id))');
+        hideLoadingSpinner();
     }
 
     function emptyPartialView() {
@@ -77,7 +81,20 @@
     function DoneBtn() {
         alert("The test has been saved");
     }
-
+    function ShowDetails(id) {
+        showLoadingSpinner();
+        $.ajax({
+            type: "GET",
+            url: "/Test/QuestionDetails?questionId=" + id,
+            dataType: "html",
+            success: function (data) {
+                $('#mydivQuestionForm').empty();
+                $('#mydivQuestionForm').html(data);
+                hideLoadingSpinner();
+            }
+            
+        });
+    }
 
 </script>
 
@@ -93,7 +110,7 @@
                 @Html.TextBoxFor(x => x.Date, new { @class = "form-control", id = "class-textBox", placeholder = "Date", disabled = "disabled" })
 
 
-                <button class="btn btn-primary" id="buttonCreate" style="margin-left: 45%; margin-top: 10px" >
+                <button class="btn btn-primary" id="buttonCreate" style="margin-left: 45%; margin-top: 10px" onclick="showLoadingSpinner();" >
                     Create
                 </button>
             }
@@ -130,7 +147,7 @@
                                 <i class="fa fa-plus btn " onclick="ShowAddQuestionPartial()" title="Add question"></i>
                             </th>
                         </tr>
-
+                        
                         @foreach (var Question in Model.Questions)
                         {
                             <tr>
@@ -140,9 +157,9 @@
 
                                 <td>
                                     <a href="@Url.Action("DeleteQuestion", "Test", Question)">
-                                        <i class="fa fa-trash btn" title="Delete"></i> |
+                                        <i class="fa fa-trash btn" title="Delete" onclick="showLoadingSpinner();"></i> |
                                     </a>
-                                    <a href="@Url.Action("QuestionDetails", "Test", Question)">
+                                    <a onclick="ShowDetails(@Question.Id)">
                                         <i class="fa fa-edit btn" title="Details"></i>
                                     </a>
 
@@ -154,11 +171,14 @@
                     </table>
 
                     <a href="@Url.Action("TestsList", "Test", new { PageNumber = 1, PageSize = 10 })" onclick="DoneBtn()">
-                        <i class="fa fa-check btn" id="doneBtn" style="color: green" title="Done"></i>
+                        <i class="fa fa-check btn" id="doneBtn" style="color: green" title="Done" onclick="showLoadingSpinner();"></i>
                     </a>
 
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6" id="mydivQuestionForm">
+
+                </div>
+                <div class="col-6" id="QuestionDetails">
 
                 </div>
             </div>

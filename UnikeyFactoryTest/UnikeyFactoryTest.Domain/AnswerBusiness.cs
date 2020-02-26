@@ -8,6 +8,6 @@ namespace UnikeyFactoryTest.Domain
         public string Text { get; set; }
         public AnswerState IsCorrect { get; set; }
         public int QuestionId { get; set; }
-        public decimal Score { get; set; }
+        public int Score { get; set; }
     }
 }

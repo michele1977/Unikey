@@ -1,44 +1,56 @@
-﻿@model UnikeyFactoryTest.Presentation.Models.UserLoginModel
+﻿@using UnikeyFactoryTest.Presentation.Models
+@model UnikeyFactoryTest.Presentation.Models.UserLoginModel
 
-<div id="logInForm" class="container" style="display: block;padding: 15px; padding-top: 25px;max-width: 500px; border: 2px solid black; border-radius: 10px; background-color: antiquewhite">
-    <form action="/User/LogIn" method="post">
-        <div class="form-group">
-            <label for="lbUsername" style="font-family:Verdana, Geneva">Username</label>
-            <input type="text" class="form-control" id="lbUsername" name="Username" onkeyup="CheckLogInForm()">
-            @Html.ValidationMessageFor(x => x.Username, null, new { @class = "text-danger" })
+@{
+    Layout = "~/Views/Shared/LayoutFruition.cshtml";
+}
+
+    <div id="logInForm" class="container" style="display: block;padding: 15px; padding-top: 25px;max-width: 500px; border: 2px solid black; border-radius: 10px; background-color: antiquewhite">
+        <form id="logForm" action="/User/CheckData" method="post">
+            <div class="form-group">
+                <label for="lbUsername" style="font-family:Verdana, Geneva">Username</label>
+                <input type="text" class="form-control" id="lbUsername" name="Username" onkeyup="CheckLogInForm()">
+                @Html.ValidationMessageFor(x => x.Username, null, new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="lbPassword" style="font-family:Verdana, Geneva">Password</label>
+                <input type="password" class="form-control" id="lbPassword" name="Password" onkeyup="CheckLogInForm()">
+                @Html.ValidationMessageFor(x => x.Password, null, new { @class = "text-danger" })
+            </div>
+
+            <div style="width: 100%;text-align: right">
+                <button id="btnLogin" class="btn btn-primary" disabled="disabled" onclick="$('#cover-spin').show(0)">Log In</button>
+            </div>
+            <br>
+
+            <div class="container alert alert-danger" role="alert" style="display: none;width: 100%" id="logInFailed">
+                Username or password invalid
+            </div>
+            <br>
+        </form>
+        <div style="width: 100%; text-align: center">
+            <p>Are you not a member? <a onclick="ChangeForm(2)" target="_top" style="color: dodgerblue">Join us!</a></p>
         </div>
-        <div class="form-group">
-            <label for="lbPassword" style="font-family:Verdana, Geneva">Password</label>
-            <input type="password" class="form-control" id="lbPassword" name="Password" onkeyup="CheckLogInForm()">
-            @Html.ValidationMessageFor(x => x.Password, null, new { @class = "text-danger" })
-        </div>
 
-        <div style="width: 100%;text-align: right">
-            <button id="btnLogin" type="submit" class="btn btn-primary" disabled="disabled">Log In</button>
-        </div>
-        <br>
 
-        <div class="container alert alert-danger" role="alert" style="display: none;width: 100%" id="logInFailed">
-            Username or password invalid
-        </div>
-        <br>
+        <script>
+            function CheckLogInForm() {
+                let firstInput = document.getElementById("lbUsername").value;
+                let secondInput = document.getElementById("lbPassword").value;
 
-    </form>
-    <div style="width: 100%; text-align: center">
-        <p>Are you not a member? <a onclick="ChangeForm(1)" target="_top" style="color: dodgerblue">Join us!</a></p>
-    </div>
-    
-    
-    <script>
-        function CheckLogInForm() {
-            let firstInput = document.getElementById("lbUsername").value;
-            let secondInput = document.getElementById("lbPassword").value;
-
-            if(firstInput !== "" && secondInput !== "") {
-                document.getElementById("btnLogin").removeAttribute("disabled");
-            } else {
-                document.getElementById("btnLogin").setAttribute("disabled", "true");
+                if (firstInput !== "" && secondInput !== "") {
+                    document.getElementById("btnLogin").removeAttribute("disabled");
+                } else {
+                    document.getElementById("btnLogin").setAttribute("disabled", "true");
+                }
             }
+        </script>
+
+        @if (Model.UserState == UserState.IsNotAUser)
+        {
+            <script>
+                let myDiv = document.getElementById("logInFailed");
+                myDiv.style.display = "block";
+            </script>
         }
-    </script>
-</div>
+    </div>

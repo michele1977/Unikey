@@ -16,7 +16,7 @@ namespace UnikeyFactoryTest.Presentation.CustomValidators
             try
             {
                 var propertyValue = value as string;
-                Regex rex = new Regex(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[*@$!#%&()^_~{}+=|]).{6,50}$");
+                Regex rex = new Regex(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[*@$!#%&()^_~{}+=|.]).{6,50}$");
 
                 if (rex.IsMatch(propertyValue) == true)
                 {
