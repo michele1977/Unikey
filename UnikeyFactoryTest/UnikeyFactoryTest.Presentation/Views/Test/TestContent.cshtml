@@ -1,15 +1,19 @@
 ﻿@using UnikeyFactoryTest.Domain.Enums
 @using UnikeyFactoryTest.Presentation.Models.DTO
-@model  UnikeyFactoryTest.Presentation.Models.DTO.TestDto
+@model UnikeyFactoryTest.Presentation.Models.DTO.TestDto
 
 @{
     ViewBag.Title = "AdministratedTestContent";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Test @Model.Title</h2>
+<link href="~/Content/font-awesome.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
+<strong><label style="font-size: 35px">Test @Model.Title</label></strong>
+<a title="Copy Test"><i class="fa fa-copy" style="font-size: 20px" onclick="Copy(@Model.Id)"></i></a>
 <a title="Go Back" href='@Url.Action("TestsList", "Test", new {Model.PageNumber, Model.PageSize, Model.TextFilter})'><img id="backIcon" src="~/Content/ICONS/goBackIcon.png" alt="goBack"></a>
-@*<h2>@Model.Title</h2>*@
 <hr />
 <br />
 <div id="testContentStats">
@@ -22,7 +26,7 @@
     @{
         int i = 1;
 
-        foreach (QuestionDto question in Model.Questions.OrderBy(q => q.Position))
+        foreach (var question in Model.Questions.OrderBy(q => q.Position))
         {
             <div class="row testContentRow">
                 <div>
@@ -71,3 +75,36 @@
         }
     }
 </div>
+
+<script>
+    function Copy(id) {
+        $.ajax({
+            type: "GET",
+            url: "/Test/CopyTest/" + id,
+            success: function () {
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-bottom-left",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr["success"]("Test copied successfully");
+            },
+            error: function () {
+                alert("Ops something wrong!!");
+            }
+        });
+    }
+</script>
