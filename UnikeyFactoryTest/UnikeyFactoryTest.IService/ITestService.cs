@@ -8,7 +8,7 @@ namespace UnikeyFactoryTest.IService
 {
     public interface ITestService
     {
-        void AddNewTest(TestBusiness test);
+        Task AddNewTest(TestBusiness test);
         Task <TestBusiness> GetTestById(int testId);
         Task<List<TestBusiness>> GetTests();
         Task DeleteTest(int testId);

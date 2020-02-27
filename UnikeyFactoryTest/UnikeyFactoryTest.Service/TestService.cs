@@ -34,20 +34,20 @@ namespace UnikeyFactoryTest.Service
             _repo = value;
         }
 
-        public void AddNewTest(TestBusiness test)
+        public async Task AddNewTest(TestBusiness test)
         {
             if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
 
             if (string.IsNullOrWhiteSpace(test.URL)) 
                 throw new Exception("Test not saved");
 
-            using (_repo)
-            {
                 var mapper = _kernel.Get<IMapper>("Heavy");
                 var testDao = mapper.Map<TestBusiness, Test>(test);
+                IUserRepository ur = _kernel.Get<IUserRepository>();
+                var user = await ur.FindByIdAsync(30);
+                testDao.User =  mapper.Map<UserBusiness, User>(user);
                 _repo.SaveTest(testDao);
                 test.Id = testDao.Id;
-            }
         }
 
 

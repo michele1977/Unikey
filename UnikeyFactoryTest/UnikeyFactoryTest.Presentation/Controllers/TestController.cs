@@ -27,6 +27,7 @@ using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service.Providers.MailProvider;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using Microsoft.AspNet.Identity;
 
 namespace UnikeyFactoryTest.Presentation.Controllers
 {
@@ -41,6 +42,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         private static readonly Test test = new Test();
         private IAdministratedTestService administratedservice;
         private ITestService _service;
+        private UserManager<UserBusiness, int> um;
         private readonly IKernel Kernel;
 
 
@@ -49,11 +51,12 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
         }
 
-        public TestController(ITestService value, IAdministratedTestService value2, IKernel kernel)
+        public TestController(ITestService value, IAdministratedTestService value2, IKernel kernel, UserManager<UserBusiness, int> usm)
         {
             Kernel = kernel;
             _service = value;
             administratedservice = value2;
+            um = usm;
         }
         // GET: Test
         public ActionResult Index(TestDto model)
