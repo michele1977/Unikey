@@ -35,6 +35,7 @@ namespace UnikeyFactoryTest.Service
         {
             if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
             var mapper = Kernel.Get<IMapper>("Heavy");
+            test.UserId = 30;
             var testDaoo = mapper.Map<TestBusiness, Test>(test);
             Repo.SaveTest(testDaoo);
             test.Id = testDaoo.Id;
