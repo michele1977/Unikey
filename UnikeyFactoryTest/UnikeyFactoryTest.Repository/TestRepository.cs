@@ -21,11 +21,12 @@ namespace UnikeyFactoryTest.Repository
     public class TestRepository : ITestRepository
     {
         private readonly TestPlatformDBEntities _ctx;
-        private IKernel Kernel;
+        private readonly IKernel _kernel;
+        public bool IsContextNull => _ctx == null;
 
         public TestRepository(TestPlatformDBEntities myCtx, IKernel kernel)
         {
-            Kernel = kernel;
+            _kernel = kernel;
             _ctx = myCtx;
         }
 
@@ -35,29 +36,28 @@ namespace UnikeyFactoryTest.Repository
             _ctx.SaveChanges();
         }
 
-
         public async Task<TestBusiness> GetTestByURL(string URL)
         {
-            var result = await _ctx.Tests.FirstAsync(x => x.URL.Equals(URL));
+            var result = await _ctx.Tests.FirstOrDefaultAsync(x => x.URL.Equals(URL));
 
             if (result == null)
             {
                 throw new Exception($"Test not found at specified URL ({URL})");
             }
 
-            var mapper = Kernel.Get<IMapper>("Heavy");
+            var mapper = _kernel.Get<IMapper>("Heavy");
             return mapper.Map<Test, TestBusiness>(result);
         }
 
         public async Task<TestBusiness> GetTest(int testId)
         {
-            var myTask = await _ctx.Tests.FirstAsync(t => t.Id == testId);
+            var myTask = await _ctx.Tests.FirstOrDefaultAsync(t => t.Id == testId);
 
             if (myTask == null)
             {
                 throw new Exception($"Test not found at specified id ({testId})");
             }
-            var mapper = Kernel.Get<IMapper>("Heavy");
+            var mapper = _kernel.Get<IMapper>("Heavy");
             return mapper.Map<Test, TestBusiness>(myTask);
         }
 
@@ -76,27 +76,20 @@ namespace UnikeyFactoryTest.Repository
 
         public async Task DeleteTest(int testId)
         {
-            var task = await _ctx.Tests.FirstAsync(t => t.Id == testId);
+            var task = await _ctx.Tests.FirstOrDefaultAsync(t => t.Id == testId);
+
+            if (task == null)
+            {
+                throw new Exception($"Test not found at specified id ({testId})");
+            }
 
             _ctx.Tests.Remove(task);
             _ctx.SaveChanges();
         }
 
-
-        //public async void UpdateTest(TestBusiness test)
-        //{
-        //    if (test == null)
-        //    {
-        //        throw new NullReferenceException("No test to update");
-        //    }
-        //    var newValue = (EntityExtension)TestMapper.MapBizToDal(test);
-        //    var oldValue = await Task.Run(() => (EntityExtension)(_ctx.Tests.FirstOrDefault(x => x.Id == newValue.MyId))); 
-        //    NewUpdate(newValue, oldValue);
-        //}
-
         public async Task UpdateTest(TestBusiness test)
         {
-            var mapper = Kernel.Get<IMapper>("Heavy");
+            var mapper = _kernel.Get<IMapper>("Heavy");
             var newValue = mapper.Map<TestBusiness, Test>(test);
             var oldValue = (EntityExtension)(_ctx.Tests.FirstOrDefault(x => x.Id == test.Id));
             await NewUpdate(newValue, oldValue);
@@ -125,6 +118,7 @@ namespace UnikeyFactoryTest.Repository
         public async Task DeleteQuestionByIdFromTest(int questionId)
         {
             var question = await _ctx.Questions.FirstOrDefaultAsync(q => q.Id == questionId);
+
             if (question == null)
             {
                 throw new NullReferenceException("Question not found ");
@@ -137,15 +131,19 @@ namespace UnikeyFactoryTest.Repository
 
         public void Dispose()
         {
-            _ctx.Dispose();
+            _ctx?.Dispose();
         }
 
         public async Task<QuestionBusiness> GetQuestionById(int id)
         {
-
-
             var taskQuestion = await _ctx.Questions.FirstOrDefaultAsync(q => q.Id == id);
-            var mapper = Kernel.Get<IMapper>("Heavy");
+
+            if (taskQuestion == null)
+            {
+                throw new NullReferenceException("Question not found");
+            }
+
+            var mapper = _kernel.Get<IMapper>("Heavy");
             var returned = mapper.Map<Question, QuestionBusiness>(taskQuestion);
             return returned;
         }
@@ -160,14 +158,17 @@ namespace UnikeyFactoryTest.Repository
         public async Task<Dictionary<int, int>> GetExTestCountByState(IEnumerable<int> testsIds, AdministratedTestState state)
         {
             var returned = new Dictionary<int, int>();
-            foreach (var Id in testsIds)
+
+            foreach (var id in testsIds)
             {
-                var test = await _ctx.Tests.FirstOrDefaultAsync(t => t.Id == Id);
-                if (test != null)
+                var test = await _ctx.Tests.FirstOrDefaultAsync(t => t.Id == id);
+
+                if (test == null)
                 {
-                    returned.Add(Id, test.AdministratedTests.Count(a => a.State == (byte)state));
+                    throw new NullReferenceException("Test not found");
                 }
-                else throw new Exception("Test not found");
+                
+                returned.Add(id, test.AdministratedTests.Count(a => a.State == (byte)state));
             }
 
             return returned;

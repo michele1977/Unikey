@@ -714,6 +714,8 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var returned = new TestDto(test, _service);
             returned.ShowForm = true;
 
+            _service.Dispose();
+
             return View("TestContent", returned);
         }
     }

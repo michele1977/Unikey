@@ -11,6 +11,7 @@ namespace UnikeyFactoryTest.IRepository
 {
     public interface ITestRepository : IDisposable
     {
+        bool IsContextNull { get; }
         void SaveTest(Test test);
         Task<TestBusiness> GetTestByURL(string URL);
         Task <TestBusiness> GetTest(int testId);
