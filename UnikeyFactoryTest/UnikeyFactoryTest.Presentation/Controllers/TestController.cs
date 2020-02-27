@@ -665,5 +665,56 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
             return new EmptyResult();
         }
+
+        [HttpGet]
+        public async Task<ActionResult> DeleteQuestionFromContent(QuestionDto question, int TestId)
+        {
+            try
+            {
+                await _service.DeleteQuestionByIdFromTest(question.Id);
+            }
+            catch (ArgumentNullException e)
+            {
+                Logger.Error(e, e.Message);
+                throw;
+            }
+            catch (InvalidOperationException e)
+            {
+                Logger.Error(e, e.Message);
+                throw;
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
+            catch (DbEntityValidationException e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
+            catch (DbUpdateException e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
+            catch (NotSupportedException e)
+            {
+                Logger.Error(e, e.Message);
+                throw;
+            }
+            catch (Exception e)
+            {
+                Logger.Fatal(e, e.Message);
+                throw;
+            }
+
+
+            var test = await _service.GetTestById(TestId);
+            var returned = new TestDto(test, _service);
+            returned.ShowForm = true;
+
+            return View("TestContent", returned);
+        }
     }
 }
