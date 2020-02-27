@@ -132,6 +132,7 @@ namespace UnikeyFactoryTest.Repository
 
             _ctx.Questions.Remove(question);
             _ctx.SaveChanges();
+            await UpdateQuestionsPosition(question.TestId);
         }
 
         public void Dispose()
@@ -170,6 +171,20 @@ namespace UnikeyFactoryTest.Repository
             }
 
             return returned;
+        }
+
+        public async Task UpdateQuestionsPosition(int testId)
+        {
+            TestBusiness test = await GetTest(testId);
+            short pos = 0;
+            
+            foreach (var question in test.Questions)
+            {
+                question.Position = pos;
+                pos++;
+            }
+
+            await UpdateTest(test);
         }
     }
 }
