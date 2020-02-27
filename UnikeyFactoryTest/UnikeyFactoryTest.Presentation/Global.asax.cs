@@ -7,12 +7,15 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using AutoMapper;
-using Microsoft.Owin.Builder;
+using FluentValidation;
+using FluentValidation.Mvc;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Web.Common.WebHost;
 using UnikeyFactoryTest.Mapper.AutoMappers;
 using UnikeyFactoryTest.NinjectConfiguration;
+using UnikeyFactoryTest.Presentation.CustomValidators;
+using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service;
 
 namespace UnikeyFactoryTest.Presentation
@@ -45,6 +48,9 @@ namespace UnikeyFactoryTest.Presentation
                 new AutoMapperBindingsService(),
                 new UnikeyFactoryTestBindings()
             });
+            kernel.Load(new BindingsService());
+            kernel.Bind<IValidator<TestDto>>().To<TestValidator>();
+            kernel.Bind<IValidator<QuestionDto>>().To<QuestionValidator>();
         }
     }
 }

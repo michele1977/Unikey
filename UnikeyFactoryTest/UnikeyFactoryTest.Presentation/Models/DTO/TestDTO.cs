@@ -65,6 +65,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
         public int UserId { get; set; }
         public int NumberOfTest { get; set; }
         public bool ShowForm { get; set; }
+        public bool ShowPartial { get; set; }
 
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
