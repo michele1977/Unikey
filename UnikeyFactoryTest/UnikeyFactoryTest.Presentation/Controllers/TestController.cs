@@ -600,7 +600,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             QuestionValidator val = new QuestionValidator();
             ValidationResult res = val.Validate(model);
 
-            if (!res.IsValid ||)
+            if (!res.IsValid)
             {
                 foreach (ValidationFailure err in res.Errors)
                 {
@@ -608,12 +608,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
                 }
 
-                
-                //for (int i = 0; i < model.Answers.Count; ++i)
-                //{
-                //    if (ModelState.ContainsKey($"Answers[{i}].Score"))
-                //        ModelState[$"Answers[{i}].Score"].Errors.Clear();
-                //}
                 returned.Id = model.TestId;
                 returned = new TestDto(await _service.GetTestById(returned.Id), _service);
                 returned.ShowForm = true;

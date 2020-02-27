@@ -4,6 +4,16 @@
 @using UnikeyFactoryTest.Presentation.Models.DTO
 @model UnikeyFactoryTest.Presentation.Models.DTO.QuestionDto
 
+<script>
+    $(document).ready(function() {
+        for (var i = 0; i < 4; ++i) {
+            if (document.getElementById("check" + i).checked) {
+                document.getElementById("txt_Score" + i).removeAttribute("hidden");
+            }
+        } 
+    })
+</script>
+
 @using (Html.BeginForm("AddOrUpdateQuestion", "Test", FormMethod.Post))
 {
     @Html.HiddenFor(x => x.TestId)
@@ -44,12 +54,12 @@
                         }
                         @if (Model.Answers[i].IsCorrectBool == false)
                         {
-                            @Html.TextBoxFor(x => x.Answers[i].Score, new { type = "decimal", id = "txt_Score" + i, @class = "class-mymarginleft", style = "width: 80px", step = "1", placeholder = "Score", @hidden = "hidden", @Value = "0" })
+                            @Html.TextBoxFor(x => x.Answers[i].Score, new { type = "number", id = "txt_Score" + i, @class = "class-mymarginleft", style = "width: 80px", step = "1", placeholder = "Score", @hidden = "hidden", @Value = "0" })
                             @Html.ValidationMessageFor(x => x.Answers[i].Score, "", new { @class = "text-danger", style = "display: block;" })
                         }
                         @if (Model.Answers[i].IsCorrectBool)
                         {
-                            @Html.TextBoxFor(x => x.Answers[i].Score, new { type = "decimal", id = "txt_Score" + i, @class = "class-mymarginleft", style = "width: 80px", step = "1", placeholder = "Score" })
+                            @Html.TextBoxFor(x => x.Answers[i].Score, new { type = "number", id = "txt_Score" + i, @class = "class-mymarginleft", style = "width: 80px", step = "1", placeholder = "Score", @Value = "0" })
                             @Html.ValidationMessageFor(x => x.Answers[i].Score, "", new { @class = "text-danger", style = "display: block;" })
                         }
                     </div>
@@ -78,12 +88,12 @@
         }
         @if (!Model.Answers[i].IsCorrectBool)
         {
-            @Html.TextBoxFor(x => x.Answers[i].Score, new { type = "decimal", id = "txt_Score" + i, @class = "class-mymarginleft", style = "width: 80px", step = "1", placeholder = "Score", @hidden = "hidden", @Value = "0" })
+            @Html.TextBoxFor(x => x.Answers[i].Score, new { type = "number", id = "txt_Score" + i, @class = "class-mymarginleft", style = "width: 80px", step = "1", placeholder = "Score", @hidden = "hidden", @Value = "0" })
             @Html.ValidationMessageFor(x => x.Answers[i].Score, "", new { @class = "text-danger", style = "display: block;" })
         }
         @if (Model.Answers[i].IsCorrectBool)
         {
-            @Html.TextBoxFor(x => x.Answers[i].Score, new { type = "decimal", id = "txt_Score" + i, @class = "class-mymarginleft", style = "width: 80px", step = "1", placeholder = "Score" })
+            @Html.TextBoxFor(x => x.Answers[i].Score, new { type = "number", id = "txt_Score" + i, @class = "class-mymarginleft", style = "width: 80px", step = "1", placeholder = "Score",  @Value = "0"})
             @Html.ValidationMessageFor(x => x.Answers[i].Score, "", new { @class = "text-danger", style = "display: block;" })
         }
 
