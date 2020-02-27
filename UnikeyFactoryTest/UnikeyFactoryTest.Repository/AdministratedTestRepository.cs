@@ -17,11 +17,13 @@ namespace UnikeyFactoryTest.Repository
 
         private readonly IKernel Kernel;
         private IMapper Mapper;
-        
+        public bool IsContextNull { get; private set; }
+
         public AdministratedTestRepository(TestPlatformDBEntities ctx,IKernel kernel)
         {
             Kernel = kernel;
             _ctx = ctx;
+            IsContextNull = false;
         }
 
         #region AddAdministatedTest
@@ -178,6 +180,7 @@ namespace UnikeyFactoryTest.Repository
         public void Dispose()
         {
             _ctx.Dispose();
+            IsContextNull = true;
         }
     }
 }
