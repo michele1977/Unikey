@@ -1,24 +1,22 @@
-﻿using Ninject;
+﻿using AutoMapper;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.UI;
-using AutoMapper;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
-using UnikeyFactoryTest.Domain.Enums;
 using UnikeyFactoryTest.IRepository;
-using UnikeyFactoryTest.Mapper;
 
 namespace UnikeyFactoryTest.Repository
 {
-    public class AdministratedTestRepository : IAdministratedTestRepository, IDisposable
+    public class AdministratedTestRepository : IAdministratedTestRepository
     {
         private readonly TestPlatformDBEntities _ctx;
 
         private readonly IKernel Kernel;
+        private IMapper Mapper;
         
         public AdministratedTestRepository(TestPlatformDBEntities ctx,IKernel kernel)
         {
@@ -26,15 +24,16 @@ namespace UnikeyFactoryTest.Repository
             _ctx = ctx;
         }
 
+        #region AddAdministatedTest
         public AdministratedTestBusiness Add(AdministratedTestBusiness adTest)
         {
             try
             {
-                var mapper = Kernel.Get<IMapper>("Heavy");
-                var newAdTestDb = mapper.Map<AdministratedTestBusiness, AdministratedTest>(adTest);
+                Mapper = Kernel.Get<IMapper>("Heavy");
+                var newAdTestDb = Mapper.Map<AdministratedTestBusiness, AdministratedTest>(adTest);
                 _ctx.AdministratedTests.Add(newAdTestDb);
                 _ctx.SaveChanges();
-                adTest = mapper.Map<AdministratedTest, AdministratedTestBusiness>(newAdTestDb);
+                adTest = Mapper.Map<AdministratedTest, AdministratedTestBusiness>(newAdTestDb);
                 return adTest;
             }
             catch 
@@ -42,23 +41,25 @@ namespace UnikeyFactoryTest.Repository
                 throw new Exception("Save Failed");
             }
         }
-
+        #endregion
+        
+        #region GetAdministratedTest
         public async Task<AdministratedTestBusiness> GetAdministratedTestById(int testId)
         {
-            var task = await _ctx.AdministratedTests.FirstOrDefaultAsync(x => x.Id.Equals(testId));
+            var administratedTest = await _ctx.AdministratedTests.FirstOrDefaultAsync(x => x.Id.Equals(testId));
 
-            if (task == null)
+            if (administratedTest == null)
             {
                 throw new Exception("Not valid id");
             }
-            var mapper = Kernel.Get<IMapper>("Heavy");
-            var result = mapper.Map<AdministratedTest, AdministratedTestBusiness>(task);
+            Mapper = Kernel.Get<IMapper>("Heavy");
+            var result = Mapper.Map<AdministratedTest, AdministratedTestBusiness>(administratedTest);
             return result;
         }
 
         public async Task<List<AdministratedTestBusiness>> GetAdministratedTests()
         {
-            var administratedTestListTask = await _ctx.AdministratedTests.Select(t => new AdministratedTestBusiness()
+            var administratedTestList = await _ctx.AdministratedTests.Select(t => new AdministratedTestBusiness()
             {
                 Id = t.Id,
                 TestSubject = t.TestSubject,
@@ -67,24 +68,25 @@ namespace UnikeyFactoryTest.Repository
                 MaxScore = t.MaxScore
             }).ToListAsync();
 
-            return administratedTestListTask;
+            return administratedTestList;
         }
 
         public async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId)
         { 
             var adTestList = await _ctx.AdministratedTests.Where(t => t.TestId == testId).ToListAsync();
-            var mapper = Kernel.Get<IMapper>("Heavy");
-            var filteredList2 = mapper.Map<List<AdministratedTest>, List<AdministratedTestBusiness>>(adTestList);
-            return filteredList2;
+            Mapper = Kernel.Get<IMapper>("Heavy");
+            var filteredList = Mapper.Map<List<AdministratedTest>, List<AdministratedTestBusiness>>(adTestList);
+            return filteredList;
         }
 
-        public async Task<int> GetState(int AdministratedTestId)
+        public async Task<int> GetState(int administratedTestId)
         {
-            var myTask = await _ctx.AdministratedTests.FirstOrDefaultAsync(x => x.Id.Equals(AdministratedTestId));
-            var State = myTask.State;
-            return (int)State;
+            var administratedTest = await _ctx.AdministratedTests.FirstOrDefaultAsync(x => x.Id.Equals(administratedTestId));
+            var state = administratedTest.State;
+            return (int)state;
         }
-
+        #endregion
+        
         #region DeleteAdministratedTest
         public async Task DeleteAdministratedTest(int administratedTestId)
         {
@@ -106,7 +108,7 @@ namespace UnikeyFactoryTest.Repository
             return administratedTest;
         }
         #endregion
-
+        
         #region Update_Save
         public async Task Update_Save(AdministratedTestBusiness test)
         {
@@ -116,13 +118,12 @@ namespace UnikeyFactoryTest.Repository
                 throw new Exception("No test to update");
             }
 
-            int score = 0;
-            test.Score = GetScore(test, score);
+            test.Score = GetScore(test);
 
             try
             {
-                var mapper = Kernel.Get<IMapper>("Heavy");
-                var newValue = (EntityExtension) mapper.Map<AdministratedTestBusiness, AdministratedTest>(test);
+                Mapper = Kernel.Get<IMapper>("Heavy");
+                var newValue = (EntityExtension) Mapper.Map<AdministratedTestBusiness, AdministratedTest>(test);
                 var oldValue = await _ctx.AdministratedTests.FirstOrDefaultAsync(x => x.Id == newValue.MyId);
                 NewUpdate(newValue, oldValue);
             }
@@ -153,8 +154,9 @@ namespace UnikeyFactoryTest.Repository
             _ctx.SaveChanges();
         }
 
-        private static int GetScore(AdministratedTestBusiness newTest, int score)
+        private static int GetScore(AdministratedTestBusiness newTest)
         {
+            int score = 0;
             foreach (var q in newTest.AdministratedQuestions)
             {
                 if ((q.AdministratedAnswers.FirstOrDefault(x => x.isSelected == true)) != null)
@@ -166,37 +168,16 @@ namespace UnikeyFactoryTest.Repository
 
         public async Task Update_Save_Question(AdministratedQuestionBusiness adQuestion)
         {
-            var mapper = Kernel.Get<IMapper>("Heavy");
-            var newQuestion = (EntityExtension)mapper.Map<AdministratedQuestionBusiness, AdministratedQuestion>(adQuestion);
+            Mapper = Kernel.Get<IMapper>("Heavy");
+            var newQuestion = (EntityExtension)Mapper.Map<AdministratedQuestionBusiness, AdministratedQuestion>(adQuestion);
             var oldQuestion = await _ctx.AdministratedQuestions.FirstOrDefaultAsync(x=>x.Id == adQuestion.Id);
             NewUpdate(newQuestion, oldQuestion);
         }
-
-        //private async Task Update_Save_Answers(AdministratedQuestion q)
-        //{
-        //    foreach (var a in q.AdministratedAnswers)
-        //    {
-        //        var myTask2 = Task.Run(() =>
-        //        {
-        //            _ctx.AdministratedAnswers.FirstOrDefault(x => x.Id == a.Id).isSelected = false;
-        //            _ctx.SaveChanges();
-
-        //            if (a.isSelected == true)
-        //            {
-        //                _ctx.AdministratedAnswers.FirstOrDefault(x => x.Id == a.Id).isSelected = true;
-        //                _ctx.SaveChanges();
-        //            }
-        //        });
-        //        await myTask2;
-        //    }
-        //}
         #endregion
 
         public void Dispose()
         {
             _ctx.Dispose();
         }
-
-
     }
 }
