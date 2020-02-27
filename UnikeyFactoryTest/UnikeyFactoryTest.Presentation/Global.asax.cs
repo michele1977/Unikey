@@ -48,7 +48,6 @@ namespace UnikeyFactoryTest.Presentation
                 new AutoMapperBindingsService(),
                 new UnikeyFactoryTestBindings()
             });
-            kernel.Load(new BindingsService());
             kernel.Bind<IValidator<TestDto>>().To<TestValidator>();
             kernel.Bind<IValidator<QuestionDto>>().To<QuestionValidator>();
         }
