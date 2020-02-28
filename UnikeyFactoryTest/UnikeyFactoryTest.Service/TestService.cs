@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AutoMapper;
+using Microsoft.AspNet.Identity;
 using Ninject;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
@@ -21,51 +22,67 @@ namespace UnikeyFactoryTest.Service
 {
     public class TestService : ITestService
     {
-        private ITestRepository Repo;
+        private ITestRepository _repo;
 
-        private readonly IKernel Kernel;
+        private readonly IKernel _kernel;
+
+        private readonly int userId;
 
         public TestService(ITestRepository value, IKernel kernel)
         {
-            Kernel = kernel;
-            Repo = value;
+            _kernel = kernel;
+            _repo = value;
         }
 
         public void AddNewTest(TestBusiness test)
         {
-            if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
-            var mapper = Kernel.Get<IMapper>("Heavy");
-            test.UserId = 30;
-            var testDaoo = mapper.Map<TestBusiness, Test>(test);
-            Repo.SaveTest(testDaoo);
-            test.Id = testDaoo.Id;
+            if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
+
+            if (string.IsNullOrWhiteSpace(test.URL))
+                throw new Exception("Test not saved");
+
+            var mapper = _kernel.Get<IMapper>("Heavy");
+            test.UserId = 14;
+            var testDao = mapper.Map<TestBusiness, Test>(test);
+             _repo.SaveTest(testDao);
+            test.Id = testDao.Id;
         }
 
 
         public async Task<TestBusiness> GetTestById(int testId)
         {
-            TestBusiness test = null;
+            if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
 
-            test = await Repo.GetTest(testId);
-
-            return test;
+            using (_repo)
+            {
+                var test = await _repo.GetTest(testId);
+                return test;
+            }
         }
 
         public async Task<List<TestBusiness>> GetTests()
         {
-            var tests = Repo.GetTests();
-            return await tests;
+            if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
+
+            var tests = await _repo.GetTests();
+            return tests;
         }
 
         public async Task DeleteTest(int testId)
         {
-            await Repo.DeleteTest(testId);
+            if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
+
+            await _repo.DeleteTest(testId);
         }
 
         public async Task UpdateTest(TestBusiness test)
         {
-            if (string.IsNullOrWhiteSpace(test.URL)) throw new Exception("Test not saved");
-            await Repo.UpdateTest(test);
+            if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
+
+            if (string.IsNullOrWhiteSpace(test.URL))
+                throw new Exception("Invalid test to update");
+
+            await _repo.UpdateTest(test);
 
         }
         public string GenerateGuid()
@@ -77,61 +94,58 @@ namespace UnikeyFactoryTest.Service
         {
             var baseUrl = ConfigurationManager.AppSettings["baseUrl"];
             return $"{baseUrl}ExTest\\TestStart?guid={guid.ToString()}";
-
         }
 
         public async Task<TestBusiness> GetTestByURL(string modelUrl)
         {
-            return await Repo.GetTestByURL(modelUrl);
+            if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
+
+            return await _repo.GetTestByURL(modelUrl);
         }
 
         public async Task DeleteQuestionByIdFromTest(int questionId)
         {
-            await Repo.DeleteQuestionByIdFromTest(questionId);
+            if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
+
+            await _repo.DeleteQuestionByIdFromTest(questionId);
         }
 
         public async Task<List<TestBusiness>> GetTestsByFilter(string filter)
         {
-            var res = (await Repo.GetTests()).Where(t => t.Title.ToLower().Contains(filter.ToLower())).ToList();
+            var res = (await _repo.GetTests()).Where(t => t.Title.ToLower().Contains(filter.ToLower())).ToList();
             return res;
         }
 
         public async Task<QuestionBusiness> GetQuestionById(int id)
         {
-            return await Repo.GetQuestionById(id);
+            if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
+
+            return await _repo.GetQuestionById(id);
         }
 
         public void Dispose()
         {
-            Repo.Dispose();
+            _repo.Dispose();
         }
-
 
         public async Task UpdateQuestion(QuestionBusiness updateQuestion)
         {
-            await Repo.UpdateQuestion(updateQuestion);
+            if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
+
+            await _repo.UpdateQuestion(updateQuestion);
         }
 
         public async Task AddOrUpdateQuestion(QuestionBusiness question)
         {
-
-            //se id = allora devo aggiungere la domanda
             if (question.Id == 0)
             {
                 var test = await GetTestById(question.TestId);
-                if (test.Questions.Count == 0)
-                {
-                    question.Position = 0;
-                }
-                else
-                {
-                    question.Position = Convert.ToInt16(test.Questions.Count);
-                }
+                question.Position = Convert.ToInt16(test.Questions.Count);
                 test.Questions.Add(question);
 
                 await UpdateTest(test);
             }
-            //Se id != 0 allora devo aggiornare la domanda
+
             if (question.Id != 0)
             {
                 await UpdateQuestion(question);
@@ -140,20 +154,18 @@ namespace UnikeyFactoryTest.Service
 
         public async Task<Dictionary<int, int>> GetExTestCountByState(IEnumerable<int> testsIds, AdministratedTestState state)
         {
-            return await Repo.GetExTestCountByState(testsIds, state);
+            if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
+
+            return await _repo.GetExTestCountByState(testsIds, state);
         }
 
         public StringBuilder TextBuilder(QuestionBusiness question, StringBuilder sb, int position)
         {
-            sb.Append($"{position}." + question.Text + "\n\n");
-
-            char[] array = {'a', 'b', 'c', 'd'};
-            int i = 0;
+            sb.Append($"{position}.{question.Text}\n\n");
 
             foreach (var answer in question.Answers)
             {
-                sb.Append($"{array[i]}) " + answer.Text + "\n");
-                i++;
+                sb.Append($"□ {answer.Text}\n");
             }
 
             sb.Append("\n");

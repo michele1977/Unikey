@@ -328,7 +328,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpGet]
         public async Task<ActionResult> DeleteQuestion(QuestionDto question, int TestId)
         {
-            var returned = new TestDto();
             try
             {
                 await _service.DeleteQuestionByIdFromTest(question.Id);
@@ -371,7 +370,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
 
             var test = await _service.GetTestById(TestId);
-            returned = new TestDto(test, _service);
+            var returned = new TestDto(test, _service);
             returned.ShowForm = true;
 
             return View("Index", returned);
@@ -715,6 +714,8 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             var test = await _service.GetTestById(TestId);
             var returned = new TestDto(test, _service);
             returned.ShowForm = true;
+
+            _service.Dispose();
 
             return View("TestContent", returned);
         }
