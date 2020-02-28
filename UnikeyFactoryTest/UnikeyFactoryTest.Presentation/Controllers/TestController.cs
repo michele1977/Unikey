@@ -27,6 +27,7 @@ using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service.Providers.MailProvider;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using Microsoft.AspNet.Identity;
 
 namespace UnikeyFactoryTest.Presentation.Controllers
 {
@@ -37,12 +38,13 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
         //private readonly TestService _service = new TestService();
         //private ITestService service;
-        private static int UserId { get; set; }
+        private int UserId { get => User.Identity.GetUserId<int>();
+            set => User.Identity.GetUserId<int>();
+        }
         private static readonly Test test = new Test();
         private IAdministratedTestService administratedservice;
         private ITestService _service;
         private readonly IKernel Kernel;
-
 
         public TestController()
         {
@@ -143,7 +145,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         {
             var testValidator = Kernel.Get<IValidator<TestDto>>();
 
-            var validationResult = await testValidator.ValidateAsync(model);
+            var validationResult =await testValidator.ValidateAsync(model);
 
             if (!validationResult.IsValid)
             {
