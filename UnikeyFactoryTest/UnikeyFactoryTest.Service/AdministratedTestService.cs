@@ -17,14 +17,15 @@ namespace UnikeyFactoryTest.Service
     public class AdministratedTestService : IAdministratedTestService
     {
         private IAdministratedTestRepository _repo;
+        private readonly IKernel _kernel;
 
         public int QuestionPosition = 0;
-
         public bool IsLast = false;
 
-        public AdministratedTestService(IAdministratedTestRepository repo)
+        public AdministratedTestService(IAdministratedTestRepository repo, IKernel kernel)
         {
             _repo = repo;
+            _kernel = kernel;
         }
 
         public AdministratedTestBusiness AdministratedTest_Builder(TestBusiness test, string subject)
@@ -57,55 +58,118 @@ namespace UnikeyFactoryTest.Service
 
         public async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByFilter(string textFilter)
         {
-            var res = (await _repo.GetAdministratedTests()).Where(t => t.TestSubject.ToLower().Contains(textFilter.ToLower())).ToList();
-            return res;
+            if (_repo.IsContextNull)
+            {
+                _repo = _kernel.Get<IAdministratedTestRepository>();
+            }
+            using (_repo)
+            {
+                var res = (await _repo.GetAdministratedTests()).Where(t => t.TestSubject.ToLower().Contains(textFilter.ToLower())).ToList();
+                return res;
+            }
         }
 
         public AdministratedTestBusiness Add(AdministratedTestBusiness adTest)
         {
-            return _repo.Add(adTest);
+            if (_repo.IsContextNull)
+            {
+                _repo = _kernel.Get<IAdministratedTestRepository>();
+            }
+            using (_repo)
+            {
+                return _repo.Add(adTest);
+            }
         }
 
         public async Task Update_Save(AdministratedTestBusiness adTest)
         {
-            await _repo.Update_Save(adTest);
+            if (_repo.IsContextNull)
+            {
+                _repo = _kernel.Get<IAdministratedTestRepository>();
+            }
+            using (_repo)
+            { 
+                await _repo.Update_Save(adTest);
+            }
         }
 
         public async Task<AdministratedTestBusiness> GetAdministratedTestById(int adTestId)
         {
-            return await _repo.GetAdministratedTestById(adTestId);
+            if (_repo.IsContextNull)
+            {
+                _repo = _kernel.Get<IAdministratedTestRepository>();
+            }
+            using (_repo)
+            {
+                return await _repo.GetAdministratedTestById(adTestId);
+            }
         }
 
         public async Task<IEnumerable<AdministratedTestBusiness>> GetAdministratedTests()
         {
-            var administratedTests = await _repo.GetAdministratedTests();
-
-            return administratedTests;
+            if (_repo.IsContextNull)
+            {
+                _repo = _kernel.Get<IAdministratedTestRepository>();
+            }
+            using (_repo)
+            {
+                var administratedTests = await _repo.GetAdministratedTests();
+                return administratedTests;
+            }
         }
 
         public async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId)
         {
-            var myTask = Task.Run(() => _repo.GetAdministratedTestsByTestId(testId));
-            return await myTask;
+            if (_repo.IsContextNull)
+            {
+                _repo = _kernel.Get<IAdministratedTestRepository>();
+            }
+            using (_repo)
+            {
+                 var myTask = Task.Run(() => _repo.GetAdministratedTestsByTestId(testId));
+                return await myTask;
+            }
         }
 
         public async Task DeleteAdministratedTest(int administratedTestId)
         {
-            await _repo.DeleteAdministratedTest(administratedTestId);
+            if (_repo.IsContextNull)
+            {
+                _repo = _kernel.Get<IAdministratedTestRepository>();
+            }
+            using (_repo)
+            {
+                await _repo.DeleteAdministratedTest(administratedTestId);
+            }
         }
 
         public AdministratedQuestionBusiness Next(AdministratedTestBusiness administratedTest, int position)
         {
-
+            if (_repo.IsContextNull)
+            {
+                _repo = _kernel.Get<IAdministratedTestRepository>();
+            }
             return administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
         }
 
         public async Task Update_Save_Question(AdministratedQuestionBusiness adQuestion)
         {
-            await _repo.Update_Save_Question(adQuestion);
+            if (_repo.IsContextNull)
+            {
+                _repo = _kernel.Get<IAdministratedTestRepository>();
+            }
+            using (_repo)
+            {
+                await _repo.Update_Save_Question(adQuestion);
+            }
         }
+
         public AdministratedQuestionBusiness Previous(AdministratedTestBusiness administratedTest, int position)
         {
+            if (_repo.IsContextNull)
+            {
+                _repo = _kernel.Get<IAdministratedTestRepository>();
+            }
             return administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
         }
 

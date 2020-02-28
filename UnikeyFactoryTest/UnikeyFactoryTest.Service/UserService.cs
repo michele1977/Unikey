@@ -68,5 +68,10 @@ namespace UnikeyFactoryTest.Service
                 return new IdentityResult(ex.Message);
             }
         }
+
+        public override Task<UserBusiness> FindByIdAsync(int userId)
+        {
+            return Store.FindByIdAsync(userId);
+        }
     }
 }
