@@ -34,20 +34,18 @@ namespace UnikeyFactoryTest.Service
             _repo = value;
         }
 
-        public async Task AddNewTest(TestBusiness test)
+        public void AddNewTest(TestBusiness test)
         {
             if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
 
-            if (string.IsNullOrWhiteSpace(test.URL)) 
+            if (string.IsNullOrWhiteSpace(test.URL))
                 throw new Exception("Test not saved");
 
-                var mapper = _kernel.Get<IMapper>("Heavy");
-                var testDao = mapper.Map<TestBusiness, Test>(test);
-                IUserRepository ur = _kernel.Get<IUserRepository>();
-                var user = await ur.FindByIdAsync(30);
-                testDao.User =  mapper.Map<UserBusiness, User>(user);
-                _repo.SaveTest(testDao);
-                test.Id = testDao.Id;
+            var mapper = _kernel.Get<IMapper>("Heavy");
+            test.UserId = 14;
+            var testDao = mapper.Map<TestBusiness, Test>(test);
+             _repo.SaveTest(testDao);
+            test.Id = testDao.Id;
         }
 
 
@@ -81,9 +79,9 @@ namespace UnikeyFactoryTest.Service
         {
             if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
 
-            if (string.IsNullOrWhiteSpace(test.URL)) 
+            if (string.IsNullOrWhiteSpace(test.URL))
                 throw new Exception("Invalid test to update");
-            
+
             await _repo.UpdateTest(test);
 
         }
