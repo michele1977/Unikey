@@ -42,7 +42,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         private static readonly Test test = new Test();
         private IAdministratedTestService administratedservice;
         private ITestService _service;
-        private UserManager<UserBusiness, int> um;
         private readonly IKernel Kernel;
 
 
@@ -51,12 +50,11 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
         }
 
-        public TestController(ITestService value, IAdministratedTestService value2, IKernel kernel, UserManager<UserBusiness, int> usm)
+        public TestController(ITestService value, IAdministratedTestService value2, IKernel kernel)
         {
             Kernel = kernel;
             _service = value;
             administratedservice = value2;
-            um = usm;
         }
         // GET: Test
         public ActionResult Index(TestDto model)
@@ -329,7 +327,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
         [HttpGet]
         public async Task<ActionResult> DeleteQuestion(QuestionDto question, int TestId)
         {
-            var returned = new TestDto();
             try
             {
                 await _service.DeleteQuestionByIdFromTest(question.Id);
@@ -372,7 +369,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
 
 
             var test = await _service.GetTestById(TestId);
-            returned = new TestDto(test, _service);
+            var returned = new TestDto(test, _service);
             returned.ShowForm = true;
 
             return View("Index", returned);
