@@ -63,8 +63,10 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             if ((TestDto)TempData["mod"] != null)
                 model = (TestDto)TempData["mod"];
 
-            if (UserId == 0)
-                UserId = model.UserId;
+            //if (UserId == 0)
+            //    UserId = model.UserId;
+
+            model.UserId = UserId;
 
             try
             {

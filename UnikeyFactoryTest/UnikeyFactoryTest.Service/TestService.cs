@@ -42,7 +42,6 @@ namespace UnikeyFactoryTest.Service
                 throw new Exception("Test not saved");
 
             var mapper = _kernel.Get<IMapper>("Heavy");
-            test.UserId = 14;
             var testDao = mapper.Map<TestBusiness, Test>(test);
              _repo.SaveTest(testDao);
             test.Id = testDao.Id;
