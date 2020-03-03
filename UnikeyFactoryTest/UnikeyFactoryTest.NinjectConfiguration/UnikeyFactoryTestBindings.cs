@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using Microsoft.AspNet.Identity;
 using Ninject.Modules;
+using NLog;
 using UnikeyFactoryTest.Context;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
@@ -22,6 +23,7 @@ namespace UnikeyFactoryTest.NinjectConfiguration
             Bind<DbContext>().To<TestPlatformDBEntities>();
             Bind<IUserRepository>().To<UserRepository>();
             Bind<UserManager<UserBusiness, int>>().To<UserService>();
+            Bind<ILogger>().ToMethod(c => LogManager.GetLogger(c.Request.Target.Member.DeclaringType.ToString()));
         }
     }
 }
