@@ -11,7 +11,7 @@ namespace UnikeyFactoryTest.NinjectConfiguration
 {
     public class MapConfig
     {
-        public void RegisterMap(IKernel kernel)
+        public static void RegisterMap(IKernel kernel)
         {
             kernel.Bind<MapperConfiguration>().ToConstant(ConfigureLight()).InSingletonScope();
             kernel.Bind<MapperConfiguration>().ToConstant(Configure()).InSingletonScope();

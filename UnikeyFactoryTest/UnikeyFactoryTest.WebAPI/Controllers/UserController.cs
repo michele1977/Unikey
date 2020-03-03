@@ -42,12 +42,11 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         {
             try
             {
-                throw new OverflowException();
                 var result = await _service.CreateAsync(user);
 
                 if (result.Errors.Count() != 0)
                 {
-                    return Unauthorized();
+                    return BadRequest();
                 }
             }
             catch (ArgumentException e)
