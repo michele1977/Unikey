@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import {SubscribeService} from './services/subscribe.service';
+import {SubscribeModule} from './core/subscribe/subscribe.module';
+import {LandingPageModule} from './shared/landing-page/landing-page.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +15,7 @@ import {SubscribeService} from './services/subscribe.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    LandingPageModule
   ],
   providers: [],
   bootstrap: [AppComponent]

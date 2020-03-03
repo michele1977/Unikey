@@ -10,12 +10,5 @@ import {User} from './models/user';
 export class AppComponent {
   title = 'UnikeyFactoryTestClient';
 
-  constructor(private service: SubscribeService) {
-  }
-
-  user: User = { UserName: 'Federicchione', Password: 'Unikey1!' };
-
-  subscribe() {
-    this.service.subscribe(this.user);
-  }
+  constructor() { }
 }
