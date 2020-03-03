@@ -42,7 +42,6 @@ namespace UnikeyFactoryTest.ITextSharp
                 doc.NewPage();
 
                 int questionNum = 1;
-                string[] indexes = { "a)", "b)", "c)", "d)" };
                 StringBuilder builder = new StringBuilder("");
 
                 foreach (var question in test.Questions)
@@ -51,7 +50,7 @@ namespace UnikeyFactoryTest.ITextSharp
 
                     for (int i = 0; i < question.Answers.Count; ++i)
                     {
-                        builder.Append($"{indexes[i]} {question.Answers[i].Text}\n");
+                        builder.Append($"□ {question.Answers[i].Text}\n");
                     }
 
                     builder.Append("\n");
