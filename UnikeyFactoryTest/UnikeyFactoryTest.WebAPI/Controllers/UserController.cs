@@ -32,11 +32,6 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             _service = _kernel.Get<UserManager<UserBusiness, int>>();
         }
 
-        //public UserController(UserManager<UserBusiness, int> service)
-        //{
-        //    _service = service;
-        //}
-
         [HttpPost]
         public async Task<IHttpActionResult> Subscribe([FromBody] UserBusiness user)
         {
