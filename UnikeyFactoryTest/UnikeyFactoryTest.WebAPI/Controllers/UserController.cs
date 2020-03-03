@@ -6,8 +6,11 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.ExceptionHandling;
+using System.Web.Http.Results;
 using Microsoft.AspNet.Identity;
 using Ninject;
+using NLog;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IRepository;
 using UnikeyFactoryTest.IService;
@@ -18,29 +21,52 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
     [EnableCors("*", "*", "*")]
     public class UserController : ApiController
     {
-        private IKernel kernel;
-        private UserManager<UserBusiness, int> _service;
+        private ILogger _logger;
+        private readonly IKernel _kernel;
+        private readonly UserManager<UserBusiness, int> _service;
 
-        public UserController()
+        public UserController(IKernel kernel, ILogger logger)
         {
-            
+            _kernel = kernel;
+            _logger = logger;
+            _service = _kernel.Get<UserManager<UserBusiness, int>>();
         }
 
-        public UserController(IKernel k)
-        {
-            kernel = k;
-            _service = k.Get<UserManager<UserBusiness, int>>();
-        }
+        //public UserController(UserManager<UserBusiness, int> service)
+        //{
+        //    _service = service;
+        //}
 
         [HttpPost]
         public async Task<IHttpActionResult> Subscribe([FromBody] UserBusiness user)
         {
-            var result = await _service.CreateAsync(user);
-
-            if (result.Errors.Count() != 0)
+            try
             {
-                return Unauthorized();
+                throw new OverflowException();
+                var result = await _service.CreateAsync(user);
+
+                if (result.Errors.Count() != 0)
+                {
+                    return Unauthorized();
+                }
             }
+            catch (ArgumentException e)
+            {
+                _logger.Error(e, e.Message);
+                return StatusCode(HttpStatusCode.Conflict);
+            }
+            catch (OverflowException e)
+            {
+                _logger.Error(e, e.Message);
+                return StatusCode(HttpStatusCode.Conflict);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, e.Message);
+                return StatusCode(HttpStatusCode.Conflict);
+            }
+
+            _logger.Info($"{user.UserName} succesfully registered");
 
             return Ok();
         }

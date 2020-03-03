@@ -20,6 +20,7 @@ namespace UnikeyFactoryTest.WebAPI.App_Start
     using Ninject;
     using Ninject.Web.Common;
     using Ninject.Web.Common.WebHost;
+    using UnikeyFactoryTest.NinjectConfiguration;
 
     public static class NinjectWebCommon
     {
@@ -55,7 +56,7 @@ namespace UnikeyFactoryTest.WebAPI.App_Start
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
                 RegisterServices(kernel);
-                GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
+                GlobalConfiguration.Configuration.DependencyResolver = new CustomNinjectDependencyResolver(kernel);
                 return kernel;
             }
             catch
@@ -71,9 +72,9 @@ namespace UnikeyFactoryTest.WebAPI.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<ITestRepository>().To<TestRepository>();
-            kernel.Bind<UserManager<UserBusiness, int>>().To<UserService>();
-            kernel.Bind<IUserRepository>().To<UserRepository>();
+            var mapConfig = new MapConfig();
+            mapConfig.RegisterMap(kernel);
+            kernel.Load(new UnikeyFactoryTestBindings());
         }
     }
 }
