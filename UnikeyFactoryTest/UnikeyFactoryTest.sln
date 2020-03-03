@@ -39,7 +39,26 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{09D42ECA-6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.ITextSharp", "UnikeyFactoryTest.ITextSharp\UnikeyFactoryTest.ITextSharp.csproj", "{59D33D86-3D79-4332-BC47-CEB98CE35CA6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AngularClient", "AngularClient", "{E85C2154-62B1-48CF-84DA-1B3F2F007F57}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "UnikeyFactoryTestClient", "UnikeyFactoryTestClient\", "{E675247D-2D97-4EAA-A848-F8F37D75FC04}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_58711"
+		Debug.AspNetCompiler.PhysicalPath = "UnikeyFactoryTestClient\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_58711\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_58711"
+		Release.AspNetCompiler.PhysicalPath = "UnikeyFactoryTestClient\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_58711\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "58711"
+		SlnRelativePath = "UnikeyFactoryTestClient\"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +114,10 @@ Global
 		{59D33D86-3D79-4332-BC47-CEB98CE35CA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59D33D86-3D79-4332-BC47-CEB98CE35CA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59D33D86-3D79-4332-BC47-CEB98CE35CA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E675247D-2D97-4EAA-A848-F8F37D75FC04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E675247D-2D97-4EAA-A848-F8F37D75FC04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E675247D-2D97-4EAA-A848-F8F37D75FC04}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{E675247D-2D97-4EAA-A848-F8F37D75FC04}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,7 +134,7 @@ Global
 		{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6} = {F4512DB7-BE86-4310-83A9-166B39A25F22}
 		{764F94A0-C26D-45E8-A86C-91EE99D1ACA7} = {09DA4313-D100-4588-9275-535B046748E7}
 		{59D33D86-3D79-4332-BC47-CEB98CE35CA6} = {09D42ECA-6C4D-46E2-A1EA-6649872BB0B0}
-		{E85C2154-62B1-48CF-84DA-1B3F2F007F57} = {EB76DF01-7BF1-461D-89FC-DF2B3B257E9C}
+		{E675247D-2D97-4EAA-A848-F8F37D75FC04} = {EB76DF01-7BF1-461D-89FC-DF2B3B257E9C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {16A85E8B-7001-49BB-8ABA-4B835045F2E7}
