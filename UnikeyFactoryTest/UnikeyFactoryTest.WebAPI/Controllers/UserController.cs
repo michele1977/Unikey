@@ -9,7 +9,6 @@ using Microsoft.AspNet.Identity;
 using Ninject;
 using NLog;
 using UnikeyFactoryTest.Domain;
-using UnikeyFactoryTest.WebAPI.CustomIHttpResults;
 using UnikeyFactoryTest.WebAPI.ResponseMessages;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
@@ -37,7 +36,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
                 if (result.Errors.Count() != 0)
                 {
                     var validationMessages = result.Errors.ToList();
-                    return Request.CreateResponse(HttpStatusCode.Conflict, validationMessages);
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, validationMessages);
                 }
             }
             catch (ArgumentNullException e)
