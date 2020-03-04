@@ -6,7 +6,7 @@ using Ninject;
 using NLog;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.NinjectConfiguration;
-using UnikeyFactoryTest.WebAPI.Controllers;
+using UnikeyFactoryTest.WebAPI;
 using System.Web.Http.Results;
 
 namespace WebApiUnitTests

@@ -3,9 +3,154 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{0591EEC8-E5A8-45F4-80AD-BD56EBC7D550}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BUSINESS", "BUSINESS", "{09DA4313-D100-4588-9275-535B046748E7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PRESENTATION", "PRESENTATION", "{EB76DF01-7BF1-461D-89FC-DF2B3B257E9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.Context", "UnikeyFactoryTest.Context\UnikeyFactoryTest.Context.csproj", "{858F3FB2-AB75-4685-BE3B-B83B9983F51B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.IRepository", "UnikeyFactoryTest.IRepository\UnikeyFactoryTest.IRepository.csproj", "{06E5E146-DF6E-4BC6-9339-1D68BEA1B996}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.Repository", "UnikeyFactoryTest.Repository\UnikeyFactoryTest.Repository.csproj", "{1AE6EE8E-E465-41C5-A17A-EF35DA1ED082}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.Service", "UnikeyFactoryTest.Service\UnikeyFactoryTest.Service.csproj", "{694C09A8-9DC2-408A-B91F-9383B02E93F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.Presentation", "UnikeyFactoryTest.Presentation\UnikeyFactoryTest.Presentation.csproj", "{9BC92D83-2295-40F9-A86B-E54C6BD8454F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TESTS", "TESTS", "{12B1DC80-C19E-4571-BB25-5982B5879FC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserTest", "UserTest\UserTest.csproj", "{062F5E08-D623-4104-92B1-4CCE2CCE82BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.Domain", "UnikeyFactoryTest.Domain\UnikeyFactoryTest.Domain.csproj", "{E2F1E71E-9900-4CEF-A8AB-0BC152698A47}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mappers", "Mappers", "{F4512DB7-BE86-4310-83A9-166B39A25F22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.Mapper", "UnikeyFactoryTest.Mapper\UnikeyFactoryTest.Mapper.csproj", "{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.IService", "UnikeyFactoryTest.IService\UnikeyFactoryTest.IService.csproj", "{764F94A0-C26D-45E8-A86C-91EE99D1ACA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.NinjectConfiguration", "UnikeyFactoryTest.NinjectConfiguration\UnikeyFactoryTest.NinjectConfiguration.csproj", "{04C2FC8F-855F-45FF-9BE7-DDBA35197D45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.AutoMapper", "UnikeyFactoryTest.AutoMapper\UnikeyFactoryTest.AutoMapper.csproj", "{CC8ACD51-AC4B-4A5B-9017-A20E0331C4C3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{09D42ECA-6C4D-46E2-A1EA-6649872BB0B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.ITextSharp", "UnikeyFactoryTest.ITextSharp\UnikeyFactoryTest.ITextSharp.csproj", "{59D33D86-3D79-4332-BC47-CEB98CE35CA6}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "UnikeyFactoryTestClient", "UnikeyFactoryTestClient\", "{E675247D-2D97-4EAA-A848-F8F37D75FC04}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_58711"
+		Debug.AspNetCompiler.PhysicalPath = "UnikeyFactoryTestClient\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_58711\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_58711"
+		Release.AspNetCompiler.PhysicalPath = "UnikeyFactoryTestClient\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_58711\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "58711"
+		SlnRelativePath = "UnikeyFactoryTestClient\"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebAPI", "WebAPI", "{716009AD-547F-452F-B437-110BA267FC56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnikeyFactoryTest.WebAPI", "UnikeyFactoryTest.WebAPI\UnikeyFactoryTest.WebAPI.csproj", "{AA0A9538-19A4-46B2-BEE0-BC2BADA947C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiUnitTests", "WebApiUnitTests\WebApiUnitTests.csproj", "{3A020656-7685-4E4F-B4F8-7CE6EE06DCB9}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{858F3FB2-AB75-4685-BE3B-B83B9983F51B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{858F3FB2-AB75-4685-BE3B-B83B9983F51B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{858F3FB2-AB75-4685-BE3B-B83B9983F51B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{858F3FB2-AB75-4685-BE3B-B83B9983F51B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06E5E146-DF6E-4BC6-9339-1D68BEA1B996}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06E5E146-DF6E-4BC6-9339-1D68BEA1B996}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06E5E146-DF6E-4BC6-9339-1D68BEA1B996}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06E5E146-DF6E-4BC6-9339-1D68BEA1B996}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AE6EE8E-E465-41C5-A17A-EF35DA1ED082}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AE6EE8E-E465-41C5-A17A-EF35DA1ED082}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AE6EE8E-E465-41C5-A17A-EF35DA1ED082}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AE6EE8E-E465-41C5-A17A-EF35DA1ED082}.Release|Any CPU.Build.0 = Release|Any CPU
+		{694C09A8-9DC2-408A-B91F-9383B02E93F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{694C09A8-9DC2-408A-B91F-9383B02E93F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{694C09A8-9DC2-408A-B91F-9383B02E93F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{694C09A8-9DC2-408A-B91F-9383B02E93F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BC92D83-2295-40F9-A86B-E54C6BD8454F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BC92D83-2295-40F9-A86B-E54C6BD8454F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BC92D83-2295-40F9-A86B-E54C6BD8454F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BC92D83-2295-40F9-A86B-E54C6BD8454F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{062F5E08-D623-4104-92B1-4CCE2CCE82BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{062F5E08-D623-4104-92B1-4CCE2CCE82BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{062F5E08-D623-4104-92B1-4CCE2CCE82BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{062F5E08-D623-4104-92B1-4CCE2CCE82BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2F1E71E-9900-4CEF-A8AB-0BC152698A47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2F1E71E-9900-4CEF-A8AB-0BC152698A47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2F1E71E-9900-4CEF-A8AB-0BC152698A47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2F1E71E-9900-4CEF-A8AB-0BC152698A47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{764F94A0-C26D-45E8-A86C-91EE99D1ACA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{764F94A0-C26D-45E8-A86C-91EE99D1ACA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{764F94A0-C26D-45E8-A86C-91EE99D1ACA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{764F94A0-C26D-45E8-A86C-91EE99D1ACA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04C2FC8F-855F-45FF-9BE7-DDBA35197D45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04C2FC8F-855F-45FF-9BE7-DDBA35197D45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04C2FC8F-855F-45FF-9BE7-DDBA35197D45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04C2FC8F-855F-45FF-9BE7-DDBA35197D45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC8ACD51-AC4B-4A5B-9017-A20E0331C4C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC8ACD51-AC4B-4A5B-9017-A20E0331C4C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC8ACD51-AC4B-4A5B-9017-A20E0331C4C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC8ACD51-AC4B-4A5B-9017-A20E0331C4C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59D33D86-3D79-4332-BC47-CEB98CE35CA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59D33D86-3D79-4332-BC47-CEB98CE35CA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59D33D86-3D79-4332-BC47-CEB98CE35CA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59D33D86-3D79-4332-BC47-CEB98CE35CA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E675247D-2D97-4EAA-A848-F8F37D75FC04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E675247D-2D97-4EAA-A848-F8F37D75FC04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E675247D-2D97-4EAA-A848-F8F37D75FC04}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{E675247D-2D97-4EAA-A848-F8F37D75FC04}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{AA0A9538-19A4-46B2-BEE0-BC2BADA947C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA0A9538-19A4-46B2-BEE0-BC2BADA947C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA0A9538-19A4-46B2-BEE0-BC2BADA947C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA0A9538-19A4-46B2-BEE0-BC2BADA947C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A020656-7685-4E4F-B4F8-7CE6EE06DCB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A020656-7685-4E4F-B4F8-7CE6EE06DCB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A020656-7685-4E4F-B4F8-7CE6EE06DCB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A020656-7685-4E4F-B4F8-7CE6EE06DCB9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{858F3FB2-AB75-4685-BE3B-B83B9983F51B} = {0591EEC8-E5A8-45F4-80AD-BD56EBC7D550}
+		{06E5E146-DF6E-4BC6-9339-1D68BEA1B996} = {0591EEC8-E5A8-45F4-80AD-BD56EBC7D550}
+		{1AE6EE8E-E465-41C5-A17A-EF35DA1ED082} = {0591EEC8-E5A8-45F4-80AD-BD56EBC7D550}
+		{694C09A8-9DC2-408A-B91F-9383B02E93F0} = {09DA4313-D100-4588-9275-535B046748E7}
+		{9BC92D83-2295-40F9-A86B-E54C6BD8454F} = {EB76DF01-7BF1-461D-89FC-DF2B3B257E9C}
+		{062F5E08-D623-4104-92B1-4CCE2CCE82BB} = {12B1DC80-C19E-4571-BB25-5982B5879FC0}
+		{E2F1E71E-9900-4CEF-A8AB-0BC152698A47} = {09DA4313-D100-4588-9275-535B046748E7}
+		{F4512DB7-BE86-4310-83A9-166B39A25F22} = {0591EEC8-E5A8-45F4-80AD-BD56EBC7D550}
+		{D9FA8193-E2C4-4E4D-A41D-7493BA8818A6} = {F4512DB7-BE86-4310-83A9-166B39A25F22}
+		{764F94A0-C26D-45E8-A86C-91EE99D1ACA7} = {09DA4313-D100-4588-9275-535B046748E7}
+		{59D33D86-3D79-4332-BC47-CEB98CE35CA6} = {09D42ECA-6C4D-46E2-A1EA-6649872BB0B0}
+		{E675247D-2D97-4EAA-A848-F8F37D75FC04} = {EB76DF01-7BF1-461D-89FC-DF2B3B257E9C}
+		{AA0A9538-19A4-46B2-BEE0-BC2BADA947C7} = {716009AD-547F-452F-B437-110BA267FC56}
+		{3A020656-7685-4E4F-B4F8-7CE6EE06DCB9} = {12B1DC80-C19E-4571-BB25-5982B5879FC0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {16A85E8B-7001-49BB-8ABA-4B835045F2E7}
