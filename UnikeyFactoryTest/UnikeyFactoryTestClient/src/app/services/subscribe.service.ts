@@ -9,18 +9,15 @@ import {catchError} from 'rxjs/operators';
 })
 export class SubscribeService {
   errors: any;
-
-  constructor(private http: HttpClient) {}
-
-  private handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      return error.message;
-    } else {
-      return [error.status];
-    }
-  }
+  succesfullySubscribed: boolean;
+  constructor(private http: HttpClient) { this.succesfullySubscribed = false;}
 
   subscribeUser(user: User) {
-    return this.http.post<User>('https://localhost:99/api/Subscribe', {user})
+    return this.http.post('https://localhost:99/api/Subscribe', {user})
+      .subscribe(res => {
+      this.succesfullySubscribed = true;
+    }, error => {
+      this.errors = error;
+    });
   }
 }

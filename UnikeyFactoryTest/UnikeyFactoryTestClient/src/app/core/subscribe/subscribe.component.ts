@@ -14,17 +14,11 @@ export class SubscribeComponent {
   constructor(private service: SubscribeService) { }
 
   user: User;
-  errorPass = false;
-  emptyError = false;
+  minLength = 1;
+  maxLength = 50;
+
 
   subscribe(form: NgForm) {
-      if (form.value.Password === form.value.retyped) {
-        this.user = form.value;
-        this.service.subscribe(this.user);
-        this.errorPass = false;
-        this.emptyError = false;
-      } else {
-        this.errorPass = true;
-      }
+
   }
 }

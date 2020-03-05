@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Microsoft.AspNet.Identity;
 using Ninject;
 using NLog;
@@ -13,6 +14,7 @@ using UnikeyFactoryTest.WebAPI.ResponseMessages;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
+    [EnableCors("*", "*", "*")]
     public class UserController : ApiController
     {
         private readonly IKernel _kernel;
