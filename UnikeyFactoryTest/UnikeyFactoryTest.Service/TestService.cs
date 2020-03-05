@@ -36,10 +36,9 @@ namespace UnikeyFactoryTest.Service
 
         public void AddNewTest(TestBusiness test)
         {
-            if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
+            test.URL = GenerateUrl();
 
-            if (string.IsNullOrWhiteSpace(test.URL))
-                throw new Exception("Test not saved");
+            if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
 
             var mapper = _kernel.Get<IMapper>("Heavy");
             var testDao = mapper.Map<TestBusiness, Test>(test);
@@ -84,15 +83,11 @@ namespace UnikeyFactoryTest.Service
             await _repo.UpdateTest(test);
 
         }
-        public string GenerateGuid()
-        {
-            return Guid.NewGuid().ToString();
-        }
 
-        public string GenerateUrl(string guid)
+        public string GenerateUrl()
         {
             var baseUrl = ConfigurationManager.AppSettings["baseUrl"];
-            return $"{baseUrl}ExTest\\TestStart?guid={guid.ToString()}";
+            return $"{baseUrl}ExTest\\TestStart?guid={Guid.NewGuid():N}";
         }
 
         public async Task<TestBusiness> GetTestByURL(string modelUrl)

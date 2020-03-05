@@ -35,9 +35,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
     public class TestController : Controller
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-
-        //private readonly TestService _service = new TestService();
-        //private ITestService service;
         private int UserId { get => User.Identity.GetUserId<int>();
             set => User.Identity.GetUserId<int>();
         }
@@ -163,7 +160,6 @@ namespace UnikeyFactoryTest.Presentation.Controllers
                     test.Id = model.Id;
                     test.Title = model.Title;
                     test.UserId = UserId;
-                    test.URL = _service.GenerateGuid();
                     test.Date = model.Date;
                     var mapper = Kernel.Get<IMapper>("Heavy");
                     var testDomain = mapper.Map<Test, TestBusiness>(test);

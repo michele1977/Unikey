@@ -14,8 +14,7 @@ namespace UnikeyFactoryTest.IService
         Task DeleteTest(int testId);
         Task UpdateTest(TestBusiness test);
         Task UpdateQuestion(QuestionBusiness updateQuestion);
-        string GenerateGuid();
-        string GenerateUrl(string guid);
+        string GenerateUrl();
         Task<TestBusiness> GetTestByURL(string modelUrl);
         Task DeleteQuestionByIdFromTest(int questionId);
         Task<List<TestBusiness>> GetTestsByFilter(string filter);

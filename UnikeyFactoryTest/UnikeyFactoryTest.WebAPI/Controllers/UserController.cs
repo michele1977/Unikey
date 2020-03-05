@@ -49,7 +49,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             catch (OverflowException e)
             {
                 _logger.Error(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.Conflict, ErrorMessages.Unexpected_error);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.Unexpected_error);
             }
             catch (Exception e)
             {

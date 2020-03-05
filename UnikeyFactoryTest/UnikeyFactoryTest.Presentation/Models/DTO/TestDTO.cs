@@ -30,7 +30,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
 
             Id = test.Id;
             Title = test.Title;
-            URL = testService.GenerateUrl(test.URL);
+            URL = testService.GenerateUrl();
             Date = test.Date;
             UserId = test.UserId;
             Title = test.Title;
