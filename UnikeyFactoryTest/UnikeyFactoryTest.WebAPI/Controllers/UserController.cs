@@ -5,13 +5,16 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Microsoft.AspNet.Identity;
 using Ninject;
 using NLog;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.WebAPI.ResponseMessages;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
+    [EnableCors("*", "*", "*")]
     public class UserController : ApiController
     {
         private readonly IKernel _kernel;
@@ -26,32 +29,35 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> Subscribe([FromBody] UserBusiness user)
+        public async Task<HttpResponseMessage> Subscribe([FromBody] UserBusiness user)
         {
             try
             {
                 var result = await _service.CreateAsync(user);
 
                 if (result.Errors.Count() != 0)
-                    return BadRequest();
+                {
+                    var validationMessages = result.Errors.ToList();
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, validationMessages);
+                }
             }
             catch (ArgumentNullException e)
             {
                 _logger.Error(e, e.Message);
-                return Conflict();
+                return Request.CreateResponse(HttpStatusCode.Conflict, ErrorMessages.Unexpected_error);
             }
             catch (OverflowException e)
             {
                 _logger.Error(e, e.Message);
-                return Conflict();
+                return Request.CreateResponse(HttpStatusCode.Conflict, ErrorMessages.Unexpected_error);
             }
             catch (Exception e)
             {
                 _logger.Error(e, e.Message);
-                return Conflict();
+                return Request.CreateResponse(HttpStatusCode.Conflict, ErrorMessages.Unexpected_error);
             }
 
-            return Ok();
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
 }

@@ -2,8 +2,11 @@
   <div class="container">
     <div class="form-group">
       <label for="exampleInputEmail1">Username</label>
-      <input type="text" class="form-control" name="UserName" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username" ngModel>
+      <input type="text" class="form-control" name="UserName" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username" #userNameRef="ngModel" required [minlength]="minLength" [maxLength]="maxLength" ngModel>
       <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <div *ngIf="userNameRef.touched || userNameRef.dirty">
+            <span *ngIf="userNameRef.errors?.minLength" class="error">{{userNameRef.name}} must be at least {{minLength}}</span>
+        </div>
     </div>
     <div class="form-group">
       <label for="InputPassword">Password</label>
@@ -15,14 +18,10 @@
       <input type="password" class="form-control" name="retyped" id="RetypedInputPassword" placeholder="Retype password" ngModel>
     </div>
     <div style="text-align: right">
-      <button type="submit" class="btn btn-primary" (click)="subscribe(form)">Subscribe</button>
+      <button [disabled]="form.invalid" type="submit" class="btn btn-primary" (click)="subscribe(form)">Subscribe</button>
     </div>
   </div>
 </form>
-<br>
-<div *ngIf="errorPass" class="alert alert-danger" role="alert">
-  Passwords not match!
-</div>
 <br>
 <div style="width: 100%; text-align: center">
   <button style="background: none !important; border: none; padding: 0 !important; font-family: arial, sans-serif; color: dodgerblue; text-decoration: underline; cursor: pointer">
