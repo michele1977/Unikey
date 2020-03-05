@@ -7,17 +7,17 @@ import {HttpClientModule} from '@angular/common/http';
 import {SubscribeService} from './services/subscribe.service';
 import {SubscribeModule} from './core/subscribe/subscribe.module';
 import {LandingPageModule} from './shared/landing-page/landing-page.module';
-import { ForbiddenUsernameDirective } from './shared/forbidden-username.directive';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ForbiddenUsernameDirective
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    LandingPageModule
+    LandingPageModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {SubscribeService} from '../../services/subscribe.service';
 import {NgForm} from '@angular/forms';
 import {User} from '../../models/user';
-import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 
 @Component({
   selector: 'app-subscribe',
@@ -11,12 +10,11 @@ import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 })
 export class SubscribeComponent {
 
-  constructor(private service: SubscribeService) { }
-
   user: User;
   minLength = 1;
   maxLength = 50;
 
+  constructor(private service: SubscribeService) { }
 
   subscribe(form: NgForm) {
 

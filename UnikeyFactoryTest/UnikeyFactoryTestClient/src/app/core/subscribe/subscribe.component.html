@@ -4,16 +4,9 @@
       <label for="exampleInputEmail1">Username</label>
       <input type="text" class="form-control" name="UserName" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username" #userNameRef="ngModel" required [minlength]="minLength" [maxLength]="maxLength" ngModel>
       <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-      <div *ngIf="userNameRef.errors">
-        <div *ngIf="userNameRef.invalid && userNameRef.dirty || userNameRef.touched">
-          <div *ngIf="userNameRef.errors.required">
-            {{userNameRef.name}} can't be empty
-          </div>
-          <div *ngIf="userNameRef.errors.minLength">
-            {{userNameRef.name}} must be at least {{minLength}}
-          </div>
+        <div *ngIf="userNameRef.touched || userNameRef.dirty">
+            <span *ngIf="userNameRef.errors?.minLength" class="error">{{userNameRef.name}} must be at least {{minLength}}</span>
         </div>
-      </div>
     </div>
     <div class="form-group">
       <label for="InputPassword">Password</label>
@@ -29,10 +22,6 @@
     </div>
   </div>
 </form>
-<br>
-<div *ngIf="errorPass" class="alert alert-danger" role="alert">
-  Passwords not match!
-</div>
 <br>
 <div style="width: 100%; text-align: center">
   <button style="background: none !important; border: none; padding: 0 !important; font-family: arial, sans-serif; color: dodgerblue; text-decoration: underline; cursor: pointer">
