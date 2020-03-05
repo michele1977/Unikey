@@ -8,10 +8,12 @@ import {SubscribeService} from './services/subscribe.service';
 import {SubscribeModule} from './core/subscribe/subscribe.module';
 import {LandingPageModule} from './shared/landing-page/landing-page.module';
 import {FormsModule} from '@angular/forms';
+import { CreationComponent } from './features/creation.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CreationComponent
   ],
   imports: [
     BrowserModule,
