@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Test} from '../models/test';
+import {Test} from '../../models/test';
 
 @Component({
   selector: 'app-creation',
@@ -8,13 +8,28 @@ import {Test} from '../models/test';
       <div class="form-group create-div">
         <input type="text" name="title" class="form-control" [disabled]="showForm" placeholder="Test Name.." [ngModel]="title">
         <label><b>Date: </b>{{time | date: 'dd/MM/yyyy h:m'}}</label>
-        <br>
-        <button class="btn btn-primary create-button"[disabled]="showForm" (click)="createTest(form)">Create</button>
+      </div>
+      <hr>
+      <div class="row create-row">
+        <div class="col-6">
+          <app-question-list [test]="test" (showForm) = 'visibility($event)'></app-question-list>
+        </div>
+        <div *ngIf="setVisibility" class="col-6">
+          PUT HERE THE QUESTION FORM
+        </div>
+      </div>
+      <hr>
+      <div style="text-align: right">
+        <button class="btn btn-primary create-button" [disabled]="showForm" (click)="createTest(form)">Create</button>
       </div>
     </form>
   `,
   styles: [
     `
+     .create-row{
+       min-height: 450px;
+     }
+
     .create-button{
       margin: 10px 0px 0px 45%;
     }
@@ -35,6 +50,8 @@ export class CreationComponent {
     Id: 0,
     Questions: null,
   };
+  setVisibility: boolean;
+
   constructor() { }
 
   createTest(form) {
@@ -44,4 +61,7 @@ export class CreationComponent {
     this.showForm = true;
   }
 
+  visibility(setVisibility) {
+    this.setVisibility = setVisibility;
+  }
 }

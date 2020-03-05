@@ -5,5 +5,5 @@ export class Question {
   TestId: number;
   Text: string;
   Position: number;
-  Answers: [Answer];
+  Answers: Answer[];
 }

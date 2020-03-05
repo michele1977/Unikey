@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {CreationComponent} from './features/creation.component';
-import {SubscribeComponent} from './core/subscribe/subscribe.component';
+import {CreationComponent} from './features/creation/creation.component';
 import {LandingPageComponent} from './shared/landing-page/landing-page.component';
 
 

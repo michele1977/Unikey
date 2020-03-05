@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LandingPageComponent } from './landing-page.component';
-import {SubscribeModule} from '../../core/subscribe/subscribe.module';
+import {SubscribeModule} from '../../features/subscribe/subscribe.module';
 
 
 

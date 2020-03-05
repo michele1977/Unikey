@@ -5,10 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import {SubscribeService} from './services/subscribe.service';
-import {SubscribeModule} from './core/subscribe/subscribe.module';
+import {SubscribeModule} from './features/subscribe/subscribe.module';
 import {LandingPageModule} from './shared/landing-page/landing-page.module';
 import {FormsModule} from '@angular/forms';
-import { CreationComponent } from './features/creation.component';
+import { CreationComponent } from './features/creation/creation.component';
+import {QuestionListModule} from './features/creation/question-list/question-list.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { CreationComponent } from './features/creation.component';
     BrowserModule,
     AppRoutingModule,
     LandingPageModule,
-    FormsModule
+    FormsModule,
+    QuestionListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
