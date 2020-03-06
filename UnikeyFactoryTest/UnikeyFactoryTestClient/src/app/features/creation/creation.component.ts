@@ -2,6 +2,7 @@ import {Test} from '../../models/test';
 import {Component, Input} from '@angular/core';
 import {TestService} from '../../services/test.service';
 import * as moment from 'moment';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-creation',
@@ -51,7 +52,7 @@ export class CreationComponent {
   };
   setVisibility: boolean;
 
-  constructor(private service: TestService) {
+  constructor(private service: TestService, private router: Router) {
     this.time = moment().format();
     setInterval(() => {
       this.time = moment().format();
@@ -63,9 +64,7 @@ export class CreationComponent {
     this.test.Date = moment().format('DD MM YY H:mm:ss');
 
     this.service.createTest(this.test).pipe().subscribe( res => {
-        this.result = true;
-        this.showForm = true;
-        alert('Redirect to implement');
+        this.router.navigateByUrl('testList');
     }, error => {
         alert('Error while creating');
     });

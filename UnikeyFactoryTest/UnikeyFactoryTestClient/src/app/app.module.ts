@@ -7,18 +7,24 @@ import {LandingPageModule} from './shared/landing-page/landing-page.module';
 import {FormsModule} from '@angular/forms';
 import { CreationComponent } from './features/creation/creation.component';
 import {QuestionListModule} from './features/creation/question-list/question-list.module';
+import { TestListComponent } from './features/test-list/test-list.component';
+import {Ng2SearchPipeModule} from 'ng2-search-filter';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CreationComponent
+    CreationComponent,
+    TestListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     LandingPageModule,
     FormsModule,
-    QuestionListModule
+    QuestionListModule,
+    Ng2SearchPipeModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
