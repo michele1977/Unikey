@@ -30,7 +30,7 @@ export class TestListComponent {
   textFilter = '';
   tests: Test[] = [];
   showEmailModal = false;
-  constructor(private router: Router, private icons: IconsService) {
+  constructor(private router: Router, public icons: IconsService) {
     for (let i = 0; i <= 10; i++) {
       const myTest: Test = {
         Date: moment().format('DD/MM/YY H:mm'),
