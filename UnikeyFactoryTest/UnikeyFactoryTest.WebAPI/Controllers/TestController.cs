@@ -70,6 +70,11 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
 
                 return Ok(returned);
             }
+            catch (ArgumentNullException e)
+            {
+                _logger.Error(e, e.Message);
+                return BadRequest(e.Message);
+            }
             catch (Exception e)
             {
                 _logger.Error(e, e.Message);

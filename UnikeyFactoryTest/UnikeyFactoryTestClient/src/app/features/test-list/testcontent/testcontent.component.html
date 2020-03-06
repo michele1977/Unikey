@@ -1,0 +1,56 @@
+<strong><label style="font-size: 35px">Test {{this.test.Title}}</label></strong>
+<!-- Qui logica del copy text -->
+<!-- Qui logica del go back -->
+  <hr />
+  <br />
+  <div id="testContentStats">
+  <label><strong>Number of questions: {{this.test.Questions.length}}</strong></label> |
+  <label><strong>Max Score: {{this.maxScore}}</strong></label>
+</div>
+
+<div class="container col-8">
+
+<div *ngFor="let question of this.test.Questions; let i = index" class="row testContentRow">
+  <div>
+  <div id="divQuestionForm">
+  <strong>Domanda {{i}}</strong>
+<div>
+  <form #form="ngForm">
+
+
+  </form>
+
+<link href="~/Content/font-awesome.css" rel="stylesheet" />
+  <button id="editIcon" type="submit" class="fa fa-pencil" onclick="showLoadingSpinner()"></button>
+  <a id="delIcolink" title="Delete" onclick="showLoadingSpinner()" href='@Url.Action("DeleteQuestionFromContent",
+  "Test",
+  new {TestId=question.TestId,
+    PageNumber = @Model.PageNumber,
+    PageSize = @Model.PageSize,
+    Id = question.Id,
+    Text = question.Text,
+    Position = question.Position
+    })'><img id="deleteIcon" src="~/Content/ICONS/deleteIcon.png" alt="delete"></a>
+  }
+</div>
+
+</div>
+<strong>Max Score: @question.Answers.Where(a => a.IsCorrectBool).Sum(a => a.Score)</strong>
+<hr />
+<p>@question.Text</p>
+</div>
+</div>
+<br>
+<form>
+  @foreach (AnswerDto answer in question.Answers)
+  {
+  {
+  Html.RenderPartial("AnswerPartial", answer);
+  }
+  }
+</form>
+<br>
+++i;
+}
+  }
+</div>
