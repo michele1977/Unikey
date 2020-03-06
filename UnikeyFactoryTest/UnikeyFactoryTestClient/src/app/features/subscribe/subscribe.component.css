@@ -2,3 +2,7 @@
   color: red;
   font-size: 14px;
 }
+
+.errorDiv {
+  border: 3px solid rgba(255, 0, 0, .6);
+}

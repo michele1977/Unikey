@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -33,28 +34,34 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         {
             try
             {
-                var result = await _service.CreateAsync(user);
+               var result = await _service.CreateAsync(user);
 
                 if (result.Errors.Count() != 0)
                 {
-                    var validationMessages = result.Errors.ToList();
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, validationMessages);
+                    result.Errors.ToList().ForEach(e => ModelState.AddModelError(e,e));
+
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                        ModelState);
                 }
             }
             catch (ArgumentNullException e)
             {
                 _logger.Error(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.Conflict, ErrorMessages.Unexpected_error);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
+                    ErrorMessages.InternalServerError);
             }
             catch (OverflowException e)
             {
                 _logger.Error(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.Unexpected_error);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
+                    ErrorMessages.InternalServerError);
             }
             catch (Exception e)
             {
                 _logger.Error(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.Conflict, ErrorMessages.Unexpected_error);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
+                    ErrorMessages.InternalServerError);
+
             }
 
             return Request.CreateResponse(HttpStatusCode.OK);
