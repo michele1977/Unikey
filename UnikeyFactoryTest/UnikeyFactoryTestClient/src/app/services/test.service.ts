@@ -6,9 +6,8 @@ import {Test} from '../models/test';
   providedIn: 'root'
 })
 export class TestService {
-
   constructor(private http: HttpClient) { }
   createTest(test: Test) {
-    this.http.post('https://localhost:99/api/Test', {test}).subscribe();
+      return this.http.post('https://localhost:44329/api/Test', test);
   }
 }

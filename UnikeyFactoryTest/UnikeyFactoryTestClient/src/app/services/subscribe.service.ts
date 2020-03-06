@@ -8,7 +8,7 @@ import {User} from '../models/user';
 export class SubscribeService {
   errors: any;
   succesfullySubscribed: boolean;
-  constructor(private http: HttpClient) { this.succesfullySubscribed = false;}
+  constructor(private http: HttpClient) { this.succesfullySubscribed = false; }
 
   subscribeUser(user: User) {
     return this.http.post('https://localhost:99/api/Subscribe', {user})
