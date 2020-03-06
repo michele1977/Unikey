@@ -15,7 +15,7 @@ import {Test} from '../../models/test';
           <app-question-list [test]="test" (showForm) = 'visibility($event)'></app-question-list>
         </div>
         <div *ngIf="setVisibility" class="col-6">
-          PUT HERE THE QUESTION FORM
+          <app-question-form></app-question-form>
         </div>
       </div>
       <hr>

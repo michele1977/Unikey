@@ -10,19 +10,21 @@ import {LandingPageModule} from './shared/landing-page/landing-page.module';
 import {FormsModule} from '@angular/forms';
 import { CreationComponent } from './features/creation/creation.component';
 import {QuestionListModule} from './features/creation/question-list/question-list.module';
+import {QuestionFormModule} from './features/creation/question-form/question-form.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreationComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    LandingPageModule,
-    FormsModule,
-    QuestionListModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        LandingPageModule,
+        FormsModule,
+        QuestionListModule,
+        QuestionFormModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
