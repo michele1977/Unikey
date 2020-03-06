@@ -7,7 +7,8 @@ import {LandingPageModule} from './shared/landing-page/landing-page.module';
 import {FormsModule} from '@angular/forms';
 import { CreationComponent } from './features/creation/creation.component';
 import {QuestionListModule} from './features/creation/question-list/question-list.module';
-import { TestcontentComponent } from './features/testcontent/testcontent.component';
+import {TestcontentComponent} from './features/test-list/testcontent/testcontent.component';
+
 
 @NgModule({
   declarations: [

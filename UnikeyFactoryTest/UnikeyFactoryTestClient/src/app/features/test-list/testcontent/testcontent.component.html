@@ -1,5 +1,6 @@
 <strong><label style="font-size: 35px">Test {{this.test.Title}}</label></strong>
 <!-- Qui logica del copy text -->
+<!-- Qui logica del pdfcreator -->
 <!-- Qui logica del go back -->
   <hr />
   <br />
@@ -9,48 +10,29 @@
 </div>
 
 <div class="container col-8">
-
-<div *ngFor="let question of this.test.Questions; let i = index" class="row testContentRow">
+  <div *ngFor="let question of this.test.Questions; let i = index" class="row testContentRow">
+    <div>
+    <div id="divQuestionForm">
+    <strong>Domanda {{i}}</strong>
   <div>
-  <div id="divQuestionForm">
-  <strong>Domanda {{i}}</strong>
-<div>
-  <form #form="ngForm">
-
-
-  </form>
-
-<link href="~/Content/font-awesome.css" rel="stylesheet" />
-  <button id="editIcon" type="submit" class="fa fa-pencil" onclick="showLoadingSpinner()"></button>
-  <a id="delIcolink" title="Delete" onclick="showLoadingSpinner()" href='@Url.Action("DeleteQuestionFromContent",
-  "Test",
-  new {TestId=question.TestId,
-    PageNumber = @Model.PageNumber,
-    PageSize = @Model.PageSize,
-    Id = question.Id,
-    Text = question.Text,
-    Position = question.Position
-    })'><img id="deleteIcon" src="~/Content/ICONS/deleteIcon.png" alt="delete"></a>
-  }
-</div>
-
-</div>
-<strong>Max Score: @question.Answers.Where(a => a.IsCorrectBool).Sum(a => a.Score)</strong>
-<hr />
-<p>@question.Text</p>
-</div>
-</div>
-<br>
-<form>
-  @foreach (AnswerDto answer in question.Answers)
-  {
-  {
-  Html.RenderPartial("AnswerPartial", answer);
-  }
-  }
-</form>
-<br>
-++i;
-}
-  }
+    <form #topForm="ngForm">
+      <button id="editIcon" type="submit" class="fa fa-pencil">Edit</button>
+      <button>Delete</button>
+      <!--<a id="delIcolink" title="Delete">Delete</a> -->
+    </form>
+  </div>
+    </div>
+      <hr />
+      <p>{{question.Text}}</p>
+    </div>
+    <br>
+    <div>
+      <form #form="ngForm">
+        <div *ngFor="let answer of question.Answers">
+          {{answer.Text}}
+        </div>
+      </form>
+    </div>
+    <br>
+  </div>
 </div>
