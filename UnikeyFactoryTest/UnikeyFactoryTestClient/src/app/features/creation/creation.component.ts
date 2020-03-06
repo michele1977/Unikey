@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import {Test} from '../../models/test';
+import {Component, Input} from '@angular/core';
+import {Test} from '../models/test';
+import {TestService} from '../services/test.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-creation',
@@ -26,10 +30,6 @@ import {Test} from '../../models/test';
   `,
   styles: [
     `
-     .create-row{
-       min-height: 450px;
-     }
-
     .create-button{
       margin: 10px 0px 0px 45%;
     }
@@ -43,22 +43,35 @@ import {Test} from '../../models/test';
 export class CreationComponent {
   showForm = false;
   title = '';
-  time: number = Date.now();
+  time: string;
+  result = false;
   test: Test = {
     Title: '',
-    Date: undefined,
+    Date: null,
     Id: 0,
     Questions: null,
   };
   setVisibility: boolean;
 
   constructor() { }
+  constructor(private service: TestService) {
+    this.time = moment().format();
+    setInterval(() => {
+      this.time = moment().format();
+    }, 1000);
+  }
 
   createTest(form) {
     this.test.Title = form.value.title;
-    this.test.Date = form.value.time;
-    console.log(this.test);
-    this.showForm = true;
+    this.test.Date = moment().format('DD MM YY H:m:s');
+
+    this.service.createTest(this.test).pipe().subscribe( res => {
+        this.result = true;
+        this.showForm = true;
+    }, error => {
+        alert('Error while creating');
+    });
+
   }
 
   visibility(setVisibility) {

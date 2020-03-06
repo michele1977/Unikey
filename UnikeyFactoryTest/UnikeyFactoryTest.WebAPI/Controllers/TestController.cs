@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Microsoft.AspNet.Identity;
 using Ninject;
 using NLog;
 using UnikeyFactoryTest.Domain;
@@ -18,6 +19,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
     [EnableCors("*", "*", "*")]
     public class TestController : ApiController
     {
+        private int UserId { get => User.Identity.GetUserId<int>(); }
         private readonly IKernel _kernel;
         private readonly ILogger _logger;
         private readonly ITestService _service;
@@ -34,6 +36,8 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         {
             try
             {
+                test.UserId = 5;
+                
                 _service.AddNewTest(test);
                 return Request.CreateResponse(HttpStatusCode.OK, test.Id);
             }

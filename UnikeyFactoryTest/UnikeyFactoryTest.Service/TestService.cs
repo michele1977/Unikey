@@ -26,8 +26,6 @@ namespace UnikeyFactoryTest.Service
 
         private readonly IKernel _kernel;
 
-        private readonly int userId;
-
         public TestService(ITestRepository value, IKernel kernel)
         {
             _kernel = kernel;
@@ -37,6 +35,7 @@ namespace UnikeyFactoryTest.Service
         public void AddNewTest(TestBusiness test)
         {
             test.URL = GenerateUrl();
+            test.UserId = 5;
 
             if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
 
