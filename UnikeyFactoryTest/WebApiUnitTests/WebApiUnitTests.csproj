@@ -76,6 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TestControllerUnitTest.cs" />
     <Compile Include="UserControllerUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -88,9 +89,17 @@
       <Project>{E2F1E71E-9900-4CEF-A8AB-0BC152698A47}</Project>
       <Name>UnikeyFactoryTest.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.IService\UnikeyFactoryTest.IService.csproj">
+      <Project>{764F94A0-C26D-45E8-A86C-91EE99D1ACA7}</Project>
+      <Name>UnikeyFactoryTest.IService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UnikeyFactoryTest.NinjectConfiguration\UnikeyFactoryTest.NinjectConfiguration.csproj">
       <Project>{04C2FC8F-855F-45FF-9BE7-DDBA35197D45}</Project>
       <Name>UnikeyFactoryTest.NinjectConfiguration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.Service\UnikeyFactoryTest.Service.csproj">
+      <Project>{694C09A8-9DC2-408A-B91F-9383B02E93F0}</Project>
+      <Name>UnikeyFactoryTest.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\UnikeyFactoryTest.WebAPI\UnikeyFactoryTest.WebAPI.csproj">
       <Project>{AA0A9538-19A4-46B2-BEE0-BC2BADA947C7}</Project>

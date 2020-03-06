@@ -42,7 +42,7 @@ namespace UnikeyFactoryTest.Repository
 
             if (result == null)
             {
-                throw new Exception($"Test not found at specified URL ({URL})");
+                throw new Exception($"Test not found");
             }
 
             var mapper = _kernel.Get<IMapper>("Heavy");
@@ -55,7 +55,7 @@ namespace UnikeyFactoryTest.Repository
 
             if (myTask == null)
             {
-                throw new Exception($"Test not found at specified id ({testId})");
+                throw new Exception($"Test not found");
             }
             var mapper = _kernel.Get<IMapper>("Heavy");
             return mapper.Map<Test, TestBusiness>(myTask);
@@ -80,7 +80,7 @@ namespace UnikeyFactoryTest.Repository
 
             if (task == null)
             {
-                throw new Exception($"Test not found at specified id ({testId})");
+                throw new Exception($"Test not found");
             }
 
             _ctx.Tests.Remove(task);

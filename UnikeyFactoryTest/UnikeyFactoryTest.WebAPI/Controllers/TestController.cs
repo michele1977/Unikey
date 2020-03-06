@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity.Core.Mapping;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Net;
@@ -29,6 +30,80 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             _kernel = kernel;
             _logger = logger;
             _service = _kernel.Get<TestService>();
+        }
+
+        public async Task<IHttpActionResult> Get(int id)
+        {
+            try
+            {
+                var returned = await _service.GetTestById(id);
+
+                return Ok(returned);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, e.Message);
+                return NotFound();
+            }
+        }
+
+        public async Task<IHttpActionResult> GetByUrl(string url)
+        {
+            try
+            {
+                var returned = await _service.GetTestByURL(url);
+
+                return Ok(returned);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, e.Message);
+                return NotFound();
+            }
+        }
+
+        public async Task<IHttpActionResult> GetByFilter(string filter)
+        {
+            try
+            {
+                var returned = await _service.GetTestsByFilter(filter);
+
+                return Ok(returned);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, e.Message);
+                return NotFound();
+            }
+        }
+
+
+        public async Task<IHttpActionResult> GetAll()
+        {
+            try
+            {
+                var returned = await _service.GetTests();
+                return Ok(returned);
+            }
+            catch (Exception e)
+            {
+                _logger.Fatal(e, e.Message);
+                return InternalServerError();
+            }
+        }
+
+        public async Task<IHttpActionResult> Delete(int id)
+        {
+            try
+            {
+                await _service.DeleteTest(id);
+                return Ok(id);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, e.Message);
+                return NotFound();
+            }
         }
 
         [HttpPost]
