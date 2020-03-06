@@ -1,0 +1,38 @@
+<strong><label style="font-size: 35px">Test {{this.test.Title}}</label></strong>
+<!-- Qui logica del copy text -->
+<!-- Qui logica del pdfcreator -->
+<!-- Qui logica del go back -->
+  <hr />
+  <br />
+  <div id="testContentStats">
+  <label><strong>Number of questions: {{this.test.Questions.length}}</strong></label> |
+  <label><strong>Max Score: {{this.maxScore}}</strong></label>
+</div>
+
+<div class="container col-8">
+  <div *ngFor="let question of this.test.Questions; let i = index" class="row testContentRow">
+    <div>
+    <div id="divQuestionForm">
+    <strong>Domanda {{i}}</strong>
+  <div>
+    <form #topForm="ngForm">
+      <button id="editIcon" type="submit" class="fa fa-pencil">Edit</button>
+      <button>Delete</button>
+      <!--<a id="delIcolink" title="Delete">Delete</a> -->
+    </form>
+  </div>
+    </div>
+      <hr />
+      <p>{{question.Text}}</p>
+    </div>
+    <br>
+    <div>
+      <form #form="ngForm">
+        <div *ngFor="let answer of question.Answers">
+          {{answer.Text}}
+        </div>
+      </form>
+    </div>
+    <br>
+  </div>
+</div>

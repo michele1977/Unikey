@@ -10,12 +10,16 @@ import {QuestionListModule} from './features/creation/question-list/question-lis
 import { TestListComponent } from './features/test-list/test-list.component';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {TestcontentComponent} from './features/test-list/testcontent/testcontent.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
+    
+    TestListComponent,
     CreationComponent,
-    TestListComponent
+    TestcontentComponent
   ],
   imports: [
     BrowserModule,
