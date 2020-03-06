@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Unexpected_error" xml:space="preserve">
-    <value>Unexpected error while processing the request</value>
+  <data name="InternalServerError" xml:space="preserve">
+    <value>Errore non previsto durante l'elaborazione della richiesta</value>
   </data>
 </root>

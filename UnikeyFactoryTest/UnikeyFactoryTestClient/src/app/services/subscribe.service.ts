@@ -1,21 +1,27 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse, HttpResponseBase} from '@angular/common/http';
 import {User} from '../models/user';
+import {Observable} from 'rxjs';
+import {catchError} from 'rxjs/operators';
+
+const URL = 'https://localhost:44329/api/User/Subscribe';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SubscribeService {
-  errors: any;
-  succesfullySubscribed: boolean;
-  constructor(private http: HttpClient) { this.succesfullySubscribed = false;}
 
-  subscribeUser(user: User) {
-    return this.http.post('https://localhost:99/api/Subscribe', {user})
-      .subscribe(res => {
-      this.succesfullySubscribed = true;
-    }, error => {
-      this.errors = error;
-    });
+  constructor(private http: HttpClient) { }
+
+    /*subscribeUser(user: User) {
+     const r = this.http.post(URL, user, {observe: 'response'})
+       .subscribe(data => {this.responseError = data; console.log(this.responseError); });
+     return this.responseError;*/
+
+  register(user: User) {
+    const reqHeader = new HttpHeaders().set('Content-Type', 'application/json')
+      .set('Accept', 'application/json');
+
+    return this.http.post(URL, user, {headers : reqHeader});
   }
 }

@@ -17,7 +17,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44348</IISExpressSSLPort>
+    <IISExpressSSLPort>44329</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -127,6 +127,7 @@
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Models\UserDto.cs" />
     <Compile Include="Controllers\FAKEUserController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="ResponseMessages\ErrorMessages.Designer.cs">
@@ -153,7 +154,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UnikeyFactoryTest.Domain\UnikeyFactoryTest.Domain.csproj">

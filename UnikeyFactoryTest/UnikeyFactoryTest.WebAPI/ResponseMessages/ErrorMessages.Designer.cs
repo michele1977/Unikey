@@ -61,11 +61,11 @@ namespace UnikeyFactoryTest.WebAPI.ResponseMessages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unexpected error while processing the request.
+        ///   Looks up a localized string similar to Errore non previsto durante l&apos;elaborazione della richiesta.
         /// </summary>
-        public static string Unexpected_error {
+        public static string InternalServerError {
             get {
-                return ResourceManager.GetString("Unexpected_error", resourceCulture);
+                return ResourceManager.GetString("InternalServerError", resourceCulture);
             }
         }
     }
