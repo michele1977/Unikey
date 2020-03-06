@@ -30,20 +30,16 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<HttpResponseMessage> Subscribe([FromBody] UserDto user)
+        public async Task<HttpResponseMessage> Subscribe([FromBody] UserBusiness user)
         {
             try
             {
-                var userBusiness = new UserBusiness()
-                {
-                    UserName = user.UserName,
-                    Password = user.Password
-                };
-
-                var result = await _service.CreateAsync(userBusiness);
+               var result = await _service.CreateAsync(user);
 
                 if (result.Errors.Count() != 0)
                 {
+                    result.Errors.ToList().ForEach(e => ModelState.AddModelError(e,e));
+
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
                         ModelState);
                 }

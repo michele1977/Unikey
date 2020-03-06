@@ -127,7 +127,6 @@
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Models\UserDto.cs" />
     <Compile Include="Controllers\FAKEUserController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="ResponseMessages\ErrorMessages.Designer.cs">
