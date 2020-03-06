@@ -1,8 +1,6 @@
-import { Component } from '@angular/core';
 import {Test} from '../../models/test';
 import {Component, Input} from '@angular/core';
-import {Test} from '../models/test';
-import {TestService} from '../services/test.service';
+import {TestService} from '../../services/test.service';
 import * as moment from 'moment';
 
 @Component({
@@ -10,8 +8,8 @@ import * as moment from 'moment';
   template: `
     <form #form="ngForm">
       <div class="form-group create-div">
-        <input type="text" name="title" class="form-control" [disabled]="showForm" placeholder="Test Name.." [ngModel]="title">
-        <label><b>Date: </b>{{time | date: 'dd/MM/yyyy h:m'}}</label>
+        <input type="text" name="title" class="form-control" placeholder="Test Name.." [ngModel]="title">
+        <label><b>Date: </b>{{time | date: 'dd/MM/yy H:mm:ss'}}</label>
       </div>
       <hr>
       <div class="row create-row">
@@ -24,7 +22,7 @@ import * as moment from 'moment';
       </div>
       <hr>
       <div style="text-align: right">
-        <button class="btn btn-primary create-button" [disabled]="showForm" (click)="createTest(form)">Create</button>
+        <button class="btn btn-primary create-button" (click)="createTest(form)">Done</button>
       </div>
     </form>
   `,
@@ -53,7 +51,6 @@ export class CreationComponent {
   };
   setVisibility: boolean;
 
-  constructor() { }
   constructor(private service: TestService) {
     this.time = moment().format();
     setInterval(() => {
@@ -63,11 +60,12 @@ export class CreationComponent {
 
   createTest(form) {
     this.test.Title = form.value.title;
-    this.test.Date = moment().format('DD MM YY H:m:s');
+    this.test.Date = moment().format('DD MM YY H:mm:ss');
 
     this.service.createTest(this.test).pipe().subscribe( res => {
         this.result = true;
         this.showForm = true;
+        alert('Redirect to implement');
     }, error => {
         alert('Error while creating');
     });
