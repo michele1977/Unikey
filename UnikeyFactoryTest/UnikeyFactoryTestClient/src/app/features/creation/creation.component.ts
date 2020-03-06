@@ -46,9 +46,9 @@ export class CreationComponent {
   time: number = Date.now();
   test: Test = {
     Title: '',
-    Date: undefined,
+    Date: Date.now(),
     Id: 0,
-    Questions: null,
+    Questions: [],
   };
   setVisibility: boolean;
 
