@@ -18,7 +18,7 @@ import {Router} from '@angular/router';
           <app-question-list [test]="test" (showForm) = 'visibility($event)'></app-question-list>
         </div>
         <div *ngIf="setVisibility" class="col-6">
-          PUT HERE THE QUESTION FORM
+          <app-question-form></app-question-form>
         </div>
       </div>
       <hr>
@@ -48,7 +48,7 @@ export class CreationComponent {
     Title: '',
     Date: null,
     Id: 0,
-    Questions: null,
+    Questions: [],
   };
   setVisibility: boolean;
 

@@ -7,6 +7,7 @@ import {LandingPageModule} from './shared/landing-page/landing-page.module';
 import {FormsModule} from '@angular/forms';
 import { CreationComponent } from './features/creation/creation.component';
 import {QuestionListModule} from './features/creation/question-list/question-list.module';
+import {QuestionFormModule} from './features/creation/question-form/question-form.module';
 import { TestListComponent } from './features/test-list/test-list.component';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
@@ -21,6 +22,7 @@ import {TestcontentComponent} from './features/test-list/testcontent/testcontent
     CreationComponent,
     TestcontentComponent
   ],
+
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -28,7 +30,8 @@ import {TestcontentComponent} from './features/test-list/testcontent/testcontent
     FormsModule,
     QuestionListModule,
     Ng2SearchPipeModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    QuestionFormModule
   ],
   providers: [],
   bootstrap: [AppComponent]
