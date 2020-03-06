@@ -40,42 +40,42 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             catch (ArgumentNullException e)
             {
                 _logger.Error(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.Unexpected_error);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.InternalServerError);
             }
             catch (NotSupportedException e)
             {
                 _logger.Error(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.Unexpected_error);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.InternalServerError);
             }
             catch (ObjectDisposedException e)
             {
                 _logger.Error(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.Unexpected_error);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.InternalServerError);
             }
             catch (InvalidOperationException e)
             {
                 _logger.Error(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.Unexpected_error);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.InternalServerError);
             }
             catch (DbUpdateConcurrencyException e)
             {
                 _logger.Fatal(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.Unexpected_error);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.InternalServerError);
             }
             catch (DbUpdateException e)
             {
                 _logger.Fatal(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.Unexpected_error);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.InternalServerError);
             }
             catch (DbEntityValidationException e)
             {
                 _logger.Fatal(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.Unexpected_error);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.InternalServerError);
             }
             catch (Exception e)
             {
                 _logger.Fatal(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.Unexpected_error);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.InternalServerError);
             }
         }
 
@@ -90,47 +90,47 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             catch (NullReferenceException e)
             {
                 _logger.Error(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.Unexpected_error);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.InternalServerError);
             }
             catch (ArgumentNullException e)
             {
                 _logger.Error(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.Unexpected_error);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.InternalServerError);
             }
             catch (NotSupportedException e)
             {
                 _logger.Error(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.Unexpected_error);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.InternalServerError);
             }
             catch (ObjectDisposedException e)
             {
                 _logger.Error(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.Unexpected_error);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.InternalServerError);
             }
             catch (InvalidOperationException e)
             {
                 _logger.Error(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.Unexpected_error);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.InternalServerError);
             }
             catch (DbUpdateConcurrencyException e)
             {
                 _logger.Fatal(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.Unexpected_error);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.InternalServerError);
             }
             catch (DbUpdateException e)
             {
                 _logger.Fatal(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.Unexpected_error);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.InternalServerError);
             }
             catch (DbEntityValidationException e)
             {
                 _logger.Fatal(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.Unexpected_error);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.InternalServerError);
             }
             catch (Exception e)
             {
                 _logger.Fatal(e, e.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.Unexpected_error);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.InternalServerError);
             }
         }
     }

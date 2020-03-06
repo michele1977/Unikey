@@ -11,7 +11,7 @@
       <input type="text" class="form-control" name="userName" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username" #userNameRef="ngModel" required [minlength]="minLength" [maxLength]="maxLength" [ngClass]="{'errorDiv' : userNameRef.errors && (userNameRef.dirty || userNameRef.touched)}" ngModel>
       <small id="usernameHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         <div *ngIf="userNameRef.errors && (userNameRef.dirty || userNameRef.touched)">
-            <span class="error">{{userNameRef.name}} must be at least {{minLength}} character long</span>
+            <span class="error">Username must be at least {{minLength}} character long</span>
         </div>
     </div>
     <div class="form-group">
