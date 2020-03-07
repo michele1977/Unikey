@@ -36,7 +36,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             {
                var result = await _service.CreateAsync(user);
 
-                if (result.Errors.Count() != 0)
+                if (result.Errors.Any())
                 {
                     result.Errors.ToList().ForEach(e => ModelState.AddModelError(e,e));
 
