@@ -20,7 +20,6 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
     [EnableCors("*", "*", "*")]
     public class TestController : ApiController
     {
-        private int UserId { get => User.Identity.GetUserId<int>(); }
         private readonly IKernel _kernel;
         private readonly ILogger _logger;
         private readonly ITestService _service;
@@ -40,10 +39,20 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
 
                 return Ok(returned);
             }
-            catch (Exception e)
+            catch (ArgumentNullException e)
             {
                 _logger.Error(e, e.Message);
-                return NotFound();
+                return InternalServerError();
+            }
+            catch (InvalidOperationException e)
+            {
+                _logger.Error(e, e.Message);
+                return InternalServerError();
+            }
+            catch (Exception e)
+            {
+                _logger.Fatal(e, e.Message);
+                return InternalServerError();
             }
         }
 
