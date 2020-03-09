@@ -1,0 +1,33 @@
+#testContentStats {
+  margin: auto;
+  text-align: center;
+}
+
+#divQuestionForm {
+  display: flex;
+}
+
+#answersList {
+  padding-left: 15px;
+}
+
+#editIcon {
+  float: right;
+  max-width: 3%;
+  height: auto;
+  cursor: pointer;
+}
+#deleteIcon {
+    float: right;
+    height: auto;
+    max-width: 4%;
+    cursor: pointer;
+}
+
+.testContentRow {
+  border-radius: 25px;
+  border: 2px solid grey;
+  background-color: #ffff99;
+  padding: 25px;
+  margin-bottom: 40px;
+}

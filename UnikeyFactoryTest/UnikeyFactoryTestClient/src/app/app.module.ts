@@ -12,15 +12,17 @@ import { TestListComponent } from './features/test-list/test-list.component';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {TestcontentComponent} from './features/test-list/testcontent/testcontent.component';
+import {ErrorComponent} from './shared/error/error.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    
+
     TestListComponent,
     CreationComponent,
-    TestcontentComponent
+    TestcontentComponent,
+    ErrorComponent
   ],
 
   imports: [

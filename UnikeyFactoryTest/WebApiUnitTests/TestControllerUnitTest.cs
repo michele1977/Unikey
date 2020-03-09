@@ -12,6 +12,8 @@ using System.Web.Http.Results;
 using UnikeyFactoryTest.WebAPI.Controllers;
 using UnikeyFactoryTest.Service;
 using UnikeyFactoryTest.IService;
+using UnikeyFactoryTest.IRepository;
+using UnikeyFactoryTest.Repository;
 
 namespace WebApiUnitTests
 {
@@ -123,6 +125,8 @@ namespace WebApiUnitTests
         {
             kernel = new StandardKernel();
             MapConfig.RegisterMap(kernel);
+            kernel.Bind<ITestService>().To<TestService>();
+            kernel.Bind<ITestRepository>().To<TestRepository>();
             service = kernel.Get<ITestService>();
         }
     }

@@ -32,7 +32,7 @@ export class SubscribeComponent {
       .subscribe(
         () => {
 
-          this.router.navigateByUrl('create');
+          this.router.navigateByUrl('testList');
           },
           (error: HttpErrorResponse) => {
 

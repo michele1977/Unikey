@@ -4,13 +4,15 @@ import {CreationComponent} from './features/creation/creation.component';
 import {LandingPageComponent} from './shared/landing-page/landing-page.component';
 import {TestListComponent} from './features/test-list/test-list.component';
 import {TestcontentComponent} from './features/test-list/testcontent/testcontent.component';
+import {ErrorComponent} from './shared/error/error.component';
 
 
 const routes: Routes = [
-  {path: 'testcontent', component: TestcontentComponent},
+  {path: 'testcontent/:id', component: TestcontentComponent},
   {path: 'create', component: CreationComponent},
   {path: 'testList', component: TestListComponent},
-  {path: '', component: LandingPageComponent}
+  {path: 'error', component: ErrorComponent},
+  {path: '', component: TestListComponent}
 ];
 
 @NgModule({

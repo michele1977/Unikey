@@ -12,27 +12,21 @@
 <div class="container col-8">
   <div *ngFor="let question of this.test.Questions; let i = index" class="row testContentRow">
     <div>
-    <div id="divQuestionForm">
-    <strong>Domanda {{i}}</strong>
-  <div>
-    <form #topForm="ngForm">
-      <button id="editIcon" type="submit" class="fa fa-pencil">Edit</button>
-      <button>Delete</button>
-      <!--<a id="delIcolink" title="Delete">Delete</a> -->
-    </form>
-  </div>
-    </div>
-      <hr />
-      <p>{{question.Text}}</p>
+      <div id="divQuestionForm">
+        <strong>Domanda {{i+1}}</strong>
+            <fa-icon [icon]="icons.faTrash" id="editIcon" title="Delete"></fa-icon>
+            <fa-icon [icon]="icons.faPencilAlt" id="deleteIcon" title="Edit"></fa-icon>
+      </div>
+        <hr />
+        <p>{{question.Text}}</p>
     </div>
     <br>
-    <div>
-      <form #form="ngForm">
-        <div *ngFor="let answer of question.Answers">
-          {{answer.Text}}
-        </div>
-      </form>
+    <div id="answersList">
+        <li type="a" *ngFor="let answer of question.Answers">
+          .{{answer.Text}}
+        </li>
     </div>
     <br>
   </div>
 </div>
+
