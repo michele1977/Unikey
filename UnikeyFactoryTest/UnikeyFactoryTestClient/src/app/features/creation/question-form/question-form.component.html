@@ -1,28 +1,30 @@
 <form #form="ngForm">
   <div class="form-group">
     <strong><label for="questionText">Question text:</label></strong>
-    <textarea class="form-control" rows="5" id="questionText" name="Text" ngModel="question.Text"></textarea>
+    <textarea class="form-control" rows="5" id="questionText" name="text" [ngModel]="text"></textarea>
   </div>
   <div class="form-group row">
     <div class="col-6">
-      <strong><label for="inlineFormInputGroup">Answers:</label></strong>
-      <label class="sr-only" for="inputScore">AnswerScore</label>
+      <strong><label>Answers:</label></strong>
     </div>
     <div class="col-6 add-answer">
-      <i class="fa fa-plus-circle" (click)="addAnswer(form)"></i>
+      <i class="fa fa-plus-circle" (click)="addAnswer(formArray)"></i>
     </div>
-    <div *ngFor="let answer of question.Answers, let i = index" class="input-group mb-2">
-      <div class="input-group-prepend">
-        <div class="form-check checkbox">
-          <label class="sr-only" for="gridCheck">CorrectAnswer</label>
-            <input class="form-check-input" type="checkbox" id="gridCheck" name="isCorrect" [ngModel]="question.Answers[i].IsCorrect">
+    <div class="form-group col-12">
+      <div *ngFor="let ctrl of formArray.controls; let i = index"  class="input-group mb-2">
+        <div class="input-group">
+        <div class="input-group-prepend" [formGroup] = "ctrl">
+          <div class="input-group-text">
+            <input type="checkbox" formControlName="isCorrect" id="isCorrect" name="isCorrect">
+          </div>
+          <input type="text" class="form-control" formControlName="answerText" id="answerText" name="answerText">
+          <input type="number" class="form-control" formControlName="answerScore" id="answerScore" name="answerScore">
+        </div>
         </div>
       </div>
-        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Text" name="answerText" [ngModel]="question.Answers[i].Text">
-        <input class="form-control score" type="number" id="inputScore" name="answerScore" [ngModel]="question.Answers[i].Score">
-      </div>
     </div>
+  </div>
   <div class="create-question">
-    <button *ngIf="question.Answers?.length > 0" class="btn btn-success" (click)="addQuestion(form)">Create</button>
+    <button *ngIf="formArray.controls.length > 1" class="btn btn-success" (click)="addQuestion(form)">Create</button>
   </div>
 </form>

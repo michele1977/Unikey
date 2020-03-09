@@ -3,6 +3,7 @@ import {Component, Input} from '@angular/core';
 import {TestService} from '../../services/test.service';
 import * as moment from 'moment';
 import {Router} from '@angular/router';
+import {Question} from '../../models/question';
 
 @Component({
   selector: 'app-creation',
@@ -18,7 +19,7 @@ import {Router} from '@angular/router';
           <app-question-list [test]="test" (showForm) = 'visibility($event)'></app-question-list>
         </div>
         <div *ngIf="setVisibility" class="col-6">
-          <app-question-form></app-question-form>
+          <app-question-form (questionInsert)="addQuestion($event)"></app-question-form>
         </div>
       </div>
       <hr>
@@ -73,5 +74,10 @@ export class CreationComponent {
 
   visibility(setVisibility) {
     this.setVisibility = setVisibility;
+  }
+
+  addQuestion(question: Question) {
+    this.test.Questions.push(question);
+    this.setVisibility = false;
   }
 }

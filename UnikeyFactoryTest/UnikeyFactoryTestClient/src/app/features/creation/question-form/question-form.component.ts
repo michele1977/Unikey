@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {Question} from '../../../models/question';
+import {FormArray, FormControl, FormGroup} from '@angular/forms';
 import {Answer} from '../../../models/answer';
 import {AnswerState} from '../../../shared/enums/answer-state';
-import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-question-form',
@@ -14,21 +14,39 @@ export class QuestionFormComponent {
   @Output() questionInsert: EventEmitter<Question> = new EventEmitter<Question>();
 
   question: Question = {
-    Answers: [new Answer()]
+    Id: 0,
+    Position: 0,
+    Text: '',
+    TestId: 0,
+    Answers: []
   };
+  text: string;
+  formArray = new FormArray([]);
 
-  constructor() {
+  constructor() { }
+
+  addAnswer(formArray: FormArray) {
+    const answer = new Answer();
+    if (formArray.controls[formArray.controls.length - 1] !== undefined) {
+      answer.Text = formArray.controls[formArray.controls.length - 1].value.answerText;
+      answer.IsCorrect = formArray.controls[formArray.controls.length - 1].value.isCorrect ? AnswerState.Correct : AnswerState.NotCorrect;
+      answer.Score = formArray.controls[formArray.controls.length - 1].value.answerScore;
+      this.question.Answers.push(answer);
+    }
+
+    console.log(this.question.Answers);
+
+    const myGroup = new FormGroup({
+      isCorrect: new FormControl(),
+      answerText: new FormControl(),
+      answerScore: new FormControl()
+    });
+
+    this.formArray.push(myGroup);
   }
 
-  addAnswer(form: NgForm) {
-    this.question.Answers[this.question.Answers.length - 1].Text = form.value.answerText;
-    this.question.Answers[this.question.Answers.length - 1].IsCorrect = form.value.isCorrect ? AnswerState.Correct : AnswerState.NotCorrect;
-    this.question.Answers[this.question.Answers.length - 1].Score = form.value.answerScore;
-    console.log(this.question);
-    this.question.Answers.push(new Answer());
-  }
-
-  addQuestion(form: NgForm) {
-    // Event
+  addQuestion(form) {
+    this.question.Text = form.value.text;
+    this.questionInsert.emit(this.question);
   }
 }

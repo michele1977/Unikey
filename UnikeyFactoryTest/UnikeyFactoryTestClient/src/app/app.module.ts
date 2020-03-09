@@ -17,7 +17,6 @@ import {TestcontentComponent} from './features/test-list/testcontent/testcontent
 @NgModule({
   declarations: [
     AppComponent,
-    
     TestListComponent,
     CreationComponent,
     TestcontentComponent
