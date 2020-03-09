@@ -13,7 +13,7 @@ namespace UserTest.AutoMappers
         public static StandardKernel Build()
         {
             var kernel = new StandardKernel();
-            kernel.Load(new BindingsService());
+            //kernel.Load(new BindingsService());
             return kernel;
         }
     }
