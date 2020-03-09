@@ -18,7 +18,10 @@ import {ErrorComponent} from './shared/error/error.component';
 @NgModule({
   declarations: [
     AppComponent,
+<<<<<<< HEAD
 
+=======
+>>>>>>> feature/QuestionFormComponent
     TestListComponent,
     CreationComponent,
     TestcontentComponent,
