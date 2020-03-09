@@ -86,13 +86,13 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             }
             catch (ArgumentNullException e)
             {
-                //_logger.Error(e, e.Message);
+                _logger.Error(e, e.Message);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
                     ErrorMessages.InternalServerError);
             }
             catch (Exception e)
             {
-                //_logger.Error(e, e.Message);
+                _logger.Error(e, e.Message);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
                     ErrorMessages.InternalServerError);
 
