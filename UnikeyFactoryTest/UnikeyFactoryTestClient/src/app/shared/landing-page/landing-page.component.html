@@ -16,7 +16,10 @@
         <h2 style="color: aliceblue">Welcome</h2>
       </div>
       <br />
-      <div id="signingUpForm" class="container" style="display: block;width: 100%;padding: 15px; border: 2px solid black; border-radius: 10px; background-color: antiquewhite">
+      <div  *ngIf="true" id="signingForm" class="container" style="display: block;width: 100%;padding: 15px; border: 2px solid black; border-radius: 10px; background-color: antiquewhite">
+        <app-login></app-login>
+      </div>
+      <div *ngIf="false" id="signingUpForm" class="container" style="display: block;width: 100%;padding: 15px; border: 2px solid black; border-radius: 10px; background-color: antiquewhite">
         <app-subscribe></app-subscribe>
       </div>
     </div>

@@ -11,15 +11,15 @@ import { TestListComponent } from './features/test-list/test-list.component';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {TestcontentComponent} from './features/test-list/testcontent/testcontent.component';
+import { LoginComponent } from './features/login/login.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    
     TestListComponent,
     CreationComponent,
-    TestcontentComponent
+    TestcontentComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +31,8 @@ import {TestcontentComponent} from './features/test-list/testcontent/testcontent
     FontAwesomeModule
   ],
   providers: [],
+  exports: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
