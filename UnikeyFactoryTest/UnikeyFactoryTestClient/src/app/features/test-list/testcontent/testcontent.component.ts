@@ -13,6 +13,7 @@ import { switchMap } from 'rxjs/operators';
 export class TestcontentComponent implements OnInit {
 test: Test;
 maxScore: number;
+areThereModifies: boolean;
 isEditable: boolean[] = [];
 
   constructor(
