@@ -9,21 +9,16 @@ import {LOCALHOST_URL} from '../constants/api.const';
 export class LoginService {
 
   LOGIN_URL = LOCALHOST_URL + 'User/Login';
-  prova: string;
   constructor(private httpClient: HttpClient) { }
 
-  login(user: User): string {
-    console.log(user);
-    this.httpClient.post<any>(this.LOGIN_URL, user)
+  login(user: User) {
+    return this.httpClient.post<string>(this.LOGIN_URL, user)
       .subscribe(jwt => {
-        this.prova = jwt;
-        // this.setSession(jwt);
+        this.setSession(jwt);
       });
-
-    return this.prova;
   }
 
-  setSession(jwt: string) {
-
+  private setSession(jwt: string) {
+    localStorage.setItem('token', jwt);
   }
 }

@@ -26,11 +26,11 @@ import {IconsService} from '../../services/icons.service';
 export class TestListComponent {
 
   showDeleteError = false;
-  pageSize = 10
+  pageSize = 10;
   textFilter = '';
   tests: Test[] = [];
   showEmailModal = false;
-  constructor(private router: Router, private icons: IconsService) {
+  constructor(private router: Router, public icons: IconsService) {
     for (let i = 0; i <= 10; i++) {
       const myTest: Test = {
         Date: moment().format('DD/MM/YY H:mm'),

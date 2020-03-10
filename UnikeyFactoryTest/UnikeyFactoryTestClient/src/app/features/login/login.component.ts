@@ -13,11 +13,10 @@ export class LoginComponent {
   maxLength = 50;
   passwordPattern = '^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[*@$!#%&()^_~{}+=|.]).{6,50}$';
 
-  constructor(private service: LoginService) {
+  constructor(public service: LoginService) {
   }
 
-  login(user: User) {
-    this.service.login(user);
-    console.log();
-  }
+  // login(user: User) {
+  //   this.service.login(user);
+  // }
 }

@@ -23,7 +23,7 @@
       </div>
     </div>
     <div style="text-align: right">
-      <button  type="submit" class="btn btn-primary" (click)="login(form.value)"
+      <button type="submit" class="btn btn-primary" (click)="service.login(form.value)"
                [disabled]="form.invalid" #loginButton >LogIn</button>
     </div>
     <div style="text-align: center; padding-top: 30px">
@@ -33,7 +33,6 @@
                   border: none; padding: 0 !important;
                   font-family: arial, sans-serif; color: dodgerblue;
                   text-decoration: underline; cursor: pointer"
-               (click)="login(form.value)"
                [disabled]="form.invalid" #loginButton >Join Us!</button>
     </div>
   </form>

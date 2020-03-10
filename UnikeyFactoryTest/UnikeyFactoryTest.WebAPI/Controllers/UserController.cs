@@ -71,6 +71,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, user.Id);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<HttpResponseMessage> Login(UserBusiness userBusiness)
         {
@@ -103,8 +104,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, jwt);
         }
 
-        [LoginAuthorize]
-        [HttpPost]
+        [HttpGet]
         public JsonResult<string> TestAction()
         {
             return Json("Test Success");
