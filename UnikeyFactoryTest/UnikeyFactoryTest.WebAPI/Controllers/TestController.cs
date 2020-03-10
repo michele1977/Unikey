@@ -2,12 +2,14 @@
 using System.Data.Entity.Core.Mapping;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json.Linq;
 using Ninject;
 using NLog;
 using UnikeyFactoryTest.Domain;
@@ -33,26 +35,36 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
 
         public async Task<IHttpActionResult> Get(int id)
         {
-            try
+#pragma Mock
             {
-                var returned = await _service.GetTestById(id);
+                var fileContent = await Task.Run(() => File.ReadAllText(@"D:\mockTest.txt"));
+                JObject json = JObject.Parse(fileContent);
+                return Ok(json);
+            }
 
-                return Ok(returned);
-            }
-            catch (ArgumentNullException e)
+#pragma Debug
             {
-                _logger.Error(e, e.Message);
-                return InternalServerError();
-            }
-            catch (InvalidOperationException e)
-            {
-                _logger.Error(e, e.Message);
-                return InternalServerError();
-            }
-            catch (Exception e)
-            {
-                _logger.Fatal(e, e.Message);
-                return InternalServerError();
+                try
+                {
+                    var returned = await _service.GetTestById(id);
+
+                    return Ok(returned);
+                }
+                catch (ArgumentNullException e)
+                {
+                    _logger.Error(e, e.Message);
+                    return InternalServerError();
+                }
+                catch (InvalidOperationException e)
+                {
+                    _logger.Error(e, e.Message);
+                    return InternalServerError();
+                }
+                catch (Exception e)
+                {
+                    _logger.Fatal(e, e.Message);
+                    return InternalServerError();
+                }
             }
         }
 
@@ -126,7 +138,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             try
             {
                 test.UserId = 5;
-                
+
                 _service.AddNewTest(test);
                 return Request.CreateResponse(HttpStatusCode.OK, test.Id);
             }

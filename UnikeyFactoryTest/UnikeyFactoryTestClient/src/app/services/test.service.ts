@@ -4,7 +4,7 @@ import {Test} from '../models/test';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 
-const reqUrl = 'https://localhost:44329/api/';
+const reqUrl = 'https://localhost:44329/api/Test/';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +13,10 @@ export class TestService {
   constructor(private http: HttpClient) { }
 
   createTest(test: Test) {
-      return this.http.post(reqUrl + 'Test', test);
+      return this.http.post(reqUrl + 'Create', test);
   }
 
   getTest(id: number): Observable<Test> {
-    return this.http.get<Test>(reqUrl + 'Test/' + id);
+    return this.http.get<Test>(reqUrl + 'Get/' + id);
   }
 }

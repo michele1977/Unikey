@@ -13,6 +13,7 @@ import { switchMap } from 'rxjs/operators';
 export class TestcontentComponent implements OnInit {
 test: Test;
 maxScore: number;
+isEditable: boolean[] = [];
 
   constructor(
     private service: TestService,
@@ -32,10 +33,9 @@ maxScore: number;
       this.maxScore = this.getMaxScore();
     }
 
-    /*getTest(id) {
-      this.service.getTest(id).subscribe(data => data,
-        () => this.router.navigateByUrl('error'));
-    } */
+    toggle(i: number) {
+      this.isEditable[i] = !this.isEditable[i];
+    }
 
   getMaxScore(): number {
     let res = 0;

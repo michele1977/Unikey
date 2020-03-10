@@ -10,23 +10,52 @@
 </div>
 
 <div class="container col-8">
-  <div *ngFor="let question of this.test.Questions; let i = index" class="row testContentRow">
-    <div>
-      <div id="divQuestionForm">
-        <strong>Domanda {{i+1}}</strong>
-            <fa-icon [icon]="icons.faTrash" id="editIcon" title="Delete"></fa-icon>
-            <fa-icon [icon]="icons.faPencilAlt" id="deleteIcon" title="Edit"></fa-icon>
+  <div *ngFor="let question of this.test.Questions; let i = index" class="testContentRow">
+    <div *ngIf="!isEditable[i]">
+        <div id="divQuestionForm">
+          <strong>Domanda {{i+1}}</strong>
+              <fa-icon [icon]="icons.faTrash" question="question" id="editIcon" title="Delete"></fa-icon>
+              <fa-icon [icon]="icons.faPencilAlt" (click)="toggle(i)" id="deleteIcon" title="Edit"></fa-icon>
+        </div>
+          <hr />
+          <p>{{question.Text}}</p>
+      <br>
+      <div id="answersList">
+          <li type="a" *ngFor="let answer of question.Answers">
+            .{{answer.Text}}
+          </li>
       </div>
-        <hr />
-        <p>{{question.Text}}</p>
-    </div>
-    <br>
-    <div id="answersList">
-        <li type="a" *ngFor="let answer of question.Answers">
-          .{{answer.Text}}
-        </li>
-    </div>
-    <br>
+      <br>
+  </div>
+
+    <form *ngIf="isEditable[i]" style="overflow: auto;">
+        <div id="divQuestionForm">
+          <strong>Domanda {{i+1}}</strong>
+              <fa-icon [icon]="icons.faTrash" question="question" id="editIcon" title="Delete"></fa-icon>
+              <fa-icon [icon]="icons.faPencilAlt" (click)="toggle(i)" id="deleteIcon" title="Edit"></fa-icon>
+        </div>
+          <hr />
+          <div  class="form-group">
+            <label for="comment">Question:</label>
+            <textarea class="form-control" value="{{question.Text}}" rows="5"></textarea>
+          </div>
+          <button (click)="question.Answers.push()">Add</button>
+          True
+          <br>
+          <div class="form-group" *ngFor="let answer of question.Answers">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <input type="checkbox"/>
+                </div>
+              </div>
+              <input type="text" class="form-control" value="{{answer.Text}}" placeholder="Answer">
+              <input type="number" style="max-width: 20%" class="form-control" value="{{answer.Score}}" min=0 placeholder="Score">
+            </div>
+          </div>
+          <button class="btn btn-success">Save</button>
+          <button class="btn btn-danger">Cancel</button>
+    </form>
   </div>
 </div>
 
