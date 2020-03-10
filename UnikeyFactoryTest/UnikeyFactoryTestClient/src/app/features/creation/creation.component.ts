@@ -10,13 +10,13 @@ import {Question} from '../../models/question';
   template: `
     <form #form="ngForm">
       <div class="form-group create-div">
-        <input type="text" name="title" class="form-control" placeholder="Test Name.." [ngModel]="title">
+        <input type="text" name="title" class="form-control" placeholder="Test Name.." [ngModel]="title" required>
         <label><b>Date: </b>{{time | date: 'dd/MM/yy H:mm:ss'}}</label>
       </div>
       <hr>
       <div class="row create-row">
         <div class="col-6">
-          <app-question-list [test]="test" (showForm) = 'visibility($event)'></app-question-list>
+          <app-question-list [test]="test" (showForm)='visibility($event)' [enable]="setVisibility"></app-question-list>
         </div>
         <div *ngIf="setVisibility" class="col-6">
           <app-question-form (questionInsert)="addQuestion($event)"></app-question-form>
@@ -24,7 +24,9 @@ import {Question} from '../../models/question';
       </div>
       <hr>
       <div style="text-align: right">
-        <button class="btn btn-primary create-button" (click)="createTest(form)">Done</button>
+        <button class="btn btn-outline-primary create-button" (click)="createTest(form)" [disabled]="!form.valid">
+          <i class="fa fa-check"></i>
+        </button>
       </div>
     </form>
   `,
@@ -77,6 +79,7 @@ export class CreationComponent {
   }
 
   addQuestion(question: Question) {
+    question.Position = this.test.Questions.length;
     this.test.Questions.push(question);
     this.setVisibility = false;
   }

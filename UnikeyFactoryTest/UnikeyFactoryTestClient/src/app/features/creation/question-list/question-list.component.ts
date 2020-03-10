@@ -11,7 +11,8 @@ import {Question} from '../../../models/question';
 })
 export class QuestionListComponent {
   @Input() test: Test;
-  @Output() showForm: EventEmitter<boolean> = new EventEmitter();
+  @Input() enable: boolean;
+  @Output() showForm: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   setVisibility: boolean;
 

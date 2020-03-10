@@ -1,30 +1,26 @@
-<form #form="ngForm">
+<form [formGroup]="orderForm" (ngSubmit)="addQuestion()">
   <div class="form-group">
     <strong><label for="questionText">Question text:</label></strong>
-    <textarea class="form-control" rows="5" id="questionText" name="text" [ngModel]="text"></textarea>
+    <textarea class="form-control" rows="5" id="questionText" formControlName="questionText" name="questionText" placeholder="Question Text.."></textarea>
   </div>
   <div class="form-group row">
     <div class="col-6">
       <strong><label>Answers:</label></strong>
     </div>
     <div class="col-6 add-answer">
-      <i class="fa fa-plus-circle" (click)="addAnswer(formArray)"></i>
+      <i class="fa fa-plus" *ngIf="orderForm.valid" (click)="addAnswer()"></i>
     </div>
-    <div class="form-group col-12">
-      <div *ngFor="let ctrl of formArray.controls; let i = index"  class="input-group mb-2">
-        <div class="input-group">
-        <div class="input-group-prepend" [formGroup] = "ctrl">
-          <div class="input-group-text">
-            <input type="checkbox" formControlName="isCorrect" id="isCorrect" name="isCorrect">
-          </div>
-          <input type="text" class="form-control" formControlName="answerText" id="answerText" name="answerText">
-          <input type="number" class="form-control" formControlName="answerScore" id="answerScore" name="answerScore">
+    <div formArrayName="items" *ngFor="let ctrl of formArray.controls; let i = index" class="col-12 padd">
+      <div class="input-group-prepend" [formGroup]="ctrl">
+        <div class="input-group-text">
+          <input type="checkbox" formControlName="isCorrect" id="isCorrect" name="isCorrect" (change)="onChange()">
         </div>
-        </div>
+        <input class="form-control" formControlName="answerText" id="answerText" name="answerText" placeholder="Answer Text..">
+        <input *ngIf="formArray.value[i].isCorrect == true" type="number" class="form-control score" formControlName="answerScore" id="answerScore" name="answerScore" placeholder="Score..">
       </div>
     </div>
   </div>
   <div class="create-question">
-    <button *ngIf="formArray.controls.length > 1" class="btn btn-success" (click)="addQuestion(form)">Create</button>
+    <button type="submit" *ngIf="formArray.controls.length > 1 && orderForm.valid" class="btn btn-outline-success" [disabled]="checked">Create</button>
   </div>
 </form>

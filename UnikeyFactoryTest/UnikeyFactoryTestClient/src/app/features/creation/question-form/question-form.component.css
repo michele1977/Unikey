@@ -3,7 +3,7 @@
 }
 
 .score{
-  width: 15px;
+  max-width: 30%;
 }
 
 .add-answer{
@@ -12,4 +12,8 @@
 
 .create-question{
   text-align: right;
+}
+
+.padd{
+  margin-bottom: 5px;
 }

@@ -1,7 +1,6 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, DoCheck, EventEmitter, OnInit, Output} from '@angular/core';
 import {Question} from '../../../models/question';
-import {FormArray, FormControl, FormGroup} from '@angular/forms';
-import {Answer} from '../../../models/answer';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AnswerState} from '../../../shared/enums/answer-state';
 
 @Component({
@@ -9,7 +8,7 @@ import {AnswerState} from '../../../shared/enums/answer-state';
   templateUrl: './question-form.component.html',
   styleUrls: ['./question-form.component.css']
 })
-export class QuestionFormComponent {
+export class QuestionFormComponent implements OnInit {
 
   @Output() questionInsert: EventEmitter<Question> = new EventEmitter<Question>();
 
@@ -21,32 +20,63 @@ export class QuestionFormComponent {
     Answers: []
   };
   text: string;
+  orderForm: FormGroup;
   formArray = new FormArray([]);
+  checked = true;
 
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
 
-  addAnswer(formArray: FormArray) {
-    const answer = new Answer();
-    if (formArray.controls[formArray.controls.length - 1] !== undefined) {
-      answer.Text = formArray.controls[formArray.controls.length - 1].value.answerText;
-      answer.IsCorrect = formArray.controls[formArray.controls.length - 1].value.isCorrect ? AnswerState.Correct : AnswerState.NotCorrect;
-      answer.Score = formArray.controls[formArray.controls.length - 1].value.answerScore;
-      this.question.Answers.push(answer);
-    }
-
-    console.log(this.question.Answers);
-
-    const myGroup = new FormGroup({
-      isCorrect: new FormControl(),
-      answerText: new FormControl(),
-      answerScore: new FormControl()
+  ngOnInit() {
+    this.orderForm = this.fb.group({
+      questionText: '',
+      items: this.fb.array([])
     });
-
-    this.formArray.push(myGroup);
   }
 
-  addQuestion(form) {
-    this.question.Text = form.value.text;
+  addAnswer() {
+    this.addItem();
+  }
+
+  addQuestion() {
+    this.question.Text = this.orderForm.controls.questionText.value;
+    this.formArray = this.orderForm.controls.items as FormArray;
+    this.orderForm.controls.items.value.forEach((value, index) => {
+      if (!this.formArray.value[index].isCorrect) {
+        this.formArray.value[index].answerScore = 0;
+      }
+      this.question.Answers.push({
+        Text: this.formArray.value[index].answerText,
+        Score: this.formArray.value[index].answerScore,
+        IsCorrect: this.formArray.value[index].isCorrect ? AnswerState.Correct : AnswerState.NotCorrect
+      });
+    });
     this.questionInsert.emit(this.question);
+    this.orderForm.reset();
+  }
+
+  createItem(): FormGroup {
+    return this.fb.group({
+      isCorrect: new FormControl(),
+      answerText: new FormControl('', [Validators.required]),
+      answerScore: new FormControl()
+    });
+  }
+
+  addItem(): void {
+    this.formArray = this.orderForm.controls.items as FormArray;
+    this.formArray.push(this.createItem());
+  }
+
+  onChange() {
+    this.formArray = this.orderForm.controls.items as FormArray;
+    this.orderForm.controls.items.value.forEach((value, index) => {
+      if (this.checked) {
+        if (this.formArray.value[index].isCorrect) {
+          this.checked = false;
+        }
+      } else {
+
+      }
+    });
   }
 }
