@@ -4,6 +4,8 @@
   <span aria-hidden="true">&times;</span>
 </button></div>
 
+<pre>{{this.test | json}}</pre>
+
 <strong><label style="font-size: 35px">Test {{this.test.Title}}</label></strong>
 <!-- Qui logica del copy text -->
 <!-- Qui logica del pdfcreator -->
@@ -44,7 +46,12 @@
           <hr />
           <div  class="form-group">
             <label for="comment">Question:</label>
-            <textarea name="questionText" [ngModel]="this.test.Questions[i].Text" class="form-control" value="{{question.Text}}" rows="5"></textarea>
+            <textarea name="Text" [ngModel]="this.test.Questions[i].Text" class="form-control" value="{{question.Text}}" rows="5"></textarea>
+            <ng-template>
+              <input name="Id" [ngModel]="this.test.Questions[i].TestId">
+              <input name="TestId" [ngModel]="this.test.Questions[i].Id">
+              <input name="Position" [ngModel]="this.test.Questions[i].Position">
+            </ng-template>
           </div>
           <button (click)="question.Answers.push()">Add</button>
           True
@@ -56,8 +63,8 @@
                   <input type="checkbox"/>
                 </div>
               </div>
-              <input name="answerText{{ai}}" [ngModel]="this.test.Questions[i].Answers[ai].Text" type="text" class="form-control" value="{{this.test.Questions[i].Answers[ai].Text}}" placeholder="Answer">
-              <input name="answerScore{{ai}}" [ngModel]="answer.Score" type="number" style="max-width: 20%" class="form-control" value="{{answer.Score}}" min=0 placeholder="Score">
+              <input [ngModel]="this.test.Questions[i].Answers[ai].Text" type="text" class="form-control" value="{{this.test.Questions[i].Answers[ai].Text}}" placeholder="Answer">
+              <input [ngModel]="answer.Score" type="number" style="max-width: 20%" class="form-control" value="{{answer.Score}}" min=0 placeholder="Score">
             </div>
           </div>
           <button class="btn btn-success" (click)="edit(questionForm.value, i)">Save</button>

@@ -25,7 +25,8 @@ isThereAnError: boolean;
     private router: Router,
     public icons: IconsService,
     private route: ActivatedRoute,
-    ) {
+    )
+    {
       this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
       this.service.getTest(parseInt(params.get('id'), 10)))

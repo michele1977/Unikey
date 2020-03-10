@@ -1,0 +1,38 @@
+<form [formGroup]="profileForm"  (ngSubmit)="onSubmit()">
+  
+  <label>
+    Question text:
+    <input type="text" formControlName="Text">
+  </label>
+
+  <!-- <div formGroupName="Answers">
+    <h3>Address</h3>
+  
+    <label>
+      Answer text:
+      <input type="text" formControlName="Text">
+    </label>
+  
+    <label>
+      Answer score:
+      <input type="text" formControlName="Score">
+    </label>
+  </div> -->
+
+  <div formArrayName="Answers">
+    <h3>Answers</h3> <button (click)="addAlias()">+</button>
+  
+    <div *ngFor="let answer of aliases.controls; let i=index">
+      <!-- The repeated alias template -->
+      <label>
+        Answer:
+        <input type="text" [formControlName]="i">
+      </label>
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+  <p>
+    <button (click)="updateProfile()">Update Profile</button>
+  </p>
+</form>
