@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define MOCK
+
+using System;
 using System.Data.Entity.Core.Mapping;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
@@ -10,12 +12,14 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json.Linq;
+
 using Ninject;
 using NLog;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.Service;
 using UnikeyFactoryTest.WebAPI.ResponseMessages;
+
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
@@ -35,15 +39,13 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
 
         public async Task<IHttpActionResult> Get(int id)
         {
-#pragma Mock
-            {
-                var fileContent = await Task.Run(() => File.ReadAllText(@"D:\mockTest.txt"));
-                JObject json = JObject.Parse(fileContent);
-                return Ok(json);
-            }
+#if MOCK
+            var fileContent = await Task.Run(() => File.ReadAllText(@"D:\mockTest.txt"));
+            JObject json = JObject.Parse(fileContent);
+            return Ok(json);
+#endif
 
-#pragma Debug
-            {
+#if !MOCK
                 try
                 {
                     var returned = await _service.GetTestById(id);
@@ -65,7 +67,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
                     _logger.Fatal(e, e.Message);
                     return InternalServerError();
                 }
-            }
+#endif
         }
 
         public async Task<IHttpActionResult> GetByUrl(string url)

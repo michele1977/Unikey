@@ -4,34 +4,36 @@ import {Test} from '../../../models/test';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import { IconsService } from 'src/app/services/icons.service';
 import { switchMap } from 'rxjs/operators';
+import { NgForm } from '@angular/forms';
+import { Question } from 'src/app/models/question';
 
 @Component({
   selector: 'app-testcontent',
   templateUrl: './testcontent.component.html',
   styleUrls: ['./testcontent.component.css']
 })
-export class TestcontentComponent implements OnInit {
+export class TestcontentComponent {
 test: Test;
+tempTest: Test;
 maxScore: number;
-areThereModifies: boolean;
+areThereModifies = false;
 isEditable: boolean[] = [];
+isThereAnError: boolean;
 
   constructor(
     private service: TestService,
     private router: Router,
     public icons: IconsService,
     private route: ActivatedRoute,
-    ) {}
-
-
-    ngOnInit() {
+    ) {
       this.route.paramMap.pipe(
-        switchMap((params: ParamMap) =>
-        this.service.getTest(parseInt(params.get('id'), 10)))
-      ).subscribe(data => this.test = data,
-        () => this.router.navigateByUrl('error'));
-
-      this.maxScore = this.getMaxScore();
+      switchMap((params: ParamMap) =>
+      this.service.getTest(parseInt(params.get('id'), 10)))
+    ).subscribe(data => {
+      this.test = data;
+      this.tempTest = this.test;
+    },
+      () => this.router.navigateByUrl('error'));
     }
 
     toggle(i: number) {
@@ -47,5 +49,31 @@ isEditable: boolean[] = [];
       res += max;
     }
     return res;
+  }
+
+  edit(question: Question, index: number) {
+    this.test.Questions[index] = question;
+    this.areThereModifies = true;
+    this.isEditable[index] = false;
+  }
+
+  undo() {
+    console.log(this.tempTest);
+    this.test = this.tempTest;
+    this.areThereModifies = false;
+  }
+
+  saveChanges(test: Test) {
+    this.service.updateTest(test).subscribe(data => {this.tempTest = this.test;
+                                                     this.areThereModifies = false; },
+      error => this.isThereAnError = true);
+  }
+
+  customQTrackBy(index: number, obj: any): any {
+    return index;
+  }
+
+  customATrackBy(index: number, obj: any): any {
+    return index;
   }
 }

@@ -1,4 +1,8 @@
-<div><p>Do you want to save changes?</p><button>Save</button><button>Undo</button></div>
+<div *ngIf="this.areThereModifies" id="saveTestNotify">Do you want to save changes?&nbsp;&nbsp;<button class="btn btn-outline-success btn-sm" (click)="saveChanges(this.test)">Save</button>&nbsp;&nbsp;<button class="btn btn-outline-danger btn-sm" (click)="undo()">Undo</button></div>
+<div  *ngIf="this.isThereAnError" id="errorNotify" role="alert">An error occurred while saving the test
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="isThereAnError=false">
+  <span aria-hidden="true">&times;</span>
+</button></div>
 
 <strong><label style="font-size: 35px">Test {{this.test.Title}}</label></strong>
 <!-- Qui logica del copy text -->
@@ -14,23 +18,24 @@
 <div class="container col-8">
   <div *ngFor="let question of this.test.Questions; let i = index" class="testContentRow">
     <div *ngIf="!isEditable[i]">
-        <div id="divQuestionForm">
-          <strong>Domanda {{i+1}}</strong>
-              <fa-icon [icon]="icons.faTrash" question="question" id="editIcon" title="Delete"></fa-icon>
-              <fa-icon [icon]="icons.faPencilAlt" (click)="toggle(i)" id="deleteIcon" title="Edit"></fa-icon>
-        </div>
-          <hr />
-          <p>{{question.Text}}</p>
+      <div id="divQuestionForm">
+        <strong>Domanda {{i+1}}</strong>
+        <fa-icon [icon]="icons.faTrash" question="question" id="editIcon" title="Delete"></fa-icon>
+        <fa-icon [icon]="icons.faPencilAlt" (click)="toggle(i)" id="deleteIcon" title="Edit"></fa-icon>
+      </div>
+      <hr />
+      <p>{{question.Text}}</p>
       <br>
       <div id="answersList">
-          <li type="a" *ngFor="let answer of question.Answers">
-            .{{answer.Text}}
-          </li>
+        <li type="a" *ngFor="let answer of question.Answers">
+          .{{answer.Text}}
+        </li>
       </div>
       <br>
-  </div>
+    </div>
 
-    <form *ngIf="isEditable[i]" style="overflow: auto;">
+    <form #questionForm="ngForm" *ngIf="isEditable[i]" style="overflow: auto;">
+        <ng-template [ngModel]></ng-template>
         <div id="divQuestionForm">
           <strong>Domanda {{i+1}}</strong>
               <fa-icon [icon]="icons.faTrash" question="question" id="editIcon" title="Delete"></fa-icon>
@@ -39,23 +44,23 @@
           <hr />
           <div  class="form-group">
             <label for="comment">Question:</label>
-            <textarea class="form-control" value="{{question.Text}}" rows="5"></textarea>
+            <textarea name="questionText" [ngModel]="this.test.Questions[i].Text" class="form-control" value="{{question.Text}}" rows="5"></textarea>
           </div>
           <button (click)="question.Answers.push()">Add</button>
           True
           <br>
-          <div class="form-group" *ngFor="let answer of question.Answers">
+          <div class="form-group" *ngFor="let answer of question.Answers; let ai = index">
             <div class="input-group">
               <div class="input-group-prepend">
                 <div class="input-group-text">
                   <input type="checkbox"/>
                 </div>
               </div>
-              <input type="text" class="form-control" value="{{answer.Text}}" placeholder="Answer">
-              <input type="number" style="max-width: 20%" class="form-control" value="{{answer.Score}}" min=0 placeholder="Score">
+              <input name="answerText{{ai}}" [ngModel]="this.test.Questions[i].Answers[ai].Text" type="text" class="form-control" value="{{this.test.Questions[i].Answers[ai].Text}}" placeholder="Answer">
+              <input name="answerScore{{ai}}" [ngModel]="answer.Score" type="number" style="max-width: 20%" class="form-control" value="{{answer.Score}}" min=0 placeholder="Score">
             </div>
           </div>
-          <button class="btn btn-success">Save</button>
+          <button class="btn btn-success" (click)="edit(questionForm.value, i)">Save</button>
           <button class="btn btn-danger">Cancel</button>
     </form>
   </div>

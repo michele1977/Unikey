@@ -19,4 +19,8 @@ export class TestService {
   getTest(id: number): Observable<Test> {
     return this.http.get<Test>(reqUrl + 'Get/' + id);
   }
+
+  updateTest(test: Test){
+    return this.http.patch<number>(reqUrl + 'Update', test);
+  }
 }
