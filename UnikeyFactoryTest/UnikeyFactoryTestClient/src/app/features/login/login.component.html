@@ -26,6 +26,16 @@
       <button  type="submit" class="btn btn-primary" (click)="login(form.value)"
                [disabled]="form.invalid" #loginButton >LogIn</button>
     </div>
+    <div style="text-align: center; padding-top: 30px">
+      <h6 style="font-family: 'Calibri Light'">Are you not registered yet?</h6>
+      <button  type="submit"
+               style="background: none !important;
+                  border: none; padding: 0 !important;
+                  font-family: arial, sans-serif; color: dodgerblue;
+                  text-decoration: underline; cursor: pointer"
+               (click)="login(form.value)"
+               [disabled]="form.invalid" #loginButton >Join Us!</button>
+    </div>
   </form>
 </div>
 

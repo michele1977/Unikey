@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../../models/user';
 import {NgForm} from '@angular/forms';
+import {LoginService} from '../../services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,11 @@ export class LoginComponent {
   maxLength = 50;
   passwordPattern = '^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[*@$!#%&()^_~{}+=|.]).{6,50}$';
 
+  constructor(private service: LoginService) {
+  }
+
   login(user: User) {
-    console.log(user.username, user.password);
-}
+    this.service.login(user);
+    console.log();
+  }
 }
