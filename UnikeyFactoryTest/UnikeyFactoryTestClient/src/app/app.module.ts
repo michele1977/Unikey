@@ -13,13 +13,10 @@ import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {TestcontentComponent} from './features/test-list/testcontent/testcontent.component';
 import {ErrorComponent} from './shared/error/error.component';
-<<<<<<< HEAD
 import { TestContentEditComponent } from './features/test-list/testcontent/testcontent-edit/testcontent-edit.component';
-=======
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TestDetailsModalComponent} from './modals/test-details-modal/test-details-modal.component';
 import {TestDetailsModalModule} from './modals/test-details-modal/test-details-modal.module';
->>>>>>> feature/ModalDetails_Component
 
 
 @NgModule({
