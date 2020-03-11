@@ -6,7 +6,7 @@ export class ExTest {
   URL?: string;
   TestId?: number;
   TestSubject: string;
-  Date: Date;
+  Date: string;
   Title: string;
   MaxScore: number;
   State?: AdministratedTestState;

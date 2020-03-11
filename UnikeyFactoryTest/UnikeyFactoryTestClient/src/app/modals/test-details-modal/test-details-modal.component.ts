@@ -4,6 +4,7 @@ import {Test} from '../../models/test';
 import {ExTestService} from '../../services/exTest.service';
 import {ExTest} from '../../models/ex-test';
 import {IconsService} from '../../services/icons.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-test-details-modal',
@@ -13,16 +14,18 @@ import {IconsService} from '../../services/icons.service';
 export class TestDetailsModalComponent implements OnInit {
 
   @Input() myModalTest: Test;
+  @Input() myFakeExTests: ExTest[];
 
   exTests: ExTest[];
   textFilter: '';
 
-  constructor(public activeModal: NgbActiveModal, private service: ExTestService) { }
+  constructor(public activeModal: NgbActiveModal, private service: ExTestService, public icons: IconsService) { }
+
 
   ngOnInit(): void {
-    this.service.getExTestByTestId(this.myModalTest.Id).subscribe((value => {
+/*    this.service.getExTestByTestId(this.myModalTest.Id).subscribe((value => {
       this.exTests = value;
-    }));
+    }));*/
   }
 
 }

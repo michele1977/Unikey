@@ -16,7 +16,8 @@ import {ErrorComponent} from './shared/error/error.component';
 import { TestContentEditComponent } from './features/test-list/testcontent/testcontent-edit/testcontent-edit.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TestDetailsModalComponent} from './modals/test-details-modal/test-details-modal.component';
-import {TestDetailsModalModule} from './modals/test-details-modal/test-details-modal.module';
+import {RouterModule} from '@angular/router';
+import { SeeExTestComponent } from './features/see-ex-test/see-ex-test.component';
 
 
 @NgModule({
@@ -26,7 +27,9 @@ import {TestDetailsModalModule} from './modals/test-details-modal/test-details-m
     CreationComponent,
     TestcontentComponent,
     ErrorComponent,
-    TestContentEditComponent
+    TestContentEditComponent,
+    TestDetailsModalComponent,
+    SeeExTestComponent
   ],
 
   imports: [
@@ -39,8 +42,7 @@ import {TestDetailsModalModule} from './modals/test-details-modal/test-details-m
     Ng2SearchPipeModule,
     FontAwesomeModule,
     QuestionFormModule,
-    NgbModule,
-    TestDetailsModalModule
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent],
