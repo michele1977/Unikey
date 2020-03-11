@@ -180,6 +180,12 @@
     <Compile Include="Controllers\FAKEUserController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Models\DTO\AdministratedAnswerDto.cs" />
+    <Compile Include="Models\DTO\AdministratedQuestionDto.cs" />
+    <Compile Include="Models\DTO\AdministratedTestDTO.cs" />
+    <Compile Include="Models\DTO\AnswerDto.cs" />
+    <Compile Include="Models\DTO\QuestionDto.cs" />
+    <Compile Include="Models\DTO\TestDto.cs" />
     <Compile Include="ResponseMessages\ErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -204,7 +210,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UnikeyFactoryTest.Context\UnikeyFactoryTest.Context.csproj">

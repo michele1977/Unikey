@@ -47,6 +47,7 @@ export class CreationComponent {
   result = false;
   test: Test = {
     Title: '',
+    URL: '',
     Date: null,
     Id: 0,
     Questions: [],

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Core.Mapping;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -11,8 +13,10 @@ using Microsoft.AspNet.Identity;
 using Ninject;
 using NLog;
 using UnikeyFactoryTest.Domain;
+using UnikeyFactoryTest.Domain.Enums;
 using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.Service;
+using UnikeyFactoryTest.WebAPI.Models.DTO;
 using UnikeyFactoryTest.WebAPI.ResponseMessages;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
@@ -92,12 +96,23 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         }
 
 
-        public async Task<IHttpActionResult> GetAll()
+        public async Task<IHttpActionResult> GetAll(int pageNum, int pageSize, string filter)
         {
             try
             {
-                var returned = await _service.GetTests();
-                return Ok(returned);
+                var testBusinessList = await _service.GetAllFiltered(pageNum, pageSize, filter);
+                var testDtoList = new List<TestDto>();
+                var NumberOfTests = testBusinessList.Count();
+
+                foreach (var test in testBusinessList)
+                {
+                    var testDto = new TestDto(test, _service);
+                    testDtoList.Add(testDto);
+                }
+                testDtoList[0].NumberOfTest = await _service.CountTests(filter);
+
+
+                return Ok(testDtoList);
             }
             catch (Exception e)
             {
@@ -126,7 +141,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             try
             {
                 test.UserId = 5;
-                
+
                 _service.AddNewTest(test);
                 return Request.CreateResponse(HttpStatusCode.OK, test.Id);
             }

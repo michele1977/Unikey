@@ -24,5 +24,9 @@ namespace UnikeyFactoryTest.IService
         void Dispose();
         StringBuilder TextBuilder(QuestionBusiness question, StringBuilder sb, int position);
         void ClipBoardMethod(StringBuilder sb);
+        Task<int> GetExTestCountByState(int testId, AdministratedTestState state);
+        Task<int> GetExTestCount(int testId);
+        Task<List<TestBusiness>> GetAllFiltered(int pageNum, int pageSize, string filter);
+        Task<int> CountTests(string filter);
     }
 }
