@@ -107,9 +107,12 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
                 foreach (var test in testBusinessList)
                 {
                     var testDto = new TestDto(test, _service);
+                    testDto.OpenedExTestNumber = await _service.GetExTestCountByState(test.Id, AdministratedTestState.Open);
+                    testDto.NumberOfExTest = await _service.GetExTestCount(test.Id);
                     testDtoList.Add(testDto);
                 }
                 testDtoList[0].NumberOfTest = await _service.CountTests(filter);
+               
 
 
                 return Ok(testDtoList);

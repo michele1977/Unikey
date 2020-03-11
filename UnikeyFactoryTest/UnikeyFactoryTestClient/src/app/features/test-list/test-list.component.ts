@@ -78,10 +78,11 @@ export class TestListComponent {
   sendMail() {}
 
   NextPage() {
-    this.pageNum += 1;
+
     this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
+      this.pageNum += 1;
     });
     if (this.pageNum === this.pages) {
       this.atLast = true;
@@ -99,20 +100,20 @@ export class TestListComponent {
   }
 
   firstPage() {
-    this.pageNum = 1;
     this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
       this.atLast = false;
+      this.pageNum = 1;
     });
   }
 
   previousPage() {
-    this.pageNum -= 1;
     this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
       this.atLast = false;
+      this.pageNum -= 1;
     });
   }
 }

@@ -35,6 +35,7 @@ namespace UnikeyFactoryTest.WebAPI.Models.DTO
         public string Title { get; set; }
         public int UserId { get; set; }
         public int NumberOfTest { get; set; }
+        public int NumberOfExTest { get; set; }
         public bool ShowForm { get; set; }
         public bool ShowPartial { get; set; }
 
@@ -43,7 +44,7 @@ namespace UnikeyFactoryTest.WebAPI.Models.DTO
         public string TextFilter { get; set; }
         public int NumQuestions { get; set; }
 
-        public int OpenedTestNumber { get; set; }
+        public int OpenedExTestNumber { get; set; }
 
         public decimal? MaxScore
         {

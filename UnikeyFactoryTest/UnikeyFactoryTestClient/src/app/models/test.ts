@@ -7,4 +7,6 @@ export class Test {
   Title: string;
   Questions: Question[];
   NumberOfTest: number;
+  NumberOfExTest: number;
+  OpenedExTestNumber: number;
 }
