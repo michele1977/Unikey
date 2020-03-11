@@ -14,7 +14,7 @@ const routes: Routes = [
   {path: 'testList', component: TestListComponent},
   {path: 'error', component: ErrorComponent},
   {path: 'spike', component: RformspikeComponent},
-  {path: '', component: LandingPageComponent}
+  {path: '', component: TestListComponent}
 ];
 
 @NgModule({

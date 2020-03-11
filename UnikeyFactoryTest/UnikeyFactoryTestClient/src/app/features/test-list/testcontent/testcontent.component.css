@@ -50,7 +50,7 @@
 #errorNotify {
   position: fixed;
   z-index: 101;
-  top: 0;
+  top: 1;
   left: 0;
   right: 0;
   background: #ff6161;

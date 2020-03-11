@@ -1,11 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {TestService} from '../../../services/test.service';
 import {Test} from '../../../models/test';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import { IconsService } from 'src/app/services/icons.service';
 import { switchMap } from 'rxjs/operators';
-import { NgForm } from '@angular/forms';
-import { Question } from 'src/app/models/question';
 
 @Component({
   selector: 'app-testcontent',
@@ -25,14 +23,13 @@ isThereAnError: boolean;
     private router: Router,
     public icons: IconsService,
     private route: ActivatedRoute,
-    )
-    {
+    ) {
       this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
       this.service.getTest(parseInt(params.get('id'), 10)))
     ).subscribe(data => {
       this.test = data;
-      this.tempTest = this.test;
+      this.tempTest = JSON.parse(JSON.stringify(this.test));
     },
       () => this.router.navigateByUrl('error'));
     }
@@ -52,10 +49,11 @@ isThereAnError: boolean;
     return res;
   }
 
-  edit(question: Question, index: number) {
-    this.test.Questions[index] = question;
+  edit(obj) {
+    this.test.Questions[obj.index].Text = obj.question.questionText;
+    this.test.Questions[obj.index].Answers = obj.question.answers;
     this.areThereModifies = true;
-    this.isEditable[index] = false;
+    this.isEditable[obj.index] = false;
   }
 
   undo() {
@@ -65,16 +63,8 @@ isThereAnError: boolean;
   }
 
   saveChanges(test: Test) {
-    this.service.updateTest(test).subscribe(data => {this.tempTest = this.test;
+    this.service.updateTest(test).subscribe(data => {this.tempTest = JSON.parse(JSON.stringify(this.test));
                                                      this.areThereModifies = false; },
       error => this.isThereAnError = true);
-  }
-
-  customQTrackBy(index: number, obj: any): any {
-    return index;
-  }
-
-  customATrackBy(index: number, obj: any): any {
-    return index;
   }
 }

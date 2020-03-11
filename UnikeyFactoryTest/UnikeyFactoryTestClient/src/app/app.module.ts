@@ -14,6 +14,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {TestcontentComponent} from './features/test-list/testcontent/testcontent.component';
 import {ErrorComponent} from './shared/error/error.component';
 import { RformspikeComponent } from './features/rformspike/rformspike.component';
+import { TestContentEditComponent } from './features/test-list/testcontent/testcontent-edit/testcontent-edit.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { RformspikeComponent } from './features/rformspike/rformspike.component'
     CreationComponent,
     TestcontentComponent,
     ErrorComponent,
-    RformspikeComponent
+    RformspikeComponent,
+    TestContentEditComponent
   ],
 
   imports: [

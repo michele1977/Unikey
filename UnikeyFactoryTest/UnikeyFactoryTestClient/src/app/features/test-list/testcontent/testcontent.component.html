@@ -1,75 +1,45 @@
-<div *ngIf="this.areThereModifies" id="saveTestNotify">Do you want to save changes?&nbsp;&nbsp;<button class="btn btn-outline-success btn-sm" (click)="saveChanges(this.test)">Save</button>&nbsp;&nbsp;<button class="btn btn-outline-danger btn-sm" (click)="undo()">Undo</button></div>
-<div  *ngIf="this.isThereAnError" id="errorNotify" role="alert">An error occurred while saving the test
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="isThereAnError=false">
-  <span aria-hidden="true">&times;</span>
-</button></div>
+<div>
+  <div *ngIf="this.areThereModifies" id="saveTestNotify">Do you want to save changes?&nbsp;&nbsp;<button
+    class="btn btn-outline-success btn-sm" (click)="saveChanges(this.test)">Save</button>&nbsp;&nbsp;<button
+    class="btn btn-outline-danger btn-sm" (click)="undo()">Undo</button></div>
 
-<pre>{{this.test | json}}</pre>
+<div *ngIf="this.isThereAnError" id="errorNotify" role="alert">An error occurred while saving the test
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="isThereAnError=false">
+    <span aria-hidden="true">&times;</span>
+  </button></div>
+</div>
 
 <strong><label style="font-size: 35px">Test {{this.test.Title}}</label></strong>
 <!-- Qui logica del copy text -->
 <!-- Qui logica del pdfcreator -->
 <!-- Qui logica del go back -->
-  <hr />
-  <br />
-  <div id="testContentStats">
+<hr />
+<br />
+<div id="testContentStats">
   <label><strong>Number of questions: {{this.test.Questions.length}}</strong></label> |
   <label><strong>Max Score: {{this.maxScore}}</strong></label>
 </div>
 
 <div class="container col-8">
   <div *ngFor="let question of this.test.Questions; let i = index" class="testContentRow">
-    <div *ngIf="!isEditable[i]">
+    <div>
       <div id="divQuestionForm">
         <strong>Domanda {{i+1}}</strong>
         <fa-icon [icon]="icons.faTrash" question="question" id="editIcon" title="Delete"></fa-icon>
         <fa-icon [icon]="icons.faPencilAlt" (click)="toggle(i)" id="deleteIcon" title="Edit"></fa-icon>
       </div>
       <hr />
-      <p>{{question.Text}}</p>
-      <br>
-      <div id="answersList">
-        <li type="a" *ngFor="let answer of question.Answers">
-          .{{answer.Text}}
-        </li>
+      <div *ngIf="!isEditable[i]">
+        <p>{{question.Text}}</p>
+        <br>
+        <div id="answersList">
+          <li type="a" *ngFor="let answer of question.Answers">
+            .{{answer.Text}}
+          </li>
+        </div>
       </div>
+      <app-testcontent-edit [question]="question" [questionIndex]="i" *ngIf="isEditable[i]" (editEvent)="edit($event)" (undoEvent)="undo()"></app-testcontent-edit>
       <br>
     </div>
-
-    <form #questionForm="ngForm" *ngIf="isEditable[i]" style="overflow: auto;">
-        <ng-template [ngModel]></ng-template>
-        <div id="divQuestionForm">
-          <strong>Domanda {{i+1}}</strong>
-              <fa-icon [icon]="icons.faTrash" question="question" id="editIcon" title="Delete"></fa-icon>
-              <fa-icon [icon]="icons.faPencilAlt" (click)="toggle(i)" id="deleteIcon" title="Edit"></fa-icon>
-        </div>
-          <hr />
-          <div  class="form-group">
-            <label for="comment">Question:</label>
-            <textarea name="Text" [ngModel]="this.test.Questions[i].Text" class="form-control" value="{{question.Text}}" rows="5"></textarea>
-            <ng-template>
-              <input name="Id" [ngModel]="this.test.Questions[i].TestId">
-              <input name="TestId" [ngModel]="this.test.Questions[i].Id">
-              <input name="Position" [ngModel]="this.test.Questions[i].Position">
-            </ng-template>
-          </div>
-          <button (click)="question.Answers.push()">Add</button>
-          True
-          <br>
-          <div class="form-group" *ngFor="let answer of question.Answers; let ai = index">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <input type="checkbox"/>
-                </div>
-              </div>
-              <input [ngModel]="this.test.Questions[i].Answers[ai].Text" type="text" class="form-control" value="{{this.test.Questions[i].Answers[ai].Text}}" placeholder="Answer">
-              <input [ngModel]="answer.Score" type="number" style="max-width: 20%" class="form-control" value="{{answer.Score}}" min=0 placeholder="Score">
-            </div>
-          </div>
-          <button class="btn btn-success" (click)="edit(questionForm.value, i)">Save</button>
-          <button class="btn btn-danger">Cancel</button>
-    </form>
   </div>
 </div>
-

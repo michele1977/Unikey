@@ -1,38 +1,32 @@
-<form [formGroup]="profileForm"  (ngSubmit)="onSubmit()">
+<form [formGroup]="orderForm">
   
   <label>
     Question text:
-    <input type="text" formControlName="Text">
+    <input type="text" formControlName="questionText">
   </label>
 
-  <!-- <div formGroupName="Answers">
-    <h3>Address</h3>
-  
-    <label>
-      Answer text:
-      <input type="text" formControlName="Text">
-    </label>
-  
-    <label>
-      Answer score:
-      <input type="text" formControlName="Score">
-    </label>
-  </div> -->
-
-  <div formArrayName="Answers">
-    <h3>Answers</h3> <button (click)="addAlias()">+</button>
-  
-    <div *ngFor="let answer of aliases.controls; let i=index">
-      <!-- The repeated alias template -->
-      <label>
-        Answer:
-        <input type="text" [formControlName]="i">
-      </label>
+  <div class="form-group row">
+    <div class="col-6">
+      <strong><label>Answers:</label></strong>
+    </div>
+    <div class="col-6 add-answer">
+    </div>
+    <button (click)="addEmptyAnswer()">+</button>
+    <div formArrayName="answers">
+      <div *ngFor="let ans of answers.controls; let i = index" [formGroupName]="i">
+        <p>Id :
+          <input formControlName="Id">
+        </p>
+        <p>Text :
+          <input formControlName="Text">
+        </p>
+        <p>Score :
+          <input formControlName="Score">
+        </p>
     </div>
   </div>
-
-  <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+  </div>
   <p>
-    <button (click)="updateProfile()">Update Profile</button>
+    <button>Save</button>
   </p>
 </form>
