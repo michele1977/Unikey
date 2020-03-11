@@ -26,17 +26,24 @@
   </div>
   <div style="float: right; margin-left: auto;">
     <div style="margin-top: 5px;">
-      <label>Elements per page </label>
-      <select name="pageSizeSelection" (change)="resizePage()">
-        <option>10</option>
-        <option>20</option>
-        <option>40</option>
-        <option>60</option>
-        <option>160</option>
-      </select>
+
+      <form #form="ngForm">
+        <label>Elements per page </label>
+        <select (change)="resizePage($event)">
+          <option name="pageSize" [value]="option" *ngFor="let option of options">{{option}}</option>
+        </select>
+      </form>
+
 
     </div>
   </div>
+</div>
+<div class="text-center">
+  <fa-icon *ngIf="pageNum > 1" [icon]="icons.faAngleDoubleLeft" class="pointer" style="margin-right: 5px;" (click)="firstPage()" title="First"></fa-icon>
+  <fa-icon *ngIf="pageNum > 1" [icon]="icons.faArrowLeft" (click)="previousPage()" class="pointer" style="margin-right: 5px;" title="Previous"></fa-icon>
+  <strong><label>{{pageNum}} of {{pages}}</label></strong>
+  <fa-icon *ngIf="pageNum < pages" class="pointer" [icon]="icons.faArrowRight" (click)="NextPage()" style="margin-left: 5px;" title="Next"></fa-icon>
+  <fa-icon *ngIf="pageNum < pages" [icon]="icons.faAngleDoubleRight" class="pointer" (click)="lastPage()" title="Last" style="margin-left: 5px;"></fa-icon>
 </div>
 <table class="table">
   <tr>
@@ -52,10 +59,10 @@
   <tr *ngFor="let test of tests | filter:textFilter">
     <td class="text-center">{{test.Id}}</td>
     <td class="text-center">{{test.Title}}</td>
-    <td class="text-center">{{test.Date}}</td>
-    <td class="text-center">Url to add</td>
-    <td class="text-center">5</td>
-    <td class="text-center">2</td>
+    <td class="text-center">{{test.Date | date: 'dd/MM/yy H:mm'}}</td>
+    <td class="text-center">{{test.URL.toString()}}</td>
+    <td class="text-center">{{test.NumberOfExTest}}</td>
+    <td class="text-center">{{test.OpenedExTestNumber}}</td>
     <td class="text-center"></td>
     <td class="text-center" style="width: 20%">
       <div>
@@ -69,9 +76,9 @@
 </table>
 
 <div class="text-center">
-  <fa-icon [icon]="icons.faAngleDoubleLeft" title="First"></fa-icon>
-  <fa-icon [icon]="icons.faArrowLeft" title="Previous"></fa-icon>
-  <strong><label>1 of N</label></strong>
-  <fa-icon [icon]="icons.faArrowRight" title="Next"></fa-icon>
-  <fa-icon [icon]="icons.faAngleDoubleRight" title="Last"></fa-icon>
+  <fa-icon *ngIf="pageNum > 1" [icon]="icons.faAngleDoubleLeft" class="pointer" style="margin-right: 5px;" (click)="firstPage()" title="First"></fa-icon>
+  <fa-icon *ngIf="pageNum > 1" [icon]="icons.faArrowLeft" (click)="previousPage()" class="pointer" style="margin-right: 5px;" title="Previous"></fa-icon>
+  <strong><label>{{pageNum}} of {{pages}}</label></strong>
+  <fa-icon *ngIf="pageNum < pages" class="pointer" [icon]="icons.faArrowRight" (click)="NextPage()" style="margin-left: 5px;" title="Next"></fa-icon>
+  <fa-icon *ngIf="pageNum < pages" [icon]="icons.faAngleDoubleRight" class="pointer" (click)="lastPage()" title="Last" style="margin-left: 5px;"></fa-icon>
 </div>

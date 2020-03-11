@@ -11,6 +11,8 @@ namespace UnikeyFactoryTest.Domain
             Questions = new List<QuestionBusiness>();
         }
         public int Id { get; set; }
+        public int NumberOfTests { get; set; }
+        public int ClosedTestNumber { get; set; }
         public string URL { get; set; }
         public DateTime Date { get; set; }
         public int UserId { get; set; }

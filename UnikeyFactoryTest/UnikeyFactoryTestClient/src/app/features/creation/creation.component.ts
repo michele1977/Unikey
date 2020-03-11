@@ -49,9 +49,13 @@ export class CreationComponent {
   result = false;
   test: Test = {
     Title: '',
+    URL: '',
     Date: null,
     Id: 0,
     Questions: [],
+    NumberOfExTest: 0,
+    NumberOfTest: 0,
+    OpenedExTestNumber: 0
   };
   setVisibility: boolean;
 
