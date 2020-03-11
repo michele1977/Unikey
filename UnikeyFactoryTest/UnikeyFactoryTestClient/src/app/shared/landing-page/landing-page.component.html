@@ -16,11 +16,12 @@
         <h2 style="color: aliceblue">Welcome</h2>
       </div>
       <br />
-      <div  *ngIf="true" id="signingForm" class="container" style="display: block;width: 100%;padding: 15px; border: 2px solid black; border-radius: 10px; background-color: antiquewhite">
-        <app-login></app-login>
+      <div *ngIf="isVisible" id="signingForm" class="container" style="display: block;width: 100%;padding: 15px;
+      border: 2px solid black; border-radius: 10px; background-color: antiquewhite">
+        <app-login (switch)="setVisible($event)"></app-login>
       </div>
-      <div *ngIf="false" id="signingUpForm" class="container" style="display: block;width: 100%;padding: 15px; border: 2px solid black; border-radius: 10px; background-color: antiquewhite">
-        <app-subscribe></app-subscribe>
+      <div *ngIf="!isVisible" id="signingUpForm" class="container" style="display: block;width: 100%;padding: 15px; border: 2px solid black; border-radius: 10px; background-color: antiquewhite">
+        <app-subscribe (switch)="setVisible($event)"></app-subscribe>
       </div>
     </div>
   </div>

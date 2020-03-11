@@ -7,7 +7,7 @@
       <button class="btn btn-success" (click) = "showQuestionForm()">+</button>
     </div>
   </div>
-  <div *ngIf="test.Questions.length > 0" class="drag-drop-list" (cdkDropListDropped)="onDrop($event)" cdkDropList>
+  <div *ngIf="test.Questions?.length > 0" class="drag-drop-list" (cdkDropListDropped)="onDrop($event)" cdkDropList>
     <div class="drag-drop-box" *ngFor="let question of test.Questions" cdkDrag>
       {{question.Position + 1}}) {{question.Text}}
     </div>

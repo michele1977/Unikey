@@ -12,6 +12,8 @@ import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {TestcontentComponent} from './features/test-list/testcontent/testcontent.component';
 import { LoginComponent } from './features/login/login.component';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {InterceptorService} from './services/interceptor.service';
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import { LoginComponent } from './features/login/login.component';
     Ng2SearchPipeModule,
     FontAwesomeModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }
+  ],
   exports: [
   ],
   bootstrap: [AppComponent]

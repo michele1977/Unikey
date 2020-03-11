@@ -3,7 +3,9 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Test} from '../models/test';
 import {map} from 'rxjs/operators';
 
-const reqUrl = 'https://localhost:44329/api/';
+// const reqUrl = 'https://localhost:44329/api/';
+const reqUrl = 'http://localhost/UnikeyFactoryTest.WebAPI/api/';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,7 @@ export class TestService {
   constructor(private http: HttpClient) { }
 
   createTest(test: Test) {
-      return this.http.post(reqUrl + 'Test', test);
+    return this.http.post(reqUrl + 'Test', test);
   }
 
   getTest(id: number) {

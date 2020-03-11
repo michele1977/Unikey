@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {SubscribeService} from '../../services/subscribe.service';
 import {User} from '../../models/user';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -19,8 +19,15 @@ export class SubscribeComponent {
   maxLength = 50;
   error: HttpErrorResponse;
   errorsList: string[];
+  isVisible = false;
+
+  @Output() switch: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(private service: SubscribeService, private router: Router) { }
+  change() {
+    this.isVisible = !this.isVisible;
+    this.switch.emit(this.isVisible);
+  }
 
   goToMain() {
     this.router.navigateByUrl('create');

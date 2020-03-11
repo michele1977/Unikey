@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {LoginService} from './login.service';
 
@@ -12,16 +12,19 @@ export class InterceptorService implements HttpInterceptor {
   }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const jwt = localStorage.getItem('token');
-    if (jwt !== null) {
-      req = req.clone({
+    req = req.clone({
         setHeaders: {
           Authorization: 'bearer ' + jwt
         }
       });
-    } else {
+
+    return next.handle(req);
+  }
+
+  interceptErr(err: HttpErrorResponse) {
+    if (err.status === 401 ) {
       this.service.router.navigateByUrl('').then();
     }
-    return next.handle(req);
   }
 
 }

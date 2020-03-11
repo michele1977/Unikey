@@ -6,7 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent implements OnInit {
+  isVisible = true;
 
+  setVisible(bool: boolean) {
+    this.isVisible = bool;
+  }
   constructor() { }
 
   ngOnInit(): void {

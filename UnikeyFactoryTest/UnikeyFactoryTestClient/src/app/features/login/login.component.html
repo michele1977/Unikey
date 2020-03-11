@@ -23,11 +23,11 @@
       </div>
     </div>
     <div style="text-align: right">
-      <button type="submit" class="btn btn-primary" (click)="login(form.value)"
+      <button type="submit" class="btn btn-primary" (click)="login(form.value); form.reset()"
                [disabled]="form.invalid" #loginButton >LogIn</button>
     </div>
-    <div *ngIf="isPostBack" class="errorDiv">
-      <h6>Login failed!</h6>
+    <div *ngIf="isPostBack" style="padding-top: 20px">
+      <span class="error">Login failed!</span>
     </div>
     <div style="text-align: center; padding-top: 30px">
       <h6 style="font-family: 'Calibri Light'">Are you not registered yet?</h6>
@@ -36,7 +36,7 @@
                   border: none; padding: 0 !important;
                   font-family: arial, sans-serif; color: dodgerblue;
                   text-decoration: underline; cursor: pointer"
-               [disabled]="form.invalid" #loginButton >Join Us!</button>
+                  #loginButton (click)="changeForm()">Join Us!</button>
     </div>
   </form>
 </div>
