@@ -43,27 +43,16 @@ export class TestListComponent {
     showEmailModal = false;
     modalOptions: NgbModalOptions;
     constructor(private router: Router, public icons: IconsService, private testService: TestListService, private modalService: NgbModal) {
-    this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
-      this.tests = data as TestList;
-      this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
-    });
-
-  
-  
-    for (let i = 0; i <= 10; i++) {
-      const myTest: Test = {
-        Date: moment().format('DD/MM/YY H:mm'),
-        Title: 'title ' + i,
-        Id: i,
-        Questions: null
-      };
-      this.tests.push(myTest);
+      this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+        this.tests = data as TestList;
+        this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
+      });
       this.modalOptions = {
         backdrop: 'static',
         backdropClass: 'customBackdrop'
       };
     }
-  }
+
   loadCreatePage() {
     this.router.navigateByUrl('create');
   }
@@ -136,3 +125,4 @@ export class TestListComponent {
     });
   }
 }
+
