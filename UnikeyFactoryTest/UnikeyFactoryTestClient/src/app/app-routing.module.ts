@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: 'create', component: CreationComponent},
   {path: 'testList', component: TestListComponent},
   {path: 'error', component: ErrorComponent},
-  {path: '', component: TestListComponent}
+  {path: '', component: LandingPageComponent}
 ];
 
 @NgModule({

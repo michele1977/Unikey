@@ -1,32 +1,45 @@
+<div>
+  <div *ngIf="this.areThereModifies" id="saveTestNotify">Do you want to save changes?&nbsp;&nbsp;<button
+    class="btn btn-outline-success btn-sm" (click)="saveChanges(this.test)">Save</button>&nbsp;&nbsp;<button
+    class="btn btn-outline-danger btn-sm" (click)="undo()">Undo</button></div>
+
+<div *ngIf="this.isThereAnError" id="errorNotify" role="alert">An error occurred while saving the test
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="isThereAnError=false">
+    <span aria-hidden="true">&times;</span>
+  </button></div>
+</div>
+
 <strong><label style="font-size: 35px">Test {{this.test.Title}}</label></strong>
 <!-- Qui logica del copy text -->
 <!-- Qui logica del pdfcreator -->
 <!-- Qui logica del go back -->
-  <hr />
-  <br />
-  <div id="testContentStats">
+<hr />
+<br />
+<div id="testContentStats">
   <label><strong>Number of questions: {{this.test.Questions.length}}</strong></label> |
   <label><strong>Max Score: {{this.maxScore}}</strong></label>
 </div>
 
 <div class="container col-8">
-  <div *ngFor="let question of this.test.Questions; let i = index" class="row testContentRow">
+  <div *ngFor="let question of this.test.Questions; let i = index" class="testContentRow">
     <div>
       <div id="divQuestionForm">
         <strong>Domanda {{i+1}}</strong>
-            <fa-icon [icon]="icons.faTrash" id="editIcon" title="Delete"></fa-icon>
-            <fa-icon [icon]="icons.faPencilAlt" id="deleteIcon" title="Edit"></fa-icon>
+        <fa-icon [icon]="icons.faTrash" question="question" id="editIcon" title="Delete"></fa-icon>
+        <fa-icon [icon]="icons.faPencilAlt" (click)="toggle(i)" id="deleteIcon" title="Edit"></fa-icon>
       </div>
-        <hr />
+      <hr />
+      <div *ngIf="!isEditable[i]">
         <p>{{question.Text}}</p>
+        <br>
+        <div id="answersList">
+          <li type="a" *ngFor="let answer of question.Answers">
+            .{{answer.Text}}
+          </li>
+        </div>
+      </div>
+      <app-testcontent-edit [question]="question" [questionIndex]="i" *ngIf="isEditable[i]" (editEvent)="edit($event)" (undoEvent)="undo()"></app-testcontent-edit>
+      <br>
     </div>
-    <br>
-    <div id="answersList">
-        <li type="a" *ngFor="let answer of question.Answers">
-          .{{answer.Text}}
-        </li>
-    </div>
-    <br>
   </div>
 </div>
-

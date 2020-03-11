@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {TestService} from '../../../services/test.service';
 import {Test} from '../../../models/test';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
@@ -10,32 +10,33 @@ import { switchMap } from 'rxjs/operators';
   templateUrl: './testcontent.component.html',
   styleUrls: ['./testcontent.component.css']
 })
-export class TestcontentComponent implements OnInit {
+export class TestcontentComponent {
 test: Test;
+tempTest: Test;
 maxScore: number;
+areThereModifies = false;
+isEditable: boolean[] = [];
+isThereAnError: boolean;
 
   constructor(
     private service: TestService,
     private router: Router,
     public icons: IconsService,
     private route: ActivatedRoute,
-    ) {}
-
-
-    ngOnInit() {
+    ) {
       this.route.paramMap.pipe(
-        switchMap((params: ParamMap) =>
-        this.service.getTest(parseInt(params.get('id'), 10)))
-      ).subscribe(data => this.test = data,
-        () => this.router.navigateByUrl('error'));
-
-      this.maxScore = this.getMaxScore();
+      switchMap((params: ParamMap) =>
+      this.service.getTest(parseInt(params.get('id'), 10)))
+    ).subscribe(data => {
+      this.test = data;
+      this.tempTest = JSON.parse(JSON.stringify(this.test));
+    },
+      () => this.router.navigateByUrl('error'));
     }
 
-    /*getTest(id) {
-      this.service.getTest(id).subscribe(data => data,
-        () => this.router.navigateByUrl('error'));
-    } */
+    toggle(i: number) {
+      this.isEditable[i] = !this.isEditable[i];
+    }
 
   getMaxScore(): number {
     let res = 0;
@@ -46,5 +47,24 @@ maxScore: number;
       res += max;
     }
     return res;
+  }
+
+  edit(obj) {
+    this.test.Questions[obj.index].Text = obj.question.questionText;
+    this.test.Questions[obj.index].Answers = obj.question.answers;
+    this.areThereModifies = true;
+    this.isEditable[obj.index] = false;
+  }
+
+  undo() {
+    console.log(this.tempTest);
+    this.test = this.tempTest;
+    this.areThereModifies = false;
+  }
+
+  saveChanges(test: Test) {
+    this.service.updateTest(test).subscribe(data => {this.tempTest = JSON.parse(JSON.stringify(this.test));
+                                                     this.areThereModifies = false; },
+      error => this.isThereAnError = true);
   }
 }
