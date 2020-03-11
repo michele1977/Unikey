@@ -118,7 +118,7 @@ namespace UnikeyFactoryTest.Service
             }
         }
 
-        public async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId)
+        public async Task<IEnumerable<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId)
         {
             if (_repo.IsContextNull)
             {

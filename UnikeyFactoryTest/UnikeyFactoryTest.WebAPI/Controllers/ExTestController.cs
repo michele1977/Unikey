@@ -57,5 +57,29 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
                 return InternalServerError();
             }
         }
+
+        public async Task<IHttpActionResult> GetByTestId(int id)
+        {
+            try
+            {
+                var returned = await _service.GetAdministratedTestsByTestId(id);
+                return Ok(returned);
+            }
+            catch (ArgumentNullException e)
+            {
+                _logger.Error(e, e.Message);
+                return InternalServerError();
+            }
+            catch (InvalidOperationException e)
+            {
+                _logger.Error(e, e.Message);
+                return InternalServerError();
+            }
+            catch (Exception e)
+            {
+                _logger.Fatal(e, e.Message);
+                return InternalServerError();
+            }
+        }
     }
 }

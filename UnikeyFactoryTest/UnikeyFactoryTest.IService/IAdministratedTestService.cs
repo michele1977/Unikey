@@ -11,7 +11,7 @@ namespace UnikeyFactoryTest.IService
         Task Update_Save(AdministratedTestBusiness adTest);
         Task<AdministratedTestBusiness> GetAdministratedTestById(int adTestId);
         Task<IEnumerable<AdministratedTestBusiness>> GetAdministratedTests();
-        Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId);
+        Task<IEnumerable<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId);
         Task DeleteAdministratedTest(int administratedTestId);
         AdministratedQuestionBusiness Next(AdministratedTestBusiness administratedTest, int position);
         Task Update_Save_Question(AdministratedQuestionBusiness adQuestion);
