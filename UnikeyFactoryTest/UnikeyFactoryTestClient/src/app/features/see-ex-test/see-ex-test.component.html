@@ -1,0 +1,29 @@
+<strong><label style="font-size: 35px">Test {{this.exTest.Title}}</label></strong>
+<hr />
+<br />
+<div id="testContentStats">
+  <label><strong>Number of questions: {{this.exTest.ExQuestions.length}}</strong></label> |
+  <label><strong>Score: {{this.exTest.Score}} / {{this.exTest.MaxScore}}</strong></label>
+</div>
+
+<div class="container col-8">
+  <div *ngFor="let question of this.exTest.ExQuestions; let i = index" class="testContentRow">
+    <div>
+      <div id="divQuestionForm">
+        <strong>Domanda {{i+1}}</strong>
+      </div>
+      <hr />
+      <p>{{question.Text}}</p>
+      <br>
+      <div id="answersList">
+        <li type="a" *ngFor="let answer of question.ExAnswers">
+          <label *ngIf="answer.IsSelected == false && answer.IsCorrect == 2">{{answer.Text}}</label>
+          <label *ngIf="answer.IsSelected == true && answer.IsCorrect == 2" style="background-color: red">{{answer.Text}}</label>
+          <label *ngIf="answer.IsSelected == true && answer.IsCorrect == 1" style="background-color: green">{{answer.Text}}</label>
+          <label *ngIf="answer.IsSelected == false && answer.IsCorrect == 1" style="background-color: green">{{answer.Text}}</label>
+        </li>
+      </div>
+    </div>
+    <br>
+  </div>
+</div>

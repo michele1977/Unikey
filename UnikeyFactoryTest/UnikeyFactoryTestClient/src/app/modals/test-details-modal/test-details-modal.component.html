@@ -14,16 +14,23 @@
         <th class="text-center">State</th>
         <th class="text-center">Actions</th>
       </tr>
-      <tr *ngFor="let exTest of exTests; let i = index">
+      <tr *ngFor="let exTest of myFakeExTests; let i = index">
         <th scope="row">{{i}}</th>
         <td class="text-center">{{exTest.TestSubject}}</td>
         <td class="text-center">{{exTest.Score}}/{{exTest.MaxScore}}</td>
         <td class="text-center">{{exTest.State == 1 || exTest.State == 2 ? 'Opened' : 'Closed'}}</td>
         <td class="text-center">
-          <a [routerLink]="['menagetest/', myModalTest.Id]"><i class="fa fa-list"></i></a>
+          <fa-icon [icon]="icons.faList" [routerLink]="['seeExTest/', exTest.Id]" (click)="activeModal.close('Redirect click')" title="See ExTest"></fa-icon>
         </td>
       </tr>
     </table>
+    <div class="text-center">
+      <fa-icon [icon]="icons.faAngleDoubleLeft" title="First"></fa-icon>
+      <fa-icon [icon]="icons.faArrowLeft" title="Previous"></fa-icon>
+      <strong><label>1 of N</label></strong>
+      <fa-icon [icon]="icons.faArrowRight" title="Next"></fa-icon>
+      <fa-icon [icon]="icons.faAngleDoubleRight" title="Last"></fa-icon>
+    </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>

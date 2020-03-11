@@ -8,7 +8,7 @@
       <strong><label>Answers:</label></strong>
     </div>
     <div class="col-6 add-answer">
-      <i class="fa fa-plus" *ngIf="orderForm.valid" (click)="addAnswer()"></i>
+      <i class="fa fa-plus" *ngIf="orderForm.valid" (click)="addAnswer()" title="Add answer"></i>
     </div>
     <div formArrayName="items" *ngFor="let ctrl of formArray.controls; let i = index" class="col-12 padd">
       <div class="input-group-prepend" [formGroup]="ctrl">

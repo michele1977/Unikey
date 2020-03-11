@@ -7,6 +7,7 @@ import {TestListService} from '../../services/test-list.service';
 import {TestList} from '../../models/test-list';
 import {TestDetailsModalComponent} from '../../modals/test-details-modal/test-details-modal.component';
 import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
+import {ExTest} from '../../models/ex-test';
 
 
 @Component({
@@ -83,6 +84,21 @@ export class TestListComponent {
   testDetails(test: Test) {
     const modalRef = this.modalService.open(TestDetailsModalComponent);
     modalRef.componentInstance.myModalTest = test;
+    const exTests: ExTest[] = [];
+    for (let i = 0; i <= 10; i++) {
+      const myExTest: ExTest = {
+        Date: moment().format('DD/MM/YY H:mm'),
+        Title: 'title ' + i,
+        Id: i,
+        ExQuestions: null,
+        Score: 100,
+        MaxScore: 100,
+        State: 2,
+        TestSubject: 'Andrea77'
+      };
+      exTests.push(myExTest);
+    }
+    modalRef.componentInstance.myFakeExTests = exTests;
   }
 
   sendMail() {}

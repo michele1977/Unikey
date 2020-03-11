@@ -76,7 +76,7 @@ namespace UnikeyFactoryTest.Repository
         public async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId)
         { 
             var adTestList = await _ctx.AdministratedTests.Where(t => t.TestId == testId).ToListAsync();
-            Mapper = Kernel.Get<IMapper>("Heavy");
+            Mapper = Kernel.Get<IMapper>("Light");
             var filteredList = Mapper.Map<List<AdministratedTest>, List<AdministratedTestBusiness>>(adTestList);
             return filteredList;
         }

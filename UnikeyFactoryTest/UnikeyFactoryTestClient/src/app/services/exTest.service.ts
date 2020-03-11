@@ -4,7 +4,7 @@ import {Test} from '../models/test';
 import {Observable} from 'rxjs';
 import {ExTest} from '../models/ex-test';
 
-const reqUrl = 'https://localhost:44329/api/';
+const reqUrl = 'https://localhost:44329/api/ExTest/';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +12,11 @@ const reqUrl = 'https://localhost:44329/api/';
 export class ExTestService {
   constructor(private http: HttpClient) { }
 
+  getExTestById(id: number) {
+    return this.http.get<ExTest>(reqUrl + 'Get/' + id);
+  }
 
   getExTestByTestId(id: number) {
-    return this.http.get<ExTest[]>(reqUrl + 'ExTest/GetByTestId/' + id);
+    return this.http.get<ExTest[]>(reqUrl + 'GetByTestId/' + id);
   }
 }
