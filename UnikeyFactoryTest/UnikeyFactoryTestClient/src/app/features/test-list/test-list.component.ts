@@ -78,11 +78,10 @@ export class TestListComponent {
   sendMail() {}
 
   NextPage() {
-
+    this.pageNum += 1;
     this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
-      this.pageNum += 1;
     });
     if (this.pageNum === this.pages) {
       this.atLast = true;
@@ -90,8 +89,7 @@ export class TestListComponent {
   }
 
   lastPage() {
-    this.pageNum = this.pages;
-    this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+    this.testService.getTests(this.pages, this.pageSize, this.textFilter).subscribe(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
       this.pageNum = this.pages;
@@ -100,7 +98,7 @@ export class TestListComponent {
   }
 
   firstPage() {
-    this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+    this.testService.getTests(1, this.pageSize, this.textFilter).subscribe(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
       this.atLast = false;
@@ -109,11 +107,11 @@ export class TestListComponent {
   }
 
   previousPage() {
+    this.pageNum -= 1;
     this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
       this.atLast = false;
-      this.pageNum -= 1;
     });
   }
 }

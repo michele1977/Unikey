@@ -51,6 +51,9 @@ export class CreationComponent {
     Date: null,
     Id: 0,
     Questions: [],
+    NumberOfExTest: 0,
+    NumberOfTest: 0,
+    OpenedExTestNumber: 0
   };
   setVisibility: boolean;
 
