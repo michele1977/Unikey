@@ -48,6 +48,10 @@ export class TestContentEditComponent implements OnInit {
     this.answers.push(this.fb.group(this.emptyAnswer));
   }
 
+  delete(index: number) {
+    this.answers.removeAt(index);
+  }
+
   edit(question: Question, index: number) {
     this.editEvent.next({question, index});
   }

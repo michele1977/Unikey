@@ -13,7 +13,6 @@ import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {TestcontentComponent} from './features/test-list/testcontent/testcontent.component';
 import {ErrorComponent} from './shared/error/error.component';
-import { RformspikeComponent } from './features/rformspike/rformspike.component';
 import { TestContentEditComponent } from './features/test-list/testcontent/testcontent-edit/testcontent-edit.component';
 
 
@@ -24,7 +23,6 @@ import { TestContentEditComponent } from './features/test-list/testcontent/testc
     CreationComponent,
     TestcontentComponent,
     ErrorComponent,
-    RformspikeComponent,
     TestContentEditComponent
   ],
 

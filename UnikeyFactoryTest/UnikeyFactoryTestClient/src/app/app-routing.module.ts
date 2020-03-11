@@ -5,7 +5,6 @@ import {LandingPageComponent} from './shared/landing-page/landing-page.component
 import {TestListComponent} from './features/test-list/test-list.component';
 import {TestcontentComponent} from './features/test-list/testcontent/testcontent.component';
 import {ErrorComponent} from './shared/error/error.component';
-import { RformspikeComponent } from './features/rformspike/rformspike.component';
 
 
 const routes: Routes = [
@@ -13,8 +12,7 @@ const routes: Routes = [
   {path: 'create', component: CreationComponent},
   {path: 'testList', component: TestListComponent},
   {path: 'error', component: ErrorComponent},
-  {path: 'spike', component: RformspikeComponent},
-  {path: '', component: TestListComponent}
+  {path: '', component: LandingPageComponent}
 ];
 
 @NgModule({
