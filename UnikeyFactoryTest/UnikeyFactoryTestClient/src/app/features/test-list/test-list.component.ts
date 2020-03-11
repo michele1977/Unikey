@@ -3,6 +3,8 @@ import {Router} from '@angular/router';
 import {Test} from '../../models/test';
 import * as moment from 'moment';
 import {IconsService} from '../../services/icons.service';
+import {TestDetailsModalComponent} from '../../modals/test-details-modal/test-details-modal.component';
+import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -30,7 +32,8 @@ export class TestListComponent {
   textFilter = '';
   tests: Test[] = [];
   showEmailModal = false;
-  constructor(private router: Router, public icons: IconsService) {
+  modalOptions: NgbModalOptions;
+  constructor(private router: Router, public icons: IconsService, private modalService: NgbModal) {
     for (let i = 0; i <= 10; i++) {
       const myTest: Test = {
         Date: moment().format('DD/MM/YY H:mm'),
@@ -39,6 +42,10 @@ export class TestListComponent {
         Questions: null
       };
       this.tests.push(myTest);
+      this.modalOptions = {
+        backdrop: 'static',
+        backdropClass: 'customBackdrop'
+      };
     }
   }
   loadCreatePage() {
@@ -55,7 +62,10 @@ export class TestListComponent {
 
   deleteTest() {}
 
-  testDetails() {}
+  testDetails(test: Test) {
+    const modalRef = this.modalService.open(TestDetailsModalComponent);
+    modalRef.componentInstance.myModalTest = test;
+  }
 
   sendMail() {}
 }
