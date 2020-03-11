@@ -11,6 +11,7 @@ const routes: Routes = [
   {path: 'testcontent', component: TestcontentComponent},
   {path: 'create', component: CreationComponent},
   {path: 'testList', component: TestListComponent},
+  {path: 'ciao', redirectTo: 'http://localhost:999/api/User/TestAction'},
   {path: '', component: LandingPageComponent}
 ];
 

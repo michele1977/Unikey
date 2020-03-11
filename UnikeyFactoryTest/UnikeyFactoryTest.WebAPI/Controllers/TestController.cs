@@ -13,11 +13,13 @@ using NLog;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.Service;
+using UnikeyFactoryTest.WebAPI.CustomAttributes;
 using UnikeyFactoryTest.WebAPI.ResponseMessages;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
     [EnableCors("*", "*", "*")]
+    [LoginAuthorize]
     public class TestController : ApiController
     {
         private int UserId { get => User.Identity.GetUserId<int>(); }
@@ -81,7 +83,6 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
                 return NotFound();
             }
         }
-
 
         public async Task<IHttpActionResult> GetAll()
         {

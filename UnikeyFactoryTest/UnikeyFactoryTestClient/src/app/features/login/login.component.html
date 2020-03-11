@@ -23,8 +23,11 @@
       </div>
     </div>
     <div style="text-align: right">
-      <button type="submit" class="btn btn-primary" (click)="service.login(form.value)"
+      <button type="submit" class="btn btn-primary" (click)="login(form.value)"
                [disabled]="form.invalid" #loginButton >LogIn</button>
+    </div>
+    <div *ngIf="isPostBack" class="errorDiv">
+      <h6>Login failed!</h6>
     </div>
     <div style="text-align: center; padding-top: 30px">
       <h6 style="font-family: 'Calibri Light'">Are you not registered yet?</h6>
