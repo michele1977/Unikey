@@ -4,9 +4,11 @@ using System.Web.Http;
 using Ninject;
 using NLog;
 using UnikeyFactoryTest.IService;
+using UnikeyFactoryTest.WebAPI.CustomAttributes;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
+    [LoginAuthorize]
     public class ExTestController : ApiController
     {
         private readonly IKernel _kernel;
@@ -44,6 +46,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             }
         }
 
+       
         public async Task<IHttpActionResult> GetAll()
         {
             try

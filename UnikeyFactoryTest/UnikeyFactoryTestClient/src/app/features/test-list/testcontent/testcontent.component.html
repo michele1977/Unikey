@@ -9,19 +9,19 @@
   </button></div>
 </div>
 
-<strong><label style="font-size: 35px">Test {{this.test.Title}}</label></strong>
+<strong><label style="font-size: 35px">Test {{this.test?.Title}}</label></strong>
 <!-- Qui logica del copy text -->
 <!-- Qui logica del pdfcreator -->
 <!-- Qui logica del go back -->
 <hr />
 <br />
 <div id="testContentStats">
-  <label><strong>Number of questions: {{this.test.Questions.length}}</strong></label> |
+  <label><strong>Number of questions: {{this.test?.Questions.length}}</strong></label> |
   <label><strong>Max Score: {{this.maxScore}}</strong></label>
 </div>
 
 <div class="container col-8">
-  <div *ngFor="let question of this.test.Questions; let i = index" class="testContentRow">
+  <div *ngFor="let question of this.test?.Questions; let i = index" class="testContentRow">
     <div>
       <div id="divQuestionForm">
         <strong>Domanda {{i+1}}</strong>
