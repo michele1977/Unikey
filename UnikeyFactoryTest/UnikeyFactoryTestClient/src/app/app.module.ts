@@ -19,6 +19,7 @@ import {TestDetailsModalComponent} from './modals/test-details-modal/test-detail
 import {RouterModule} from '@angular/router';
 import { SeeExTestComponent } from './features/see-ex-test/see-ex-test.component';
 import {LoaderService} from './services/loader.service';
+import { EmailModalComponent } from './shared/email-modal/email-modal.component';
 
 
 @NgModule({
@@ -30,7 +31,9 @@ import {LoaderService} from './services/loader.service';
     ErrorComponent,
     TestContentEditComponent,
     TestDetailsModalComponent,
-    SeeExTestComponent
+    SeeExTestComponent,
+    EmailModalComponent
+
   ],
 
   imports: [

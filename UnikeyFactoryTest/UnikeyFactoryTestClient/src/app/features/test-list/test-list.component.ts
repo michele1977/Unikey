@@ -43,6 +43,7 @@ export class TestListComponent {
   pages = 0;
   options: any[] = [10, 20, 40, 50, 60];
   showEmailModal = false;
+  sendTestId: number;
   modalOptions: NgbModalOptions;
   constructor(private router: Router, public icons: IconsService, private testService: TestListService, private modalService: NgbModal, private loader: LoaderService) {
     loader.publish('show');
@@ -120,8 +121,6 @@ export class TestListComponent {
     modalRef.componentInstance.myFakeExTests = exTests;
   }
 
-  sendMail() {}
-
   NextPage() {
     this.loader.publish('show');
     let nextPage = this.pageNum.valueOf();
@@ -182,6 +181,11 @@ export class TestListComponent {
       this.loader.publish('hide');
       alert('Ooops something went wrong');
     });
+  }
+  showEmailModalMethod(id: number) {
+    this.showEmailModal = true;
+    this.sendTestId = id;
+    console.log('Ci sono: id = ' + this.sendTestId);
   }
 }
 
