@@ -13,8 +13,8 @@ namespace UnikeyFactoryTest.Mapper.AutoMappers
     {
         public AdministratedAnswerAutoMapper()
         {
-            CreateMap<AdministratedAnswer, AdministratedAnswerBusiness>();
-            CreateMap<AdministratedAnswerBusiness, AdministratedAnswer>();
+            CreateMap<AdministratedAnswer, AdministratedAnswerBusiness>().ForMember(aab => aab.AdministratedQuestion, aa => aa.Ignore()); ;
+            CreateMap<AdministratedAnswerBusiness, AdministratedAnswer>().ForMember(aa => aa.AdministratedQuestion, aab => aab.Ignore()); ;
         }
     }
 }

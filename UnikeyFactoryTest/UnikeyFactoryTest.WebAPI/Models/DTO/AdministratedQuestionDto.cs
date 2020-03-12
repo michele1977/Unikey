@@ -12,6 +12,8 @@ namespace UnikeyFactoryTest.WebAPI.Models.DTO
         {
             Id = administratedQuestion.Id;
             Text = administratedQuestion.Text;
+            Position = administratedQuestion.Position;
+            AdministratedTestId = administratedQuestion.AdministratedTestId;
             AdministratedAnswers = administratedQuestion.AdministratedAnswers.Select(a => new AdministratedAnswerDto(a)).ToList();
 
         }
@@ -19,7 +21,7 @@ namespace UnikeyFactoryTest.WebAPI.Models.DTO
         public int Id { get; set; }
         public string Text { get; set; }
         public int AdministratedTestId { get; set; }
-        public short Postition { get; set; }
-        public List<AdministratedAnswerDto> AdministratedAnswers { get; set; }
+        public short Position { get; set; }
+        public ICollection<AdministratedAnswerDto> AdministratedAnswers { get; set; }
     }
 }

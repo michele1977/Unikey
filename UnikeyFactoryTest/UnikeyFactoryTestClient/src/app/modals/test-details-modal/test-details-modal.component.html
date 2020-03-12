@@ -1,11 +1,25 @@
 <div class="modal-content">
   <div class="modal-header">
     <h4 class="modal-title">{{myModalTest.Title}}</h4>
+    <form #form="ngForm" style="margin-bottom: 10px;" >
+      <div class="btn btn-group">
+        <input type="search" [ngModel]="textFilter" name="textFilter" class="form-control">
+        <span class="glyphicon glyphicon-remove-circle"></span>
+        <button type="submit" class="btn btn-primary" (click)="search(form)">Search</button>
+      </div>
+    </form>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
+    <div class="text-center">
+      <fa-icon *ngIf="!isFirstPage" [icon]="icons.faAngleDoubleLeft" title="First" (click)="firstPage()"></fa-icon>
+      <fa-icon *ngIf="!isFirstPage" [icon]="icons.faArrowLeft" title="Previous" (click)="previousPage()"></fa-icon>
+      <strong><label>1 of N</label></strong>
+      <fa-icon [icon]="icons.faArrowRight" title="Next" (click)="nextPage()"></fa-icon>
+      <fa-icon [icon]="icons.faAngleDoubleRight" title="Last" (click)="lastPage()"></fa-icon>
+    </div>
     <table class="table">
       <tr class="thead-dark">
         <th class="text-center">#</th>
@@ -14,8 +28,8 @@
         <th class="text-center">State</th>
         <th class="text-center">Actions</th>
       </tr>
-      <tr *ngFor="let exTest of myFakeExTests; let i = index">
-        <th scope="row">{{i}}</th>
+      <tr *ngFor="let exTest of exTests; let i = index">
+        <th scope="row">{{this.pageNum + i}}</th>
         <td class="text-center">{{exTest.TestSubject}}</td>
         <td class="text-center">{{exTest.Score}}/{{exTest.MaxScore}}</td>
         <td class="text-center">{{exTest.State == 1 || exTest.State == 2 ? 'Opened' : 'Closed'}}</td>
@@ -25,11 +39,11 @@
       </tr>
     </table>
     <div class="text-center">
-      <fa-icon [icon]="icons.faAngleDoubleLeft" title="First"></fa-icon>
-      <fa-icon [icon]="icons.faArrowLeft" title="Previous"></fa-icon>
+      <fa-icon *ngIf="!isFirstPage" [icon]="icons.faAngleDoubleLeft" title="First" (click)="firstPage()"></fa-icon>
+      <fa-icon *ngIf="!isFirstPage" [icon]="icons.faArrowLeft" title="Previous" (click)="previousPage()"></fa-icon>
       <strong><label>1 of N</label></strong>
-      <fa-icon [icon]="icons.faArrowRight" title="Next"></fa-icon>
-      <fa-icon [icon]="icons.faAngleDoubleRight" title="Last"></fa-icon>
+      <fa-icon [icon]="icons.faArrowRight" title="Next" (click)="nextPage()"></fa-icon>
+      <fa-icon [icon]="icons.faAngleDoubleRight" title="Last" (click)="lastPage()"></fa-icon>
     </div>
   </div>
   <div class="modal-footer">

@@ -5,5 +5,5 @@ export class ExQuestion {
   Text: string;
   AdministratedTestId: number;
   Position: number;
-  ExAnswers: ExAnswer[];
+  AdministratedAnswers: ExAnswer[];
 }
