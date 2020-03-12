@@ -1,0 +1,19 @@
+.checkbox{
+  margin-top: 7px;
+}
+
+.score{
+  max-width: 30%;
+}
+
+.add-answer{
+  text-align: right;
+}
+
+.create-question{
+  text-align: right;
+}
+
+.padd{
+  margin-bottom: 5px;
+}

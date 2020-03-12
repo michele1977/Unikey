@@ -7,6 +7,7 @@ import {faPlus} from '@fortawesome/free-solid-svg-icons/faPlus';
 import {faAngleDoubleLeft} from '@fortawesome/free-solid-svg-icons/faAngleDoubleLeft';
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import {faAngleDoubleRight} from '@fortawesome/free-solid-svg-icons/faAngleDoubleRight';
+import {faPencilAlt} from '@fortawesome/free-solid-svg-icons/faPencilAlt';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,8 @@ export class IconsService {
   faArrowLeft = faArrowLeft;
   faArrowRight = faArrowRight;
   faAngleDoubleRight = faAngleDoubleRight;
+  faPencilAlt = faPencilAlt;
+
   faLogout = faSignOutAlt;
   constructor() { }
 

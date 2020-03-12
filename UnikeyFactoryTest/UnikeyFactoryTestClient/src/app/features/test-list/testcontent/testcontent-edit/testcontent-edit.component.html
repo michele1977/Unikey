@@ -1,0 +1,26 @@
+<form [formGroup]="questionForm" style="overflow: auto;">
+    <textarea formControlName="questionText" class="form-control" rows="5"></textarea>
+    <br>
+    True
+    <br>
+    <div formArrayName="answers">
+        <div *ngFor="let ans of answers.controls; let i = index" [formGroupName]="i" class="formGroup">
+
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <input type="checkbox" formControlName="IsCorrect"/>
+                    </div>
+                </div>
+                <input formControlName="Text" type="text" class="form-control" placeholder="Answer">
+                <input formControlName="Score" style="max-width: 20%" class="form-control">
+                <button *ngIf="this.answers.length > 2" (click)="delete(i)" class="btn btn-danger btn-sm">x</button>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div>
+        <button class="btn btn-success btn-sm" (click)="edit(questionForm.value, questionIndex)">Save</button>
+        <button class="btn btn-primary btn-sm" style="float:right;" (click)="addEmptyAnswer()">+</button>
+    </div>
+</form>

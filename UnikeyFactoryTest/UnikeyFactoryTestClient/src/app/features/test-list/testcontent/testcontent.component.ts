@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Question} from '../../../models/question';
 import {TestService} from '../../../services/test.service';
 import {Test} from '../../../models/test';
-import {map} from 'rxjs/operators';
+import {Router, ActivatedRoute, ParamMap} from '@angular/router';
+import { IconsService } from 'src/app/services/icons.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-testcontent',
@@ -11,30 +12,59 @@ import {map} from 'rxjs/operators';
 })
 export class TestcontentComponent {
 test: Test;
+tempTest: Test;
 maxScore: number;
+areThereModifies = false;
+isEditable: boolean[] = [];
+isThereAnError: boolean;
 
-  constructor(private service: TestService) { this.getQuestions(60); }
+  constructor(
+    private service: TestService,
+    private router: Router,
+    public icons: IconsService,
+    private route: ActivatedRoute,
+    ) {
+      this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+      this.service.getTest(parseInt(params.get('id'), 10)))
+    ).subscribe(data => {
+      this.test = data;
+      this.tempTest = JSON.parse(JSON.stringify(this.test));
+    },
+      () => this.router.navigateByUrl('error'));
+    }
 
-  // For debug
-  getQuestions(id) {
-    this.service.getTest(id).pipe(map((res: Response) => res.json()))
-      .subscribe(
-        async data => {
+    toggle(i: number) {
+      this.isEditable[i] = !this.isEditable[i];
+    }
 
-          this.test = await data;
-        });
+  getMaxScore(): number {
+    let res = 0;
+    for (const question of this.test.Questions) {
+      const max = question.Answers.filter(answer => answer.IsCorrect === 1)
+      .map(answer => answer.Score)
+      .reduce((prev, curr) => prev + curr, 0);
+      res += max;
+    }
+    return res;
   }
 
-  gerMaxScore() {
-    const max = this.test.Questions.reduce((previous, current) => {
-      return (previous.Answers.filter(a => a.IsCorrect)
-        .map(answer => answer.Score)
-        .reduce((sum, curr) => sum + curr, 0)
-      >
-        current.Answers.filter(a => a.IsCorrect)
-        .map(answer => answer.Score)
-        .reduce((sum, curr) => sum + curr, 0)) ? previous : current;
-    });
+  edit(obj) {
+    this.test.Questions[obj.index].Text = obj.question.questionText;
+    this.test.Questions[obj.index].Answers = obj.question.answers;
+    this.areThereModifies = true;
+    this.isEditable[obj.index] = false;
   }
 
+  undo() {
+    console.log(this.tempTest);
+    this.test = this.tempTest;
+    this.areThereModifies = false;
+  }
+
+  saveChanges(test: Test) {
+    this.service.updateTest(test).subscribe(data => {this.tempTest = JSON.parse(JSON.stringify(this.test));
+                                                     this.areThereModifies = false; },
+      error => this.isThereAnError = true);
+  }
 }

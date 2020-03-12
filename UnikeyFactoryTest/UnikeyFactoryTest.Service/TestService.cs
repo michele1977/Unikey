@@ -41,7 +41,7 @@ namespace UnikeyFactoryTest.Service
 
             var mapper = _kernel.Get<IMapper>("Heavy");
             var testDao = mapper.Map<TestBusiness, Test>(test);
-             _repo.SaveTest(testDao);
+            _repo.SaveTest(testDao);
             test.Id = testDao.Id;
         }
 
@@ -62,6 +62,7 @@ namespace UnikeyFactoryTest.Service
             if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
 
             var tests = await _repo.GetTests();
+
             return tests;
         }
 
@@ -172,6 +173,39 @@ namespace UnikeyFactoryTest.Service
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
             thread.Join();
+        }
+
+        public async Task<int> GetExTestCountByState(int testId, AdministratedTestState state)
+        {
+            if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
+
+            return await _repo.GetExTestCountByState(testId, state);
+        }
+        public async Task<int> GetExTestCount(int testId)
+        {
+            if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
+
+            return await _repo.GetExTestCount(testId);
+        }
+        public async Task<List<TestBusiness>> GetAllFiltered(int pageNum, int pageSize, string filter)
+        {
+            var lastPage = (int)Math.Ceiling((float)await CountTests(filter) / pageSize);
+
+            if (pageNum > lastPage)
+                pageNum = lastPage;
+
+            if(String.IsNullOrWhiteSpace(filter))
+                return await _repo.GetAllFiltered(pageNum, pageSize);
+            else
+                return await _repo.GetAllFiltered(pageNum, pageSize, filter);
+
+        }
+        public async Task<int> CountTests(string filter)
+        {
+            if (String.IsNullOrWhiteSpace(filter))
+                return await _repo.CountTests();
+            else
+                return await _repo.CountTests(filter);
         }
     }
 }

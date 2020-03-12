@@ -22,6 +22,12 @@ namespace UnikeyFactoryTest.IRepository
         Task DeleteQuestionByIdFromTest(int questionId);
         Task<QuestionBusiness> GetQuestionById(int id);
         Task<Dictionary<int, int>> GetExTestCountByState(IEnumerable<int> testsIds, AdministratedTestState state);
+        Task<int> GetExTestCountByState(int testId, AdministratedTestState state);
+        Task<int> GetExTestCount(int testId);
+        Task<List<TestBusiness>> GetAllFiltered(int pageNum, int pageSize, string filter);
+        Task<List<TestBusiness>> GetAllFiltered(int pageNum, int pageSize);
+        Task<int> CountTests(string filter);
+        Task<int> CountTests();
     } 
 
 }

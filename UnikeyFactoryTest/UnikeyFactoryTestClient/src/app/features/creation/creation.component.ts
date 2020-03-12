@@ -3,27 +3,30 @@ import {Component, Input} from '@angular/core';
 import {TestService} from '../../services/test.service';
 import * as moment from 'moment';
 import {Router} from '@angular/router';
+import {Question} from '../../models/question';
 
 @Component({
   selector: 'app-creation',
   template: `
     <form #form="ngForm">
       <div class="form-group create-div">
-        <input type="text" name="title" class="form-control" placeholder="Test Name.." [ngModel]="title">
+        <input type="text" name="title" class="form-control" placeholder="Test Name.." [ngModel]="title" required>
         <label><b>Date: </b>{{time | date: 'dd/MM/yy H:mm:ss'}}</label>
       </div>
       <hr>
       <div class="row create-row">
         <div class="col-6">
-          <app-question-list [test]="test" (showForm) = 'visibility($event)'></app-question-list>
+          <app-question-list [test]="test" (showForm)='visibility($event)' [enable]="setVisibility"></app-question-list>
         </div>
         <div *ngIf="setVisibility" class="col-6">
-          PUT HERE THE QUESTION FORM
+          <app-question-form (questionInsert)="addQuestion($event)"></app-question-form>
         </div>
       </div>
       <hr>
       <div style="text-align: right">
-        <button class="btn btn-primary create-button" (click)="createTest(form)">Done</button>
+        <button class="btn btn-outline-primary create-button" (click)="createTest(form)" [disabled]="!form.valid">
+          <i class="fa fa-check"></i>
+        </button>
       </div>
     </form>
   `,
@@ -46,9 +49,13 @@ export class CreationComponent {
   result = false;
   test: Test = {
     Title: '',
+    URL: '',
     Date: null,
     Id: 0,
-    Questions: null,
+    Questions: [],
+    NumberOfExTest: 0,
+    NumberOfTest: 0,
+    OpenedExTestNumber: 0
   };
   setVisibility: boolean;
 
@@ -73,5 +80,11 @@ export class CreationComponent {
 
   visibility(setVisibility) {
     this.setVisibility = setVisibility;
+  }
+
+  addQuestion(question: Question) {
+    question.Position = this.test.Questions.length;
+    this.test.Questions.push(question);
+    this.setVisibility = false;
   }
 }

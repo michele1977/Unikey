@@ -167,7 +167,7 @@ namespace UnikeyFactoryTest.Repository
                 {
                     throw new NullReferenceException("Test not found");
                 }
-                
+
                 returned.Add(id, test.AdministratedTests.Count(a => a.State == (byte)state));
             }
 
@@ -178,7 +178,7 @@ namespace UnikeyFactoryTest.Repository
         {
             TestBusiness test = await GetTest(testId);
             short pos = 0;
-            
+
             foreach (var question in test.Questions)
             {
                 question.Position = pos;
@@ -186,6 +186,57 @@ namespace UnikeyFactoryTest.Repository
             }
 
             await UpdateTest(test);
+        }
+
+        public async Task<int> GetExTestCountByState(int testId, AdministratedTestState state)
+        {
+            var test = await _ctx.Tests.FirstOrDefaultAsync(x => x.Id == testId);
+
+            return test.AdministratedTests.Count(a => a.State == (byte)state);
+        }
+        public async Task<int> GetExTestCount(int testId)
+        {
+            var test = await _ctx.Tests.FirstOrDefaultAsync(x => x.Id == testId);
+            return test.AdministratedTests.Count();
+        }
+        public async Task<List<TestBusiness>> GetAllFiltered(int pageNum, int pageSize, string filter)
+        {
+
+            return await _ctx.Tests
+                            .OrderBy(x => x.Id)
+                            .Where(test => test.Title.Contains(filter))
+                            .Skip((pageNum - 1) * pageSize)
+                            .Take(pageSize).Select(t => new TestBusiness()
+                            {
+                                Id = t.Id,
+                                Title = t.Title,
+                                URL = t.URL,
+                                Date = t.Date,
+                            })
+                            .ToListAsync();
+        }
+        public async Task<List<TestBusiness>> GetAllFiltered(int pageNum, int pageSize)
+        {
+            return await _ctx.Tests
+                            .OrderBy(x => x.Id)
+                            .Skip((pageNum - 1) * pageSize)
+                            .Take(pageSize).Select(t => new TestBusiness()
+                            {
+                                Id = t.Id,
+                                Title = t.Title,
+                                URL = t.URL,
+                                Date = t.Date,
+                            })
+                            .ToListAsync();
+        }
+
+        async public Task<int> CountTests(string filter)
+        {
+            return await _ctx.Tests.Where(t => t.Title.Contains(filter)).CountAsync();
+        }
+        async public Task<int> CountTests()
+        {
+            return await _ctx.Tests.CountAsync();
         }
     }
 }
