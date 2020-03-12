@@ -13,6 +13,7 @@ import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {TestcontentComponent} from './features/test-list/testcontent/testcontent.component';
 import {ErrorComponent} from './shared/error/error.component';
+import { EmailModalComponent } from './shared/email-modal/email-modal.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {ErrorComponent} from './shared/error/error.component';
     TestListComponent,
     CreationComponent,
     TestcontentComponent,
-    ErrorComponent
+    ErrorComponent,
+    EmailModalComponent
   ],
 
   imports: [

@@ -4,7 +4,9 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Net;
 using System.Net.Http;
+using System.Net.Mail;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Microsoft.AspNet.Identity;
@@ -12,7 +14,10 @@ using Ninject;
 using NLog;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IService;
+using UnikeyFactoryTest.Presentation.Models;
+using UnikeyFactoryTest.Presentation.Models.DTO;
 using UnikeyFactoryTest.Service;
+using UnikeyFactoryTest.Service.Providers.MailProvider;
 using UnikeyFactoryTest.WebAPI.ResponseMessages;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
@@ -226,5 +231,107 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.InternalServerError);
             }
         }
+
+
+        [Route("api/Test/sendMail")]
+        [HttpPost]
+        public async Task<IHttpActionResult> SendMail(EmailModel emailModel)
+        {
+            TestBusiness test;
+
+            try
+            {
+                test = await _service.GetTestById(emailModel.Id);
+            }
+            catch (ArgumentNullException e)
+            {
+                _logger.Error(e, e.Message);
+                throw;
+            }
+            catch (InvalidOperationException e)
+            {
+                _logger.Error(e, e.Message);
+                throw;
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                _logger.Fatal(e, e.Message);
+                throw;
+            }
+            catch (DbEntityValidationException e)
+            {
+                _logger.Fatal(e, e.Message);
+                throw;
+            }
+            catch (DbUpdateException e)
+            {
+                _logger.Fatal(e, e.Message);
+                throw;
+            }
+            catch (NotSupportedException e)
+            {
+                _logger.Error(e, e.Message);
+                throw;
+            }
+            catch (Exception e)
+            {
+                _logger.Fatal(e, e.Message);
+                throw;
+            }
+
+            bool result = false;
+            TestDto sendTest = new TestDto(test, _service);
+            var URL = sendTest.URL;
+            MailProvider provider = new MailProvider();
+
+            try
+            {
+                result = provider.SendMail(emailModel.email, emailModel.name, URL);
+            }
+            catch (HttpException e)
+            {
+                _logger.Error(e, e.Message);
+            }
+            catch (ArgumentNullException e)
+            {
+                _logger.Error(e, e.Message);
+
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                _logger.Error(e, e.Message);
+            }
+            catch (ArgumentException e)
+            {
+                _logger.Error(e, e.Message);
+            }
+            catch (FormatException e)
+            {
+                _logger.Error(e, e.Message);
+            }
+            catch (ObjectDisposedException e)
+            {
+                _logger.Error(e, e.Message);
+            }
+            catch (InvalidOperationException e)
+            {
+                _logger.Error(e, e.Message);
+            }
+            catch (SmtpFailedRecipientException e)
+            {
+                _logger.Error(e, e.Message);
+            }
+            catch (SmtpException e)
+            {
+                _logger.Error(e, e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.Fatal(e, e.Message);
+            }
+
+            return Ok(result);
+        }
     }
+    
 }

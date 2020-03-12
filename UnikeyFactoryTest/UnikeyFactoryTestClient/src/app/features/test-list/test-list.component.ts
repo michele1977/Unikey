@@ -26,10 +26,11 @@ import {IconsService} from '../../services/icons.service';
 export class TestListComponent {
 
   showDeleteError = false;
-  pageSize = 10
+  pageSize = 10;
   textFilter = '';
   tests: Test[] = [];
   showEmailModal = false;
+  sendTestId: number;
   constructor(private router: Router, public icons: IconsService) {
     for (let i = 0; i <= 10; i++) {
       const myTest: Test = {
@@ -57,5 +58,9 @@ export class TestListComponent {
 
   testDetails() {}
 
-  sendMail() {}
+  showEmailModalMethod(id: number) {
+    this.showEmailModal = true;
+    this.sendTestId = id;
+    console.log('Ci sono: id = ' + this.sendTestId);
+  }
 }
