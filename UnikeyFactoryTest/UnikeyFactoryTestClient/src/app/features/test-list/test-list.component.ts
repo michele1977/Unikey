@@ -50,6 +50,9 @@ export class TestListComponent {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
       loader.publish('hide');
+    }, error => {
+      this.loader.publish('hide');
+      alert('Ooops something went wrong');
     });
     this.modalOptions = {
       backdrop: 'static',
@@ -70,6 +73,9 @@ export class TestListComponent {
         this.pageNum = this.pages;
       }
       this.loader.publish('hide');
+    }, error => {
+      this.loader.publish('hide');
+      alert('Ooops something went wrong');
     });
   }
   resizePage(event: any) {
@@ -82,6 +88,9 @@ export class TestListComponent {
         this.pageNum = this.pages;
       }
       this.loader.publish('hide');
+    }, error => {
+      this.loader.publish('hide');
+      alert('Ooops something went wrong');
     });
   }
 
@@ -115,11 +124,16 @@ export class TestListComponent {
 
   NextPage() {
     this.loader.publish('show');
-    this.pageNum += 1;
-    this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+    let nextPage = this.pageNum.valueOf();
+    nextPage++;
+    this.testService.getTests(nextPage, this.pageSize, this.textFilter).subscribe(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
       this.loader.publish('hide');
+      this.pageNum += 1;
+    }, error => {
+      this.loader.publish('hide');
+      alert('Ooops something went wrong');
     });
     if (this.pageNum === this.pages) {
       this.atLast = true;
@@ -134,6 +148,9 @@ export class TestListComponent {
       this.pageNum = this.pages;
       this.atLast = true;
       this.loader.publish('hide');
+    }, error => {
+      this.loader.publish('hide');
+      alert('Ooops something went wrong');
     });
   }
 
@@ -145,17 +162,25 @@ export class TestListComponent {
       this.atLast = false;
       this.pageNum = 1;
       this.loader.publish('hide');
+    }, error => {
+      this.loader.publish('hide');
+      alert('Ooops something went wrong');
     });
   }
 
   previousPage() {
     this.loader.publish('show');
-    this.pageNum -= 1;
-    this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+    let prevPage = this.pageNum.valueOf();
+    prevPage++;
+    this.testService.getTests(prevPage, this.pageSize, this.textFilter).subscribe(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
       this.atLast = false;
       this.loader.publish('hide');
+      this.pageNum -= 1;
+    }, error => {
+      this.loader.publish('hide');
+      alert('Ooops something went wrong');
     });
   }
 }
