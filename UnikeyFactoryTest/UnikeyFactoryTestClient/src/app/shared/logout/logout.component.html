@@ -1,5 +1,12 @@
-<fa-icon class="btn btn-primary"
-   [icon]="icons.faLogout"
-   (click)="logout()"
-   title="logout"></fa-icon>
+<div *ngIf="isVisible">
+  <label style="padding-right: 10px;
+            font-family: Calibri, serif;
+            font-weight: bold;
+            font-size: medium">Hello, {{user}}!</label>
+  <fa-icon class="btn btn-primary"
+           [icon]="icons.faLogout"
+           (click)="logout()"
+           title="logout"></fa-icon>
+</div>
+
 

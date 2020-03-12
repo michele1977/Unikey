@@ -27,7 +27,7 @@ export class LoginComponent {
   login(user: User) {
     this.service.login(user).subscribe(
       jwt => {
-        this.setSession(jwt);
+        this.setSession(jwt, user);
       }, () => {
         this.service.router.navigateByUrl('')
           .then();
@@ -39,7 +39,8 @@ export class LoginComponent {
     );
   }
 
-  private setSession(jwt: string) {
+  private setSession(jwt: string, user: User) {
     localStorage.setItem('token', jwt);
+    localStorage.setItem('userInfo', user.username);
   }
 }
