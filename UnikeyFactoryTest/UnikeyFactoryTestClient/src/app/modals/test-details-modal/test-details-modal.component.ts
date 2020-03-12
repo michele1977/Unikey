@@ -1,10 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Test} from '../../models/test';
 import {ExTestService} from '../../services/exTest.service';
 import {ExTest} from '../../models/ex-test';
 import {IconsService} from '../../services/icons.service';
-import * as moment from 'moment';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-test-details-modal',

@@ -47,7 +47,7 @@ import {LogoutModule} from './shared/logout/logout.module';
     Ng2SearchPipeModule,
     FontAwesomeModule,
     QuestionFormModule,
-    NgbModule
+    NgbModule,
     LogoutModule
   ],
   providers: [
@@ -55,7 +55,7 @@ import {LogoutModule} from './shared/logout/logout.module';
   ],
   exports: [
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
   entryComponents: [TestDetailsModalComponent]
 })
 export class AppModule { }

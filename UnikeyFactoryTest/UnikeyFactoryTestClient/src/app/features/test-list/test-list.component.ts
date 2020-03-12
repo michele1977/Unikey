@@ -77,7 +77,9 @@ export class TestListComponent {
 
   closeErrorAlert() {}
 
-  showContent() {}
+  showContent(id: number) {
+      this.router.navigateByUrl('testcontent/' + id).then();
+  }
 
   deleteTest() {}
 

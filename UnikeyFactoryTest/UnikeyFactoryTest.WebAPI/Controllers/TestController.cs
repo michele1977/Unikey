@@ -1,6 +1,4 @@
-﻿#define MOCK
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Mapping;
 using System.Data.Entity.Infrastructure;
@@ -14,7 +12,6 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json.Linq;
-
 using Ninject;
 using NLog;
 using UnikeyFactoryTest.Domain;
