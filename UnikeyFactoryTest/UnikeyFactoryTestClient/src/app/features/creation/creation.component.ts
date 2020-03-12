@@ -4,6 +4,8 @@ import {TestService} from '../../services/test.service';
 import * as moment from 'moment';
 import {Router} from '@angular/router';
 import {Question} from '../../models/question';
+import {LoaderService} from '../../services/loader.service';
+import loader from '@angular-devkit/build-angular/src/angular-cli-files/plugins/single-test-transform';
 
 @Component({
   selector: 'app-creation',
@@ -59,7 +61,7 @@ export class CreationComponent {
   };
   setVisibility: boolean;
 
-  constructor(private service: TestService, private router: Router) {
+  constructor(private service: TestService, private router: Router, private loader: LoaderService) {
     this.time = moment().format();
     setInterval(() => {
       this.time = moment().format();
@@ -67,13 +69,16 @@ export class CreationComponent {
   }
 
   createTest(form) {
+    this.loader.publish('show');
     this.test.Title = form.value.title;
     this.test.Date = moment().format('DD MM YY H:mm:ss');
 
     this.service.createTest(this.test).pipe().subscribe( res => {
         this.router.navigateByUrl('testList');
+        this.loader.publish('hide');
     }, error => {
         alert('Error while creating');
+        this.loader.publish('hide');
     });
 
   }

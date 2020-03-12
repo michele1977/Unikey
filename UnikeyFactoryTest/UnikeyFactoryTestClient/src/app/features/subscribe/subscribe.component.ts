@@ -4,6 +4,7 @@ import {User} from '../../models/user';
 import {HttpErrorResponse} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {LoaderService} from '../../services/loader.service';
 
 
 @Component({
@@ -20,19 +21,21 @@ export class SubscribeComponent {
   error: HttpErrorResponse;
   errorsList: string[];
 
-  constructor(private service: SubscribeService, private router: Router) { }
+  constructor(private service: SubscribeService, private router: Router, private loader: LoaderService) { }
 
   goToMain() {
     this.router.navigateByUrl('create');
   }
 
   subscribe(user: User) {
+    this.loader.publish('show');
     this.errorsList = null;
     this.service.register(user)
       .subscribe(
         () => {
 
           this.router.navigateByUrl('testList');
+          this.loader.publish('show');
           },
           (error: HttpErrorResponse) => {
 
@@ -45,6 +48,7 @@ export class SubscribeComponent {
                 this.errorsList.push(val);
               }
             }
+            this.loader.publish('hide');
           }
         );
   }
