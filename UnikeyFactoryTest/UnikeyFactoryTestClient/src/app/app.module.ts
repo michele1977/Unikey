@@ -18,6 +18,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TestDetailsModalComponent} from './modals/test-details-modal/test-details-modal.component';
 import {RouterModule} from '@angular/router';
 import { SeeExTestComponent } from './features/see-ex-test/see-ex-test.component';
+import {LoaderService} from './services/loader.service';
 
 
 @NgModule({
@@ -44,7 +45,7 @@ import { SeeExTestComponent } from './features/see-ex-test/see-ex-test.component
     QuestionFormModule,
     NgbModule
   ],
-  providers: [],
+  providers: [LoaderService],
   bootstrap: [AppComponent],
   entryComponents: [TestDetailsModalComponent]
 })

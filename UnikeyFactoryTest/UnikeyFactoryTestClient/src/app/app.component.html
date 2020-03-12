@@ -1,3 +1,9 @@
 <div class="container">
-<router-outlet></router-outlet>
+  <div *ngIf="showLoader" class="myLoaderDiv">
+    <div class="spinner-border text-primary myLoader" role="status">
+      <span class="sr-only">Loading</span>
+    </div>
+  </div>
+
+  <router-outlet></router-outlet>
 </div>

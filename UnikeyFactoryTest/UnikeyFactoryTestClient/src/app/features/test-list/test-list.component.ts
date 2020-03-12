@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {Test} from '../../models/test';
 import * as moment from 'moment';
@@ -8,6 +8,7 @@ import {TestList} from '../../models/test-list';
 import {TestDetailsModalComponent} from '../../modals/test-details-modal/test-details-modal.component';
 import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 import {ExTest} from '../../models/ex-test';
+import {LoaderService} from '../../services/loader.service';
 
 
 @Component({
@@ -41,30 +42,38 @@ export class TestListComponent {
   tests: TestList;
   pages = 0;
   options: any[] = [10, 20, 40, 50, 60];
-    showEmailModal = false;
-    modalOptions: NgbModalOptions;
-    constructor(private router: Router, public icons: IconsService, private testService: TestListService, private modalService: NgbModal) {
-      this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
-        this.tests = data as TestList;
-        this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
-      });
-      this.modalOptions = {
-        backdrop: 'static',
-        backdropClass: 'customBackdrop'
-      };
-    }
+  showEmailModal = false;
+  modalOptions: NgbModalOptions;
+  constructor(private router: Router, public icons: IconsService, private testService: TestListService, private modalService: NgbModal, private loader: LoaderService) {
+    loader.publish('show');
+    this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+      this.tests = data as TestList;
+      this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
+      loader.publish('hide');
+    });
+    this.modalOptions = {
+      backdrop: 'static',
+      backdropClass: 'customBackdrop'
+    };
+  }
 
   loadCreatePage() {
     this.router.navigateByUrl('create');
   }
   search(form) {
     this.textFilter = form.value.textFilter;
+    this.loader.publish('show');
     this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
+      if (this.atLast === true) {
+        this.pageNum = this.pages;
+      }
+      this.loader.publish('hide');
     });
   }
   resizePage(event: any) {
+    this.loader.publish('show');
     this.pageSize = event.target.value;
     this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
       this.tests = data as TestList;
@@ -72,6 +81,7 @@ export class TestListComponent {
       if (this.atLast === true) {
         this.pageNum = this.pages;
       }
+      this.loader.publish('hide');
     });
   }
 
@@ -104,10 +114,12 @@ export class TestListComponent {
   sendMail() {}
 
   NextPage() {
+    this.loader.publish('show');
     this.pageNum += 1;
     this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
+      this.loader.publish('hide');
     });
     if (this.pageNum === this.pages) {
       this.atLast = true;
@@ -115,29 +127,35 @@ export class TestListComponent {
   }
 
   lastPage() {
+    this.loader.publish('show');
     this.testService.getTests(this.pages, this.pageSize, this.textFilter).subscribe(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
       this.pageNum = this.pages;
       this.atLast = true;
+      this.loader.publish('hide');
     });
   }
 
   firstPage() {
+    this.loader.publish('show');
     this.testService.getTests(1, this.pageSize, this.textFilter).subscribe(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
       this.atLast = false;
       this.pageNum = 1;
+      this.loader.publish('hide');
     });
   }
 
   previousPage() {
+    this.loader.publish('show');
     this.pageNum -= 1;
     this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
       this.atLast = false;
+      this.loader.publish('hide');
     });
   }
 }
