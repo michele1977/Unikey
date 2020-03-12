@@ -17,23 +17,19 @@ namespace UnikeyFactoryTest.WebAPI.Models.DTO
             Date = administratedTest.Date;
             AdministratedQuestions =
                 administratedTest.AdministratedQuestions.Select(q => new AdministratedQuestionDto(q)).ToList();
-            ResultScore = administratedTest.Score;
-            TotalScore = administratedTest.MaxScore;
+            Score = administratedTest.Score;
+            MaxScore = administratedTest.MaxScore;
         }
 
         public int Id { get; set; }
         public string URL { get; set; }
-        public int TotalScore { get; set; }
+        public int Score { get; set; }
         public int? TestId { get; set; }
         public string TestSubject { get; set; }
         public DateTime Date { get; set; }
-        public TimeSpan Timer { get; set; }
-        public int PageNumber { get; set; } = 1;
-        public int PageSize { get; set; } = 10;
-        public string TextFilter { get; set; }
-        public int ResultScore { get; set; }
+        public int NumberOfExTests { get; set; }
+        public int MaxScore { get; set; }
 
-        public List<AdministratedQuestionDto> AdministratedQuestions { get; set; }
-        public List<AdministratedTestBusiness> AdministratedTests { get; set; }
+        public ICollection<AdministratedQuestionDto> AdministratedQuestions { get; set; }
     }
 }

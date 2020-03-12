@@ -13,7 +13,7 @@ import * as moment from 'moment';
 })
 export class SeeExTestComponent implements OnInit {
 
-  exTest: ExTest;
+  exTest = new ExTest();
 
   constructor(
     private service: ExTestService,
@@ -21,40 +21,20 @@ export class SeeExTestComponent implements OnInit {
     public icons: IconsService,
     private route: ActivatedRoute,
   ) {
-/*    this.route.paramMap.pipe(
+    this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.service.getExTestById(parseInt(params.get('id'), 10)))
     ).subscribe(data => {
-        this.exTest = data;
+        console.log(data);
+        this.exTest = data as ExTest;
       },
-      () => this.router.navigateByUrl('error'));*/
-    const myExTest: ExTest = {
-      Date: moment().format('DD/MM/YY H:mm'),
-      Title: 'title 0',
-      Id: 0,
-      ExQuestions: [{
-        Text: 'Prova Domanda',
-        Id: 0,
-        AdministratedTestId: 0,
-        Position: 0,
-        ExAnswers: [{
-          AdministratedQuestionId: 0,
-          Id: 0,
-          IsCorrect: 2,
-          IsSelected: true,
-          Score: 0,
-          Text: 'Prova risposta'
-        }]
-      }],
-      Score: 100,
-      MaxScore: 100,
-      State: 2,
-      TestSubject: 'Andrea77'
-    };
-    this.exTest = myExTest;
+      error => {
+        console.error(error);
+        this.router.navigateByUrl('error');
+      });
   }
 
-  ngOnInit(): void {
-  }
+
+  ngOnInit(): void { }
 
 }

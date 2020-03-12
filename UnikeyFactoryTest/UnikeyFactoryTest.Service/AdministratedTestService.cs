@@ -118,7 +118,7 @@ namespace UnikeyFactoryTest.Service
             }
         }
 
-        public async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId)
+        public async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int pageNum, int pageSize, string filter, int testId)
         {
             if (_repo.IsContextNull)
             {
@@ -126,8 +126,12 @@ namespace UnikeyFactoryTest.Service
             }
             using (_repo)
             {
-                 var myTask = Task.Run(() => _repo.GetAdministratedTestsByTestId(testId));
-                return await myTask;
+                var lastPage = (int)Math.Ceiling((float)await CountExTests(filter) / pageSize);
+
+                if (String.IsNullOrWhiteSpace(filter))
+                    return await _repo.GetAdministratedTestsByTestId(pageNum, pageSize, testId);
+                else
+                    return await _repo.GetAdministratedTestsByTestId(pageNum, pageSize, filter, testId);
             }
         }
 
@@ -171,6 +175,19 @@ namespace UnikeyFactoryTest.Service
                 _repo = _kernel.Get<IAdministratedTestRepository>();
             }
             return administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
+        }
+
+        public async Task<int> CountExTests(string filter)
+        {
+            if (_repo.IsContextNull)
+            {
+                _repo = _kernel.Get<IAdministratedTestRepository>();
+            }
+
+            if (String.IsNullOrWhiteSpace(filter))
+                return await _repo.CountExTests();
+            else
+                return await _repo.CountExTests(filter);
         }
 
         public void Dispose()
