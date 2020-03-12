@@ -187,6 +187,7 @@
     <Compile Include="Models\DTO\AnswerDto.cs" />
     <Compile Include="Models\DTO\QuestionDto.cs" />
     <Compile Include="Models\DTO\TestDto.cs" />
+    <Compile Include="Models\EmailModel.cs" />
     <Compile Include="ResponseMessages\ErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -232,10 +233,6 @@
     <ProjectReference Include="..\UnikeyFactoryTest.NinjectConfiguration\UnikeyFactoryTest.NinjectConfiguration.csproj">
       <Project>{04C2FC8F-855F-45FF-9BE7-DDBA35197D45}</Project>
       <Name>UnikeyFactoryTest.NinjectConfiguration</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\UnikeyFactoryTest.Presentation\UnikeyFactoryTest.Presentation.csproj">
-      <Project>{9BC92D83-2295-40F9-A86B-E54C6BD8454F}</Project>
-      <Name>UnikeyFactoryTest.Presentation</Name>
     </ProjectReference>
     <ProjectReference Include="..\UnikeyFactoryTest.Repository\UnikeyFactoryTest.Repository.csproj">
       <Project>{1AE6EE8E-E465-41C5-A17A-EF35DA1ED082}</Project>

@@ -26,7 +26,7 @@ using UnikeyFactoryTest.Service;
 using UnikeyFactoryTest.WebAPI.Models.DTO;
 using UnikeyFactoryTest.Service.Providers.MailProvider;
 using UnikeyFactoryTest.WebAPI.ResponseMessages;
-
+using UnikeyFactoryTest.WebAPI.Models;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
