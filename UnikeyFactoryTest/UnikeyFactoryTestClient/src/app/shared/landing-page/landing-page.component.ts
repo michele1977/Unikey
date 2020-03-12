@@ -8,8 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class LandingPageComponent implements OnInit {
   isVisible = true;
 
-  setVisible(bool: boolean) {
-    this.isVisible = bool;
+  setVisible() {
+    this.isVisible = !this.isVisible;
   }
   constructor() { }
 

@@ -19,14 +19,13 @@ export class SubscribeComponent {
   maxLength = 50;
   error: HttpErrorResponse;
   errorsList: string[];
-  isVisible = false;
 
-  @Output() switch: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() switch: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private service: SubscribeService, private router: Router) { }
-  change() {
-    this.isVisible = !this.isVisible;
-    this.switch.emit(this.isVisible);
+  
+  changeForm() {
+    this.switch.emit();
   }
 
   goToMain() {

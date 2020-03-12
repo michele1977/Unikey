@@ -14,20 +14,21 @@ export class LoginComponent {
   maxLength = 50;
   passwordPattern = '^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[*@$!#%&()^_~{}+=|.]).{6,50}$';
   isPostBack: boolean;
-  isLogin = true;
 
   constructor(public service: LoginService) {
   }
-  @Output() switch: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  @Output() switch: EventEmitter<any> = new EventEmitter<any>();
+
   changeForm() {
-    this.isLogin = !this.isLogin;
-    this.switch.emit(this.isLogin);
+    this.switch.emit();
   }
+
   login(user: User) {
     this.service.login(user).subscribe(
       jwt => {
         this.setSession(jwt);
-      }, error => {
+      }, () => {
         this.service.router.navigateByUrl('')
           .then();
         this.isPostBack = true;

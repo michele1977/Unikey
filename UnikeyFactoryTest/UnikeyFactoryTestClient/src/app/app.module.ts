@@ -14,6 +14,8 @@ import {TestcontentComponent} from './features/test-list/testcontent/testcontent
 import { LoginComponent } from './features/login/login.component';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {InterceptorService} from './services/interceptor.service';
+import { LogoutComponent } from './shared/logout/logout.component';
+import {LogoutModule} from './shared/logout/logout.module';
 
 
 @NgModule({
@@ -21,7 +23,7 @@ import {InterceptorService} from './services/interceptor.service';
     AppComponent,
     TestListComponent,
     CreationComponent,
-    TestcontentComponent,
+    TestcontentComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,8 @@ import {InterceptorService} from './services/interceptor.service';
     FormsModule,
     QuestionListModule,
     Ng2SearchPipeModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    LogoutModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }

@@ -8,6 +8,6 @@ import {faInfo} from '@fortawesome/free-solid-svg-icons';
 })
 export class AppComponent {
   title = 'UnikeyFactoryTestClient';
-
   constructor() { }
+
 }

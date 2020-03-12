@@ -5,12 +5,17 @@
   <div class="create-test-a-div">
     <fa-icon [icon]="icons.faPlus" class="btn btn-success create-test-a" (click)="loadCreatePage()"></fa-icon>
   </div>
+  <div style="position: absolute; right: 200px">
+    <app-logout></app-logout>
+  </div>
 </div>
 
 <div class="alert alert-danger" *ngIf="showDeleteError" >
   <strong>Holy holy maccaroni!</strong> An error occurred while deleting the test
   <button type="button" class="close" aria-label="Close" (click)="closeErrorAlert()">&times;</button>
 </div>
+
+
 
 <hr>
 

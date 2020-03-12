@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {faArrowLeft, faInfo} from '@fortawesome/free-solid-svg-icons';
+import {faArrowLeft, faInfo, faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
 import {faTrash} from '@fortawesome/free-solid-svg-icons/faTrash';
 import {faList} from '@fortawesome/free-solid-svg-icons/faList';
 import {faMailBulk} from '@fortawesome/free-solid-svg-icons/faMailBulk';
@@ -21,6 +21,7 @@ export class IconsService {
   faArrowLeft = faArrowLeft;
   faArrowRight = faArrowRight;
   faAngleDoubleRight = faAngleDoubleRight;
+  faLogout = faSignOutAlt;
   constructor() { }
 
 }
