@@ -1,4 +1,4 @@
-﻿#define MOCK
+﻿
 
 using System;
 using System.Collections.Generic;
@@ -209,6 +209,8 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         {
             try
             {
+                test.UserId = 5;
+
                 await _service.UpdateTest(test);
                 return Request.CreateResponse(HttpStatusCode.OK, test.Id);
             }

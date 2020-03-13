@@ -19,6 +19,9 @@ import {TestDetailsModalComponent} from './modals/test-details-modal/test-detail
 import {RouterModule} from '@angular/router';
 import { SeeExTestComponent } from './features/see-ex-test/see-ex-test.component';
 import { ExTestListComponent } from './features/ex-test-list/ex-test-list.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -44,7 +47,10 @@ import { ExTestListComponent } from './features/ex-test-list/ex-test-list.compon
     Ng2SearchPipeModule,
     FontAwesomeModule,
     QuestionFormModule,
-    NgbModule
+    NgbModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent],

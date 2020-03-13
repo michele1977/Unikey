@@ -49,11 +49,20 @@ isThereAnError: boolean;
     return res;
   }
 
+  deleteQuestion(index: number) {
+    this.test.Questions.splice(index, 1);
+    this.areThereModifies = true;
+  }
+
   edit(obj) {
     this.test.Questions[obj.index].Text = obj.question.questionText;
     this.test.Questions[obj.index].Answers = obj.question.answers;
     this.areThereModifies = true;
     this.isEditable[obj.index] = false;
+  }
+
+  goBack() {
+    this.router.navigateByUrl('testList');
   }
 
   undo() {

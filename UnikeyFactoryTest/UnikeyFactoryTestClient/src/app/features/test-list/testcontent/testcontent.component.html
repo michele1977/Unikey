@@ -16,16 +16,19 @@
 <hr />
 <br />
 <div id="testContentStats">
-  <label><strong>Number of questions: {{this.test.Questions.length}}</strong></label> |
-  <label><strong>Max Score: {{this.maxScore}}</strong></label>
+  <label><strong>Number of questions: {{this.test.Questions.length}}</strong></label>
+  <fa-icon id="goBackIcon" [icon]="icons.faSignInAlt" title="Go back" (click)="goBack()"></fa-icon>
 </div>
 
+<div>
+</div>
+<br>
 <div class="container col-8">
   <div *ngFor="let question of this.test.Questions; let i = index" class="testContentRow">
     <div>
       <div id="divQuestionForm">
-        <strong>Domanda {{i+1}}</strong>
-        <fa-icon [icon]="icons.faTrash" question="question" id="editIcon" title="Delete"></fa-icon>
+        <strong>Question {{i+1}}</strong>
+        <fa-icon [icon]="icons.faTrash" question="question" (click)="deleteQuestion(i)" id="editIcon" title="Delete"></fa-icon>
         <fa-icon [icon]="icons.faPencilAlt" (click)="toggle(i)" id="deleteIcon" title="Edit"></fa-icon>
       </div>
       <hr />
@@ -34,7 +37,7 @@
         <br>
         <div id="answersList">
           <li type="a" *ngFor="let answer of question.Answers">
-            .{{answer.Text}}
+            .{{answer.Text}}&nbsp;&nbsp;<fa-icon *ngIf="answer.IsCorrect == 1" style="color: green" [icon]="icons.faCheck"></fa-icon>
           </li>
         </div>
       </div>
