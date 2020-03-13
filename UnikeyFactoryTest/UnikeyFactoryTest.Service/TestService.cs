@@ -207,5 +207,16 @@ namespace UnikeyFactoryTest.Service
             else
                 return await _repo.CountTests(filter);
         }
+
+        public async Task<TestBusiness> GetTestByIdLight(int testId)
+        {
+            if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
+
+            using (_repo)
+            {
+                var test = await _repo.GetTestLight(testId);
+                return test;
+            }
+        }
     }
 }

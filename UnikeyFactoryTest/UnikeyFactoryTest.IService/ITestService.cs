@@ -28,5 +28,6 @@ namespace UnikeyFactoryTest.IService
         Task<int> GetExTestCount(int testId);
         Task<List<TestBusiness>> GetAllFiltered(int pageNum, int pageSize, string filter);
         Task<int> CountTests(string filter);
+        Task<TestBusiness> GetTestByIdLight(int testId);
     }
 }

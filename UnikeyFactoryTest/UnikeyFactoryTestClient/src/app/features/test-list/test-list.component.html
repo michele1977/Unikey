@@ -6,9 +6,6 @@
     <fa-icon [icon]="icons.faPlus" class="btn btn-success create-test-a" (click)="loadCreatePage()"></fa-icon>
   </div>
 </div>
-
-<app-email-modal [show]="showEmailModal" [testId]="sendTestId"></app-email-modal>
-
 <div class="alert alert-danger" *ngIf="showDeleteError" >
   <strong>Holy holy maccaroni!</strong> An error occurred while deleting the test
   <button type="button" class="close" aria-label="Close" (click)="closeErrorAlert()">&times;</button>
@@ -30,15 +27,12 @@
   </div>
   <div style="float: right; margin-left: auto;">
     <div style="margin-top: 5px;">
-
       <form #form="ngForm">
         <label>Elements per page </label>
         <select (change)="resizePage($event)">
           <option name="pageSize" [value]="option" *ngFor="let option of options">{{option}}</option>
         </select>
       </form>
-
-
     </div>
   </div>
 </div>
@@ -70,14 +64,13 @@
     <td class="text-center"></td>
     <td class="text-center" style="width: 20%">
       <div>
-        <fa-icon [icon]="icons.faInfo" (click)="showContent(test?.Id)"></fa-icon> |
-        <fa-icon [icon]="icons.faTrash" (click)="deleteTest()"></fa-icon> |
-        <fa-icon [icon]="icons.faList" (click)="testDetails(test)"></fa-icon> |
-        <fa-icon [icon]="icons.faMailForward" (click)="showEmailModalMethod(test.Id)"></fa-icon>
+        <fa-icon [icon]="icons.faInfo" class="pointer" [routerLink]="['testcontent/', test.Id]"></fa-icon> |
+        <fa-icon [icon]="icons.faTrash" class="pointer" (click)="deleteTest()"></fa-icon> |
+        <fa-icon [icon]="icons.faList" class="pointer" (click)="testDetails(test)"></fa-icon> |
+        <fa-icon [icon]="icons.faMailForward" class="pointer" (click)="showEmailModalMethod(test.Id)"></fa-icon>
       </div>
     </td>
   </tr>
-
 </table>
 
 <div class="text-center">
