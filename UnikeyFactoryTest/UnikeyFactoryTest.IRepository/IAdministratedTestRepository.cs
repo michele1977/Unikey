@@ -18,6 +18,10 @@ namespace UnikeyFactoryTest.IRepository
         Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId);
         Task DeleteAdministratedTest(int administratedTestId);
         Task Update_Save_Question(AdministratedQuestionBusiness adQuestion);
+        Task<int> CountExTests();
+        Task<int> CountExTests(string filter);
+        Task<List<AdministratedTestBusiness>> GetAllFiltered(int pageNum, int pageSize, string filter);
+        Task<Dictionary<string, int>> GetScoreAndMax(int id);
         bool IsContextNull { get; }
     }
 }

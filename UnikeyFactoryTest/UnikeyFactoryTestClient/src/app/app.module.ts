@@ -18,6 +18,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TestDetailsModalComponent} from './modals/test-details-modal/test-details-modal.component';
 import {RouterModule} from '@angular/router';
 import { SeeExTestComponent } from './features/see-ex-test/see-ex-test.component';
+import { ExTestListComponent } from './features/ex-test-list/ex-test-list.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { SeeExTestComponent } from './features/see-ex-test/see-ex-test.component
     ErrorComponent,
     TestContentEditComponent,
     TestDetailsModalComponent,
-    SeeExTestComponent
+    SeeExTestComponent,
+    ExTestListComponent
   ],
 
   imports: [

@@ -17,6 +17,10 @@ namespace UnikeyFactoryTest.IService
         Task Update_Save_Question(AdministratedQuestionBusiness adQuestion);
         AdministratedQuestionBusiness Previous(AdministratedTestBusiness administratedTest, int position);
         Task<List<AdministratedTestBusiness>> GetAdministratedTestsByFilter(string filter);
+        Task<List<AdministratedTestBusiness>> GetAllFiltered(int pageNum, int pageSize, string filter);
+        Task<int> CountExTests();
+        Task<int> CountExTests(string filter);
+        Task<Dictionary<string, int>> GetScoreAndMax(int id);
         void Dispose();
     }
 }

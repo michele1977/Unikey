@@ -1,12 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Ninject;
+using Ninject.Infrastructure.Language;
 using NLog;
+using UnikeyFactoryTest.Domain.Enums;
 using UnikeyFactoryTest.IService;
+using UnikeyFactoryTest.WebAPI.Models.DTO;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
+    [EnableCors("*", "*", "*")]
     public class ExTestController : ApiController
     {
         private readonly IKernel _kernel;
@@ -44,12 +51,20 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             }
         }
 
-        public async Task<IHttpActionResult> GetAll()
+        public async Task<IHttpActionResult> GetAll(int pageNum, int pageSize, string filter)
         {
             try
             {
-                var returned = await _service.GetAdministratedTests();
-                return Ok(returned);
+                var testBusinessList = await _service.GetAllFiltered(pageNum, pageSize, filter);
+                var exTestDtoList = testBusinessList.Select(t => new ExTestDto(_service, t)).ToList();
+                exTestDtoList[0].TotalNumberOfExTests = await _service.CountExTests(filter);
+
+                return Ok(exTestDtoList);
+            }
+            catch (ArgumentNullException e)
+            {
+                _logger.Error(e, e.Message);
+                return InternalServerError();
             }
             catch (Exception e)
             {

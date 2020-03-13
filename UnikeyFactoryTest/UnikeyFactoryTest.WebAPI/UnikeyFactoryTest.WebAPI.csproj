@@ -184,6 +184,9 @@
     <Compile Include="Models\DTO\AdministratedQuestionDto.cs" />
     <Compile Include="Models\DTO\AdministratedTestDTO.cs" />
     <Compile Include="Models\DTO\AnswerDto.cs" />
+    <Compile Include="Models\DTO\ExAnswerDto.cs" />
+    <Compile Include="Models\DTO\ExQuestionDto.cs" />
+    <Compile Include="Models\DTO\ExTestDto.cs" />
     <Compile Include="Models\DTO\QuestionDto.cs" />
     <Compile Include="Models\DTO\TestDto.cs" />
     <Compile Include="ResponseMessages\ErrorMessages.Designer.cs">

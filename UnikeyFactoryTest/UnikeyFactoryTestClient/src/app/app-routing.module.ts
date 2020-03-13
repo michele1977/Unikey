@@ -6,6 +6,7 @@ import {TestListComponent} from './features/test-list/test-list.component';
 import {TestcontentComponent} from './features/test-list/testcontent/testcontent.component';
 import {ErrorComponent} from './shared/error/error.component';
 import {SeeExTestComponent} from './features/see-ex-test/see-ex-test.component';
+import { ExTestListComponent } from './features/ex-test-list/ex-test-list.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'testcontent/:id', component: TestcontentComponent},
   {path: 'create', component: CreationComponent},
   {path: 'testList', component: TestListComponent},
+  {path: 'extestList', component: ExTestListComponent},
   {path: 'error', component: ErrorComponent},
   {path: '', component: LandingPageComponent}
 ];
