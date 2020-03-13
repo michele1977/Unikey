@@ -9,6 +9,7 @@ import {TestDetailsModalComponent} from '../../modals/test-details-modal/test-de
 import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 import {ExTest} from '../../models/ex-test';
 import {LoaderService} from '../../services/loader.service';
+import {EmailModalComponent} from '../../shared/email-modal/email-modal.component';
 
 
 @Component({
@@ -27,9 +28,6 @@ import {LoaderService} from '../../services/loader.service';
     .create-test-a{
       float: left;
     }
-    .pointer {
-      cursor: pointer;
-    }
   `]
 })
 export class TestListComponent {
@@ -42,8 +40,6 @@ export class TestListComponent {
   tests: TestList;
   pages = 0;
   options: any[] = [10, 20, 40, 50, 60];
-  showEmailModal = false;
-  sendTestId: number;
   modalOptions: NgbModalOptions;
   constructor(private router: Router, public icons: IconsService, private testService: TestListService, private modalService: NgbModal, private loader: LoaderService) {
     loader.publish('show');
@@ -170,7 +166,7 @@ export class TestListComponent {
   previousPage() {
     this.loader.publish('show');
     let prevPage = this.pageNum.valueOf();
-    prevPage++;
+    prevPage--;
     this.testService.getTests(prevPage, this.pageSize, this.textFilter).subscribe(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
@@ -183,9 +179,8 @@ export class TestListComponent {
     });
   }
   showEmailModalMethod(id: number) {
-    this.showEmailModal = true;
-    this.sendTestId = id;
-    console.log('Ci sono: id = ' + this.sendTestId);
+    const modal = this.modalService.open(EmailModalComponent);
+    modal.componentInstance.testId = id;
   }
 }
 

@@ -1,38 +1,49 @@
-import {Component, DoCheck, Input, OnInit} from '@angular/core';
+import {AfterContentInit, Component, DoCheck, Input, OnInit} from '@angular/core';
 import {EmailSenderService} from '../../services/email-sender.service';
-import {NgForm} from '@angular/forms';
+import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {EmailModel} from '../../models/emailModel';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {IconsService} from '../../services/icons.service';
+import {LoaderService} from '../../services/loader.service';
+import validate = WebAssembly.validate;
 
 @Component({
   selector: 'app-email-modal',
   templateUrl: './email-modal.component.html',
   styleUrls: ['./email-modal.component.css']
 })
-export class EmailModalComponent implements DoCheck {
-  @Input() show = false;
-  @Input() testId: number;
+export class EmailModalComponent {
 
-  email: EmailModel;
 
-  constructor(private emailSender: EmailSenderService) {
-    console.log('Ciao, sono il modal');
-    console.log(this.show);
-  }
+  constructor(
+    private emailSender: EmailSenderService,
+    public activeModal: NgbActiveModal,
+    public icons: IconsService,
+    private loader: LoaderService) { }
 
-  ngDoCheck(): void {
-    console.log(this.show);
-    if (this.show === true) {
-      const btn = document.getElementById('btnOpenModal').click();
-      console.log('sono visibile');
-    }
-    console.log(this.show);
-  }
+  emailValidator = '^([a-zA-Z0-9-.]+)@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$';
+  testId: number;
+  emailSent = false;
+  emailError = false;
+  email: EmailModel = {
+    Name: '',
+    Email: '',
+    Id: 0
+  };
 
   sendEmail(form: NgForm) {
+    this.loader.publish('show');
     this.email.Id = this.testId;
     this.email.Name = form.value.name;
     this.email.Email = form.value.email;
-    this.emailSender.sendEmail(this.email);
+    this.emailSender.sendEmail(this.email).subscribe( res => {
+        this.emailSent = true;
+        this.loader.publish('hide');
+      },
+      error => {
+        this.emailError = true;
+        this.loader.publish('hide');
+      });
   }
 
 }
