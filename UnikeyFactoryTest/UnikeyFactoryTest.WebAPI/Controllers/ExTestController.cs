@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Ninject;
 using NLog;
 using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.WebAPI.CustomAttributes;
+using UnikeyFactoryTest.WebAPI.Models.DTO;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
     [LoginAuthorize]
+    [EnableCors("*", "*", "*")]
     public class ExTestController : ApiController
     {
         private readonly IKernel _kernel;
@@ -61,11 +65,22 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             }
         }
 
-        public async Task<IHttpActionResult> GetByTestId(int id)
+        public async Task<IHttpActionResult> GetByTestId(int pageNum, int pageSize, string filter, int id)
         {
             try
             {
-                var returned = await _service.GetAdministratedTestsByTestId(id);
+                var tests = await _service.GetAdministratedTestsByTestId(pageNum, pageSize, filter, id);
+                var returned = new List<AdministratedTestDto>();
+                var numberOfTests = await _service.CountExTests(filter);
+
+                foreach(var test in tests)
+                {
+                    var testDto = new AdministratedTestDto(test);
+                    returned.Add(testDto);
+                }
+
+                returned[0].NumberOfExTests = numberOfTests;
+
                 return Ok(returned);
             }
             catch (ArgumentNullException e)

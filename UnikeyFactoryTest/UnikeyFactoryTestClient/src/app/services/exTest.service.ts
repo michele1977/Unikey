@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Test} from '../models/test';
-import {Observable} from 'rxjs';
 import {ExTest} from '../models/ex-test';
 
 const reqUrl = 'https://localhost:44329/api/ExTest/';
@@ -16,7 +14,9 @@ export class ExTestService {
     return this.http.get<ExTest>(reqUrl + 'Get/' + id);
   }
 
-  getExTestByTestId(id: number) {
-    return this.http.get<ExTest[]>(reqUrl + 'GetByTestId/' + id);
+  getExTestByTestId(pageNum: number, pageSize: number, textFilter: string, id: number) {
+    return this.http.get<ExTest[]>(
+      reqUrl + 'GetByTestId?pageNum=' + pageNum + '&pageSize=' + pageSize + '&filter=' + textFilter + '&id=' + id
+    );
   }
 }

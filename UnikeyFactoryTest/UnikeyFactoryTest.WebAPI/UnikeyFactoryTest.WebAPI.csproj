@@ -210,6 +210,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Templates\MailTemplate\CodiceHtml.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -225,6 +226,7 @@
     <Compile Include="Models\DTO\AnswerDto.cs" />
     <Compile Include="Models\DTO\QuestionDto.cs" />
     <Compile Include="Models\DTO\TestDto.cs" />
+    <Compile Include="Models\EmailModel.cs" />
     <Compile Include="CustomAttributes\LoginAuthorizeAttribute.cs" />
     <Compile Include="ResponseMessages\ErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>

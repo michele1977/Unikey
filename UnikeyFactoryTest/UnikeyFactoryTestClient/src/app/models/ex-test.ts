@@ -11,5 +11,6 @@ export class ExTest {
   MaxScore: number;
   State?: AdministratedTestState;
   Score: number;
-  ExQuestions: ExQuestion[];
+  NumberOfExTests: number;
+  AdministratedQuestions: ExQuestion[];
 }

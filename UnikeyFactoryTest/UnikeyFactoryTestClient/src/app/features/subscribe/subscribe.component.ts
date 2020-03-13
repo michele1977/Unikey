@@ -4,6 +4,7 @@ import {User} from '../../models/user';
 import {HttpErrorResponse} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {LoaderService} from '../../services/loader.service';
 
 
 @Component({
@@ -21,8 +22,7 @@ export class SubscribeComponent {
   errorsList: string[];
 
   @Output() switch: EventEmitter<any> = new EventEmitter<any>();
-
-  constructor(private service: SubscribeService, private router: Router) { }
+  constructor(private service: SubscribeService, private router: Router, private loader: LoaderService) { }
   
   changeForm() {
     this.switch.emit();
@@ -33,12 +33,14 @@ export class SubscribeComponent {
   }
 
   subscribe(user: User) {
+    this.loader.publish('show');
     this.errorsList = null;
     this.service.register(user)
       .subscribe(
         () => {
 
           this.router.navigateByUrl('testList');
+          this.loader.publish('show');
           },
           (error: HttpErrorResponse) => {
 
@@ -51,6 +53,7 @@ export class SubscribeComponent {
                 this.errorsList.push(val);
               }
             }
+            this.loader.publish('hide');
           }
         );
   }

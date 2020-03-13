@@ -18,6 +18,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TestDetailsModalComponent} from './modals/test-details-modal/test-details-modal.component';
 import {RouterModule} from '@angular/router';
 import { SeeExTestComponent } from './features/see-ex-test/see-ex-test.component';
+import {LoaderService} from './services/loader.service';
+import { EmailModalComponent } from './shared/email-modal/email-modal.component';
 import { LoginComponent } from './features/login/login.component';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {InterceptorService} from './services/interceptor.service';
@@ -34,7 +36,9 @@ import {LogoutModule} from './shared/logout/logout.module';
     ErrorComponent,
     TestContentEditComponent,
     TestDetailsModalComponent,
-    SeeExTestComponent
+    SeeExTestComponent,
+    EmailModalComponent
+
   ],
 
   imports: [
@@ -55,6 +59,7 @@ import {LogoutModule} from './shared/logout/logout.module';
   ],
   exports: [
   ],
+  providers: [LoaderService],
   bootstrap: [AppComponent],
   entryComponents: [TestDetailsModalComponent]
 })

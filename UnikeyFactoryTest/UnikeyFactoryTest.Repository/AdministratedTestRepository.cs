@@ -73,9 +73,26 @@ namespace UnikeyFactoryTest.Repository
             return administratedTestList;
         }
 
-        public async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId)
-        { 
-            var adTestList = await _ctx.AdministratedTests.Where(t => t.TestId == testId).ToListAsync();
+        public async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int pageNum, int pageSize, int testId)
+        {
+            var adTestList = await _ctx.AdministratedTests
+                .OrderBy(x => x.Id)
+                .Where(t => t.TestId == testId)
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize).Select(t => t).ToListAsync();
+            
+            Mapper = Kernel.Get<IMapper>("Light");
+            var filteredList = Mapper.Map<List<AdministratedTest>, List<AdministratedTestBusiness>>(adTestList);
+            return filteredList;
+        }
+        public async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int pageNum, int pageSize, string filter, int testId)
+        {
+            var adTestList = await _ctx.AdministratedTests
+                .OrderBy(x => x.Id)
+                .Where(test => test.TestSubject.Contains(filter) && test.TestId == testId)
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize).Select(t => t).ToListAsync();
+
             Mapper = Kernel.Get<IMapper>("Light");
             var filteredList = Mapper.Map<List<AdministratedTest>, List<AdministratedTestBusiness>>(adTestList);
             return filteredList;
@@ -176,6 +193,15 @@ namespace UnikeyFactoryTest.Repository
             NewUpdate(newQuestion, oldQuestion);
         }
         #endregion
+
+        async public Task<int> CountExTests(string filter)
+        {
+            return await _ctx.AdministratedTests.Where(t => t.Title.Contains(filter)).CountAsync();
+        }
+        async public Task<int> CountExTests()
+        {
+            return await _ctx.AdministratedTests.CountAsync();
+        }
 
         public void Dispose()
         {
