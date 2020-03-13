@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {TestList} from '../models/test-list';
 
-const reqUrl = 'https://localhost:44329/api/';
+// const reqUrl = 'https://localhost:44329/api/';
+const reqUrl = 'http://localhost/UnikeyFactoryTest.WebAPI/api/';
 
 @Injectable({
   providedIn: 'root'

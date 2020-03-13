@@ -26,7 +26,7 @@ namespace UserTest
         }
         private void RegisterServices(IKernel kernel)
         {
-            kernel.Load(new BindingsService());
+            //kernel.Load(new BindingsService());
         }
     }
 }

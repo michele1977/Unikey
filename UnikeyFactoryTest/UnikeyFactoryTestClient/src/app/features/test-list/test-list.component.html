@@ -14,6 +14,8 @@
   <button type="button" class="close" aria-label="Close" (click)="closeErrorAlert()">&times;</button>
 </div>
 
+
+
 <hr>
 
 <div style="display: flex;">
@@ -68,7 +70,7 @@
     <td class="text-center"></td>
     <td class="text-center" style="width: 20%">
       <div>
-        <fa-icon [icon]="icons.faInfo" [routerLink]="['testcontent/', test.Id]"></fa-icon> |
+        <fa-icon [icon]="icons.faInfo" (click)="showContent(test?.Id)"></fa-icon> |
         <fa-icon [icon]="icons.faTrash" (click)="deleteTest()"></fa-icon> |
         <fa-icon [icon]="icons.faList" (click)="testDetails(test)"></fa-icon> |
         <fa-icon [icon]="icons.faMailForward" (click)="showEmailModalMethod(test.Id)"></fa-icon>

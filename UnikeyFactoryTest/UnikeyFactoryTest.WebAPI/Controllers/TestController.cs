@@ -1,6 +1,4 @@
-﻿#define MOCK
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Mapping;
 using System.Data.Entity.Infrastructure;
@@ -16,7 +14,6 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json.Linq;
-
 using Ninject;
 using NLog;
 using UnikeyFactoryTest.Domain;
@@ -25,12 +22,14 @@ using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.Service;
 using UnikeyFactoryTest.WebAPI.Models.DTO;
 using UnikeyFactoryTest.Service.Providers.MailProvider;
+using UnikeyFactoryTest.WebAPI.CustomAttributes;
 using UnikeyFactoryTest.WebAPI.ResponseMessages;
 using UnikeyFactoryTest.WebAPI.Models;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
     [EnableCors("*", "*", "*")]
+    [LoginAuthorize]
     public class TestController : ApiController
     {
         private readonly IKernel _kernel;

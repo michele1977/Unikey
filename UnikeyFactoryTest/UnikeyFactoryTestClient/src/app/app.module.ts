@@ -20,6 +20,11 @@ import {RouterModule} from '@angular/router';
 import { SeeExTestComponent } from './features/see-ex-test/see-ex-test.component';
 import {LoaderService} from './services/loader.service';
 import { EmailModalComponent } from './shared/email-modal/email-modal.component';
+import { LoginComponent } from './features/login/login.component';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {InterceptorService} from './services/interceptor.service';
+import { LogoutComponent } from './shared/logout/logout.component';
+import {LogoutModule} from './shared/logout/logout.module';
 
 
 @NgModule({
@@ -46,9 +51,15 @@ import { EmailModalComponent } from './shared/email-modal/email-modal.component'
     Ng2SearchPipeModule,
     FontAwesomeModule,
     QuestionFormModule,
-    NgbModule
+    NgbModule,
+    LogoutModule
   ],
-  providers: [LoaderService],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
+    LoaderService
+  ],
+  exports: [
+  ],
   bootstrap: [AppComponent],
   entryComponents: [TestDetailsModalComponent]
 })
