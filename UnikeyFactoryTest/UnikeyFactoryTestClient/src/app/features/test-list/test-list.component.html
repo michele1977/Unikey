@@ -3,7 +3,7 @@
     <h2>Test List</h2>
   </div>
   <div class="create-test-a-div">
-    <fa-icon [icon]="icons.faPlus" class="btn btn-success create-test-a" (click)="loadCreatePage()"></fa-icon>
+    <fa-icon [icon]="icons.faPlus" class="btn btn-success create-test-a" (click)="loadCreatePage()" title="Create Test"></fa-icon>
   </div>
 </div>
 <div class="alert alert-danger" *ngIf="showDeleteError" >
@@ -64,10 +64,10 @@
     <td class="text-center"></td>
     <td class="text-center" style="width: 20%">
       <div>
-        <fa-icon [icon]="icons.faInfo" class="pointer" [routerLink]="['testcontent/', test.Id]"></fa-icon> |
-        <fa-icon [icon]="icons.faTrash" class="pointer" (click)="deleteTest()"></fa-icon> |
-        <fa-icon [icon]="icons.faList" class="pointer" (click)="testDetails(test)"></fa-icon> |
-        <fa-icon [icon]="icons.faMailForward" class="pointer" (click)="showEmailModalMethod(test.Id)"></fa-icon>
+        <fa-icon [icon]="icons.faInfo" (click)="showContent(test?.Id)" title="Show Test"></fa-icon> |
+        <fa-icon [icon]="icons.faTrash" (click)="deleteTest()" title="Delete Test"></fa-icon> |
+        <fa-icon [icon]="icons.faList" (click)="testDetails(test)" title="See ExTests"></fa-icon> |
+        <fa-icon [icon]="icons.faMailForward" (click)="showEmailModalMethod(test.Id)" title="Send Mail"></fa-icon>
       </div>
     </td>
   </tr>

@@ -160,6 +160,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             try
             {
                 test.UserId = 5;
+                test.Date = DateTime.Now;
 
                 _service.AddNewTest(test);
                 return Request.CreateResponse(HttpStatusCode.OK, test.Id);

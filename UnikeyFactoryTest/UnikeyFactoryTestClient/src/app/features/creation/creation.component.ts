@@ -5,17 +5,22 @@ import * as moment from 'moment';
 import {Router} from '@angular/router';
 import {Question} from '../../models/question';
 import {LoaderService} from '../../services/loader.service';
-import loader from '@angular-devkit/build-angular/src/angular-cli-files/plugins/single-test-transform';
 
 @Component({
   selector: 'app-creation',
   template: `
     <form #form="ngForm">
+      <nav class="navbar navbar-expand-lg navbar-light" style="border-radius: 15px 15px; background-color: #2F00FC;">
+        <a class="navbar-brand">
+          <h1 style="color: white">Create Test</h1>
+        </a>
+      </nav>
+      <hr>
       <div class="form-group create-div">
         <input type="text" name="title" class="form-control" placeholder="Test Name.." [ngModel]="title" required>
         <label><b>Date: </b>{{time | date: 'dd/MM/yy H:mm:ss'}}</label>
       </div>
-      <hr>
+      <br>
       <div class="row create-row">
         <div class="col-6">
           <app-question-list [test]="test" (showForm)='visibility($event)' [enable]="setVisibility"></app-question-list>
@@ -26,7 +31,7 @@ import loader from '@angular-devkit/build-angular/src/angular-cli-files/plugins/
       </div>
       <hr>
       <div style="text-align: right">
-        <button class="btn btn-outline-primary create-button" (click)="createTest(form)" [disabled]="!form.valid">
+        <button class="btn btn-outline-primary create-button" (click)="createTest(form)" [disabled]="!form.valid" title="Save Test">
           <i class="fa fa-check"></i>
         </button>
       </div>
@@ -71,7 +76,7 @@ export class CreationComponent {
   createTest(form) {
     this.loader.publish('show');
     this.test.Title = form.value.title;
-    this.test.Date = moment().format('DD MM YY H:mm:ss');
+    this.test.Date = moment().format('DD MM YY H:mm:ss').toString();
 
     this.service.createTest(this.test).pipe().subscribe( res => {
         this.router.navigateByUrl('testList');
@@ -80,7 +85,7 @@ export class CreationComponent {
         alert('Error while creating');
         this.loader.publish('hide');
     });
-
+    this.loader.publish('hide');
   }
 
   visibility(setVisibility) {

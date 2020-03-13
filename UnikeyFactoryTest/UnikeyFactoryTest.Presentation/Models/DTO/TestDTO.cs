@@ -51,7 +51,7 @@ namespace UnikeyFactoryTest.Presentation.Models.DTO
 
         private async Task<List<AdministratedTestBusiness>> GetAdministratedTestsByTestId(int testId)
         {
-            var listAdTest = await service.GetAdministratedTestsByTestId(testId);
+            var listAdTest = await service.GetAdministratedTestsByTestId(1, 10, "", testId);
             return listAdTest;
         }
 
