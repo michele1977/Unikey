@@ -55,11 +55,11 @@ import {LogoutModule} from './shared/logout/logout.module';
     LogoutModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
+    LoaderService
   ],
   exports: [
   ],
-  providers: [LoaderService],
   bootstrap: [AppComponent],
   entryComponents: [TestDetailsModalComponent]
 })
