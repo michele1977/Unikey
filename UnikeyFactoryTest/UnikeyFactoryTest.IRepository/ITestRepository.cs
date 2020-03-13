@@ -28,6 +28,7 @@ namespace UnikeyFactoryTest.IRepository
         Task<List<TestBusiness>> GetAllFiltered(int pageNum, int pageSize);
         Task<int> CountTests(string filter);
         Task<int> CountTests();
+        Task<TestBusiness> GetTestLight(int testId);
     } 
 
 }

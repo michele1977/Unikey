@@ -263,7 +263,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         }
 
 
-        [Route("api/Test/sendMail")]
+        //[Route("api/Test/sendMail")]
         [HttpPost]
         public async Task<IHttpActionResult> SendMail(EmailModel emailModel)
         {
@@ -271,7 +271,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
 
             try
             {
-                test = await _service.GetTestById(emailModel.Id);
+                test = await _service.GetTestByIdLight(emailModel.Id);
             }
             catch (ArgumentNullException e)
             {

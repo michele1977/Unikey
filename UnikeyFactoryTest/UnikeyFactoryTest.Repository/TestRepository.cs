@@ -237,6 +237,19 @@ namespace UnikeyFactoryTest.Repository
         async public Task<int> CountTests()
         {
             return await _ctx.Tests.CountAsync();
+
+        }
+
+        public async Task<TestBusiness> GetTestLight(int testId)
+        {
+            var myTask = await _ctx.Tests.FirstOrDefaultAsync(t => t.Id == testId);
+
+            if (myTask == null)
+            {
+                throw new Exception($"Test not found");
+            }
+            var mapper = _kernel.Get<IMapper>("Light");
+            return mapper.Map<Test, TestBusiness>(myTask);
         }
     }
 }

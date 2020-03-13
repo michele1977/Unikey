@@ -10,6 +10,6 @@ export class EmailSenderService {
   }
 
   sendEmail(emailModel: EmailModel) {
-    return this.http.post('http://localhost/UnikeyFactoryTest.WebAPI/api/Test/sendMail', emailModel);
+    return this.http.post('http://localhost/UnikeyFactoryTest.WebAPI/api/Test/SendMail', emailModel);
   }
 }
