@@ -4,7 +4,7 @@
       <h2>Questions</h2>
     </div>
     <div class="col-6 div-set-visibility">
-      <button class="btn btn-outline-success" [disabled]="enable" (click) = "showQuestionForm()"><i class="fa fa-plus"></i></button>
+      <button class="btn btn-outline-success" [disabled]="enable" (click) = "showQuestionForm()" title="Add Question"><i class="fa fa-plus"></i></button>
     </div>
   </div>
   <div *ngIf="test.Questions?.length > 0" class="drag-drop-list" (cdkDropListDropped)="onDrop($event)" cdkDropList>

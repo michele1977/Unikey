@@ -171,7 +171,7 @@ namespace UnikeyFactoryTest.Presentation.Controllers
             AdministratedTestDto testToPass = new AdministratedTestDto();
             try
             {
-                var theTest = await _adTestService.GetAdministratedTestsByTestId(testId);
+                var theTest = await _adTestService.GetAdministratedTestsByTestId(1, 10, "", testId);
                 testToPass.AdministratedTests = theTest;
             }
             catch(Exception e)
