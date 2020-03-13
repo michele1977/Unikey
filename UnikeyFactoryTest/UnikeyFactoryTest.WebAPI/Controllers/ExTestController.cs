@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Ninject;
+using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using Ninject;
-using Ninject.Infrastructure.Language;
-using NLog;
-using UnikeyFactoryTest.Domain.Enums;
 using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.WebAPI.Models.DTO;
 

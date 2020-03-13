@@ -1,20 +1,12 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Mapping;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
-using System.Linq;
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using Microsoft.AspNet.Identity;
-using Newtonsoft.Json.Linq;
-
 using Ninject;
 using NLog;
 using UnikeyFactoryTest.Domain;
@@ -22,8 +14,7 @@ using UnikeyFactoryTest.Domain.Enums;
 using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.Service;
 using UnikeyFactoryTest.WebAPI.Models.DTO;
-using UnikeyFactoryTest.WebAPI.ResponseMessages;
-
+using UnikeyFactoryTest.WebAPI_new.ResponseMessages;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
@@ -116,7 +107,6 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             {
                 var testBusinessList = await _service.GetAllFiltered(pageNum, pageSize, filter);
                 var testDtoList = new List<TestDto>();
-                var NumberOfTests = testBusinessList.Count();
 
                 foreach (var test in testBusinessList)
                 {

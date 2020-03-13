@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -11,7 +9,7 @@ using Microsoft.AspNet.Identity;
 using Ninject;
 using NLog;
 using UnikeyFactoryTest.Domain;
-using UnikeyFactoryTest.WebAPI.ResponseMessages;
+using UnikeyFactoryTest.WebAPI_new.ResponseMessages;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
