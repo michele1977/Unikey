@@ -4,7 +4,7 @@ import {Test} from '../models/test';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 
-const reqUrl = 'https://localhost:44329/api/Test/';
+const reqUrl = 'http://localhost/UnikeyFactoryTest.WebAPI/api//Test/';
 
 @Injectable({
   providedIn: 'root'

@@ -68,15 +68,18 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             {
                 var tests = await _service.GetAdministratedTestsByTestId(pageNum, pageSize, filter, id);
                 var returned = new List<AdministratedTestDto>();
-                var numberOfTests = await _service.CountExTests(filter);
+                var numberOfTests = await _service.CountExTests(filter, id);
 
-                foreach(var test in tests)
+                if (numberOfTests > 0)
                 {
-                    var testDto = new AdministratedTestDto(test);
-                    returned.Add(testDto);
-                }
+                    foreach (var test in tests)
+                    {
+                        var testDto = new AdministratedTestDto(test);
+                        returned.Add(testDto);
+                    }
 
-                returned[0].NumberOfExTests = numberOfTests;
+                    returned[0].NumberOfExTests = numberOfTests;
+                }
 
                 return Ok(returned);
             }

@@ -1,26 +1,26 @@
 <form [formGroup]="orderForm" (ngSubmit)="addQuestion()">
   <div class="form-group">
-    <strong><label for="questionText">Question text:</label></strong>
-    <textarea class="form-control" rows="5" id="questionText" formControlName="questionText" name="questionText" placeholder="Question Text.."></textarea>
+    <strong><label for="questionText">Question:</label></strong>
+    <textarea class="form-control" rows="5" id="questionText" formControlName="questionText" name="questionText" placeholder="Insert Question Text.." (keyup)="onChange(orderForm)"></textarea>
   </div>
   <div class="form-group row">
     <div class="col-6">
       <strong><label>Answers:</label></strong>
     </div>
     <div class="col-6 add-answer">
-      <i class="fa fa-plus" *ngIf="orderForm.valid" (click)="addAnswer()" title="Add answer"></i>
+      <i class="fa fa-plus" (click)="addAnswer()" title="Add answer"></i>
     </div>
     <div formArrayName="items" *ngFor="let ctrl of formArray.controls; let i = index" class="col-12 padd">
       <div class="input-group-prepend" [formGroup]="ctrl">
         <div class="input-group-text">
-          <input type="checkbox" formControlName="isCorrect" id="isCorrect" name="isCorrect" (change)="onChange()">
+          <input type="checkbox" formControlName="isCorrect" id="isCorrect" name="isCorrect">
         </div>
-        <input class="form-control" formControlName="answerText" id="answerText" name="answerText" placeholder="Answer Text..">
-        <input *ngIf="formArray.value[i].isCorrect == true" type="number" class="form-control score" formControlName="answerScore" id="answerScore" name="answerScore" placeholder="Score..">
+        <input class="form-control" formControlName="answerText" id="answerText" name="answerText" placeholder="Answer Text.." (keyup)="onChange(orderForm)">
+        <input *ngIf="formArray.value[i].isCorrect == true" type="number" class="form-control score" formControlName="answerScore" id="answerScore" name="answerScore" placeholder="Score.." required="required" (keyup)="onChange(orderForm)">
       </div>
     </div>
   </div>
   <div class="create-question">
-    <button type="submit" *ngIf="formArray.controls.length > 1 && orderForm.valid" class="btn btn-outline-success" [disabled]="checked">Create</button>
+    <button type="submit" *ngIf="formArray.controls.length > 1" class="btn btn-outline-success" [disabled]="checked">Create</button>
   </div>
 </form>

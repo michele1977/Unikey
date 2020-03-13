@@ -16,9 +16,9 @@
     <div class="text-center">
       <fa-icon *ngIf="!isFirstPage" [icon]="icons.faAngleDoubleLeft" title="First" (click)="firstPage()"></fa-icon>
       <fa-icon *ngIf="!isFirstPage" [icon]="icons.faArrowLeft" title="Previous" (click)="previousPage()"></fa-icon>
-      <strong><label>1 of N</label></strong>
-      <fa-icon [icon]="icons.faArrowRight" title="Next" (click)="nextPage()"></fa-icon>
-      <fa-icon [icon]="icons.faAngleDoubleRight" title="Last" (click)="lastPage()"></fa-icon>
+      <strong><label>{{this.pageNum}} of {{this.pages}}</label></strong>
+      <fa-icon *ngIf="!isLastPage" [icon]="icons.faArrowRight" title="Next" (click)="nextPage()"></fa-icon>
+      <fa-icon *ngIf="!isLastPage" [icon]="icons.faAngleDoubleRight" title="Last" (click)="lastPage()"></fa-icon>
     </div>
     <table class="table">
       <tr class="thead-dark">
@@ -29,7 +29,7 @@
         <th class="text-center">Actions</th>
       </tr>
       <tr *ngFor="let exTest of exTests; let i = index">
-        <th scope="row">{{this.pageNum + i}}</th>
+        <th scope="row">{{exTest.Id}}</th>
         <td class="text-center">{{exTest.TestSubject}}</td>
         <td class="text-center">{{exTest.Score}}/{{exTest.MaxScore}}</td>
         <td class="text-center">{{exTest.State == 1 || exTest.State == 2 ? 'Opened' : 'Closed'}}</td>
@@ -38,12 +38,12 @@
         </td>
       </tr>
     </table>
-    <div class="text-center">
+    <div *ngIf="!isEmpty" class="text-center">
       <fa-icon *ngIf="!isFirstPage" [icon]="icons.faAngleDoubleLeft" title="First" (click)="firstPage()"></fa-icon>
       <fa-icon *ngIf="!isFirstPage" [icon]="icons.faArrowLeft" title="Previous" (click)="previousPage()"></fa-icon>
-      <strong><label>1 of N</label></strong>
-      <fa-icon [icon]="icons.faArrowRight" title="Next" (click)="nextPage()"></fa-icon>
-      <fa-icon [icon]="icons.faAngleDoubleRight" title="Last" (click)="lastPage()"></fa-icon>
+      <strong><label>{{this.pageNum}} of {{this.pages}}</label></strong>
+      <fa-icon *ngIf="!isLastPage" [icon]="icons.faArrowRight" title="Next" (click)="nextPage()"></fa-icon>
+      <fa-icon *ngIf="!isLastPage" [icon]="icons.faAngleDoubleRight" title="Last" (click)="lastPage()"></fa-icon>
     </div>
   </div>
   <div class="modal-footer">

@@ -194,13 +194,13 @@ namespace UnikeyFactoryTest.Repository
         }
         #endregion
 
-        async public Task<int> CountExTests(string filter)
+        async public Task<int> CountExTests(string filter, int testId)
         {
-            return await _ctx.AdministratedTests.Where(t => t.Title.Contains(filter)).CountAsync();
+            return await _ctx.AdministratedTests.Where(t => t.TestId == testId).Where(t => t.Title.Contains(filter)).CountAsync();
         }
-        async public Task<int> CountExTests()
+        async public Task<int> CountExTests(int testId)
         {
-            return await _ctx.AdministratedTests.CountAsync();
+            return await _ctx.AdministratedTests.Where(t => t.TestId == testId).CountAsync();
         }
 
         public void Dispose()

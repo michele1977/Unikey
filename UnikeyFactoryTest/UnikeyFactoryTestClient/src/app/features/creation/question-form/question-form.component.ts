@@ -1,6 +1,6 @@
-import {Component, DoCheck, EventEmitter, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, DoCheck, EventEmitter, OnInit, Output} from '@angular/core';
 import {Question} from '../../../models/question';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {AnswerState} from '../../../shared/enums/answer-state';
 
 @Component({
@@ -24,11 +24,11 @@ export class QuestionFormComponent implements OnInit {
   formArray = new FormArray([]);
   checked = true;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.orderForm = this.fb.group({
-      questionText: '',
+      questionText: new FormControl('', [Validators.required]),
       items: this.fb.array([])
     });
   }
@@ -44,6 +44,10 @@ export class QuestionFormComponent implements OnInit {
       if (!this.formArray.value[index].isCorrect) {
         this.formArray.value[index].answerScore = 0;
       }
+      if (this.formArray.value[index].answerScore === null) {
+        this.formArray.value[index].answerScore = 1;
+      }
+      console.log(this.formArray.value[index].answerScore);
       this.question.Answers.push({
         Text: this.formArray.value[index].answerText,
         Score: this.formArray.value[index].answerScore,
@@ -67,15 +71,12 @@ export class QuestionFormComponent implements OnInit {
     this.formArray.push(this.createItem());
   }
 
-  onChange() {
+  onChange(form) {
     this.formArray = this.orderForm.controls.items as FormArray;
+    this.checked = true;
     this.orderForm.controls.items.value.forEach((value, index) => {
-      if (this.checked) {
-        if (this.formArray.value[index].isCorrect) {
-          this.checked = false;
-        }
-      } else {
-
+      if (this.formArray.value[index].isCorrect && form.valid) {
+        this.checked = false;
       }
     });
   }

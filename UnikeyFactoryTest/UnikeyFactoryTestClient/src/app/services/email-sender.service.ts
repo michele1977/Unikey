@@ -10,7 +10,7 @@ export class EmailSenderService {
   }
 
   sendEmail(emailModel: EmailModel) {
-    this.http.post('https://localhost:44351/api/Test/sendMail', emailModel)
+    this.http.post('http://localhost/UnikeyFactoryTest.WebAPI/api/Test/sendMail', emailModel)
       .subscribe(() => console.log('Email inviata con successo'));
   }
 }

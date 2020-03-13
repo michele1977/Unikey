@@ -18,6 +18,6 @@ namespace UnikeyFactoryTest.IService
         AdministratedQuestionBusiness Previous(AdministratedTestBusiness administratedTest, int position);
         Task<List<AdministratedTestBusiness>> GetAdministratedTestsByFilter(string filter);
         void Dispose();
-        Task<int> CountExTests(string filter);
+        Task<int> CountExTests(string filter, int tetsId);
     }
 }

@@ -7,6 +7,7 @@ import {IconsService} from '../../services/icons.service';
 import * as moment from 'moment';
 import {NgForm} from '@angular/forms';
 import {TestList} from '../../models/test-list';
+import {isUndefined} from 'util';
 
 @Component({
   selector: 'app-test-details-modal',
@@ -22,8 +23,9 @@ export class TestDetailsModalComponent implements OnInit {
   pageNum = 1;
   pageSize = 10;
   isFirstPage = true;
-  isLastPage = false;
+  isLastPage = true;
   pages: number;
+  isEmpty = true;
 
   constructor(public activeModal: NgbActiveModal, private service: ExTestService, public icons: IconsService) { }
 
@@ -31,7 +33,16 @@ export class TestDetailsModalComponent implements OnInit {
   ngOnInit(): void {
     this.service.getExTestByTestId(this.pageNum, this.pageSize, this.textFilter, this.myModalTest.Id).subscribe(value => {
       this.exTests = value as ExTest[];
-      this.pages = Math.ceil(value[0].NumberOfExTests / this.pageSize);
+      console.log();
+      if (value[0]) {
+        this.pages = Math.ceil(value[0].NumberOfExTests / this.pageSize);
+        if (this.pages > this.pageNum) {
+          this.isLastPage = false;
+        }
+        this.isEmpty = false;
+      } else {
+        this.pages = 1;
+      }
     });
   }
 
@@ -43,7 +54,7 @@ export class TestDetailsModalComponent implements OnInit {
     if (this.isFirstPage) {
       this.isFirstPage = false;
     }
-    if (this.pageNum === this.pages - 1) {
+    if (this.pageNum === this.pages) {
       this.isLastPage = true;
     }
   }
@@ -54,7 +65,7 @@ export class TestDetailsModalComponent implements OnInit {
       console.log(value);
       this.exTests = value as ExTest[];
     });
-    if (this.pageNum > 1) {
+    if (this.pageNum === 1) {
       this.isFirstPage = true;
     }
   }
@@ -65,6 +76,7 @@ export class TestDetailsModalComponent implements OnInit {
       this.exTests = value as ExTest[];
     });
     this.isFirstPage = true;
+    this.isLastPage = false;
   }
 
   lastPage() {
@@ -72,6 +84,7 @@ export class TestDetailsModalComponent implements OnInit {
     this.service.getExTestByTestId(this.pageNum, this.pageSize, this.textFilter, this.myModalTest.Id).subscribe(value => {
       this.exTests = value as ExTest[];
     });
+    this.isFirstPage = false;
     this.isLastPage = true;
   }
 

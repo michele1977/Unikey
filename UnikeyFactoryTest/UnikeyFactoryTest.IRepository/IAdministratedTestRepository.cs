@@ -20,7 +20,7 @@ namespace UnikeyFactoryTest.IRepository
         Task DeleteAdministratedTest(int administratedTestId);
         Task Update_Save_Question(AdministratedQuestionBusiness adQuestion);
         bool IsContextNull { get; }
-        Task<int> CountExTests(string filter);
-        Task<int> CountExTests();
+        Task<int> CountExTests(string filter, int testId);
+        Task<int> CountExTests(int testId);
     }
 }

@@ -126,7 +126,7 @@ namespace UnikeyFactoryTest.Service
             }
             using (_repo)
             {
-                var lastPage = (int)Math.Ceiling((float)await CountExTests(filter) / pageSize);
+                var lastPage = (int)Math.Ceiling((float)await CountExTests(filter, testId) / pageSize);
 
                 if (String.IsNullOrWhiteSpace(filter))
                     return await _repo.GetAdministratedTestsByTestId(pageNum, pageSize, testId);
@@ -177,7 +177,7 @@ namespace UnikeyFactoryTest.Service
             return administratedTest.AdministratedQuestions.FirstOrDefault(x => x.Position == position);
         }
 
-        public async Task<int> CountExTests(string filter)
+        public async Task<int> CountExTests(string filter, int testId)
         {
             if (_repo.IsContextNull)
             {
@@ -185,9 +185,9 @@ namespace UnikeyFactoryTest.Service
             }
 
             if (String.IsNullOrWhiteSpace(filter))
-                return await _repo.CountExTests();
+                return await _repo.CountExTests(testId);
             else
-                return await _repo.CountExTests(filter);
+                return await _repo.CountExTests(filter, testId);
         }
 
         public void Dispose()

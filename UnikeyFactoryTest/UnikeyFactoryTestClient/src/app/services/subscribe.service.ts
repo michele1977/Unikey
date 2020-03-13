@@ -4,7 +4,7 @@ import {User} from '../models/user';
 import {Observable} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 
-const URL = 'https://localhost:44329/api/User/Subscribe';
+const URL = 'http://localhost/UnikeyFactoryTest.WebAPI/api//User/Subscribe';
 
 @Injectable({
   providedIn: 'root'
