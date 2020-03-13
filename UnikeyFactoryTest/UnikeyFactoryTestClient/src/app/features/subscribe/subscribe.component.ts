@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {SubscribeService} from '../../services/subscribe.service';
 import {User} from '../../models/user';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -21,7 +21,12 @@ export class SubscribeComponent {
   error: HttpErrorResponse;
   errorsList: string[];
 
+  @Output() switch: EventEmitter<any> = new EventEmitter<any>();
   constructor(private service: SubscribeService, private router: Router, private loader: LoaderService) { }
+  
+  changeForm() {
+    this.switch.emit();
+  }
 
   goToMain() {
     this.router.navigateByUrl('create');
@@ -52,6 +57,4 @@ export class SubscribeComponent {
           }
         );
   }
-
-
 }

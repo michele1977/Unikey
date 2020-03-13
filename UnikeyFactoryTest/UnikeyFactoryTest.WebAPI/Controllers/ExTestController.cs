@@ -6,10 +6,12 @@ using System.Web.Http.Cors;
 using Ninject;
 using NLog;
 using UnikeyFactoryTest.IService;
+using UnikeyFactoryTest.WebAPI.CustomAttributes;
 using UnikeyFactoryTest.WebAPI.Models.DTO;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
+    [LoginAuthorize]
     [EnableCors("*", "*", "*")]
     public class ExTestController : ApiController
     {
@@ -48,6 +50,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             }
         }
 
+       
         public async Task<IHttpActionResult> GetAll()
         {
             try
