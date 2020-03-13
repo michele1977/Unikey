@@ -9,11 +9,9 @@ import {Router} from '@angular/router';
 export class ErrorComponent {
 
   constructor(private router: Router) {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userInfo');
   }
 
-  goToHomePage(){
+  goToHomePage() {
     this.router.navigateByUrl('testList');
   }
 }

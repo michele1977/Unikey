@@ -16,8 +16,11 @@ export class LoginComponent {
   isPostBack: boolean;
 
   constructor(public service: LoginService) {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userInfo');
+    const userName = localStorage.getItem('userInfo');
+    const token = localStorage.getItem('token');
+    if (token !== null) {
+      this.service.router.navigateByUrl('testList').then();
+    }
   }
 
   @Output() switch: EventEmitter<any> = new EventEmitter<any>();
