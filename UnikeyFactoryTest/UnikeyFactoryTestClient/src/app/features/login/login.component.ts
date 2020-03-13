@@ -16,6 +16,8 @@ export class LoginComponent {
   isPostBack: boolean;
 
   constructor(public service: LoginService) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userInfo');
   }
 
   @Output() switch: EventEmitter<any> = new EventEmitter<any>();

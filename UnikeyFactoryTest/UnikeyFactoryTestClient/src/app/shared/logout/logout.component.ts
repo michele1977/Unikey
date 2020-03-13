@@ -11,9 +11,12 @@ export class LogoutComponent implements DoCheck{
   isVisible: boolean;
   user: string;
 
-  constructor(private router: Router, public icons: IconsService) { }
+  constructor(private router: Router, public icons: IconsService) {
+    console.log('logout');
+  }
 
   ngDoCheck(): void {
+      console.log('DoCheck');
       const name = localStorage.getItem('userInfo');
       const jwt = localStorage.getItem('token');
       if (name !== null || jwt !== null) {
