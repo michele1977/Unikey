@@ -76,7 +76,7 @@ export class CreationComponent {
   createTest(form) {
     this.loader.publish('show');
     this.test.Title = form.value.title;
-    this.test.Date = moment().format('DD MM YY H:mm:ss');
+    this.test.Date = moment().format('DD MM YY H:mm:ss').toString();
 
     this.service.createTest(this.test).pipe().subscribe( res => {
         this.router.navigateByUrl('testList');
@@ -85,7 +85,7 @@ export class CreationComponent {
         alert('Error while creating');
         this.loader.publish('hide');
     });
-
+    this.loader.publish('hide');
   }
 
   visibility(setVisibility) {
