@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Mapping;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
-using System.Linq;
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
@@ -118,7 +115,6 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             {
                 var testBusinessList = await _service.GetAllFiltered(pageNum, pageSize, filter);
                 var testDtoList = new List<TestDto>();
-                var NumberOfTests = testBusinessList.Count();
 
                 foreach (var test in testBusinessList)
                 {
@@ -212,6 +208,8 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         {
             try
             {
+                test.UserId = 5;
+
                 await _service.UpdateTest(test);
                 return Request.CreateResponse(HttpStatusCode.OK, test.Id);
             }

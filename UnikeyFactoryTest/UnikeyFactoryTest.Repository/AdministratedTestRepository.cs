@@ -104,8 +104,48 @@ namespace UnikeyFactoryTest.Repository
             var state = administratedTest.State;
             return (int)state;
         }
+
+        public async Task<List<AdministratedTestBusiness>> GetAllFiltered(int pageNum, int pageSize, string filter)
+        {
+            return await _ctx.AdministratedTests
+                .OrderBy(x => x.Id)
+                .Where(test => test.TestSubject.Contains(filter))
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize).Select(t => 
+                new AdministratedTestBusiness()
+                {
+                    Id = t.Id,
+                    Title = t.Title,
+                    Date = t.Date,
+                    TestSubject = t.TestSubject
+                })
+                .ToListAsync();
+        }
+
+        public async Task<int> CountExTests()
+        {
+            return await _ctx.AdministratedTests.CountAsync();
+        }
+
+        public async Task<int> CountExTests(string filter)
+        {
+            return await _ctx.AdministratedTests.Where(t => t.TestSubject.Contains(filter)).CountAsync();
+        }
+
+        public async Task<Dictionary<string, int>> GetScoreAndMax(int id)
+        {
+            var test = _ctx.AdministratedTests.Find(id);
+            var result = new Dictionary<string, int>()
+            {
+                {"score", test.Score},
+                {"maxScore", test.MaxScore}
+            };
+
+            return result;
+        }
+
         #endregion
-        
+
         #region DeleteAdministratedTest
         public async Task DeleteAdministratedTest(int administratedTestId)
         {

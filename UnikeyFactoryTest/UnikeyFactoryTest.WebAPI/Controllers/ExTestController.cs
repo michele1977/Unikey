@@ -1,12 +1,20 @@
-﻿using System;
+﻿using Ninject;
+using NLog;
+using System;
 using System.Collections.Generic;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Cors;
 using Ninject;
 using NLog;
 using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.WebAPI.CustomAttributes;
+using UnikeyFactoryTest.WebAPI.Models.DTO;
 using UnikeyFactoryTest.WebAPI.Models.DTO;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
@@ -50,13 +58,20 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             }
         }
 
-       
-        public async Task<IHttpActionResult> GetAll()
+        public async Task<IHttpActionResult> GetAll(int pageNum, int pageSize, string filter)
         {
             try
             {
-                var returned = await _service.GetAdministratedTests();
-                return Ok(returned);
+                var testBusinessList = await _service.GetAllFiltered(pageNum, pageSize, filter);
+                var exTestDtoList = testBusinessList.Select(t => new ExTestDto(_service, t)).ToList();
+                exTestDtoList[0].TotalNumberOfExTests = await _service.CountExTests(filter);
+
+                return Ok(exTestDtoList);
+            }
+            catch (ArgumentNullException e)
+            {
+                _logger.Error(e, e.Message);
+                return InternalServerError();
             }
             catch (Exception e)
             {

@@ -194,5 +194,41 @@ namespace UnikeyFactoryTest.Service
         {
             _repo.Dispose();
         }
+
+        public async Task<List<AdministratedTestBusiness>> GetAllFiltered(int pageNum, int pageSize, string filter)
+        {
+            var lastPage = (int)Math.Ceiling((float)await CountExTests(filter) / pageSize);
+
+            if (pageNum > lastPage)
+                pageNum = lastPage;
+
+            if (String.IsNullOrWhiteSpace(filter))
+            {
+                filter = "";
+            }
+
+            return await _repo.GetAllFiltered(pageNum, pageSize, filter);
+
+        }
+
+        public async Task<int> CountExTests()
+        {
+            return await _repo.CountExTests();
+        }
+
+        public async Task<int> CountExTests(string filter)
+        {
+            if (String.IsNullOrWhiteSpace(filter))
+            {
+                filter = "";
+            }
+            
+            return await _repo.CountExTests(filter);
+        }
+
+        public async Task<Dictionary<string, int>> GetScoreAndMax(int id)
+        {
+            return await _repo.GetScoreAndMax(id);
+        }
     }
 }

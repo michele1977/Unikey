@@ -25,6 +25,10 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {InterceptorService} from './services/interceptor.service';
 import { LogoutComponent } from './shared/logout/logout.component';
 import {LogoutModule} from './shared/logout/logout.module';
+import { ExTestListComponent } from './features/ex-test-list/ex-test-list.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -37,8 +41,7 @@ import {LogoutModule} from './shared/logout/logout.module';
     TestContentEditComponent,
     TestDetailsModalComponent,
     SeeExTestComponent,
-    EmailModalComponent
-
+    ExTestListComponent
   ],
 
   imports: [

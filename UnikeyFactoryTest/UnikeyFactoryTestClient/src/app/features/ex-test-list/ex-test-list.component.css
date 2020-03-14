@@ -1,0 +1,9 @@
+.main-div {
+    display: flex;
+  }
+  .title {
+    float: left;
+  }
+  .pointer {
+    cursor: pointer;
+  }
