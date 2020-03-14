@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ExTest} from '../models/ex-test';
+import { LOCALHOST_URL } from '../constants/api.const';
 
-const reqUrl = 'http://localhost/UnikeyFactoryTest.WebAPI/api//ExTest/';
+const reqUrl = LOCALHOST_URL + 'ExTest/';
 
 @Injectable({
   providedIn: 'root'

@@ -1,11 +1,12 @@
 import {AfterContentInit, Component, DoCheck, Input, OnInit} from '@angular/core';
 import {EmailSenderService} from '../../services/email-sender.service';
-import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
+
 import {EmailModel} from '../../models/emailModel';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {IconsService} from '../../services/icons.service';
 import {LoaderService} from '../../services/loader.service';
 import validate = WebAssembly.validate;
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-email-modal',

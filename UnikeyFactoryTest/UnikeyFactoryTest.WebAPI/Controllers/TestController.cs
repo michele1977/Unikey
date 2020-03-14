@@ -20,8 +20,8 @@ using UnikeyFactoryTest.Service;
 using UnikeyFactoryTest.WebAPI.Models.DTO;
 using UnikeyFactoryTest.Service.Providers.MailProvider;
 using UnikeyFactoryTest.WebAPI.CustomAttributes;
-using UnikeyFactoryTest.WebAPI.ResponseMessages;
 using UnikeyFactoryTest.WebAPI.Models;
+using UnikeyFactoryTest.WebAPI_new.ResponseMessages;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {

@@ -3,8 +3,9 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {User} from '../models/user';
 import {Observable} from 'rxjs';
 import {catchError} from 'rxjs/operators';
+import { LOCALHOST_URL } from '../constants/api.const';
 
-const URL = 'http://localhost/UnikeyFactoryTest.WebAPI/api//User/Subscribe';
+const URL = LOCALHOST_URL + '/User/Subscribe';
 
 @Injectable({
   providedIn: 'root'

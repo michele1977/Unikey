@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {faArrowLeft, faInfo, faBackward, faSignInAlt, faCheck} from '@fortawesome/free-solid-svg-icons';
+import {faArrowLeft, faInfo, faBackward, faSignInAlt, faCheck, faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
 import {faTrash} from '@fortawesome/free-solid-svg-icons/faTrash';
 import {faList} from '@fortawesome/free-solid-svg-icons/faList';
 import {faMailBulk} from '@fortawesome/free-solid-svg-icons/faMailBulk';

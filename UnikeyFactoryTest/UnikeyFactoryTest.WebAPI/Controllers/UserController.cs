@@ -12,8 +12,8 @@ using Ninject;
 using NLog;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.WebAPI.CustomAttributes;
-using UnikeyFactoryTest.WebAPI.ResponseMessages;
 using UnikeyFactoryTest.WebAPI.Tools;
+using UnikeyFactoryTest.WebAPI_new.ResponseMessages;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
