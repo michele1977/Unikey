@@ -41,6 +41,7 @@ export class TestListComponent {
   pages = 0;
   options: any[] = [10, 20, 40, 50, 60];
   modalOptions: NgbModalOptions;
+  // tslint:disable-next-line:max-line-length
   constructor(private router: Router, public icons: IconsService, private testService: TestListService, private modalService: NgbModal, private loader: LoaderService) {
     loader.publish('show');
     this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
