@@ -25,6 +25,7 @@ namespace UnikeyFactoryTest.Context
         {
             Date = ((Test) newEntity).Date;
             Title = ((Test) newEntity).Title;
+            UserId = ((Test) newEntity).UserId;
         }
 
         public override void RemoveChild(EntityExtension toRemove, TestPlatformDBEntities ctx)
@@ -59,6 +60,7 @@ namespace UnikeyFactoryTest.Context
         {
             Text = ((Question) newEntity).Text;
             Position = ((Question) newEntity).Position;
+            TestId = ((Question) newEntity).TestId;
         }
     }
 
@@ -71,6 +73,7 @@ namespace UnikeyFactoryTest.Context
             Text = ((Answer) newEntity).Text;
             IsCorrect = ((Answer) newEntity).IsCorrect;
             Score = ((Answer) newEntity).Score;
+            QuestionId = ((Answer) newEntity).QuestionId;
         }
 
         public override void RemoveChild(EntityExtension toRemove, TestPlatformDBEntities ctx)
@@ -96,6 +99,9 @@ namespace UnikeyFactoryTest.Context
             Date = ((AdministratedTest) newEntity).Date;
             State = ((AdministratedTest) newEntity).State;
             Score = ((AdministratedTest) newEntity).Score;
+            TestId = ((AdministratedTest) newEntity).TestId;
+            URL = ((AdministratedTest) newEntity).URL;
+            TestSubject = ((AdministratedTest) newEntity).TestSubject;
         }
 
         public override void RemoveChild(EntityExtension toRemove, TestPlatformDBEntities ctx)
@@ -120,6 +126,7 @@ namespace UnikeyFactoryTest.Context
         {
             Text = ((AdministratedQuestion) newEntity).Text;
             Position = ((AdministratedQuestion) newEntity).Position;
+            AdministratedTestId = ((AdministratedQuestion) newEntity).AdministratedTestId;
         }
 
         public override void RemoveChild(EntityExtension toRemove, TestPlatformDBEntities ctx)
@@ -143,6 +150,7 @@ namespace UnikeyFactoryTest.Context
             isCorrect = ((AdministratedAnswer) newEntity).isCorrect;
             isSelected = ((AdministratedAnswer) newEntity).isSelected;
             Score = ((AdministratedAnswer) newEntity).Score;
+            AdministratedQuestionId = ((AdministratedAnswer) newEntity).AdministratedQuestionId;
         }
 
         public override void RemoveChild(EntityExtension toRemove, TestPlatformDBEntities ctx)
