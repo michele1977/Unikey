@@ -3,6 +3,7 @@ import {User} from '../../models/user';
 import {LoginService} from '../../services/login.service';
 import {finalize} from 'rxjs/operators';
 import {from} from 'rxjs';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent {
   passwordPattern = '^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[*@$!#%&()^_~{}+=|.]).{6,50}$';
   isPostBack: boolean;
 
-  constructor(public service: LoginService) {
+  constructor(public service: LoginService, private loader: LoaderService) {
     const userName = localStorage.getItem('userInfo');
     const token = localStorage.getItem('token');
     if (token !== null) {
@@ -30,16 +31,17 @@ export class LoginComponent {
   }
 
   login(user: User) {
+    this.loader.publish('show');
     this.service.login(user).subscribe(
       jwt => {
         this.setSession(jwt, user);
       }, () => {
         this.service.router.navigateByUrl('')
-          .then();
+          .then(() => this.loader.publish('hide'));
         this.isPostBack = true;
       }, () => {
           this.service.router.navigateByUrl('testList')
-            .then();
+            .then(() => this.loader.publish('hide'));
       }
     );
   }
