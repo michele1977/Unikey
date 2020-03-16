@@ -77,7 +77,7 @@ namespace UnikeyFactoryTest.WebAPI_new.Controllers
         {
             try
             {
-                var returned = await _service.GetAdministratedTestsByTestId(id);
+                var returned = await _service.GetAdministratedTestsByTestId(1, 10, "", id);
                 return Ok(returned);
             }
             catch (ArgumentNullException e)

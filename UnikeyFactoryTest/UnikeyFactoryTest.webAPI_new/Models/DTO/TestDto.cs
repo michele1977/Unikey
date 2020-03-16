@@ -17,7 +17,7 @@ namespace UnikeyFactoryTest.webAPI_new.Models.DTO
 
             Id = test.Id;
             Title = test.Title;
-            URL = testService.GenerateUrl();
+            URL = testService.GenerateUrl(test.URL);
             Date = test.Date;
             UserId = test.UserId;
             Title = test.Title;

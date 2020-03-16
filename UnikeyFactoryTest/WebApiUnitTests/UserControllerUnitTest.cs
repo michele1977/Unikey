@@ -7,6 +7,7 @@ using NLog;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.NinjectConfiguration;
 using System.Web.Http.Results;
+using UnikeyFactoryTest.WebAPI.Controllers;
 
 namespace WebApiUnitTests
 {

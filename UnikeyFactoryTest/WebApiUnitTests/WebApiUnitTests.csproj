@@ -128,6 +128,10 @@
       <Project>{694C09A8-9DC2-408A-B91F-9383B02E93F0}</Project>
       <Name>UnikeyFactoryTest.Service</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.WebAPI\UnikeyFactoryTest.WebAPI.csproj">
+      <Project>{044FCD74-0E59-4B38-B071-68F0F38EDD8A}</Project>
+      <Name>UnikeyFactoryTest.WebAPI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
