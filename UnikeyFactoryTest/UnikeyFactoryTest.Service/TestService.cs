@@ -34,7 +34,7 @@ namespace UnikeyFactoryTest.Service
 
         public void AddNewTest(TestBusiness test)
         {
-            test.URL = GenerateUrl();
+            test.URL = GenerateGuid();
             test.UserId = 5;
 
             if (_repo.IsContextNull) _repo = _kernel.Get<ITestRepository>();
@@ -84,10 +84,15 @@ namespace UnikeyFactoryTest.Service
 
         }
 
-        public string GenerateUrl()
+        public string GenerateUrl(string guid)
         {
             var baseUrl = ConfigurationManager.AppSettings["baseUrl"];
-            return $"{baseUrl}ExTest\\TestStart?guid={Guid.NewGuid():N}";
+            return $"{baseUrl}ExTest\\TestStart?guid={guid}";
+        }
+
+        public string GenerateGuid()
+        {
+            return $"{Guid.NewGuid():N}";
         }
 
         public async Task<TestBusiness> GetTestByURL(string modelUrl)
