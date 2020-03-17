@@ -26,7 +26,7 @@ namespace UnikeyFactoryTest.WebAPI.Tools
                     new Claim("int", $"{user.UserName}")
                 }),
                 DateTime.Now,
-                DateTime.Now.AddHours(1),
+                DateTime.Now.AddSeconds(60),
                 DateTime.Now,
                 new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
             );

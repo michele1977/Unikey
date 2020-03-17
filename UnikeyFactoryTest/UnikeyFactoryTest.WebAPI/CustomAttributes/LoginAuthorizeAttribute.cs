@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
+using System.Web.Http.Properties;
+using System.Web.Http.Results;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 
@@ -16,17 +20,28 @@ namespace UnikeyFactoryTest.WebAPI.CustomAttributes
     {
         public override void OnAuthorization(HttpActionContext actionContext)
         {
+            var jwt = actionContext.Request.Headers.Authorization.Parameter;
+            var jwtHandler = new JwtSecurityTokenHandler();
+            var jwtSecurityToken = jwtHandler.ReadJwtToken(jwt);
+            
             try
             {
-                var jwt = actionContext.Request.Headers.Authorization.Parameter;
-                var jwtHandler = new JwtSecurityTokenHandler();
-                var jwtSecurityToken = jwtHandler.ReadJwtToken(jwt);
-                if(!CheckClaims(jwtSecurityToken) || !CheckJwtStructure(jwt) || !CheckSignature(jwtSecurityToken))
+                if (!CheckJwtStructure(jwt) || !CheckSignature(jwtSecurityToken))
                     throw new Exception();
             }
             catch
             {
                 base.HandleUnauthorizedRequest(actionContext);
+            }
+
+            try
+            {
+                if (!CheckClaims(jwtSecurityToken))
+                    throw new Exception();
+            }
+            catch
+            {
+                actionContext.Response = actionContext.ControllerContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized, "Token has expired");
             }
         }
 
