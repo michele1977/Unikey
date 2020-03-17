@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input} from '@angular/core';
 import {TestService} from '../../../services/test.service';
 import {Test} from '../../../models/test';
-import {Router, ActivatedRoute, ParamMap} from '@angular/router';
-import { IconsService } from 'src/app/services/icons.service';
-import { switchMap } from 'rxjs/operators';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {IconsService} from 'src/app/services/icons.service';
+import {switchMap} from 'rxjs/operators';
+import {Question} from '../../../models/question';
 
 @Component({
   selector: 'app-testcontent',
@@ -11,12 +12,22 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./testcontent.component.css']
 })
 export class TestcontentComponent {
-test: Test;
+  @Input() questionInsert: EventEmitter<Question> = new EventEmitter<Question>();
+  test: Test;
 tempTest: Test;
+question: Question = {
+    Id: 0,
+    Position: 0,
+    Text: '',
+    TestId: 0,
+    Answers: []
+  };
 maxScore: number;
 areThereModifies = false;
 isEditable: boolean[] = [];
 isThereAnError: boolean;
+text: string;
+public isButtonVisible = false;
 
   constructor(
     private service: TestService,
@@ -75,5 +86,12 @@ isThereAnError: boolean;
     this.service.updateTest(test).subscribe(data => {this.tempTest = JSON.parse(JSON.stringify(this.test));
                                                      this.areThereModifies = false; },
       error => this.isThereAnError = true);
+  }
+
+  addQuestion(question: Question) {
+      question.Position = this.test.Questions.length;
+      this.test.Questions.push(question);
+      this.saveChanges(this.test);
+      this.isButtonVisible = false;
   }
 }

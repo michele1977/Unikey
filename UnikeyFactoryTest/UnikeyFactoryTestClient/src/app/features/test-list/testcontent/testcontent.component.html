@@ -17,13 +17,18 @@
 <br />
 <div id="testContentStats">
   <label><strong>Number of questions: {{this.test.Questions.length}}</strong></label>
-  <fa-icon id="goBackIcon" [icon]="icons.faSignInAlt" title="Go back" (click)="goBack()"></fa-icon>
-</div>
+  <div class="pull-right">
+    <i class="fa fa-plus" (click)="this.isButtonVisible = true" (dblclick)="isButtonVisible = false" title="Add Question"></i>
+    <br>
+    <fa-icon id="goBackIcon" [icon]="icons.faSignInAlt" title="Go back" (click)="goBack()"></fa-icon>
+  </div>
 
-<div>
 </div>
 <br>
 <div class="container col-8">
+  <div class="form-group" *ngIf="this.isButtonVisible">
+    <app-question-form (questionInsert)="addQuestion($event)"></app-question-form>
+  </div>
   <div *ngFor="let question of this.test?.Questions; let i = index" class="testContentRow">
     <div>
       <div id="divQuestionForm">
