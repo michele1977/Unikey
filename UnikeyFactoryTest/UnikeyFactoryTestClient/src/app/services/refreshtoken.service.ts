@@ -5,11 +5,6 @@ import {Observable} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class RefreshtokeninterceptorService implements HttpInterceptor {
+export class RefreshtokeninterceptorService {
 
-  constructor() { }
-
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return undefined;
-  }
 }
