@@ -33,16 +33,6 @@ namespace UnikeyFactoryTest.WebAPI.CustomAttributes
             {
                 base.HandleUnauthorizedRequest(actionContext);
             }
-
-            try
-            {
-                if (!CheckClaims(jwtSecurityToken))
-                    throw new Exception();
-            }
-            catch
-            {
-                actionContext.Response = actionContext.ControllerContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized, "Token has expired");
-            }
         }
 
         public static bool CheckJwtStructure(string jwt)
@@ -62,14 +52,8 @@ namespace UnikeyFactoryTest.WebAPI.CustomAttributes
             return true;
         }
 
-        public static bool CheckClaims(JwtSecurityToken jwt)
-        {
-            var expireDate = jwt.Claims.ToList().Find(m => m.Type.Equals("exp"));
-            var expireDateTime = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt32(expireDate.Value));
-            return expireDateTime >= DateTime.Now;
-        }
 
-        public static bool CheckSignature(JwtSecurityToken jwt)
+        private static bool CheckSignature(JwtSecurityToken jwt)
         {
             if(!jwt.Header.Alg.Equals("HS256"))
                 return false;
@@ -79,7 +63,7 @@ namespace UnikeyFactoryTest.WebAPI.CustomAttributes
             return jwt.RawSignature.Equals(verifyString);
         }
 
-        public static string CreateSignature(JwtSecurityToken jwt)
+        private static string CreateSignature(JwtSecurityToken jwt)
         {
             var key = new SymmetricSecurityKey(Encoding.Default.GetBytes("MeFaSchifoLAgile"));
             var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

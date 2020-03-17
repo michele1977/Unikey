@@ -33,5 +33,9 @@ namespace UnikeyFactoryTest.WebAPI.Tools
             
             return jwtHandler.WriteToken(token);
         }
+
+        public static void RefreshToken(JwtSecurityToken jwt)
+        {
+        }
     }
 }
