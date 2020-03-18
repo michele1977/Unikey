@@ -21,23 +21,22 @@ export class CreatePDFModalComponent implements OnInit {
   }
 
   builderPdf(): string {
-  const builder = '';
-  builder.concat(this.inputTest.Title + '\n\n');
+  let builder = '';
+  builder += this.inputTest.Title + '\n\n';
 
   for (const question of this.inputTest.Questions) {
-  builder.concat(question.Text + '\n');
-  for (const answer of question.Answers) {
-  builder.concat( '◻️' + answer.Text + '\n');
-}
-  builder.concat('\n');
-}
+    builder += question.Text + '\n';
+    for (const answer of question.Answers) {
+    builder += '◻️' + answer.Text + '\n';
+    }
+    builder += '\n';
+  }
   console.log(builder);
   return builder;
 }
 
 downloadPDF() {
     const doc = new jsPDF();
-    console.log(this.builderPdf());
     doc.text(this.builderPdf(), 10, 10);
     doc.save();
 

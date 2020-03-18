@@ -60,7 +60,8 @@ import { CreatePDFModalComponent } from './modals/create-pdf-modal/create-pdf-mo
     QuestionFormModule,
     NgbModule,
     LogoutModule,
-    MatDialogModule
+    MatDialogModule,
+    MatButtonModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
