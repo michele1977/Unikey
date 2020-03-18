@@ -3,7 +3,7 @@ import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import * as jsPDF from 'jspdf';
 import {Test} from '../../models/test';
 
-import StringBuilder from 'string-builder';
+// import StringBuilder from 'string-builder';
 
 @Component({
   selector: 'app-create-pdf-modal',
@@ -21,23 +21,24 @@ export class CreatePDFModalComponent implements OnInit {
   }
 
   builderPdf(): string {
-    const builder = new StringBuilder();
-    builder.append(this.inputTest.Title + '\n\n');
+  const builder = '';
+  builder.concat(this.inputTest.Title + '\n\n');
 
-    for (const question of this.inputTest.Questions) {
-      builder.append(question.Text + '\n');
-      for (const answer of question.Answers) {
-        builder.append( '◻️' + answer.Text + '\n');
-      }
-      builder.append('\n');
-    }
+  for (const question of this.inputTest.Questions) {
+  builder.concat(question.Text + '\n');
+  for (const answer of question.Answers) {
+  builder.concat( '◻️' + answer.Text + '\n');
+}
+  builder.concat('\n');
+}
+  console.log(builder);
+  return builder;
+}
 
-    return builder.toString();
-  }
-
-  downloadPDF() {
+downloadPDF() {
     const doc = new jsPDF();
-    doc.text('ciao', 10, 10);
+    console.log(this.builderPdf());
+    doc.text(this.builderPdf(), 10, 10);
     doc.save();
 
     this.activeModal.dismiss('closeDownload');
