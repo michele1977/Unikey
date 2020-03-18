@@ -12,13 +12,14 @@ import {AuthenticationService} from './services/authentication.service';
 
 
 const routes: Routes = [
-  {path: 'seeExTest/:id', component: SeeExTestComponent},
-  {path: 'testcontent/:id', component: TestcontentComponent},
-  {path: 'create', component: CreationComponent},
-  {path: 'testList', component: TestListComponent},
-  {path: 'extestList', component: ExTestListComponent},
+  {path: 'seeExTest/:id', component: SeeExTestComponent, canActivate: [AuthenticationService]},
+  {path: 'testcontent/:id', component: TestcontentComponent, canActivate: [AuthenticationService]},
+  {path: 'create', component: CreationComponent, canActivate: [AuthenticationService]},
+  {path: 'testList', component: TestListComponent, canActivate: [AuthenticationService]},
+  {path: 'extestList', component: ExTestListComponent, canActivate: [AuthenticationService]},
   {path: 'error', component: ErrorComponent},
-  {path: '', component: LandingPageComponent}
+  {path: '', component: LandingPageComponent},
+  {path: '**', component: ErrorComponent},
 ];
 
 @NgModule({

@@ -33,12 +33,18 @@ export class LogoutService {
   private checkErrorPage(): boolean {
     this.router.events.pipe(
       filter(event => {
-        return !!(event instanceof RoutesRecognized && (event.url.match('/error')));
+        return !!(event instanceof RoutesRecognized && ((event.url.match('/error') || event.url.match(''))));
       }))
       .subscribe(() => {
         this.isVisible = false;
         console.log('test');
       });
     return this.isVisible;
+  }
+
+  public logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userInfo');
+    this.router.navigateByUrl('').then();
   }
 }
