@@ -22,24 +22,26 @@ export class CreatePDFModalComponent implements OnInit {
 
   builderPdf(): string {
   let builder = '';
-  builder += this.inputTest.Title + '\n\n';
+  builder += this.inputTest.Title + '\r\r';
 
   for (const question of this.inputTest.Questions) {
-    builder += question.Text + '\n';
+    builder += question.Text + '\r';
+    let i = 1;
     for (const answer of question.Answers) {
-    builder += '◻️' + answer.Text + '\n';
+    builder += i + '. ' + answer.Text + '\r';
+    i++;
     }
-    builder += '\n';
+    builder += '\r';
   }
   console.log(builder);
   return builder;
 }
 
 downloadPDF() {
-    const doc = new jsPDF();
-    doc.text(this.builderPdf(), 10, 10);
-    doc.save();
-
+    const doc = new jsPDF('p', 'mm', 'a4');
+    const paragraph = this.builderPdf();
+    doc.text(paragraph, 20 , 20 , {maxWidth: 170, align: 'justify'});
+    doc.save('Andrea.pdf');
     this.activeModal.dismiss('closeDownload');
   }
 }
