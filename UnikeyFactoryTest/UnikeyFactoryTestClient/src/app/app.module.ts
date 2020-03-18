@@ -30,6 +30,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import {WINDOW_PROVIDERS} from './services/window-ref.service';
+import { CreatePDFModalComponent } from './modals/create-pdf-modal/create-pdf-modal.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import {WINDOW_PROVIDERS} from './services/window-ref.service';
     TestDetailsModalComponent,
     SeeExTestComponent,
     ExTestListComponent,
-    EmailModalComponent
+    EmailModalComponent,
+    CreatePDFModalComponent
   ],
 
   imports: [
@@ -57,7 +59,8 @@ import {WINDOW_PROVIDERS} from './services/window-ref.service';
     FontAwesomeModule,
     QuestionFormModule,
     NgbModule,
-    LogoutModule
+    LogoutModule,
+    MatDialogModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
