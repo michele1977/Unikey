@@ -29,6 +29,7 @@ import { ExTestListComponent } from './features/ex-test-list/ex-test-list.compon
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import {WINDOW_PROVIDERS} from './services/window-ref.service';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { MatDialogModule } from '@angular/material/dialog';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
-    LoaderService
+    LoaderService,
+    WINDOW_PROVIDERS
   ],
   exports: [
   ],
