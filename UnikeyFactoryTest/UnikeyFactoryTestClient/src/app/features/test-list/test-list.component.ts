@@ -34,12 +34,14 @@ export class TestListComponent {
   pageSize = 10;
   textFilter = '';
   tests: Test[];
+  numberOfTest: number;
   modalOptions: NgbModalOptions;
   constructor(private router: Router, public icons: IconsService, private testService: TestListService,
               private modalService: NgbModal, private loader: LoaderService,
               @Inject(DOCUMENT) private document: Document, @Inject(WINDOW) private window) {
     loader.publish('show');
     this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+      this.numberOfTest = data[0].NumberOfTest;
       this.tests = data;
       loader.publish('hide');
     }, error => {
@@ -59,6 +61,7 @@ export class TestListComponent {
     this.textFilter = form.value.textFilter;
     this.loader.publish('show');
     this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+      this.numberOfTest = data[0].NumberOfTest;
       this.tests = data;
       this.loader.publish('hide');
     }, error => {
@@ -91,20 +94,22 @@ export class TestListComponent {
     const pos = document.documentElement.scrollTop + document.documentElement.offsetHeight;
     const max = document.documentElement.scrollHeight;
     if (pos >= max - 1 && pos <= max) {
-      this.loader.publish('show');
-      let nextPage = this.pageNum.valueOf();
-      nextPage++;
-      this.testService.getTests(nextPage, this.pageSize, this.textFilter).subscribe(data => {
-        data.forEach(value => {
-          this.tests.push(value);
+      if (this.tests.length < this.numberOfTest) {
+        this.loader.publish('show');
+        let nextPage = this.pageNum.valueOf();
+        nextPage++;
+        this.testService.getTests(nextPage, this.pageSize, this.textFilter).subscribe(data => {
+          data.forEach(value => {
+            this.tests.push(value);
+          });
+          this.pageNum += 1;
+          this.window.scrollTo(0, max + 1);
+          this.loader.publish('hide');
+        }, error => {
+          this.loader.publish('hide');
+          alert('Ooops something went wrong');
         });
-        this.pageNum += 1;
-        this.window.scrollTo(0, max + 1);
-        this.loader.publish('hide');
-      }, error => {
-        this.loader.publish('hide');
-        alert('Ooops something went wrong');
-      });
+      }
     }
   }
 }

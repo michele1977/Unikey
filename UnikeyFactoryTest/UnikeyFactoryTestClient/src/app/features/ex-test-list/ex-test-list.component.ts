@@ -20,7 +20,7 @@ export class ExTestListComponent {
   pageSize = 10;
   textFilter = '';
   tests: ExTest[];
-  options: any[] = [10, 20, 40, 50, 60];
+  numberOfTests: number;
 
     constructor(private router: Router,
                 public icons: IconsService,
@@ -30,23 +30,21 @@ export class ExTestListComponent {
                 @Inject(WINDOW) private window) {
                   this.loader.publish('show');
                   this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
-        this.tests = data;
-        this.loader.publish('hide');
+                      this.numberOfTests = data[0].NumberOfExTests;
+                      this.tests = data;
+                      this.loader.publish('hide');
       }, () => {
         this.loader.publish('hide');
         this.router.navigateByUrl('error'); }
         );
     }
 
-  loadCreatePage() {
-    this.router.navigateByUrl('create');
-  }
-
   search(form) {
     this.loader.publish('show');
     this.textFilter = form.value.textFilter;
     this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
       this.loader.publish('hide');
+      this.numberOfTests = data[0].NumberOfExTests;
       this.tests = data;
     }, () => {this.router.navigateByUrl('error');
               this.loader.publish('hide'); });
@@ -61,15 +59,16 @@ export class ExTestListComponent {
     const pos = document.documentElement.scrollTop + document.documentElement.offsetHeight;
     const max = document.documentElement.scrollHeight;
     if (pos >= max - 1 && pos <= max) {
-      this.loader.publish('show');
-      this.pageNum += 1;
-      this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
-        data.forEach(value => {
-          this.tests.push(value);
-        });
-        this.loader.publish('hide');
-      }, () => this.router.navigateByUrl('error'));
+      if (this.tests.length < this.numberOfTests) {
+        this.loader.publish('show');
+        this.pageNum += 1;
+        this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+          data.forEach(value => {
+            this.tests.push(value);
+          });
+          this.loader.publish('hide');
+        }, () => this.router.navigateByUrl('error'));
+      }
     }
   }
-
 }
