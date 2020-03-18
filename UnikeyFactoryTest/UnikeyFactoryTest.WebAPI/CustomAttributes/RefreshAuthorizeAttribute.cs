@@ -4,9 +4,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
+using System.Web.Http.Properties;
 using UnikeyFactoryTest.WebAPI.Tools;
 
 namespace UnikeyFactoryTest.WebAPI.CustomAttributes
@@ -19,9 +21,16 @@ namespace UnikeyFactoryTest.WebAPI.CustomAttributes
             var jwtHandler = new JwtSecurityTokenHandler();
             var jwtSecurityToken = jwtHandler.ReadJwtToken(jwt);
 
-            if (!CheckClaims(jwtSecurityToken))
-                JwtFactory.RefreshToken(jwtSecurityToken);
-
+            try
+            {
+                if (!CheckClaims(jwtSecurityToken))
+                    throw new Exception();
+            }
+            catch (Exception e)
+            {
+                var newJwt = JwtFactory.RefreshToken(jwtSecurityToken);
+                actionContext.Response = actionContext.ControllerContext.Request.CreateResponse(HttpStatusCode.Created, newJwt);
+            }
         }
 
         private static bool CheckClaims(JwtSecurityToken jwt)

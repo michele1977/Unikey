@@ -27,6 +27,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
 {
     [EnableCors("*", "*", "*")]
     [LoginAuthorize]
+    [RefreshAuthorize]
     public class TestController : ApiController
     {
         private readonly IKernel _kernel;

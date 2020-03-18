@@ -31,6 +31,8 @@ export class InterceptorService implements HttpInterceptor {
           }
           this.service.router.navigateByUrl('').then();
         }
+
+
         return of(error);
       })
     );
