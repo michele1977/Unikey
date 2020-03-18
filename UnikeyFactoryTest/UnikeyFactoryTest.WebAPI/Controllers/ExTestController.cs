@@ -20,6 +20,7 @@ using UnikeyFactoryTest.WebAPI.Models.DTO;
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
     [LoginAuthorize]
+    [RefreshAuthorize]
     [EnableCors("*", "*", "*")]
     public class ExTestController : ApiController
     {

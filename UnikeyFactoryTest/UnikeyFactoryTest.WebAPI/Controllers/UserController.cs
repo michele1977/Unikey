@@ -101,7 +101,6 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, jwt);
         }
 
-        [LoginAuthorize]
         [HttpGet]
         public JsonResult<string> TestAction()
         {
