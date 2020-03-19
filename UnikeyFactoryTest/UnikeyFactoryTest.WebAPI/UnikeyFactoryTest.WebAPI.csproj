@@ -265,6 +265,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Content Include="Global.asax" />
+    <Content Include="Logos\assestmentImage.png" />
+    <Content Include="Logos\Unikey.png" />
+    <Content Include="Logos\UnikeyLogo.png" />
     <Content Include="Templates\MailTemplate\CodiceHtml.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -426,6 +429,10 @@
     <ProjectReference Include="..\UnikeyFactoryTest.IService\UnikeyFactoryTest.IService.csproj">
       <Project>{764F94A0-C26D-45E8-A86C-91EE99D1ACA7}</Project>
       <Name>UnikeyFactoryTest.IService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnikeyFactoryTest.ITextSharp\UnikeyFactoryTest.ITextSharp.csproj">
+      <Project>{59D33D86-3D79-4332-BC47-CEB98CE35CA6}</Project>
+      <Name>UnikeyFactoryTest.ITextSharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\UnikeyFactoryTest.NinjectConfiguration\UnikeyFactoryTest.NinjectConfiguration.csproj">
       <Project>{04C2FC8F-855F-45FF-9BE7-DDBA35197D45}</Project>

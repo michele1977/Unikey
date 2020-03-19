@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import * as jsPDF from 'jspdf';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {TestService} from '../../services/test.service';
+import { saveAs } from 'file-saver';
 import {Test} from '../../models/test';
-
-// import StringBuilder from 'string-builder';
+import {LoaderService} from '../../services/loader.service';
 
 @Component({
   selector: 'app-create-pdf-modal',
@@ -13,35 +13,23 @@ import {Test} from '../../models/test';
 export class CreatePDFModalComponent implements OnInit {
   @Input() inputTest: Test;
 
+  fileUrl;
+
   constructor(
-    public activeModal: NgbActiveModal
+    public activeModal: NgbActiveModal,
+    public testService: TestService,
+    private loader: LoaderService
   ) { }
 
   ngOnInit(): void {
   }
 
-  builderPdf(): string {
-  let builder = '';
-  builder += this.inputTest.Title + '\r\r';
-
-  for (const question of this.inputTest.Questions) {
-    builder += question.Text + '\r';
-    let i = 1;
-    for (const answer of question.Answers) {
-    builder += i + '. ' + answer.Text + '\r';
-    i++;
-    }
-    builder += '\r';
-  }
-  console.log(builder);
-  return builder;
-}
-
-downloadPDF() {
-    const doc = new jsPDF('p', 'mm', 'a4');
-    const paragraph = this.builderPdf();
-    doc.text(paragraph, 20 , 20 , {maxWidth: 170, align: 'justify'});
-    doc.save('Andrea.pdf');
-    this.activeModal.dismiss('closeDownload');
+  downloadPDF() {
+    this.loader.publish('show');
+    this.testService.downloadPdf(this.inputTest.Id).subscribe(value => {
+      saveAs(value, this.inputTest.Title + '.pdf');
+      this.loader.publish('hide');
+      this.activeModal.close();
+    });
   }
 }

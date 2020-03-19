@@ -1,6 +1,19 @@
-<h2 mat-dialog-title>Information</h2>
-<mat-dialog-content>Are you sure to download this test in PDF format?</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button (click)="activeModal.dismiss('closePdf')">Cancel</button>
-  <button mat-button (click)="downloadPDF()">Download</button>
-</mat-dialog-actions>
+<div class="modal-content">
+  <div class="modal-header">
+    <div class="row" style="margin-left: 3px">
+      <h4 class="modal-title" style="color: blue;margin-right: 2px">Information</h4>
+      <i class="fa fa-info-circle fa-2x" style="color: blue"></i>
+    </div>
+    <button type="button" class="close" aria-label="Close" style="float: right" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <label>Are you sure you want to download this test in PDF format?</label>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" style="float: left" (click)="downloadPDF()">Download</button>
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+  </div>
+</div>
+

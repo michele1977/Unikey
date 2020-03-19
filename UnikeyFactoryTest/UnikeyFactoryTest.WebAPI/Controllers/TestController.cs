@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
+using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json.Linq;
 using Ninject;
@@ -22,6 +25,7 @@ using UnikeyFactoryTest.Service.Providers.MailProvider;
 using UnikeyFactoryTest.WebAPI.CustomAttributes;
 using UnikeyFactoryTest.WebAPI.Models;
 using UnikeyFactoryTest.WebAPI_new.ResponseMessages;
+using UnikeyFactoryTest.ITextSharp;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
@@ -49,27 +53,27 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
 #endif
 
 #if !MOCK
-                try
-                {
-                    var returned = await _service.GetTestById(id);
+            try
+            {
+                var returned = await _service.GetTestById(id);
 
-                    return Ok(returned);
-                }
-                catch (ArgumentNullException e)
-                {
-                    _logger.Error(e, e.Message);
-                    return InternalServerError();
-                }
-                catch (InvalidOperationException e)
-                {
-                    _logger.Error(e, e.Message);
-                    return InternalServerError();
-                }
-                catch (Exception e)
-                {
-                    _logger.Fatal(e, e.Message);
-                    return InternalServerError();
-                }
+                return Ok(returned);
+            }
+            catch (ArgumentNullException e)
+            {
+                _logger.Error(e, e.Message);
+                return InternalServerError();
+            }
+            catch (InvalidOperationException e)
+            {
+                _logger.Error(e, e.Message);
+                return InternalServerError();
+            }
+            catch (Exception e)
+            {
+                _logger.Fatal(e, e.Message);
+                return InternalServerError();
+            }
 #endif
         }
 
@@ -126,7 +130,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
                     testDtoList.Add(testDto);
                 }
                 testDtoList[0].NumberOfTest = await _service.CountTests(filter);
-               
+
 
 
                 return Ok(testDtoList);
@@ -135,6 +139,37 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             {
                 _logger.Fatal(e, e.Message);
                 return InternalServerError();
+            }
+        }
+
+        public async Task<HttpResponseMessage> GetPdf(int testId)
+        {
+            try
+            {
+                PdfCreator creator = new PdfCreator();
+
+                var testBusiness = await _service.GetTestById(testId);
+
+                var memoryStream = creator.CreatePdf(testBusiness);
+
+                var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StreamContent(memoryStream)
+                };
+
+                httpResponseMessage.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+
+                httpResponseMessage.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = $"{testBusiness.Title}.pdf"
+                };
+
+                return httpResponseMessage;
+            }
+            catch(Exception e)
+            {
+                _logger.Error(e, e.Message);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.InternalServerError);
             }
         }
 
@@ -152,7 +187,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             }
         }
 
-        [HttpPost]
+        [System.Web.Http.HttpPost]
         public HttpResponseMessage Create(TestBusiness test)
         {
             try
@@ -205,7 +240,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             }
         }
 
-        [HttpPatch]
+        [System.Web.Http.HttpPatch]
         public async Task<HttpResponseMessage> Update(TestBusiness test)
         {
             try
@@ -264,7 +299,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
 
 
         //[Route("api/Test/sendMail")]
-        [HttpPost]
+        [System.Web.Http.HttpPost]
         public async Task<IHttpActionResult> SendMail(EmailModel emailModel)
         {
             TestBusiness test;
@@ -363,5 +398,5 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             return Ok(result);
         }
     }
-    
+
 }
