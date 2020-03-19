@@ -3,14 +3,14 @@ import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest,
 import {Observable, of} from 'rxjs';
 import {LoginService} from './login.service';
 import {catchError, map} from 'rxjs/operators';
-import {RefreshtokenService} from './refreshtoken.service';
+import {RefreshTokenService} from './refreshtoken.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InterceptorService implements HttpInterceptor {
 
-  constructor(private loginService: LoginService, private refreshService: RefreshtokenService) {
+  constructor(private loginService: LoginService, private refreshService: RefreshTokenService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -33,7 +33,12 @@ export class InterceptorService implements HttpInterceptor {
         if (error instanceof HttpErrorResponse) {
           switch (error.status) {
             case 400:
-              this.refreshService.router.navigateByUrl('/refresh').then();
+              this.refreshService.Refresh().subscribe(
+                newJwt => {
+                  localStorage.setItem('token', newJwt);
+                  const URL = this.refreshService.router.url;
+                  this.refreshService.router.navigateByUrl(URL).then();
+                });
               break;
             case 401:
               this.loginService.router.navigateByUrl('').then();

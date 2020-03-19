@@ -40,13 +40,14 @@ namespace UnikeyFactoryTest.WebAPI.Tools
             return token;
         }
 
-        public static string RefreshToken(JwtSecurityToken jwt)
+        public static string RefreshToken(string jwt)
         {
             var jwtHandler = new JwtSecurityTokenHandler();
+            var myJwt =jwtHandler.ReadJwtToken(jwt);
             try
             {
-                var id = jwt.Claims.FirstOrDefault(c => c.Type.Equals("id")).Value;
-                var userName = jwt.Claims.FirstOrDefault(c => c.Type.Equals("userName")).Value;
+                var id = myJwt.Claims.FirstOrDefault(c => c.Type.Equals("id")).Value;
+                var userName = myJwt.Claims.FirstOrDefault(c => c.Type.Equals("userName")).Value;
                 var newJwt = jwtHandler.WriteToken(CreateJwtSecurityToken(new JwtSecurityTokenHandler(), id, userName));
                 return newJwt;
             }

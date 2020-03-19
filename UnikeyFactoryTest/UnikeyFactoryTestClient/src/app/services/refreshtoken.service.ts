@@ -8,18 +8,15 @@ import {Router} from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class RefreshtokenService {
-  LOGIN_URL = LOCALHOST_URL + 'User/Login';
-  user: User;
-
+export class RefreshTokenService {
+  REFRESH_URL = LOCALHOST_URL + 'User/Refresh';
   constructor(public httpClient: HttpClient, public router: Router) {
   }
 
   Refresh() {
-    this.user.username = 'Lollolone';
-    this.user.password = 'Unikey1!';
-    this.httpClient.post<string>(this.LOGIN_URL, this.user).subscribe(
-      jwt => localStorage.setItem('token', jwt));
-    console.log('Refresh');
+    const jwt = localStorage.getItem('token');
+    console.log(jwt);
+    return this.httpClient.post<string>(this.REFRESH_URL, {jwt});
+
   }
 }

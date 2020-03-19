@@ -104,7 +104,8 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> Refresh(string jwt)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, jwt);
+            var newJwt = JwtFactory.RefreshToken(jwt);
+            return Request.CreateResponse(HttpStatusCode.OK, newJwt);
         }
 
 
