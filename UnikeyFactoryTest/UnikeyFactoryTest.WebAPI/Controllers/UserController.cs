@@ -71,7 +71,6 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
 
         [HttpPost]
         public async Task<HttpResponseMessage> Login(UserBusiness userBusiness)
-        
         {
             try
             {
@@ -101,6 +100,13 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, jwt);
         }
+
+        [HttpPost]
+        public async Task<HttpResponseMessage> Refresh(string jwt)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, jwt);
+        }
+
 
         [HttpGet]
         public JsonResult<string> TestAction()

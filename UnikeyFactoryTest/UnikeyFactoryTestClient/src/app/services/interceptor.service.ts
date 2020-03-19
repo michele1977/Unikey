@@ -2,16 +2,15 @@ import { Injectable } from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {LoginService} from './login.service';
-import {catchError, first, map, single, tap} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {RefreshtokenService} from './refreshtoken.service';
-import {LogoutService} from './logout.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InterceptorService implements HttpInterceptor {
 
-  constructor(private service: LoginService, private logoutService: LogoutService ) {
+  constructor(private loginService: LoginService, private refreshService: RefreshtokenService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -23,20 +22,28 @@ export class InterceptorService implements HttpInterceptor {
       });
 
     return next.handle(req).pipe(
-      map((event: HttpResponse<any>) => {
-        if (event.status === 201) {
-        localStorage.setItem('token', event.body);
-        const URL = this.service.router.url;
-        this.service.router.navigateByUrl(URL).then();
-      }
-        return event;
-      }),
+      // map((event: HttpResponse<any>) => {
+      //   if (event.status === 201) {
+      //     localStorage.setItem('token', event.body);
+      //     return next.handle(req);
+      //   }
+      //   return event;
+      // }),
       catchError((error: any) => {
-        if (error instanceof HttpErrorResponse && error.status === 401) {
-          this.service.router.navigateByUrl('').then();
+        if (error instanceof HttpErrorResponse) {
+          switch (error.status) {
+            case 400:
+              this.refreshService.router.navigateByUrl('/refresh').then();
+              break;
+            case 401:
+              this.loginService.router.navigateByUrl('').then();
+              break;
+            default:
+              this.loginService.router.navigateByUrl('/error').then();
+          }
         }
         return of(error);
-      }),
+      })
     );
   }
 }

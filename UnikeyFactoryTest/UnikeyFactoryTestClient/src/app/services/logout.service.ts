@@ -37,7 +37,6 @@ export class LogoutService {
       }))
       .subscribe(() => {
         this.isVisible = false;
-        console.log('test');
       });
     return this.isVisible;
   }

@@ -3,6 +3,7 @@ import {HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '
 import {Observable} from 'rxjs';
 import {LOCALHOST_URL} from '../constants/api.const';
 import {User} from '../models/user';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class RefreshtokenService {
   LOGIN_URL = LOCALHOST_URL + 'User/Login';
   user: User;
 
-  constructor(public httpClient: HttpClient) {
+  constructor(public httpClient: HttpClient, public router: Router) {
   }
 
   Refresh() {

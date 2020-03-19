@@ -13,6 +13,7 @@ using System.Web.Http.Properties;
 using System.Web.Http.Results;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
+using UnikeyFactoryTest.WebAPI.CustomExceptions;
 
 namespace UnikeyFactoryTest.WebAPI.CustomAttributes
 {
@@ -23,15 +24,25 @@ namespace UnikeyFactoryTest.WebAPI.CustomAttributes
             var jwt = actionContext.Request.Headers.Authorization.Parameter;
             var jwtHandler = new JwtSecurityTokenHandler();
             var jwtSecurityToken = jwtHandler.ReadJwtToken(jwt);
-            
+
             try
             {
                 if (!CheckJwtStructure(jwt) || !CheckSignature(jwtSecurityToken))
-                    throw new Exception();
+                    throw new UnauthorizedException();
+                if (!CheckClaims(jwtSecurityToken))
+                    throw new RefreshUnauthorizedException();
             }
-            catch
+            catch (RefreshUnauthorizedException ex)
+            {
+                HandleUnauthorizedRequest(actionContext);
+            }
+            catch (UnauthorizedException ex)
             {
                 base.HandleUnauthorizedRequest(actionContext);
+            }
+            catch (Exception ex)
+            {
+                var msg = ex.Message;
             }
         }
 
@@ -44,7 +55,6 @@ namespace UnikeyFactoryTest.WebAPI.CustomAttributes
                 return false;
 
             var jwtComponents = jwt.Split('.').Take(2);
-
 
             if(!jwtComponents.All(jwtComponent => Regex.IsMatch(Base64UrlEncoder.Decode(jwtComponent), regexJson)))
                 return false;
@@ -67,7 +77,22 @@ namespace UnikeyFactoryTest.WebAPI.CustomAttributes
         {
             var key = new SymmetricSecurityKey(Encoding.Default.GetBytes("MeFaSchifoLAgile"));
             var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            return JwtTokenUtilities.CreateEncodedSignature(string.Concat(jwt.Header.Base64UrlEncode(), ".", jwt.Payload.Base64UrlEncode()), signingCredentials);
+            return JwtTokenUtilities.CreateEncodedSignature(String.Concat(jwt.Header.Base64UrlEncode(), ".", jwt.Payload.Base64UrlEncode()), signingCredentials);
+        }
+
+        private static bool CheckClaims(JwtSecurityToken jwt)
+        {
+            var expireDate = jwt.Claims.ToList().Find(m => m.Type.Equals("exp"));
+            var expireDateTime = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt32(expireDate.Value));
+            return expireDateTime >= DateTime.Now;
+        }
+
+        protected override void HandleUnauthorizedRequest(HttpActionContext actionContext)
+        {
+            if (actionContext == null)
+                throw new Exception("Action Context is null");
+
+            actionContext.Response = actionContext.ControllerContext.Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Token is refreshing", new RefreshUnauthorizedException());
         }
     }
 }

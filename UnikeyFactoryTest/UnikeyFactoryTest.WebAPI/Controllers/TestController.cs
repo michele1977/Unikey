@@ -27,7 +27,6 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
 {
     [EnableCors("*", "*", "*")]
     [LoginAuthorize]
-    [RefreshAuthorize]
     public class TestController : ApiController
     {
         private readonly IKernel _kernel;
@@ -127,9 +126,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
                     testDtoList.Add(testDto);
                 }
                 testDtoList[0].NumberOfTest = await _service.CountTests(filter);
-               
-
-
+                
                 return Ok(testDtoList);
             }
             catch (Exception e)

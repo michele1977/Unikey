@@ -2,25 +2,19 @@
 using NLog;
 using System;
 using System.Collections.Generic;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using System.Web.Http.Cors;
-using Ninject;
-using NLog;
 using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.WebAPI.CustomAttributes;
-using UnikeyFactoryTest.WebAPI.Models.DTO;
 using UnikeyFactoryTest.WebAPI.Models.DTO;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
     [LoginAuthorize]
-    [RefreshAuthorize]
     [EnableCors("*", "*", "*")]
     public class ExTestController : ApiController
     {
