@@ -16,7 +16,6 @@ export class RefreshTokenService {
   Refresh() {
     const jwt = localStorage.getItem('token');
     console.log(jwt);
-    return this.httpClient.post<string>(this.REFRESH_URL, {jwt});
-
+    return this.httpClient.post<string>(this.REFRESH_URL, {token: jwt});
   }
 }

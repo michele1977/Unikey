@@ -33,7 +33,7 @@ namespace UnikeyFactoryTest.WebAPI.Tools
                     new Claim("userName", $"{claims[1]}")
                 }),
                 DateTime.Now,
-                DateTime.Now.AddSeconds(60),
+                DateTime.Now.AddSeconds(20),
                 DateTime.Now,
                 new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
             );

@@ -27,16 +27,15 @@ export class LoginComponent {
 
   login(user: User) {
     this.loader.publish('show');
-    this.service.login(user).subscribe(
+    this.service.login(user).then(
       jwt => {
         this.setSession(jwt, user);
+        this.service.router.navigateByUrl('testList')
+          .then(() => this.loader.publish('hide'));
       }, () => {
         this.service.router.navigateByUrl('')
           .then(() => this.loader.publish('hide'));
         this.isPostBack = true;
-      }, () => {
-          this.service.router.navigateByUrl('testList')
-            .then(() => this.loader.publish('hide'));
       }
     );
   }

@@ -8,7 +8,9 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Results;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Ninject;
+using Ninject.Parameters;
 using NLog;
 using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.WebAPI.CustomAttributes;
@@ -23,6 +25,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         private readonly IKernel _kernel;
         private readonly ILogger _logger;
         private readonly UserManager<UserBusiness, int> _service;
+        private readonly SignInManager<UserBusiness, int> _signigni;
 
         public UserController(IKernel kernel, ILogger logger)
         {
@@ -69,6 +72,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, user.Id);
         }
 
+        [LoginAuthorize]
         [HttpPost]
         public async Task<HttpResponseMessage> Login(UserBusiness userBusiness)
         {
@@ -79,8 +83,10 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
                 if (user is null)
                     throw new ArgumentNullException();
 
-                if(!await _service.CheckPasswordAsync(user, userBusiness.Password))
+                if (!await _service.CheckPasswordAsync(user, userBusiness.Password))
                     throw new Exception("Invalid Password");
+
+                //await _signigni.SignInAsync(user, false, false);
             }
             catch (ArgumentNullException e)
             {
@@ -97,17 +103,21 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             }
 
             var jwt = JwtFactory.GenerateToken(userBusiness);
-
             return Request.CreateResponse(HttpStatusCode.OK, jwt);
         }
 
-        [HttpPost]
-        public async Task<HttpResponseMessage> Refresh(string jwt)
+        public class JwtObj
         {
-            var newJwt = JwtFactory.RefreshToken(jwt);
-            return Request.CreateResponse(HttpStatusCode.OK, newJwt);
+            public string token { get; set; }
         }
 
+        [HttpPost]
+        public async Task<HttpResponseMessage> Refresh(JwtObj token)
+        {
+            //var newJwt = JwtFactory.RefreshToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAiLCJ1c2VyTmFtZSI6IkxvbGxvbG9uZSIsIm5iZiI6MTU4NDYyNTEzMiwiZXhwIjoxNTg0NjI1MTkyLCJpYXQiOjE1ODQ2MjUxMzIsImlzcyI6Imlzc3VlciIsImF1ZCI6IkF1ZGllbmNlIn0.WG81BJlGgMo6mFALtwNUfWPKKk3OZxl5moJB-s1taAg");
+            var newJwt = JwtFactory.RefreshToken(token.token);
+            return Request.CreateResponse(HttpStatusCode.OK, newJwt);
+        }
 
         [HttpGet]
         public JsonResult<string> TestAction()

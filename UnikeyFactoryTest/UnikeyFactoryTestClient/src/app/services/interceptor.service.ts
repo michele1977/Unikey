@@ -15,6 +15,7 @@ export class InterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const jwt = localStorage.getItem('token');
+
     req = req.clone({
       setHeaders: {
         Authorization: 'bearer ' + jwt
@@ -22,27 +23,10 @@ export class InterceptorService implements HttpInterceptor {
       });
 
     return next.handle(req).pipe(
-      // map((event: HttpResponse<any>) => {
-      //   if (event.status === 201) {
-      //     localStorage.setItem('token', event.body);
-      //     return next.handle(req);
-      //   }
-      //   return event;
-      // }),
       catchError((error: any) => {
         if (error instanceof HttpErrorResponse) {
           switch (error.status) {
-            case 400:
-              this.refreshService.Refresh().subscribe(
-                newJwt => {
-                  localStorage.setItem('token', newJwt);
-                  const URL = this.refreshService.router.url;
-                  this.refreshService.router.navigateByUrl(URL).then();
-                });
-              break;
-            case 401:
-              this.loginService.router.navigateByUrl('').then();
-              break;
+
             default:
               this.loginService.router.navigateByUrl('/error').then();
           }
