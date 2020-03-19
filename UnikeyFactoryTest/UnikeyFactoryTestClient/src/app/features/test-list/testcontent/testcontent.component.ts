@@ -5,6 +5,8 @@ import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {IconsService} from 'src/app/services/icons.service';
 import {switchMap} from 'rxjs/operators';
 import {Question} from '../../../models/question';
+import {isWhiteSpace} from 'tslint';
+import index from '@angular/cli/lib/cli';
 
 @Component({
   selector: 'app-testcontent',
@@ -93,5 +95,30 @@ public isButtonVisible = false;
       this.test.Questions.push(question);
       this.saveChanges(this.test);
       this.isButtonVisible = false;
+  }
+
+  copyText(test: Test) {
+     let s = '';
+     let Index = 1;
+     for (const question of test.Questions) {
+        s += '\n';
+        s += Index + '. ' + question.Text;
+        s += '\n';
+        Index++;
+        for (const answer of question.Answers) {
+           s += '□ ' + answer.Text;
+           if (answer.IsCorrect) {
+            s += ' V';
+           }
+           s += '\n';
+      }
+     }
+     const selBox = document.createElement('textarea');
+     selBox.value = 'Title: ' + test.Title + '\n' + 'Date of creation: ' + test.Date + '\n' + s;
+     document.body.appendChild(selBox);
+     selBox.focus();
+     selBox.select();
+     document.execCommand('copy');
+     document.body.removeChild(selBox);
   }
 }
