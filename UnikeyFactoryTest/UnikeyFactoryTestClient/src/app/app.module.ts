@@ -29,6 +29,10 @@ import { ExTestListComponent } from './features/ex-test-list/ex-test-list.compon
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import {WINDOW_PROVIDERS} from './services/window-ref.service';
+import { BeginTestComponent } from './features/fruition/begin-test/begin-test.component';
+import { FruitionLandingPageComponent } from './shared/fruition-landing-page/fruition-landing-page.component';
+import { CreatePDFModalComponent } from './modals/create-pdf-modal/create-pdf-modal.component';
 
 
 @NgModule({
@@ -42,7 +46,12 @@ import { MatDialogModule } from '@angular/material/dialog';
     TestDetailsModalComponent,
     SeeExTestComponent,
     ExTestListComponent,
-    EmailModalComponent
+    EmailModalComponent,
+    BeginTestComponent,
+    FruitionLandingPageComponent,
+    BeginTestComponent
+    EmailModalComponent,
+    CreatePDFModalComponent
   ],
 
   imports: [
@@ -56,11 +65,14 @@ import { MatDialogModule } from '@angular/material/dialog';
     FontAwesomeModule,
     QuestionFormModule,
     NgbModule,
-    LogoutModule
+    LogoutModule,
+    MatDialogModule,
+    MatButtonModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
-    LoaderService
+    LoaderService,
+    WINDOW_PROVIDERS
   ],
   exports: [
   ],

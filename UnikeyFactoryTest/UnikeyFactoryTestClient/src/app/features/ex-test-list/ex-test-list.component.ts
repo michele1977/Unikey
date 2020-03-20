@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, Inject, OnInit} from '@angular/core';
 import { IconsService } from 'src/app/services/icons.service';
 import { ExTestList } from 'src/app/models/ex-test-list';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ExTestListService } from 'src/app/services/ex-test-list.service';
 import { LoaderService } from 'src/app/services/loader.service';
+import {DOCUMENT} from '@angular/common';
+import {WINDOW} from '../../services/window-ref.service';
+import {ExTest} from '../../models/ex-test';
 
 @Component({
   selector: 'app-ex-test-list',
@@ -13,41 +16,36 @@ import { LoaderService } from 'src/app/services/loader.service';
 })
 export class ExTestListComponent {
 
-  showDeleteError = false;
   pageNum = 1;
   pageSize = 10;
   textFilter = '';
-  atLast = false;
-  tests: ExTestList;
-  pages = 0;
-  options: any[] = [10, 20, 40, 50, 60];
+  tests: ExTest[];
+  numberOfTests: number;
 
     constructor(private router: Router,
                 public icons: IconsService,
                 private exTestService: ExTestListService,
-                private loader: LoaderService) {
+                private loader: LoaderService,
+                @Inject(DOCUMENT) private document: Document,
+                @Inject(WINDOW) private window) {
                   this.loader.publish('show');
                   this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
-        this.tests = data as ExTestList;
-        this.loader.publish('hide');
-        this.pages = Math.ceil(data[0].TotalNumberOfExTests / this.pageSize);
+                      this.numberOfTests = data[0].NumberOfExTests;
+                      this.tests = data;
+                      this.loader.publish('hide');
       }, () => {
         this.loader.publish('hide');
         this.router.navigateByUrl('error'); }
         );
     }
 
-  loadCreatePage() {
-    this.router.navigateByUrl('create');
-  }
-
   search(form) {
     this.loader.publish('show');
     this.textFilter = form.value.textFilter;
     this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
       this.loader.publish('hide');
-      this.tests = data as ExTestList;
-      this.pages = Math.ceil(data[0].TotalNumberOfExTests / this.pageSize);
+      this.numberOfTests = data[0].NumberOfExTests;
+      this.tests = data;
     }, () => {this.router.navigateByUrl('error');
               this.loader.publish('hide'); });
   }
@@ -56,68 +54,21 @@ export class ExTestListComponent {
     this.router.navigateByUrl('seeExTest/' + id);
   }
 
-  resizePage(event: any) {
-    this.loader.publish('show');
-    this.pageSize = event.target.value;
-    this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
-      this.tests = data as ExTestList;
-      this.pages = Math.ceil(data[0].TotalNumberOfExTests / this.pageSize);
-      if (this.atLast === true) {
-        this.pageNum = this.pages;
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const pos = document.documentElement.scrollTop + document.documentElement.offsetHeight;
+    const max = document.documentElement.scrollHeight;
+    if (pos >= max - 1 && pos <= max) {
+      if (this.tests.length < this.numberOfTests) {
+        this.loader.publish('show');
+        this.pageNum += 1;
+        this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+          data.forEach(value => {
+            this.tests.push(value);
+          });
+          this.loader.publish('hide');
+        }, () => this.router.navigateByUrl('error'));
       }
-      this.loader.publish('hide');
-    }, () => {this.router.navigateByUrl('error');
-              this.loader.publish('hide'); });
-  }
-
-  NextPage() {
-    this.loader.publish('show');
-    this.pageNum += 1;
-    this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
-      this.tests = data as ExTestList;
-      this.pages = Math.ceil(data[0].TotalNumberOfExTests / this.pageSize);
-      this.loader.publish('hide');
-    }, () => this.router.navigateByUrl('error'));
-    if (this.pageNum === this.pages) {
-      this.atLast = true;
-      this.loader.publish('hide');
     }
   }
-
-  lastPage() {
-    this.loader.publish('show');
-    this.exTestService.getExTests(this.pages, this.pageSize, this.textFilter).subscribe(data => {
-      this.tests = data as ExTestList;
-      this.pages = Math.ceil(data[0].TotalNumberOfExTests / this.pageSize);
-      this.pageNum = this.pages;
-      this.atLast = true;
-      this.loader.publish('hide');
-    }, () => this.router.navigateByUrl('error'))
-    this.loader.publish('hide');
-  }
-
-  firstPage() {
-    this.loader.publish('show');
-    this.exTestService.getExTests(1, this.pageSize, this.textFilter).subscribe(data => {
-      this.tests = data as ExTestList;
-      this.pages = Math.ceil(data[0].TotalNumberOfExTests / this.pageSize);
-      this.atLast = false;
-      this.pageNum = 1;
-      this.loader.publish('hide');
-    }, () => this.router.navigateByUrl('error'));
-    this.loader.publish('hide');
-  }
-
-  previousPage() {
-    this.loader.publish('show');
-    this.pageNum -= 1;
-    this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
-      this.tests = data as ExTestList;
-      this.pages = Math.ceil(data[0].TotalNumberOfExTests / this.pageSize);
-      this.atLast = false;
-      this.loader.publish('hide');
-    }, () => this.router.navigateByUrl('error'));
-    this.loader.publish('hide');
-  }
-
 }

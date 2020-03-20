@@ -1,0 +1,33 @@
+        <div class="container h-100">
+        <div class="d-flex justify-content-center h-100">
+            <div class="user_card">
+                <div class="d-flex justify-content-center">
+                    <div class="brand_logo_container">
+                        <img src="assets\img\Unikey.png" class="brand_logo" alt="Logo">
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center form_container">
+                    
+                    <form #form="ngForm">
+                        <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                <span class="input-group-text">F</span>
+                            </div>
+                            <input type="text" name="firstName" class="form-control input_user" value=""
+                                placeholder="First name" #firstNameRef="ngModel" required pattern="\S{1,}" ngModel>
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append">
+                                <span class="input-group-text">L</span>
+                            </div>
+                            <input type="text" name="lastName" class="form-control input_pass" value="" 
+                                placeholder="Last name" #lastNameRef="ngModel" required pattern="\S{1,}" ngModel>
+                        </div>
+                        <div class="d-flex justify-content-center mt-3 login_container">
+                            <button type="submit" name="button" [disabled]="form.invalid" (click)="toggleFirstQuestion(form.value)" class="btn login_btn">Begin test</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

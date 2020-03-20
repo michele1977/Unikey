@@ -1,23 +1,14 @@
-<div class="main-div">
-  <div class="title">
-    <h2>Test List</h2>
+<div class="row">
+  <div class="col-6">
+    <div class="title">
+      <h2>Test List</h2>
+    </div>
+    <div>
+      <fa-icon [icon]="icons.faPlus" class="btn btn-success create-test-a" (click)="loadCreatePage()" title="Create Test"></fa-icon>
+    </div>
   </div>
-  <div class="create-test-a-div">
-    <fa-icon [icon]="icons.faPlus" class="btn btn-success create-test-a" (click)="loadCreatePage()" title="Create Test"></fa-icon>
-  </div>
-</div>
-<div class="alert alert-danger" *ngIf="showDeleteError" >
-  <strong>Holy holy maccaroni!</strong> An error occurred while deleting the test
-  <button type="button" class="close" aria-label="Close" (click)="closeErrorAlert()">&times;</button>
-</div>
-
-
-
-<hr>
-
-<div style="display: flex;">
-  <div style="float:left;">
-    <form #form="ngForm" style="margin-bottom: 10px;" >
+  <div class="col-6" style="text-align: right">
+    <form #form="ngForm">
       <div class="btn btn-group">
         <input type="search" [ngModel]="textFilter" name="textFilter" class="form-control">
         <span class="glyphicon glyphicon-remove-circle"></span>
@@ -25,24 +16,12 @@
       </div>
     </form>
   </div>
-  <div style="float: right; margin-left: auto;">
-    <div style="margin-top: 5px;">
-      <form #form="ngForm">
-        <label>Elements per page </label>
-        <select (change)="resizePage($event)">
-          <option name="pageSize" [value]="option" *ngFor="let option of options">{{option}}</option>
-        </select>
-      </form>
-    </div>
-  </div>
 </div>
-<div class="text-center">
-  <fa-icon *ngIf="pageNum > 1" [icon]="icons.faAngleDoubleLeft" class="pointer" style="margin-right: 5px;" (click)="firstPage()" title="First"></fa-icon>
-  <fa-icon *ngIf="pageNum > 1" [icon]="icons.faArrowLeft" (click)="previousPage()" class="pointer" style="margin-right: 5px;" title="Previous"></fa-icon>
-  <strong><label>{{pageNum}} of {{pages}}</label></strong>
-  <fa-icon *ngIf="pageNum < pages" class="pointer" [icon]="icons.faArrowRight" (click)="NextPage()" style="margin-left: 5px;" title="Next"></fa-icon>
-  <fa-icon *ngIf="pageNum < pages" [icon]="icons.faAngleDoubleRight" class="pointer" (click)="lastPage()" title="Last" style="margin-left: 5px;"></fa-icon>
+<div class="alert alert-danger" *ngIf="showDeleteError" >
+  <strong>Holy holy maccaroni!</strong> An error occurred while deleting the test
+  <button type="button" class="close" aria-label="Close" (click)="closeErrorAlert()">&times;</button>
 </div>
+<br>
 <table class="table">
   <tr>
     <th class="text-center">Id</th>
@@ -72,11 +51,3 @@
     </td>
   </tr>
 </table>
-
-<div class="text-center">
-  <fa-icon *ngIf="pageNum > 1" [icon]="icons.faAngleDoubleLeft" class="pointer" style="margin-right: 5px;" (click)="firstPage()" title="First"></fa-icon>
-  <fa-icon *ngIf="pageNum > 1" [icon]="icons.faArrowLeft" (click)="previousPage()" class="pointer" style="margin-right: 5px;" title="Previous"></fa-icon>
-  <strong><label>{{pageNum}} of {{pages}}</label></strong>
-  <fa-icon *ngIf="pageNum < pages" class="pointer" [icon]="icons.faArrowRight" (click)="NextPage()" style="margin-left: 5px;" title="Next"></fa-icon>
-  <fa-icon *ngIf="pageNum < pages" [icon]="icons.faAngleDoubleRight" class="pointer" (click)="lastPage()" title="Last" style="margin-left: 5px;"></fa-icon>
-</div>

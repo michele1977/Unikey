@@ -50,7 +50,7 @@ namespace UnikeyFactoryTest.ITextSharp
 
                     for (int i = 0; i < question.Answers.Count; ++i)
                     {
-                        builder.Append($"□ {question.Answers[i].Text}\n");
+                        builder.Append($"O {question.Answers[i].Text}\n");
                     }
 
                     builder.Append("\n");

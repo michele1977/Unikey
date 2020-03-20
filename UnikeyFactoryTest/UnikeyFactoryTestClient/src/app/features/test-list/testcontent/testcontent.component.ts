@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {TestService} from '../../../services/test.service';
 import {Test} from '../../../models/test';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import { IconsService } from 'src/app/services/icons.service';
 import { switchMap } from 'rxjs/operators';
 import { LoaderService } from 'src/app/services/loader.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {CreatePDFModalComponent} from "../../../modals/create-pdf-modal/create-pdf-modal.component";
 
 @Component({
   selector: 'app-testcontent',
@@ -19,11 +21,13 @@ areThereModifies = false;
 isEditable: boolean[] = [];
 isThereAnError: boolean;
 
+
   constructor(
     private service: TestService,
     private router: Router,
     public icons: IconsService,
     private route: ActivatedRoute,
+    private modalService: NgbModal,
     private loader: LoaderService
     ) {
       loader.publish('show');
@@ -84,4 +88,10 @@ isThereAnError: boolean;
       error => this.isThereAnError = true);
     this.loader.publish('hide');
   }
+
+  ShowPopUP() {
+    const modal = this.modalService.open(CreatePDFModalComponent);
+    modal.componentInstance.inputTest = this.test;
+  }
+
 }
