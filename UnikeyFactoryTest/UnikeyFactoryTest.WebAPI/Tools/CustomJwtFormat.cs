@@ -17,9 +17,11 @@ namespace UnikeyFactoryTest.WebAPI.Tools
         {
             var user = new UserBusiness
             {
-                Id = data.Identity.NameClaimType[""]
-            }
-            var jwt = JwtFactory.GenerateToken();
+                Id = Convert.ToInt32(data.Identity.Claims.FirstOrDefault(c => c.Type.Equals("id")).Value),
+                UserName = data.Identity.Claims.FirstOrDefault(c => c.Type.Equals("userName")).Value
+            };
+
+            var jwt = JwtFactory.GenerateToken(user);
             return jwt;
         }
         

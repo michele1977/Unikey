@@ -26,7 +26,7 @@ using UnikeyFactoryTest.WebAPI_new.ResponseMessages;
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
     [EnableCors("*", "*", "*")]
-    [LoginAuthorize]
+    //[LoginAuthorize]
     public class TestController : ApiController
     {
         private readonly IKernel _kernel;
@@ -40,6 +40,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             _service = _kernel.Get<TestService>();
         }
 
+        [LoginAuthorize]
         public async Task<IHttpActionResult> Get(int id)
         {
 #if MOCK

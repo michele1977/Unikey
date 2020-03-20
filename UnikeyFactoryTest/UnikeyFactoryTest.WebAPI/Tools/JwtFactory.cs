@@ -22,11 +22,11 @@ namespace UnikeyFactoryTest.WebAPI.Tools
 
         private static JwtSecurityToken CreateJwtSecurityToken(JwtSecurityTokenHandler jwtHandler, params object[] claims)
         {
-            var key = new SymmetricSecurityKey(Encoding.Default.GetBytes("MeFaSchifoLAgile"));
+            var key = new SymmetricSecurityKey(Encoding.Default.GetBytes("MeFaSchifoLAgileyufntdbrsve"));
             
             var token = jwtHandler.CreateJwtSecurityToken(
                 "issuer",
-                "Audience",
+                "audience",
                 new ClaimsIdentity(new List<Claim>
                 {
                     new Claim("id", $"{claims[0]}"),

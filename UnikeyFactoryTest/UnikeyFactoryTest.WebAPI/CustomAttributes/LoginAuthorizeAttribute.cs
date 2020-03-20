@@ -75,7 +75,7 @@ namespace UnikeyFactoryTest.WebAPI.CustomAttributes
 
         private static string CreateSignature(JwtSecurityToken jwt)
         {
-            var key = new SymmetricSecurityKey(Encoding.Default.GetBytes("MeFaSchifoLAgile"));
+            var key = new SymmetricSecurityKey(Encoding.Default.GetBytes("MeFaSchifoLAgileyufntdbrsve"));
             var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             return JwtTokenUtilities.CreateEncodedSignature(String.Concat(jwt.Header.Base64UrlEncode(), ".", jwt.Payload.Base64UrlEncode()), signingCredentials);
         }

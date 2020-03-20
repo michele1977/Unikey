@@ -31,7 +31,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             _kernel = kernel;
             _logger = logger;
             _service = _kernel.Get<UserManager<UserBusiness, int>>();
-            _signigni = Request.GetOwinContext().Get<SignInManager<UserBusiness, int>>();
+            _signigni = HttpContext.Current.GetOwinContext().Get<SignInManager<UserBusiness, int>>();
         }
 
         [HttpPost]
