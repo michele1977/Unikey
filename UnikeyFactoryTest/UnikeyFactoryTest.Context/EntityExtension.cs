@@ -25,6 +25,7 @@ namespace UnikeyFactoryTest.Context
         {
             Date = ((Test) newEntity).Date;
             Title = ((Test) newEntity).Title;
+            UserId = ((Test) newEntity).UserId;
         }
 
         public override void RemoveChild(EntityExtension toRemove, TestPlatformDBEntities ctx)
@@ -59,6 +60,7 @@ namespace UnikeyFactoryTest.Context
         {
             Text = ((Question) newEntity).Text;
             Position = ((Question) newEntity).Position;
+            TestId = ((Question) newEntity).TestId;
         }
     }
 
@@ -68,6 +70,7 @@ namespace UnikeyFactoryTest.Context
         public override List<EntityExtension> Childs => new List<EntityExtension>();
         public override void SetFlatProperty(EntityExtension newEntity)
         {
+            QuestionId = ((Answer) newEntity).QuestionId;
             Text = ((Answer) newEntity).Text;
             IsCorrect = ((Answer) newEntity).IsCorrect;
             Score = ((Answer) newEntity).Score;

@@ -30,6 +30,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import {WINDOW_PROVIDERS} from './services/window-ref.service';
+import { BeginTestComponent } from './features/fruition/begin-test/begin-test.component';
+import { FruitionLandingPageComponent } from './shared/fruition-landing-page/fruition-landing-page.component';
 
 
 @NgModule({
@@ -43,7 +45,10 @@ import {WINDOW_PROVIDERS} from './services/window-ref.service';
     TestDetailsModalComponent,
     SeeExTestComponent,
     ExTestListComponent,
-    EmailModalComponent
+    EmailModalComponent,
+    BeginTestComponent,
+    FruitionLandingPageComponent,
+    BeginTestComponent
   ],
 
   imports: [
