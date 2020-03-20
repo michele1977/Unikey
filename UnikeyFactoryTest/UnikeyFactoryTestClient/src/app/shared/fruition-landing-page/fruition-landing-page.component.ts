@@ -39,6 +39,5 @@ export class FruitionLandingPageComponent implements OnInit {
 
   toggleFirstQuestion(event) {
     this.subject = JSON.parse(event);
-    console.log(this.subject);
   }
 }
