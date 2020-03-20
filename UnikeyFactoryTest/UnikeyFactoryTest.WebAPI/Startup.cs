@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -33,6 +34,11 @@ namespace UnikeyFactoryTest.WebAPI
 
         public void Configuration(IAppBuilder app)
         {
+            HttpConfiguration config = new HttpConfiguration();
+            config.MapHttpAttributeRoutes();
+
+            app.UseWebApi(config);
+            
             app.CreatePerOwinContext(() => Kernel.Get<UserManager<UserBusiness, int>>());
             app.CreatePerOwinContext(() => Kernel.Get<IUserRepository>());
 

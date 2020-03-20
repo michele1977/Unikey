@@ -1,19 +1,18 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Ninject;
+using NLog;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Results;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Ninject;
-using Ninject.Parameters;
-using NLog;
 using UnikeyFactoryTest.Domain;
-using UnikeyFactoryTest.WebAPI.CustomAttributes;
+using UnikeyFactoryTest.WebAPI.Models.DTO;
 using UnikeyFactoryTest.WebAPI.Tools;
 using UnikeyFactoryTest.WebAPI_new.ResponseMessages;
 
@@ -32,6 +31,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             _kernel = kernel;
             _logger = logger;
             _service = _kernel.Get<UserManager<UserBusiness, int>>();
+            _signigni = Request.GetOwinContext().Get<SignInManager<UserBusiness, int>>();
         }
 
         [HttpPost]
@@ -72,7 +72,6 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, user.Id);
         }
 
-        [LoginAuthorize]
         [HttpPost]
         public async Task<HttpResponseMessage> Login(UserBusiness userBusiness)
         {
@@ -83,10 +82,10 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
                 if (user is null)
                     throw new ArgumentNullException();
 
-                if (!await _service.CheckPasswordAsync(user, userBusiness.Password))
+                var status = await _signigni.PasswordSignInAsync(userBusiness.UserName, userBusiness.Password, false, false);
+                
+                if (status == SignInStatus.Failure)
                     throw new Exception("Invalid Password");
-
-                //await _signigni.SignInAsync(user, false, false);
             }
             catch (ArgumentNullException e)
             {
@@ -106,17 +105,11 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, jwt);
         }
 
-        public class JwtObj
-        {
-            public string token { get; set; }
-        }
-
         [HttpPost]
-        public async Task<HttpResponseMessage> Refresh(JwtObj token)
+        public IHttpActionResult Refresh(JwtDto token)
         {
-            //var newJwt = JwtFactory.RefreshToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAiLCJ1c2VyTmFtZSI6IkxvbGxvbG9uZSIsIm5iZiI6MTU4NDYyNTEzMiwiZXhwIjoxNTg0NjI1MTkyLCJpYXQiOjE1ODQ2MjUxMzIsImlzcyI6Imlzc3VlciIsImF1ZCI6IkF1ZGllbmNlIn0.WG81BJlGgMo6mFALtwNUfWPKKk3OZxl5moJB-s1taAg");
-            var newJwt = JwtFactory.RefreshToken(token.token);
-            return Request.CreateResponse(HttpStatusCode.OK, newJwt);
+            var newJwt = JwtFactory.RefreshToken(token.Token);
+            return Ok(newJwt);
         }
 
         [HttpGet]

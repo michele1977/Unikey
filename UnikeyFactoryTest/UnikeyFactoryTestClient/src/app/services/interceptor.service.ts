@@ -22,17 +22,6 @@ export class InterceptorService implements HttpInterceptor {
       }
       });
 
-    return next.handle(req).pipe(
-      catchError((error: any) => {
-        if (error instanceof HttpErrorResponse) {
-          switch (error.status) {
-
-            default:
-              this.loginService.router.navigateByUrl('/error').then();
-          }
-        }
-        return of(error);
-      })
-    );
+    return next.handle(req);
   }
 }

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {take} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {RefreshTokenService} from './refreshtoken.service';
 
@@ -20,13 +19,111 @@ export class HttpWrapperService {
             resolve(param);
           },
           error => {
-            if (error instanceof HttpErrorResponse && error.status === 400) {
-              this.refreshService.Refresh().subscribe(
-                newJwt => {
-                  localStorage.setItem('token', newJwt);
-                  console.log(newJwt);
-                  this.refreshService.router.navigateByUrl(url).then();
-                });
+            if (error instanceof HttpErrorResponse) {
+              switch (error.status) {
+                case 400:
+                  this.refreshService.Refresh().subscribe(
+                    newJwt => {
+                      localStorage.setItem('token', newJwt);
+                      resolve(this.invokePostUrl(url, obj));
+                    });
+                  break;
+                case 401:
+                  this.refreshService.router.navigateByUrl('').then();
+                  break;
+                default:
+                  this.refreshService.router.navigateByUrl('/error').then();
+              }
+            } else {
+              reject(error);
+            }
+          });
+    });
+  }
+
+  invokeGetUrl(url: string): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.httpClient.get(url)
+        .subscribe(
+          param => {
+            resolve(param);
+          },
+          error => {
+            if (error instanceof HttpErrorResponse) {
+              switch (error.status) {
+                case 400:
+                  this.refreshService.Refresh().subscribe(
+                    newJwt => {
+                      localStorage.setItem('token', newJwt);
+                      resolve(this.invokeGetUrl(url));
+                    });
+                  break;
+                case 401:
+                  this.refreshService.router.navigateByUrl('').then();
+                  break;
+                default:
+                  this.refreshService.router.navigateByUrl('/error').then();
+              }
+            } else {
+              reject(error);
+            }
+          });
+    });
+  }
+
+  invokeDeleteUrl(url: string): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.httpClient.delete(url)
+        .subscribe(
+          param => {
+            resolve(param);
+          },
+          error => {
+            if (error instanceof HttpErrorResponse) {
+              switch (error.status) {
+                case 400:
+                  this.refreshService.Refresh().subscribe(
+                    newJwt => {
+                      localStorage.setItem('token', newJwt);
+                      resolve(this.invokeDeleteUrl(url));
+                    });
+                  break;
+                case 401:
+                  this.refreshService.router.navigateByUrl('').then();
+                  break;
+                default:
+                  this.refreshService.router.navigateByUrl('/error').then();
+              }
+            } else {
+              reject(error);
+            }
+          });
+    });
+  }
+
+  invokePutUrl(url: string, obj): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.httpClient.put(url, obj)
+        .subscribe(
+          param => {
+            resolve(param);
+          },
+          error => {
+            if (error instanceof HttpErrorResponse) {
+              switch (error.status) {
+                case 400:
+                  this.refreshService.Refresh().subscribe(
+                    newJwt => {
+                      localStorage.setItem('token', newJwt);
+                      resolve(this.invokePutUrl(url, obj));
+                    });
+                  break;
+                case 401:
+                  this.refreshService.router.navigateByUrl('').then();
+                  break;
+                default:
+                  this.refreshService.router.navigateByUrl('/error').then();
+              }
             } else {
               reject(error);
             }
