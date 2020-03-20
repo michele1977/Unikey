@@ -9,6 +9,8 @@ import {SeeExTestComponent} from './features/see-ex-test/see-ex-test.component';
 import { ExTestListComponent } from './features/ex-test-list/ex-test-list.component';
 import {LoginComponent} from './features/login/login.component';
 import {AuthenticationService} from './services/authentication.service';
+import { BeginTestComponent } from './features/fruition/begin-test/begin-test.component';
+import { FruitionLandingPageComponent } from './shared/fruition-landing-page/fruition-landing-page.component';
 
 
 const routes: Routes = [
@@ -18,6 +20,7 @@ const routes: Routes = [
   {path: 'testList', component: TestListComponent},
   {path: 'extestList', component: ExTestListComponent},
   {path: 'error', component: ErrorComponent},
+  {path: 'beginTest', component: FruitionLandingPageComponent},
   {path: '', component: LandingPageComponent}
 ];
 

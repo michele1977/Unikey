@@ -30,12 +30,12 @@ using UnikeyFactoryTest.ITextSharp;
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
     [EnableCors("*", "*", "*")]
-    [LoginAuthorize]
     public class TestController : ApiController
     {
         private readonly IKernel _kernel;
         private readonly ILogger _logger;
         private readonly ITestService _service;
+        private string _url = "http://localhost:4200/";
 
         public TestController(IKernel kernel, ILogger logger)
         {
@@ -44,6 +44,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             _service = _kernel.Get<TestService>();
         }
 
+        [LoginAuthorize]
         public async Task<IHttpActionResult> Get(int id)
         {
 #if MOCK
@@ -82,8 +83,9 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             try
             {
                 var returned = await _service.GetTestByURL(url);
+                var test = new TestDto(returned, _service);
 
-                return Ok(returned);
+                return Ok(test);
             }
             catch (Exception e)
             {
@@ -92,6 +94,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             }
         }
 
+        [LoginAuthorize]
         public async Task<IHttpActionResult> GetByFilter(string filter)
         {
             try
@@ -112,7 +115,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             }
         }
 
-
+        [LoginAuthorize]
         public async Task<IHttpActionResult> GetAll(int pageNum, int pageSize, string filter)
         {
             try
@@ -187,6 +190,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             }
         }
 
+        [LoginAuthorize]
         [System.Web.Http.HttpPost]
         public HttpResponseMessage Create(TestBusiness test)
         {
@@ -241,6 +245,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         }
 
         [System.Web.Http.HttpPatch]
+        [LoginAuthorize]
         public async Task<HttpResponseMessage> Update(TestBusiness test)
         {
             try
@@ -299,6 +304,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
 
 
         //[Route("api/Test/sendMail")]
+        [LoginAuthorize]
         [System.Web.Http.HttpPost]
         public async Task<IHttpActionResult> SendMail(EmailModel emailModel)
         {
@@ -345,13 +351,13 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             }
 
             bool result = false;
-            TestDto sendTest = new TestDto(test, _service);
-            var URL = sendTest.URL;
+            //TestDto sendTest = new TestDto(test, _service);
+            var url = _url + "beginTest?guid=" + test.URL;
             MailProvider provider = new MailProvider();
 
             try
             {
-                result = provider.SendMail(emailModel.email, emailModel.name, URL);
+                result = provider.SendMail(emailModel.email, emailModel.name, url);
             }
             catch (HttpException e)
             {

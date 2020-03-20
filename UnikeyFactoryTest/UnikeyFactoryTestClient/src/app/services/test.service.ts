@@ -20,6 +20,10 @@ export class TestService {
     return this.http.get<Test>(reqUrl + 'Get/' + id);
   }
 
+  getTestByUrl(url: string) {
+    return this.http.get<Test>(reqUrl + 'GetByUrl?url=' + url);
+  }
+
   updateTest(test: Test) {
     return this.http.patch<number>(reqUrl + 'Update', test);
   }

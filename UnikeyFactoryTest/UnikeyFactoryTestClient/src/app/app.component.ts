@@ -11,6 +11,7 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'UnikeyFactoryTestClient';
   showLoader = false;
   private subscription;
+
   constructor(private loaderService: LoaderService ) { }
   ngOnInit() {
     this.subscription = this.loaderService.on('show').subscribe(() => this.viewLoader());
