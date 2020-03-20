@@ -9,9 +9,11 @@ import {SeeExTestComponent} from './features/see-ex-test/see-ex-test.component';
 import { ExTestListComponent } from './features/ex-test-list/ex-test-list.component';
 import {LoginComponent} from './features/login/login.component';
 import {AuthenticationService} from './services/authentication.service';
+import {FruitionTestComponent} from './features/fruition-test/fruition-test.component';
 
 
 const routes: Routes = [
+  {path: 'fruitiontest', component: FruitionTestComponent},
   {path: 'seeExTest/:id', component: SeeExTestComponent},
   {path: 'testcontent/:id', component: TestcontentComponent},
   {path: 'create', component: CreationComponent},

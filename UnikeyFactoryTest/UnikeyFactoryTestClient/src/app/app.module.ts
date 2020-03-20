@@ -31,6 +31,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import {WINDOW_PROVIDERS} from './services/window-ref.service';
 import { CreatePDFModalComponent } from './modals/create-pdf-modal/create-pdf-modal.component';
+import { FruitionTestComponent } from './features/fruition-test/fruition-test.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { CreatePDFModalComponent } from './modals/create-pdf-modal/create-pdf-mo
     SeeExTestComponent,
     ExTestListComponent,
     EmailModalComponent,
-    CreatePDFModalComponent
+    CreatePDFModalComponent,
+    FruitionTestComponent
   ],
 
   imports: [
