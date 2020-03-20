@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Test} from '../models/test';
-import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import { LOCALHOST_URL } from '../constants/api.const';
 
-// const reqUrl = 'http://localhost:44329/api/Test/';
 const reqUrl = LOCALHOST_URL + 'Test/';
 
 @Injectable({
@@ -24,5 +22,9 @@ export class TestService {
 
   updateTest(test: Test) {
     return this.http.patch<number>(reqUrl + 'Update', test);
+  }
+
+  downloadPdf(testId: number): Observable<Blob> {
+    return this.http.get(reqUrl + 'GetPdf?testId=' + testId, {responseType: 'blob'});
   }
 }

@@ -73,7 +73,6 @@ export class TestListComponent {
   closeErrorAlert() {}
 
   showContent(id: number) {
-      this.loader.publish('show');
       this.router.navigateByUrl('testcontent/' + id).then();
   }
 
