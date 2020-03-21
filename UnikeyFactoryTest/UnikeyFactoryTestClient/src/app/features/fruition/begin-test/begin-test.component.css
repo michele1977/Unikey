@@ -64,11 +64,16 @@
         box-shadow: none !important;
         outline: 0px !important;
     }
+
+    .inputError {
+        border: 2px solid red;
+        border-radius: 4px;
+    }
     .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
         background-color: #c0392b !important;
     }
     .welcomeMessage {
         color: white;
         text-align: center;
-        font-size: large;
+        font-size: 28px;
     }

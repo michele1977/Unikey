@@ -22,40 +22,40 @@ namespace WebApiUnitTests
         private ITestService service;
 
         [TestMethod]
-        public async void TestController_Get_Ok()
+        public async Task TestController_Get_Ok()
         {
-            var result = await service.GetTestById(60);
+            var result = await service.GetTestById(22);
 
-            Assert.AreEqual(60, result.Id);
+            Assert.AreEqual(22, result.Id);
         }
 
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public async void TestController_Get_Ko()
+        public async Task TestController_Get_Ko()
         {
             var result = await service.GetTestById(0);
 
         }
 
         [TestMethod]
-        public async void TestController_GetByUrl_Ok()
+        public async Task TestController_GetByUrl_Ok()
         {
-            var test = await service.GetTestById(60);
+            var test = await service.GetTestById(22);
 
             var result = await service.GetTestByURL(test.URL);
 
-            Assert.AreEqual(60, result.Id);
+            Assert.AreEqual(22, result.Id);
         }
 
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public async void TestController_GetByUrl_Ko()
+        public async Task TestController_GetByUrl_Ko()
         {
             var result = await service.GetTestByURL("InvalidUrl");
         }
 
         [TestMethod]
-        public async void TestController_GetByFilter_Ok()
+        public async Task TestController_GetByFilter_Ok()
         {
             var filter = "UniqueTestJustForFun";
 
@@ -76,7 +76,7 @@ namespace WebApiUnitTests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public async void TestController_GetByFilter_Ko()
+        public async Task TestController_GetByFilter_Ko()
         {
             var result = await service.GetTestsByFilter(null);
 
@@ -84,7 +84,7 @@ namespace WebApiUnitTests
         }
 
         [TestMethod]
-        public async void TestController_GetAll_Ok()
+        public async Task TestController_GetAll_Ok()
         {
             var returned = await service.GetTests();
 
@@ -93,7 +93,7 @@ namespace WebApiUnitTests
 
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public async void TestController_Delete_Ok()
+        public async Task TestController_Delete_Ok()
         {
             using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
