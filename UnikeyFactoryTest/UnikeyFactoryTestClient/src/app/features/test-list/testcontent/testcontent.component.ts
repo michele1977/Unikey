@@ -5,8 +5,6 @@ import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {IconsService} from 'src/app/services/icons.service';
 import {switchMap} from 'rxjs/operators';
 import {Question} from '../../../models/question';
-import {isWhiteSpace} from 'tslint';
-import index from '@angular/cli/lib/cli';
 
 @Component({
   selector: 'app-testcontent',

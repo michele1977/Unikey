@@ -29,6 +29,7 @@ import { ExTestListComponent } from './features/ex-test-list/ex-test-list.compon
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import {StatisticPageModule} from './features/statistic-page/statistic-page.module';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     FontAwesomeModule,
     QuestionFormModule,
     NgbModule,
-    LogoutModule
+    LogoutModule,
+    StatisticPageModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
