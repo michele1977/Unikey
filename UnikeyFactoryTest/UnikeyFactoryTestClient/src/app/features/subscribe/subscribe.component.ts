@@ -23,7 +23,7 @@ export class SubscribeComponent {
 
   @Output() switch: EventEmitter<any> = new EventEmitter<any>();
   constructor(private service: SubscribeService, private router: Router, private loader: LoaderService) { }
-  
+
   changeForm() {
     this.switch.emit();
   }
@@ -38,8 +38,7 @@ export class SubscribeComponent {
     this.service.register(user)
       .subscribe(
         () => {
-
-          this.router.navigateByUrl('testList');
+          this.router.navigateByUrl('').then();
           this.loader.publish('show');
           },
           (error: HttpErrorResponse) => {
@@ -53,8 +52,7 @@ export class SubscribeComponent {
                 this.errorsList.push(val);
               }
             }
-            this.loader.publish('hide');
-          }
-        );
+          });
+    this.loader.publish('hide');
   }
 }

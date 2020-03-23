@@ -35,17 +35,17 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<HttpResponseMessage> Subscribe([FromBody] UserBusiness user)
+        public async Task<HttpResponseMessage> Subscribe(UserBusiness user)
         {
             try
             {
-               var result = await _service.CreateAsync(user);
+                var result = await _service.CreateAsync(user);
 
                 if (result.Errors.Any())
                 {
-                    result.Errors.ToList().ForEach(e => ModelState.AddModelError(e,e));
+                    result.Errors.ToList().ForEach(e => ModelState.AddModelError(e, e));
 
-                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                    return Request.CreateErrorResponse(HttpStatusCode.PreconditionFailed,
                         ModelState);
                 }
             }
@@ -77,15 +77,15 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         {
             try
             {
-                var user = await _service.FindByNameAsync(userBusiness.UserName);
+                //var user = await _service.FindByNameAsync(userBusiness.UserName);
 
-                if (user is null)
-                    throw new ArgumentNullException();
+                //if (user is null)
+                //    throw new ArgumentNullException();
 
                 var status = await _signigni.PasswordSignInAsync(userBusiness.UserName, userBusiness.Password, false, false);
                 
                 if (status == SignInStatus.Failure)
-                    throw new Exception("Invalid Password");
+                    throw new Exception("Invalid Username and/or Password");
             }
             catch (ArgumentNullException e)
             {
