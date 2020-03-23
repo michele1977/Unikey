@@ -36,12 +36,12 @@ namespace UpdateTest
             try
             {
                 var prova = await repo.GetTest(520);
-                var answertoremove = prova.Questions.FirstOrDefault()
+                var answertoremove = prova.Questions.FirstOrDefault(q => q.Id == 1120)
                     .Answers.FirstOrDefault();
 
-                prova.Questions.FirstOrDefault().Text = "Prova modifica testo domanda";
+                prova.Questions.FirstOrDefault(q => q.Id == 1120).Text = "Prova modifica testo domanda";
 
-                prova.Questions.FirstOrDefault().Answers.Remove(answertoremove);
+                prova.Questions.FirstOrDefault(q => q.Id == 1120).Answers.Remove(answertoremove);
                 await repo.UpdateTest(prova);
 
                 var verifica = await repo.GetTest(520);

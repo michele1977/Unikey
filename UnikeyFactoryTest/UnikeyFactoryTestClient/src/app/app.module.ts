@@ -49,7 +49,7 @@ import { CreatePDFModalComponent } from './modals/create-pdf-modal/create-pdf-mo
     EmailModalComponent,
     BeginTestComponent,
     FruitionLandingPageComponent,
-    BeginTestComponent
+    BeginTestComponent,
     EmailModalComponent,
     CreatePDFModalComponent
   ],

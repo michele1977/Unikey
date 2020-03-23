@@ -185,6 +185,7 @@ namespace UnikeyFactoryTest.Repository
                 var newValue = (EntityExtension) Mapper.Map<AdministratedTestBusiness, AdministratedTest>(test);
                 var oldValue = await _ctx.AdministratedTests.FirstOrDefaultAsync(x => x.Id == newValue.MyId);
                 NewUpdate(newValue, oldValue);
+                await _ctx.SaveChangesAsync();
             }
 
             catch (Exception)
@@ -200,7 +201,11 @@ namespace UnikeyFactoryTest.Repository
             var toAdd = newValue.Childs.Where(x => oldValue.Childs.All(y => y.MyId != x.MyId)).ToList();
             var toUpdate = newValue.Childs.Where(x => oldValue.Childs.Any(y => y.MyId == x.MyId)).ToList();
 
-            foreach (var child in toRemove) oldValue.RemoveChild(child, _ctx);
+            foreach (var child in toRemove)
+            {
+                oldValue.RemoveChild(child, _ctx);
+                _ctx.Entry(child).State = EntityState.Deleted;
+            }
 
             foreach (var child in toAdd) oldValue.AddChild(child, _ctx);
 
@@ -209,8 +214,6 @@ namespace UnikeyFactoryTest.Repository
                 var childToUpdate = oldValue.Childs.FirstOrDefault(x => x.MyId == child.MyId);
                 NewUpdate(child, childToUpdate);
             }
-
-            _ctx.SaveChanges();
         }
 
         private static int GetScore(AdministratedTestBusiness newTest)
