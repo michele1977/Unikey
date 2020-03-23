@@ -4,6 +4,8 @@ import {Test} from '../models/test';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import { LOCALHOST_URL } from '../constants/api.const';
+import {Router} from '@angular/router';
+import {HttpWrapperService} from './http-wrapper.service';
 
 // const reqUrl = 'http://localhost:44329/api/Test/';
 const reqUrl = LOCALHOST_URL + 'Test/';
@@ -12,17 +14,17 @@ const reqUrl = LOCALHOST_URL + 'Test/';
   providedIn: 'root'
 })
 export class TestService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private httpWrapper: HttpWrapperService) { }
 
   createTest(test: Test) {
-      return this.http.post(reqUrl + 'Create', test);
+      return this.httpWrapper.invokePostUrl(reqUrl + 'Create', test);
   }
 
-  getTest(id: number): Observable<Test> {
-    return this.http.get<Test>(reqUrl + 'Get/' + id);
+  getTest(id: number): Promise<Test> {
+    return this.httpWrapper.invokeGetUrl(reqUrl + 'Get/' + id);
   }
 
   updateTest(test: Test) {
-    return this.http.patch<number>(reqUrl + 'Update', test);
+    return this.httpWrapper.invokePatchUrl(reqUrl + 'Update', test);
   }
 }
