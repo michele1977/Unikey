@@ -78,7 +78,7 @@ export class CreationComponent {
     this.test.Title = form.value.title;
     this.test.Date = moment().format('DD MM YY H:mm:ss').toString();
 
-    this.service.createTest(this.test).pipe().subscribe( res => {
+    this.service.createTest(this.test).then(res => {
         this.router.navigateByUrl('testList');
         this.loader.publish('hide');
     }, error => {

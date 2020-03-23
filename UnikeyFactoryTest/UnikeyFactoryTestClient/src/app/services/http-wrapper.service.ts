@@ -130,4 +130,34 @@ export class HttpWrapperService {
           });
     });
   }
+
+  invokePatchUrl(url: string, obj): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.httpClient.patch(url, obj)
+        .subscribe (
+          param => {
+            resolve(param);
+          },
+          error => {
+            if (error instanceof HttpErrorResponse) {
+              switch (error.status) {
+                case 400:
+                  this.refreshService.Refresh().subscribe(
+                    newJwt => {
+                      localStorage.setItem('token', newJwt);
+                      resolve(this.invokePutUrl(url, obj));
+                    });
+                  break;
+                case 401:
+                  this.refreshService.router.navigateByUrl('').then();
+                  break;
+                default:
+                  this.refreshService.router.navigateByUrl('/error').then();
+              }
+            } else {
+              reject(error);
+            }
+          });
+    });
+  }
 }

@@ -44,7 +44,7 @@ export class TestListComponent {
   // tslint:disable-next-line:max-line-length
   constructor(private router: Router, public icons: IconsService, private testService: TestListService, private modalService: NgbModal, private loader: LoaderService) {
     loader.publish('show');
-    this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+    this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
       loader.publish('hide');
@@ -64,7 +64,7 @@ export class TestListComponent {
   search(form) {
     this.textFilter = form.value.textFilter;
     this.loader.publish('show');
-    this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+    this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
       if (this.atLast === true) {
@@ -79,7 +79,7 @@ export class TestListComponent {
   resizePage(event: any) {
     this.loader.publish('show');
     this.pageSize = event.target.value;
-    this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+    this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
       if (this.atLast === true) {
@@ -110,7 +110,7 @@ export class TestListComponent {
     this.loader.publish('show');
     let nextPage = this.pageNum.valueOf();
     nextPage++;
-    this.testService.getTests(nextPage, this.pageSize, this.textFilter).subscribe(data => {
+    this.testService.getTests(nextPage, this.pageSize, this.textFilter).then(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
       this.loader.publish('hide');
@@ -126,7 +126,7 @@ export class TestListComponent {
 
   lastPage() {
     this.loader.publish('show');
-    this.testService.getTests(this.pages, this.pageSize, this.textFilter).subscribe(data => {
+    this.testService.getTests(this.pages, this.pageSize, this.textFilter).then(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
       this.pageNum = this.pages;
@@ -140,7 +140,7 @@ export class TestListComponent {
 
   firstPage() {
     this.loader.publish('show');
-    this.testService.getTests(1, this.pageSize, this.textFilter).subscribe(data => {
+    this.testService.getTests(1, this.pageSize, this.textFilter).then(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
       this.atLast = false;
@@ -156,7 +156,7 @@ export class TestListComponent {
     this.loader.publish('show');
     let prevPage = this.pageNum.valueOf();
     prevPage--;
-    this.testService.getTests(prevPage, this.pageSize, this.textFilter).subscribe(data => {
+    this.testService.getTests(prevPage, this.pageSize, this.textFilter).then(data => {
       this.tests = data as TestList;
       this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
       this.atLast = false;

@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {LOCALHOST_URL} from '../constants/api.const';
 import {User} from '../models/user';
 import {Router} from '@angular/router';
+import {HttpWrapperService} from './http-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
