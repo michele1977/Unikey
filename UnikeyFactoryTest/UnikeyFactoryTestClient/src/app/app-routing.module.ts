@@ -7,8 +7,6 @@ import {TestcontentComponent} from './features/test-list/testcontent/testcontent
 import {ErrorComponent} from './shared/error/error.component';
 import {SeeExTestComponent} from './features/see-ex-test/see-ex-test.component';
 import { ExTestListComponent } from './features/ex-test-list/ex-test-list.component';
-import {LoginComponent} from './features/login/login.component';
-import {AuthenticationService} from './services/authentication.service';
 import {StatisticPageComponent} from './features/statistic-page/statistic-page.component';
 
 

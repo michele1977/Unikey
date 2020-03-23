@@ -16,20 +16,17 @@ import {ErrorComponent} from './shared/error/error.component';
 import { TestContentEditComponent } from './features/test-list/testcontent/testcontent-edit/testcontent-edit.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TestDetailsModalComponent} from './modals/test-details-modal/test-details-modal.component';
-import {RouterModule} from '@angular/router';
 import { SeeExTestComponent } from './features/see-ex-test/see-ex-test.component';
 import {LoaderService} from './services/loader.service';
 import { EmailModalComponent } from './shared/email-modal/email-modal.component';
-import { LoginComponent } from './features/login/login.component';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {InterceptorService} from './services/interceptor.service';
-import { LogoutComponent } from './shared/logout/logout.component';
 import {LogoutModule} from './shared/logout/logout.module';
 import { ExTestListComponent } from './features/ex-test-list/ex-test-list.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
 import {StatisticPageModule} from './features/statistic-page/statistic-page.module';
+import {SideBarModule} from './core/side-bar/side-bar.module';
+import {SideBarService} from './services/side-bar.service';
+
 
 
 @NgModule({
@@ -58,11 +55,12 @@ import {StatisticPageModule} from './features/statistic-page/statistic-page.modu
     QuestionFormModule,
     NgbModule,
     LogoutModule,
-    StatisticPageModule
+    StatisticPageModule,
+    SideBarModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
-    LoaderService
+    LoaderService, SideBarService
   ],
   exports: [
   ],

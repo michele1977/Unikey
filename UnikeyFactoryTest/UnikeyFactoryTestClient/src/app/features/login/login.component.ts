@@ -1,8 +1,6 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {User} from '../../models/user';
 import {LoginService} from '../../services/login.service';
-import {finalize} from 'rxjs/operators';
-import {from} from 'rxjs';
 
 @Component({
   selector: 'app-login',
