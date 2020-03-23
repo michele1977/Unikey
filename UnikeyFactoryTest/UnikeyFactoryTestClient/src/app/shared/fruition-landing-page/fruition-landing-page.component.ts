@@ -14,6 +14,7 @@ export class FruitionLandingPageComponent implements OnInit {
   testUrl: string;
   test: Test;  // Da mandare in input nel child di fruizione del test
   subject: TestSubject;  // Da mandare in input nel child di fruizione del test
+  showBeginTestForm = true;  // Diventa false quando l'utente inserisce i suoi dati
 
   constructor(private route: ActivatedRoute,
               private service: TestService,
@@ -39,5 +40,6 @@ export class FruitionLandingPageComponent implements OnInit {
 
   toggleFirstQuestion(event) {
     this.subject = JSON.parse(event);
+    this.showBeginTestForm = false;
   }
 }

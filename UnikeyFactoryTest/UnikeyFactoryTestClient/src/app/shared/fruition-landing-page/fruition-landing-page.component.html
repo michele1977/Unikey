@@ -1,1 +1,1 @@
-  <app-begin-test (subjectEvent)="toggleFirstQuestion($event)"></app-begin-test>
+  <app-begin-test *ngIf="showBeginTestForm" (subjectEvent)="toggleFirstQuestion($event)"></app-begin-test>
