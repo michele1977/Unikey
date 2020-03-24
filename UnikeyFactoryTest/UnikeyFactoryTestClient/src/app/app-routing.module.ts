@@ -17,6 +17,7 @@ import {FruitionTestComponent} from './features/fruition-test/fruition-test.comp
 import {EndTestComponent} from './features/fruition-test/end-test/end-test.component';
 >>>>>>> 5603ff6f26cb1797d448e22536fab7cf0674f538
 
+import {StatisticPageComponent} from './features/statistic-page/statistic-page.component';
 
 const routes: Routes = [
   {path: 'fruitiontest', component: FruitionTestComponent},
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path: 'endTest', component: EndTestComponent},
   {path: 'error', component: ErrorComponent},
   {path: 'beginTest', component: FruitionLandingPageComponent},
+  {path: 'statistic/:id', component: StatisticPageComponent},
   {path: '', component: LandingPageComponent}
 ];
 

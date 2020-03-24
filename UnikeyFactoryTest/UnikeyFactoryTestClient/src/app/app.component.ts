@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, OnDestroy} from '@angular/core';
-import {faInfo} from '@fortawesome/free-solid-svg-icons';
 import {LoaderService} from './services/loader.service';
+import {SideBarService} from './services/side-bar.service';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +11,7 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'UnikeyFactoryTestClient';
   showLoader = false;
   private subscription;
-
-  constructor(private loaderService: LoaderService ) { }
+  constructor(private loaderService: LoaderService, public nav: SideBarService ) { }
   ngOnInit() {
     this.subscription = this.loaderService.on('show').subscribe(() => this.viewLoader());
     this.subscription = this.loaderService.on('hide').subscribe(() => this.hideLoader());
