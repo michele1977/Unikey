@@ -29,7 +29,7 @@ export class ExTestListComponent {
                 @Inject(DOCUMENT) private document: Document,
                 @Inject(WINDOW) private window) {
                   this.loader.publish('show');
-                  this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+                  this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
                       this.numberOfTests = data[0].NumberOfExTests;
                       this.tests = data;
                       this.loader.publish('hide');
@@ -42,7 +42,7 @@ export class ExTestListComponent {
   search(form) {
     this.loader.publish('show');
     this.textFilter = form.value.textFilter;
-    this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+    this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
       this.loader.publish('hide');
       this.numberOfTests = data[0].NumberOfExTests;
       this.tests = data;
@@ -62,7 +62,7 @@ export class ExTestListComponent {
       if (this.tests.length < this.numberOfTests) {
         this.loader.publish('show');
         this.pageNum += 1;
-        this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+        this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
           data.forEach(value => {
             this.tests.push(value);
           });

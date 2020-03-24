@@ -17,11 +17,6 @@ export class LoginComponent {
   isPostBack: boolean;
 
   constructor(public service: LoginService, private loader: LoaderService) {
-    const userName = localStorage.getItem('userInfo');
-    const token = localStorage.getItem('token');
-    if (token !== null) {
-      this.service.router.navigateByUrl('testList').then();
-    }
   }
 
   @Output() switch: EventEmitter<any> = new EventEmitter<any>();
@@ -32,16 +27,15 @@ export class LoginComponent {
 
   login(user: User) {
     this.loader.publish('show');
-    this.service.login(user).subscribe(
+    this.service.login(user).then(
       jwt => {
         this.setSession(jwt, user);
+        this.service.router.navigateByUrl('testList')
+          .then(() => this.loader.publish('hide'));
       }, () => {
         this.service.router.navigateByUrl('')
           .then(() => this.loader.publish('hide'));
         this.isPostBack = true;
-      }, () => {
-          this.service.router.navigateByUrl('testList')
-            .then(() => this.loader.publish('hide'));
       }
     );
   }
