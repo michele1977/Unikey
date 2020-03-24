@@ -6,7 +6,7 @@ export class Test {
   URL: string;
   Title: string;
   Questions: Question[];
-  NumberOfTest: number;
-  NumberOfExTest: number;
-  OpenedExTestNumber: number;
+  NumberOfTest?: number;
+  NumberOfExTest?: number;
+  OpenedExTestNumber?: number;
 }
