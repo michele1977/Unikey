@@ -8,12 +8,8 @@ import {ErrorComponent} from './shared/error/error.component';
 import {SeeExTestComponent} from './features/see-ex-test/see-ex-test.component';
 import { ExTestListComponent } from './features/ex-test-list/ex-test-list.component';
 import { FruitionLandingPageComponent } from './shared/fruition-landing-page/fruition-landing-page.component';
-import {FruitionTestComponent} from './features/fruition-test/fruition-test.component';
-
-import {StatisticPageComponent} from './features/statistic-page/statistic-page.component';
 
 const routes: Routes = [
-  {path: 'fruitiontest', component: FruitionTestComponent},
   {path: 'seeExTest/:id', component: SeeExTestComponent},
   {path: 'testcontent/:id', component: TestcontentComponent},
   {path: 'create', component: CreationComponent},
@@ -21,7 +17,6 @@ const routes: Routes = [
   {path: 'extestList', component: ExTestListComponent},
   {path: 'error', component: ErrorComponent},
   {path: 'beginTest', component: FruitionLandingPageComponent},
-  {path: 'statistic/:id', component: StatisticPageComponent},
   {path: '', component: LandingPageComponent}
 ];
 

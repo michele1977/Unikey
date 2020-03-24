@@ -12,10 +12,13 @@ using System.Web.Http.Cors;
 using System.Web.Http.Cors;
 using Ninject;
 using NLog;
+using UnikeyFactoryTest.Domain;
 using UnikeyFactoryTest.IService;
 using UnikeyFactoryTest.WebAPI.CustomAttributes;
 using UnikeyFactoryTest.WebAPI.Models.DTO;
 using UnikeyFactoryTest.WebAPI.Models.DTO;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 
 namespace UnikeyFactoryTest.WebAPI.Controllers
 {
@@ -26,11 +29,13 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         private readonly IKernel _kernel;
         private readonly ILogger _logger;
         private readonly IAdministratedTestService _service;
+        private readonly ITestService _testService;
 
-        public ExTestController(ILogger logger, IAdministratedTestService service, IKernel kernel)
+        public ExTestController(ILogger logger, IAdministratedTestService service, ITestService testService, IKernel kernel)
         {
             _kernel = kernel;
             _service = service;
+            _testService = testService;
             _logger = logger;
         }
 
@@ -109,6 +114,87 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             catch (InvalidOperationException e)
             {
                 _logger.Error(e, e.Message);
+                return InternalServerError();
+            }
+            catch (Exception e)
+            {
+                _logger.Fatal(e, e.Message);
+                return InternalServerError();
+            }
+        }
+
+        public async Task<IHttpActionResult> GetExTestByTestUrl(string guid, string subject)
+        {
+            try
+            {
+                var test = await _testService.GetTestByURL(guid);
+                var exTest = _service.AdministratedTest_Builder(test, subject);
+
+                return Ok(exTest);
+            }
+            catch (ArgumentNullException e)
+            {
+                _logger.Error(e, e.Message);
+                return InternalServerError();
+            }
+            catch (InvalidOperationException e)
+            {
+                _logger.Error(e, e.Message);
+                return InternalServerError();
+            }
+            catch (NullReferenceException e)
+            {
+                _logger.Error(e, e.Message);
+                return InternalServerError();
+            }
+            catch (Exception e)
+            {
+                _logger.Fatal(e, e.Message);
+                return InternalServerError();
+            }
+        }
+
+        [HttpPost]
+        public IHttpActionResult Create(AdministratedTestBusiness exTest)
+        {
+            try
+            {
+                var exTestBusiness = _service.Add(exTest);
+                return Ok(exTestBusiness);
+            }
+            catch (ArgumentNullException e)
+            {
+                _logger.Error(e, e.Message);
+                return InternalServerError();
+            }
+            catch (NotSupportedException e)
+            {
+                _logger.Error(e, e.Message);
+                return InternalServerError();
+            }
+            catch (ObjectDisposedException e)
+            {
+                _logger.Error(e, e.Message);
+                return InternalServerError();
+            }
+            catch (InvalidOperationException e)
+            {
+                _logger.Error(e, e.Message);
+                return InternalServerError();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                _logger.Fatal(e, e.Message);
+                return InternalServerError();
+            }
+            catch (DbUpdateException e)
+            {
+                _logger.Fatal(e, e.Message);
+                return InternalServerError();
+            }
+            catch (DbEntityValidationException e)
+            {
+                _logger.Fatal(e, e.Message);
                 return InternalServerError();
             }
             catch (Exception e)

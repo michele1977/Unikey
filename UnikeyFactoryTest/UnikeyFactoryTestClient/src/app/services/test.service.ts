@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {Test} from '../models/test';
 import {Observable} from 'rxjs';
 import { LOCALHOST_URL } from '../constants/api.const';
+import {ExTest} from '../models/ex-test';
+import {TestSubject} from '../models/testSubject';
 
 const reqUrl = LOCALHOST_URL + 'Test/';
 
