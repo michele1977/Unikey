@@ -31,8 +31,11 @@ export class HttpWrapperService {
                 case 401:
                   this.refreshService.router.navigateByUrl('').then();
                   break;
-                default:
+                case 500:
                   this.refreshService.router.navigateByUrl('/error').then();
+                  break;
+                default:
+                  reject(error);
               }
             } else {
               reject(error);
@@ -61,8 +64,11 @@ export class HttpWrapperService {
                 case 401:
                   this.refreshService.router.navigateByUrl('').then();
                   break;
-                default:
+                case 500:
                   this.refreshService.router.navigateByUrl('/error').then();
+                  break;
+                default:
+                  reject(error);
               }
             } else {
               reject(error);
@@ -91,8 +97,11 @@ export class HttpWrapperService {
                 case 401:
                   this.refreshService.router.navigateByUrl('').then();
                   break;
-                default:
+                case 500:
                   this.refreshService.router.navigateByUrl('/error').then();
+                  break;
+                default:
+                  reject(error);
               }
             } else {
               reject(error);
@@ -121,8 +130,11 @@ export class HttpWrapperService {
                 case 401:
                   this.refreshService.router.navigateByUrl('').then();
                   break;
-                default:
+                case 500:
                   this.refreshService.router.navigateByUrl('/error').then();
+                  break;
+                default:
+                  reject(error);
               }
             } else {
               reject(error);
@@ -151,8 +163,11 @@ export class HttpWrapperService {
                 case 401:
                   this.refreshService.router.navigateByUrl('').then();
                   break;
-                default:
+                case 500:
                   this.refreshService.router.navigateByUrl('/error').then();
+                  break;
+                default:
+                  reject(error);
               }
             } else {
               reject(error);

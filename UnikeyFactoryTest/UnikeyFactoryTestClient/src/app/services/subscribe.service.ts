@@ -4,6 +4,7 @@ import {User} from '../models/user';
 import {Observable} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import { LOCALHOST_URL } from '../constants/api.const';
+import {HttpWrapperService} from './http-wrapper.service';
 
 const URL = LOCALHOST_URL + '/User/Subscribe';
 
@@ -12,7 +13,7 @@ const URL = LOCALHOST_URL + '/User/Subscribe';
 })
 export class SubscribeService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private httpWrapper: HttpWrapperService) { }
 
     /*subscribeUser(user: User) {
      const r = this.http.post(URL, user, {observe: 'response'})
@@ -23,6 +24,7 @@ export class SubscribeService {
     const reqHeader = new HttpHeaders().set('Content-Type', 'application/json')
       .set('Accept', 'application/json');
 
-    return this.http.post(URL, user, {headers : reqHeader});
+    return this.httpWrapper.invokePostUrl(URL, user);
+    // return this.http.post(URL, user, {headers : reqHeader});
   }
 }
