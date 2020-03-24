@@ -8,22 +8,37 @@
     <span aria-hidden="true">&times;</span>
   </button></div>
 </div>
-
-<strong><label style="font-size: 35px">Test {{this.test?.Title}}</label></strong>
-<!-- Qui logica del copy text -->
+<div class="row">
+<div class="col-10">
+  <strong><label style="font-size: 35px">Test {{this.test?.Title}}</label></strong>
+</div>
+  <div class="col-2" style="text-align: right">
+    <fa-icon [icon]="icons.faFilePdf" title="CreatePDF" size="2x" (click)="ShowPopUP()"></fa-icon>
+  </div>
+  <!-- Qui logica del copy text -->
 <!-- Qui logica del pdfcreator -->
 <!-- Qui logica del go back -->
 <hr />
 <br />
-<div id="testContentStats">
-  <label><strong>Number of questions: {{this.test.Questions.length}}</strong></label>
-  <fa-icon id="goBackIcon" [icon]="icons.faSignInAlt" title="Go back" (click)="goBack()"></fa-icon>
 </div>
 
-<div>
+<div id="testContentStats">
+  <label><strong>Number of questions: {{this.test?.Questions?.length}}</strong></label>
+  <div class="pull-right">
+    <i class="fa fa-copy" (click)="copyText(this.test)" title="Copia Test"></i>
+    <br>
+    <i class="fa fa-plus" (click)="this.isButtonVisible = !this.isButtonVisible" title="Add Question"></i>
+    <br>
+    <fa-icon id="goBackIcon" [icon]="icons.faSignInAlt" title="Go back" (click)="goBack()"></fa-icon>
+  </div>
+
 </div>
+
 <br>
-<div class="container col-8">
+<div class="container col-8" *ngIf="test">
+  <div class="form-group" *ngIf="this.isButtonVisible">
+    <app-question-form (questionInsert)="addQuestion($event)"></app-question-form>
+  </div>
   <div *ngFor="let question of this.test?.Questions; let i = index" class="testContentRow">
     <div>
       <div id="divQuestionForm">

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, HostListener, Inject} from '@angular/core';
 import {Router} from '@angular/router';
 import {Test} from '../../models/test';
 import * as moment from 'moment';
@@ -10,20 +10,17 @@ import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 import {ExTest} from '../../models/ex-test';
 import {LoaderService} from '../../services/loader.service';
 import {EmailModalComponent} from '../../shared/email-modal/email-modal.component';
+import {DOCUMENT} from '@angular/common';
+import {WINDOW} from '../../services/window-ref.service';
 
 
 @Component({
   selector: 'app-test-list',
   templateUrl: './test-list.component.html',
   styles: [`
-    .main-div {
-      display: flex;
-    }
     .title {
       float: left;
-    }
-    .create-test-a-div {
-      margin-left: 20px;
+      margin-right: 3%;
     }
     .create-test-a{
       float: left;
@@ -36,17 +33,16 @@ export class TestListComponent {
   pageNum = 1;
   pageSize = 10;
   textFilter = '';
-  atLast = false;
-  tests: TestList;
-  pages = 0;
-  options: any[] = [10, 20, 40, 50, 60];
+  tests: Test[];
+  numberOfTest: number;
   modalOptions: NgbModalOptions;
-  // tslint:disable-next-line:max-line-length
-  constructor(private router: Router, public icons: IconsService, private testService: TestListService, private modalService: NgbModal, private loader: LoaderService) {
+  constructor(private router: Router, public icons: IconsService, private testService: TestListService,
+              private modalService: NgbModal, private loader: LoaderService,
+              @Inject(DOCUMENT) private document: Document, @Inject(WINDOW) private window) {
     loader.publish('show');
     this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
-      this.tests = data as TestList;
-      this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
+      this.numberOfTest = data[0].NumberOfTest;
+      this.tests = data;
       loader.publish('hide');
     }, error => {
       this.loader.publish('hide');
@@ -65,26 +61,8 @@ export class TestListComponent {
     this.textFilter = form.value.textFilter;
     this.loader.publish('show');
     this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
-      this.tests = data as TestList;
-      this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
-      if (this.atLast === true) {
-        this.pageNum = this.pages;
-      }
-      this.loader.publish('hide');
-    }, error => {
-      this.loader.publish('hide');
-      alert('Ooops something went wrong');
-    });
-  }
-  resizePage(event: any) {
-    this.loader.publish('show');
-    this.pageSize = event.target.value;
-    this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
-      this.tests = data as TestList;
-      this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
-      if (this.atLast === true) {
-        this.pageNum = this.pages;
-      }
+      this.numberOfTest = data[0].NumberOfTest;
+      this.tests = data;
       this.loader.publish('hide');
     }, error => {
       this.loader.publish('hide');
@@ -95,7 +73,6 @@ export class TestListComponent {
   closeErrorAlert() {}
 
   showContent(id: number) {
-      this.loader.publish('show');
       this.router.navigateByUrl('testcontent/' + id).then();
   }
 
@@ -106,70 +83,33 @@ export class TestListComponent {
     modalRef.componentInstance.myModalTest = test;
   }
 
-  NextPage() {
-    this.loader.publish('show');
-    let nextPage = this.pageNum.valueOf();
-    nextPage++;
-    this.testService.getTests(nextPage, this.pageSize, this.textFilter).then(data => {
-      this.tests = data as TestList;
-      this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
-      this.loader.publish('hide');
-      this.pageNum += 1;
-    }, error => {
-      this.loader.publish('hide');
-      alert('Ooops something went wrong');
-    });
-    if (this.pageNum === this.pages) {
-      this.atLast = true;
-    }
-  }
-
-  lastPage() {
-    this.loader.publish('show');
-    this.testService.getTests(this.pages, this.pageSize, this.textFilter).then(data => {
-      this.tests = data as TestList;
-      this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
-      this.pageNum = this.pages;
-      this.atLast = true;
-      this.loader.publish('hide');
-    }, error => {
-      this.loader.publish('hide');
-      alert('Ooops something went wrong');
-    });
-  }
-
-  firstPage() {
-    this.loader.publish('show');
-    this.testService.getTests(1, this.pageSize, this.textFilter).then(data => {
-      this.tests = data as TestList;
-      this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
-      this.atLast = false;
-      this.pageNum = 1;
-      this.loader.publish('hide');
-    }, error => {
-      this.loader.publish('hide');
-      alert('Ooops something went wrong');
-    });
-  }
-
-  previousPage() {
-    this.loader.publish('show');
-    let prevPage = this.pageNum.valueOf();
-    prevPage--;
-    this.testService.getTests(prevPage, this.pageSize, this.textFilter).then(data => {
-      this.tests = data as TestList;
-      this.pages = Math.ceil(data[0].NumberOfTest / this.pageSize);
-      this.atLast = false;
-      this.loader.publish('hide');
-      this.pageNum -= 1;
-    }, error => {
-      this.loader.publish('hide');
-      alert('Ooops something went wrong');
-    });
-  }
   showEmailModalMethod(id: number) {
     const modal = this.modalService.open(EmailModalComponent);
     modal.componentInstance.testId = id;
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const pos = document.documentElement.scrollTop + document.documentElement.offsetHeight;
+    const max = document.documentElement.scrollHeight;
+    if (pos >= max - 1 && pos <= max) {
+      if (this.tests.length < this.numberOfTest) {
+        this.loader.publish('show');
+        let nextPage = this.pageNum.valueOf();
+        nextPage++;
+        this.testService.getTests(nextPage, this.pageSize, this.textFilter).subscribe(data => {
+          data.forEach(value => {
+            this.tests.push(value);
+          });
+          this.pageNum += 1;
+          this.window.scrollTo(0, max + 1);
+          this.loader.publish('hide');
+        }, error => {
+          this.loader.publish('hide');
+          alert('Ooops something went wrong');
+        });
+      }
+    }
   }
 }
 

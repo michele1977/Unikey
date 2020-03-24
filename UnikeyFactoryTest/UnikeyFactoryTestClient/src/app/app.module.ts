@@ -16,19 +16,26 @@ import {ErrorComponent} from './shared/error/error.component';
 import { TestContentEditComponent } from './features/test-list/testcontent/testcontent-edit/testcontent-edit.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TestDetailsModalComponent} from './modals/test-details-modal/test-details-modal.component';
-import {RouterModule} from '@angular/router';
 import { SeeExTestComponent } from './features/see-ex-test/see-ex-test.component';
 import {LoaderService} from './services/loader.service';
 import { EmailModalComponent } from './shared/email-modal/email-modal.component';
-import { LoginComponent } from './features/login/login.component';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {InterceptorService} from './services/interceptor.service';
-import { LogoutComponent } from './shared/logout/logout.component';
 import {LogoutModule} from './shared/logout/logout.module';
 import { ExTestListComponent } from './features/ex-test-list/ex-test-list.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import {WINDOW_PROVIDERS} from './services/window-ref.service';
+import { BeginTestComponent } from './features/fruition/begin-test/begin-test.component';
+import { FruitionLandingPageComponent } from './shared/fruition-landing-page/fruition-landing-page.component';
+import { CreatePDFModalComponent } from './modals/create-pdf-modal/create-pdf-modal.component';
+import { FruitionTestComponent } from './features/fruition-test/fruition-test.component';
+import { EndTestModalComponent } from './modals/end-test-modal/end-test-modal.component';
+import {SideBarModule} from './core/side-bar/side-bar.module';
+import {SideBarService} from './services/side-bar.service';
+import {CircleProgressOptions, NgCircleProgressModule} from 'ng-circle-progress';
+import {CommonModule} from '@angular/common';
+import {StatisticPageComponent} from './features/statistic-page/statistic-page.component';
 
 
 @NgModule({
@@ -42,11 +49,19 @@ import { MatDialogModule } from '@angular/material/dialog';
     TestDetailsModalComponent,
     SeeExTestComponent,
     ExTestListComponent,
-    EmailModalComponent
+    EmailModalComponent,
+    FruitionTestComponent,
+    EndTestModalComponent,
+    FruitionLandingPageComponent,
+    BeginTestComponent,
+    EmailModalComponent,
+    CreatePDFModalComponent,
+    StatisticPageComponent
   ],
 
   imports: [
     BrowserModule,
+    CommonModule,
     ReactiveFormsModule,
     AppRoutingModule,
     LandingPageModule,
@@ -56,11 +71,18 @@ import { MatDialogModule } from '@angular/material/dialog';
     FontAwesomeModule,
     QuestionFormModule,
     NgbModule,
-    LogoutModule
+    LogoutModule,
+    MatDialogModule,
+    MatButtonModule,
+    SideBarModule,
+    NgCircleProgressModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
-    LoaderService
+    LoaderService,
+    WINDOW_PROVIDERS,
+    SideBarService,
+    CircleProgressOptions
   ],
   exports: [
   ],

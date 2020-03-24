@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Core.Common.CommandTrees;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -89,31 +90,42 @@ namespace UnikeyFactoryTest.Repository
 
         public async Task UpdateTest(TestBusiness test)
         {
+            _ctx.Database.Log = x => Debug.WriteLine(x);
             var mapper = _kernel.Get<IMapper>("Heavy");
             var newValue = mapper.Map<TestBusiness, Test>(test);
-            var oldValue = (EntityExtension)(_ctx.Tests.FirstOrDefault(x => x.Id == test.Id));
-            await NewUpdate(newValue, oldValue);
+            var oldValue = (EntityExtension)await(_ctx.Tests.FirstOrDefaultAsync(x => x.Id == test.Id));
+            NewUpdate(newValue, oldValue);
+            await _ctx.SaveChangesAsync();
         }
 
-        public async Task NewUpdate(EntityExtension newValue, EntityExtension oldValue)
+        public void NewUpdate(EntityExtension newValue, EntityExtension oldValue)
         {
-            oldValue.SetFlatProperty(newValue);
-            var toRemove = oldValue.Childs.Where(x => newValue.Childs.All(y => y.MyId != x.MyId)).ToList();
-            var toAdd = newValue.Childs.Where(x => oldValue.Childs.All(y => y.MyId != x.MyId)).ToList();
-            var toUpdate = newValue.Childs.Where(x => oldValue.Childs.Any(y => y.MyId == x.MyId)).ToList();
-            await Task.Run(() =>
+            try
             {
-                foreach (var child in toRemove) oldValue.RemoveChild(child, _ctx);
 
+                oldValue.SetFlatProperty(newValue);
+                var toRemove = oldValue.Childs.Where(x => newValue.Childs.All(y => y.MyId != x.MyId)).ToList();
+                var toAdd = newValue.Childs.Where(x => oldValue.Childs.All(y => y.MyId != x.MyId)).ToList();
+                var toUpdate = newValue.Childs.Where(x => oldValue.Childs.Any(y => y.MyId == x.MyId)).ToList();
+
+                foreach (var child in toRemove) 
+                {
+                    oldValue.RemoveChild(child, _ctx);
+                    _ctx.Entry(child).State = EntityState.Deleted;
+                }
                 foreach (var child in toAdd) oldValue.AddChild(child, _ctx);
-            });
-            foreach (var child in toUpdate)
-            {
-                var childToUpdate = oldValue.Childs.FirstOrDefault(x => x.MyId == child.MyId);
-                await NewUpdate(child, childToUpdate);
-            }
 
-            _ctx.SaveChanges();
+                foreach (var child in toUpdate)
+                {
+                    var childToUpdate = oldValue.Childs.FirstOrDefault(x => x.MyId == child.MyId);
+                    NewUpdate(child, childToUpdate);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
         public async Task DeleteQuestionByIdFromTest(int questionId)
         {
@@ -152,7 +164,8 @@ namespace UnikeyFactoryTest.Repository
         {
             var newQuestion = (EntityExtension)QuestionMapper.MapBizToDal(updateQuestion);
             var oldQuestion = await _ctx.Questions.FirstOrDefaultAsync(q => q.Id == updateQuestion.Id);
-            await NewUpdate(newQuestion, oldQuestion);
+            NewUpdate(newQuestion, oldQuestion);
+            await _ctx.SaveChangesAsync();
         }
 
         public async Task<Dictionary<int, int>> GetExTestCountByState(IEnumerable<int> testsIds, AdministratedTestState state)

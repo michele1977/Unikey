@@ -13,6 +13,7 @@ import {FormsModule} from '@angular/forms';
   imports: [
     CommonModule,
     FormsModule
-  ]
+  ],
+  providers: [LoginComponent]
 })
 export class LoginModule { }
