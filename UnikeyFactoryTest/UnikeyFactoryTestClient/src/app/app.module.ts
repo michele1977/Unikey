@@ -26,6 +26,7 @@ import { ExTestListComponent } from './features/ex-test-list/ex-test-list.compon
 import {StatisticPageModule} from './features/statistic-page/statistic-page.module';
 import {SideBarModule} from './core/side-bar/side-bar.module';
 import {SideBarService} from './services/side-bar.service';
+import {TopBarModule} from './core/top-bar/top-bar-module.module';
 
 
 
@@ -40,7 +41,7 @@ import {SideBarService} from './services/side-bar.service';
     TestDetailsModalComponent,
     SeeExTestComponent,
     ExTestListComponent,
-    EmailModalComponent
+    EmailModalComponent,
   ],
 
   imports: [
@@ -57,6 +58,7 @@ import {SideBarService} from './services/side-bar.service';
     LogoutModule,
     StatisticPageModule,
     SideBarModule,
+    TopBarModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },

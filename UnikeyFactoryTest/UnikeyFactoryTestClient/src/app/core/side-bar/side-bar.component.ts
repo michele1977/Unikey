@@ -9,8 +9,8 @@ import {SideBarService} from '../../services/side-bar.service';
 })
 export class SideBarComponent {
   constructor(public nav: SideBarService) {}
-   // public isButtonVisible = true;
-   // Toggle() {
-   //   this.isButtonVisible = false;
-   // }
+    public isButtonVisible = true;
+    Toggle() {
+     this.isButtonVisible = false;
+    }
 }

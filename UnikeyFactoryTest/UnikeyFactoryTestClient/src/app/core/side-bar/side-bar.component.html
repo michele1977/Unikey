@@ -1,15 +1,22 @@
 <div class="wrapper" *ngIf="nav.visible">
   <!-- Sidebar -->
-  <nav id="sidebar">
+  <a class="fa fa-windows fa-xl" (click)="isButtonVisible = true"></a>
+  <nav id="sidebar" *ngIf="isButtonVisible">
     <div class="sidebar-header">
-      <img src="../../../assets/img/Unikey.png" height="70" width="70" alt="" routerLink="/testList"/>
+      <img src="../../../assets/img/Unikey.png" height="60" width="60" alt="" routerLink="/testList"/>
     </div>
     <ul class="list-unstyled components">
       <li>
-        <a class="fa-table" routerLink="/testList"></a>
+        <a class="fa fa-archive fa-lg" routerLink="/testList"></a>
       </li>
       <li>
-        <a class="fa fa-facebook" routerLink="/extestList"></a>
+        <a class="fa fa-list" routerLink="/extestList"></a>
+      </li>
+      <li>
+        <a class="fa fa-plus" routerLink="/create"></a>
+      </li>
+      <li>
+        <a class="fa fa-arrow-left" (click)="Toggle()"></a>
       </li>
     </ul>
   </nav>
