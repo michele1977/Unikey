@@ -27,7 +27,7 @@
         <div class="col-4"></div>
         <div class="col-4">
           <button *ngIf="isLast === false" class="btn btn-primary" (click)="next()">Next</button>
-          <button *ngIf="isLast === true" class="btn btn-success">End</button>
+          <button *ngIf="isLast === true" class="btn btn-success" (click)="end()">End</button>
         </div>
       </div>
     </div>

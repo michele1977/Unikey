@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {AnswerState} from '../../shared/enums/answer-state';
 import {ExTest} from '../../models/ex-test';
 import {AdministratedTestState} from '../../shared/enums/administrated-test-state';
+import {EndTestModalComponent} from '../../modals/end-test-modal/end-test-modal.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-fruition-test',
@@ -175,7 +177,7 @@ export class FruitionTestComponent implements OnInit {
   isLast = false;
   isFirst = true;
 
-  constructor() { }
+  constructor( private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
@@ -188,6 +190,10 @@ export class FruitionTestComponent implements OnInit {
     if (this.i !== 0) {
       this.isFirst = false;
     }
+  }
+
+  end() {
+ this.modalService.open(EndTestModalComponent);
   }
 
   previous() {
