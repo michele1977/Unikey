@@ -37,7 +37,7 @@ export class EmailModalComponent {
     this.email.Id = this.testId;
     this.email.Name = form.value.name;
     this.email.Email = form.value.email;
-    this.emailSender.sendEmail(this.email).subscribe( res => {
+    this.emailSender.sendEmail(this.email).then( res => {
         this.emailSent = true;
         this.loader.publish('hide');
       },
