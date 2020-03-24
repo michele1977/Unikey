@@ -21,16 +21,16 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
     [EnableCors("*", "*", "*")]
     public class UserController : ApiController
     {
-        private readonly IKernel _kernel;
+        //private readonly IKernel _kernel;
         private readonly ILogger _logger;
-        private readonly UserManager<UserBusiness, int> _service;
+        //private readonly UserManager<UserBusiness, int> _service;
         private readonly SignInManager<UserBusiness, int> _signigni;
 
         public UserController(IKernel kernel, ILogger logger)
         {
-            _kernel = kernel;
+            //_kernel = kernel;
             _logger = logger;
-            _service = _kernel.Get<UserManager<UserBusiness, int>>();
+            //_service = _kernel.Get<UserManager<UserBusiness, int>>();
             _signigni = HttpContext.Current.GetOwinContext().Get<SignInManager<UserBusiness, int>>();
         }
 
@@ -39,7 +39,9 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         {
             try
             {
-                var result = await _service.CreateAsync(user);
+                //var result = await _service.CreateAsync(user);
+
+                var result = await _signigni.UserManager.CreateAsync(user);
 
                 if (result.Errors.Any())
                 {
