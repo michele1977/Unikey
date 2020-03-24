@@ -2,16 +2,17 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {EmailModel} from '../models/emailModel';
 import {LOCALHOST_URL} from '../constants/api.const';
+import {HttpWrapperService} from './http-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmailSenderService {
  URL = LOCALHOST_URL + '/Test/SendMail';
-  constructor(private http: HttpClient) {
+  constructor(private httpWrapper: HttpWrapperService) {
   }
 
   sendEmail(emailModel: EmailModel) {
-    return this.http.post('http://localhost/UnikeyFactoryTest.WebAPI/api/Test/SendMail', emailModel);
+    return this.httpWrapper.invokePostUrl(this.URL, emailModel);
   }
 }
