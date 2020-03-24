@@ -18,7 +18,7 @@ export class EndTestModalComponent implements OnInit {
   }
 
   endPage(){
-    this.router.navigateByUrl('endTest');
+    this.router.navigateByUrl('statistic/1410');
     this.activeModal.close('Close endTestModal');
   }
 }

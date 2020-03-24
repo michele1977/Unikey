@@ -8,8 +8,8 @@
   <div class="container">
     <h4 class="display-4 lead">Ciao {{exTest.TestSubject}}, grazie per aver ultimato il test!</h4>
     <hr>
-    <h4>Hai iniziato il tuo test alle: {{exTest.Date | date:"HH:mm:ss"}}</h4>
-    <h4>Tempo di esecuzione: {{timer() | date: "HH:mm:ss"}}</h4>
+    <h4>Hai iniziato il tuo test alle: {{this.exTest.Date | date: "HH:mm:ss"}}</h4>
+    <h4>Tempo di esecuzione: {{this.timer() | date: "HH:mm:ss"}}</h4>
     <h4>Hai ottenuto il {{percentage()}}% delle risposte esatte!</h4>
   </div>
 </div>

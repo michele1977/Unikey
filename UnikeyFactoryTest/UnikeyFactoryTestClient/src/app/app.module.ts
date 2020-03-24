@@ -31,7 +31,9 @@ import { FruitionLandingPageComponent } from './shared/fruition-landing-page/fru
 import { CreatePDFModalComponent } from './modals/create-pdf-modal/create-pdf-modal.component';
 import { FruitionTestComponent } from './features/fruition-test/fruition-test.component';
 import { EndTestModalComponent } from './modals/end-test-modal/end-test-modal.component';
-import { EndTestComponent } from './features/fruition-test/end-test/end-test.component';
+import {SideBarModule} from './core/side-bar/side-bar.module';
+import {CommonModule} from '@angular/common';
+import {StatisticPageComponent} from './features/statistic-page/statistic-page.component';
 
 
 @NgModule({
@@ -46,18 +48,17 @@ import { EndTestComponent } from './features/fruition-test/end-test/end-test.com
     SeeExTestComponent,
     ExTestListComponent,
     EmailModalComponent,
-    CreatePDFModalComponent,
     FruitionTestComponent,
     EndTestModalComponent,
-    EndTestComponent
-    BeginTestComponent,
     FruitionLandingPageComponent,
     BeginTestComponent,
-    CreatePDFModalComponent
+    CreatePDFModalComponent,
+    StatisticPageComponent
   ],
 
   imports: [
     BrowserModule,
+    CommonModule,
     ReactiveFormsModule,
     AppRoutingModule,
     LandingPageModule,
@@ -69,7 +70,8 @@ import { EndTestComponent } from './features/fruition-test/end-test/end-test.com
     NgbModule,
     LogoutModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    SideBarModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
