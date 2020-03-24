@@ -33,6 +33,7 @@ import {StatisticPageModule} from './features/statistic-page/statistic-page.modu
 import {SideBarModule} from './core/side-bar/side-bar.module';
 import {SideBarService} from './services/side-bar.service';
 import {TopBarModule} from './core/top-bar/top-bar-module.module';
+import {CircleProgressOptions, NgCircleProgressModule} from 'ng-circle-progress';
 
 
 
@@ -52,7 +53,7 @@ import {TopBarModule} from './core/top-bar/top-bar-module.module';
     FruitionLandingPageComponent,
     BeginTestComponent,
     EmailModalComponent,
-    CreatePDFModalComponent
+    CreatePDFModalComponent,
     EmailModalComponent,
   ],
 
@@ -69,17 +70,18 @@ import {TopBarModule} from './core/top-bar/top-bar-module.module';
     NgbModule,
     LogoutModule,
     MatDialogModule,
-    MatButtonModule
-    LogoutModule,
+    MatButtonModule,
     StatisticPageModule,
     SideBarModule,
-    TopBarModule
+    TopBarModule,
+    NgCircleProgressModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
     LoaderService,
-    WINDOW_PROVIDERS
-    LoaderService, SideBarService
+    WINDOW_PROVIDERS,
+    SideBarService,
+    CircleProgressOptions
   ],
   exports: [
   ],

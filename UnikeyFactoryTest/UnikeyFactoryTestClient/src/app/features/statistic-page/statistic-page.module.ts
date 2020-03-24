@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StatisticPageComponent } from './statistic-page.component';
 import {FormsModule} from '@angular/forms';
+import {NgCircleProgressModule} from 'ng-circle-progress';
 
 
 
@@ -11,9 +12,10 @@ import {FormsModule} from '@angular/forms';
   exports: [
     StatisticPageComponent
   ],
-  imports: [
-    CommonModule,
-    FormsModule
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        NgCircleProgressModule
+    ]
 })
 export class StatisticPageModule { }

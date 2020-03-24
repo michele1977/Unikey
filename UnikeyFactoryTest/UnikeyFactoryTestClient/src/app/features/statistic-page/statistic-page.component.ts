@@ -44,4 +44,16 @@ export class StatisticPageComponent {
     const datenownumber = new Date(this.date).getTime();
     return (datenownumber - datenumber);
   }
+
+  formatSubtitle = (percentage: number): string  => {
+    if (percentage >= 80) {
+      return 'Congratulationi: ';
+    } else if (percentage >= 50) {
+      return 'Bravo: ';
+    } else if (percentage <= 20) {
+      return 'Accidenti!';
+    } else {
+      return 'Not started';
+    }
+  }
 }
