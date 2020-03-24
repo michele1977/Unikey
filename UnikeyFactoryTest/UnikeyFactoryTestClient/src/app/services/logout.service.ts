@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Router, RouterEvent, RoutesRecognized} from '@angular/router';
+import {Router, RouterEvent, RouterOutlet, RoutesRecognized} from '@angular/router';
 import {filter, first, map, take} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -8,13 +9,13 @@ import {filter, first, map, take} from 'rxjs/operators';
 export class LogoutService {
   user: string;
 
-  isVisible = true;
-
   constructor(private router: Router) {
   }
 
   setVisible(): boolean {
-    return this.checkLocalStorage() && this.checkErrorPage();
+    const checkLocalStorage = this.checkLocalStorage();
+    const checkErrorPage = this.checkErrorPage();
+    return checkLocalStorage && checkErrorPage;
   }
 
   private checkLocalStorage(): boolean {
@@ -26,19 +27,15 @@ export class LogoutService {
       isVisible = true;
       this.user = name;
     }
-
     return isVisible;
   }
 
   private checkErrorPage(): boolean {
-    this.router.events.pipe(
-      filter(event => {
-        return !!(event instanceof RoutesRecognized && ((event.url.match('/error') || event.url.match(''))));
-      }))
-      .subscribe(() => {
-        this.isVisible = false;
-      });
-    return this.isVisible;
+    let isVisible = true;
+    if (this.router.url.match('/error')) {
+      isVisible = false;
+    }
+    return isVisible;
   }
 
   public logout() {
