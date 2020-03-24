@@ -36,13 +36,18 @@ export class SubscribeComponent {
     this.loader.publish('show');
     this.errorsList = null;
     this.service.register(user)
-      .subscribe(
+      .then(
         () => {
-          this.router.navigateByUrl('').then();
-          this.loader.publish('show');
+          this.router.navigateByUrl('').then(
+            () => {
+              this.loader.publish('hide');
+              this.switch.emit();
+              alert('Registration Successful!');
+            }
+          );
           },
           (error: HttpErrorResponse) => {
-
+            this.loader.publish('hide');
             this.error = error;
             this.errorsList = [];
             const modelstate = error.error.ModelState;
@@ -53,6 +58,5 @@ export class SubscribeComponent {
               }
             }
           });
-    this.loader.publish('hide');
   }
 }
