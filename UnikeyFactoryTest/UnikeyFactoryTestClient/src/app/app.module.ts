@@ -48,12 +48,9 @@ import {TopBarModule} from './core/top-bar/top-bar-module.module';
     SeeExTestComponent,
     ExTestListComponent,
     EmailModalComponent,
-    BeginTestComponent,
     FruitionLandingPageComponent,
     BeginTestComponent,
-    EmailModalComponent,
     CreatePDFModalComponent
-    EmailModalComponent,
   ],
 
   imports: [
@@ -67,9 +64,8 @@ import {TopBarModule} from './core/top-bar/top-bar-module.module';
     FontAwesomeModule,
     QuestionFormModule,
     NgbModule,
-    LogoutModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
     LogoutModule,
     StatisticPageModule,
     SideBarModule,
@@ -77,8 +73,7 @@ import {TopBarModule} from './core/top-bar/top-bar-module.module';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
-    LoaderService,
-    WINDOW_PROVIDERS
+    WINDOW_PROVIDERS,
     LoaderService, SideBarService
   ],
   exports: [

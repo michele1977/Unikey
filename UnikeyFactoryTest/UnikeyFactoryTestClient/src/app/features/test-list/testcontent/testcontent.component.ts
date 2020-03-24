@@ -1,5 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Component, EventEmitter, Input} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit} from '@angular/core';
 import {TestService} from '../../../services/test.service';
 import {Test} from '../../../models/test';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
@@ -8,9 +7,6 @@ import { switchMap } from 'rxjs/operators';
 import { LoaderService } from 'src/app/services/loader.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CreatePDFModalComponent} from "../../../modals/create-pdf-modal/create-pdf-modal.component";
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {IconsService} from 'src/app/services/icons.service';
-import {switchMap} from 'rxjs/operators';
 import {Question} from '../../../models/question';
 
 @Component({
