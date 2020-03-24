@@ -29,6 +29,11 @@ import {WINDOW_PROVIDERS} from './services/window-ref.service';
 import { BeginTestComponent } from './features/fruition/begin-test/begin-test.component';
 import { FruitionLandingPageComponent } from './shared/fruition-landing-page/fruition-landing-page.component';
 import { CreatePDFModalComponent } from './modals/create-pdf-modal/create-pdf-modal.component';
+import {StatisticPageModule} from './features/statistic-page/statistic-page.module';
+import {SideBarModule} from './core/side-bar/side-bar.module';
+import {SideBarService} from './services/side-bar.service';
+import {TopBarModule} from './core/top-bar/top-bar-module.module';
+
 
 
 @NgModule({
@@ -48,6 +53,7 @@ import { CreatePDFModalComponent } from './modals/create-pdf-modal/create-pdf-mo
     BeginTestComponent,
     EmailModalComponent,
     CreatePDFModalComponent
+    EmailModalComponent,
   ],
 
   imports: [
@@ -64,11 +70,16 @@ import { CreatePDFModalComponent } from './modals/create-pdf-modal/create-pdf-mo
     LogoutModule,
     MatDialogModule,
     MatButtonModule
+    LogoutModule,
+    StatisticPageModule,
+    SideBarModule,
+    TopBarModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
     LoaderService,
     WINDOW_PROVIDERS
+    LoaderService, SideBarService
   ],
   exports: [
   ],

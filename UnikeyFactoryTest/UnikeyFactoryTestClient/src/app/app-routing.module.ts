@@ -11,7 +11,7 @@ import {LoginComponent} from './features/login/login.component';
 import {AuthenticationService} from './services/authentication.service';
 import { BeginTestComponent } from './features/fruition/begin-test/begin-test.component';
 import { FruitionLandingPageComponent } from './shared/fruition-landing-page/fruition-landing-page.component';
-
+import {StatisticPageComponent} from './features/statistic-page/statistic-page.component';
 
 const routes: Routes = [
   {path: 'seeExTest/:id', component: SeeExTestComponent},
@@ -21,6 +21,7 @@ const routes: Routes = [
   {path: 'extestList', component: ExTestListComponent},
   {path: 'error', component: ErrorComponent},
   {path: 'beginTest', component: FruitionLandingPageComponent},
+  {path: 'statistic/:id', component: StatisticPageComponent},
   {path: '', component: LandingPageComponent}
 ];
 
