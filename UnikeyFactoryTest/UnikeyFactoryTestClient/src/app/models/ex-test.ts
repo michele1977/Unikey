@@ -10,7 +10,7 @@ export class ExTest {
   Title: string;
   MaxScore: number;
   State?: AdministratedTestState;
-  Score: number;
-  NumberOfExTests: number;
+  Score?: number;
+  NumberOfExTests?: number;
   AdministratedQuestions: ExQuestion[];
 }

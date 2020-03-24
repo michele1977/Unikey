@@ -1,0 +1,40 @@
+.QuestionContainer {
+  background-color: darkcyan;
+  border-radius: 8px;
+  border: black 1.5px solid;
+  width: 500px;
+  text-align: center;
+  margin: auto;
+  padding: 10px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.AnswerContainer {
+  width: 300px;
+  margin: auto;
+}
+
+.answer {
+  background-color: cyan;
+  padding: 10px 10px 5px 10px;
+  margin-bottom: 10px;
+}
+
+.AnswerLabel {
+  width: 90%;
+}
+
+.body-content {
+  padding: 15px;
+}
+
+.logo {
+  border-radius: 5px;
+  margin-bottom: 30px;
+  padding: 10px;
+  margin-left: 43%;
+  text-align: center;
+  width: 170px;
+  height: 100px;
+}

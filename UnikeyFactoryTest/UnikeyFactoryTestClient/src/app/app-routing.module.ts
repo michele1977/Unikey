@@ -7,13 +7,13 @@ import {TestcontentComponent} from './features/test-list/testcontent/testcontent
 import {ErrorComponent} from './shared/error/error.component';
 import {SeeExTestComponent} from './features/see-ex-test/see-ex-test.component';
 import { ExTestListComponent } from './features/ex-test-list/ex-test-list.component';
-import {LoginComponent} from './features/login/login.component';
-import {AuthenticationService} from './services/authentication.service';
-import { BeginTestComponent } from './features/fruition/begin-test/begin-test.component';
 import { FruitionLandingPageComponent } from './shared/fruition-landing-page/fruition-landing-page.component';
+import {FruitionTestComponent} from './features/fruition-test/fruition-test.component';
+
 import {StatisticPageComponent} from './features/statistic-page/statistic-page.component';
 
 const routes: Routes = [
+  {path: 'fruitiontest', component: FruitionTestComponent},
   {path: 'seeExTest/:id', component: SeeExTestComponent},
   {path: 'testcontent/:id', component: TestcontentComponent},
   {path: 'create', component: CreationComponent},
@@ -30,3 +30,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+

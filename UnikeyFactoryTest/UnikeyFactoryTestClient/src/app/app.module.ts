@@ -29,12 +29,14 @@ import {WINDOW_PROVIDERS} from './services/window-ref.service';
 import { BeginTestComponent } from './features/fruition/begin-test/begin-test.component';
 import { FruitionLandingPageComponent } from './shared/fruition-landing-page/fruition-landing-page.component';
 import { CreatePDFModalComponent } from './modals/create-pdf-modal/create-pdf-modal.component';
-import {StatisticPageModule} from './features/statistic-page/statistic-page.module';
+import { FruitionTestComponent } from './features/fruition-test/fruition-test.component';
+import { EndTestModalComponent } from './modals/end-test-modal/end-test-modal.component';
 import {SideBarModule} from './core/side-bar/side-bar.module';
 import {SideBarService} from './services/side-bar.service';
 import {TopBarModule} from './core/top-bar/top-bar-module.module';
 import {CircleProgressOptions, NgCircleProgressModule} from 'ng-circle-progress';
-
+import {CommonModule} from '@angular/common';
+import {StatisticPageComponent} from './features/statistic-page/statistic-page.component';
 
 
 @NgModule({
@@ -49,16 +51,18 @@ import {CircleProgressOptions, NgCircleProgressModule} from 'ng-circle-progress'
     SeeExTestComponent,
     ExTestListComponent,
     EmailModalComponent,
-    BeginTestComponent,
+    FruitionTestComponent,
+    EndTestModalComponent,
     FruitionLandingPageComponent,
     BeginTestComponent,
     EmailModalComponent,
     CreatePDFModalComponent,
-    EmailModalComponent,
+    StatisticPageComponent
   ],
 
   imports: [
     BrowserModule,
+    CommonModule,
     ReactiveFormsModule,
     AppRoutingModule,
     LandingPageModule,
@@ -71,9 +75,7 @@ import {CircleProgressOptions, NgCircleProgressModule} from 'ng-circle-progress'
     LogoutModule,
     MatDialogModule,
     MatButtonModule,
-    StatisticPageModule,
     SideBarModule,
-    TopBarModule,
     NgCircleProgressModule
   ],
   providers: [
