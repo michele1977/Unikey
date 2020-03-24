@@ -21,8 +21,8 @@ export class SubscribeService {
      return this.responseError;*/
 
   register(user: User) {
-    const reqHeader = new HttpHeaders().set('Content-Type', 'application/json')
-      .set('Accept', 'application/json');
+    // const reqHeader = new HttpHeaders().set('Content-Type', 'application/json')
+    //   .set('Accept', 'application/json');
 
     return this.httpWrapper.invokePostUrl(URL, user);
     // return this.http.post(URL, user, {headers : reqHeader});

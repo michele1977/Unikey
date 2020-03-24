@@ -27,7 +27,7 @@ export class ExTestListComponent {
                 private exTestService: ExTestListService,
                 private loader: LoaderService) {
                   this.loader.publish('show');
-                  this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+                  this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
         this.tests = data as ExTestList;
         this.loader.publish('hide');
         this.pages = Math.ceil(data[0].TotalNumberOfExTests / this.pageSize);
@@ -44,7 +44,7 @@ export class ExTestListComponent {
   search(form) {
     this.loader.publish('show');
     this.textFilter = form.value.textFilter;
-    this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+    this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
       this.loader.publish('hide');
       this.tests = data as ExTestList;
       this.pages = Math.ceil(data[0].TotalNumberOfExTests / this.pageSize);
@@ -59,7 +59,7 @@ export class ExTestListComponent {
   resizePage(event: any) {
     this.loader.publish('show');
     this.pageSize = event.target.value;
-    this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+    this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
       this.tests = data as ExTestList;
       this.pages = Math.ceil(data[0].TotalNumberOfExTests / this.pageSize);
       if (this.atLast === true) {
@@ -73,7 +73,7 @@ export class ExTestListComponent {
   NextPage() {
     this.loader.publish('show');
     this.pageNum += 1;
-    this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+    this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
       this.tests = data as ExTestList;
       this.pages = Math.ceil(data[0].TotalNumberOfExTests / this.pageSize);
       this.loader.publish('hide');
@@ -86,19 +86,19 @@ export class ExTestListComponent {
 
   lastPage() {
     this.loader.publish('show');
-    this.exTestService.getExTests(this.pages, this.pageSize, this.textFilter).subscribe(data => {
+    this.exTestService.getExTests(this.pages, this.pageSize, this.textFilter).then(data => {
       this.tests = data as ExTestList;
       this.pages = Math.ceil(data[0].TotalNumberOfExTests / this.pageSize);
       this.pageNum = this.pages;
       this.atLast = true;
       this.loader.publish('hide');
-    }, () => this.router.navigateByUrl('error'))
+    }, () => this.router.navigateByUrl('error'));
     this.loader.publish('hide');
   }
 
   firstPage() {
     this.loader.publish('show');
-    this.exTestService.getExTests(1, this.pageSize, this.textFilter).subscribe(data => {
+    this.exTestService.getExTests(1, this.pageSize, this.textFilter).then(data => {
       this.tests = data as ExTestList;
       this.pages = Math.ceil(data[0].TotalNumberOfExTests / this.pageSize);
       this.atLast = false;
@@ -111,7 +111,7 @@ export class ExTestListComponent {
   previousPage() {
     this.loader.publish('show');
     this.pageNum -= 1;
-    this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+    this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
       this.tests = data as ExTestList;
       this.pages = Math.ceil(data[0].TotalNumberOfExTests / this.pageSize);
       this.atLast = false;
