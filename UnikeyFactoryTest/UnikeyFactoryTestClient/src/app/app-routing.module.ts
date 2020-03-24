@@ -11,6 +11,7 @@ import { FruitionLandingPageComponent } from './shared/fruition-landing-page/fru
 import {FruitionTestComponent} from './features/fruition-test/fruition-test.component';
 
 import {StatisticPageComponent} from './features/statistic-page/statistic-page.component';
+import {AuthenticationService} from './services/authentication.service';
 
 const routes: Routes = [
   {path: 'fruitiontest', component: FruitionTestComponent},

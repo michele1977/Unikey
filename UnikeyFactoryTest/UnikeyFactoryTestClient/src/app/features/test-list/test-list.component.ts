@@ -97,7 +97,7 @@ export class TestListComponent {
         this.loader.publish('show');
         let nextPage = this.pageNum.valueOf();
         nextPage++;
-        this.testService.getTests(nextPage, this.pageSize, this.textFilter).subscribe(data => {
+        this.testService.getTests(nextPage, this.pageSize, this.textFilter).then(data => {
           data.forEach(value => {
             this.tests.push(value);
           });

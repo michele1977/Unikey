@@ -62,7 +62,7 @@ export class ExTestListComponent {
       if (this.tests.length < this.numberOfTests) {
         this.loader.publish('show');
         this.pageNum += 1;
-        this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+        this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
           data.forEach(value => {
             this.tests.push(value);
           });
