@@ -30,7 +30,7 @@
   </tr>
   <tr *ngFor="let test of tests | filter:textFilter">
     <td class="text-center">{{test.Title}}</td>
-    <td class="text-center">{{test.URL.toString()}}</td>
+    <td class="text-center" (click)="CopytoClipboard(test.URL.toString())" title="Click to copy link">{{test.URL.toString()}}</td>
     <td class="text-center">{{test.NumberOfExTest}}</td>
     <td class="text-center">{{test.OpenedExTestNumber}}</td>
     <td class="text-center"></td>

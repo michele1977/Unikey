@@ -137,5 +137,7 @@ public isButtonVisible = false;
      selBox.select();
      document.execCommand('copy');
      document.body.removeChild(selBox);
+     alert('Copied!');
+
   }
 }
