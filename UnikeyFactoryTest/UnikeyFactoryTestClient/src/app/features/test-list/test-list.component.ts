@@ -111,5 +111,17 @@ export class TestListComponent {
       }
     }
   }
+
+  CopytoClipboard(url: string) {
+    console.log('linkcopiato');
+    const box = document.createElement('textarea');
+    box.value = url;
+    document.body.appendChild(box);
+    box.select();
+    document.execCommand('copy');
+    document.body.removeChild(box);
+    alert('Copied!');
+  }
 }
+
 
