@@ -36,7 +36,7 @@ export class TestDetailsModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.loader.publish('show');
-    this.service.getExTestByTestId(this.pageNum, this.pageSize, this.textFilter, this.myModalTest.Id).subscribe(value => {
+    this.service.getExTestByTestId(this.pageNum, this.pageSize, this.textFilter, this.myModalTest.Id).then(value => {
       this.exTests = value as ExTest[];
       console.log();
       if (value[0]) {
@@ -55,7 +55,7 @@ export class TestDetailsModalComponent implements OnInit {
   nextPage() {
     this.loader.publish('show');
     this.pageNum += 1;
-    this.service.getExTestByTestId(this.pageNum, this.pageSize, this.textFilter, this.myModalTest.Id).subscribe(value => {
+    this.service.getExTestByTestId(this.pageNum, this.pageSize, this.textFilter, this.myModalTest.Id).then(value => {
       this.exTests = value as ExTest[];
     });
     if (this.isFirstPage) {
@@ -70,7 +70,7 @@ export class TestDetailsModalComponent implements OnInit {
   previousPage() {
     this.loader.publish('show');
     this.pageNum -= 1;
-    this.service.getExTestByTestId(this.pageNum, this.pageSize, this.textFilter, this.myModalTest.Id).subscribe(value => {
+    this.service.getExTestByTestId(this.pageNum, this.pageSize, this.textFilter, this.myModalTest.Id).then(value => {
       console.log(value);
       this.exTests = value as ExTest[];
     });
@@ -83,7 +83,7 @@ export class TestDetailsModalComponent implements OnInit {
   firstPage() {
     this.loader.publish('show');
     this.pageNum = 1;
-    this.service.getExTestByTestId(this.pageNum, this.pageSize, this.textFilter, this.myModalTest.Id).subscribe(value => {
+    this.service.getExTestByTestId(this.pageNum, this.pageSize, this.textFilter, this.myModalTest.Id).then(value => {
       this.exTests = value as ExTest[];
     });
     this.isFirstPage = true;
@@ -94,7 +94,7 @@ export class TestDetailsModalComponent implements OnInit {
   lastPage() {
     this.loader.publish('show');
     this.pageNum = this.pages;
-    this.service.getExTestByTestId(this.pageNum, this.pageSize, this.textFilter, this.myModalTest.Id).subscribe(value => {
+    this.service.getExTestByTestId(this.pageNum, this.pageSize, this.textFilter, this.myModalTest.Id).then(value => {
       this.exTests = value as ExTest[];
       this.loader.publish('hide');
     });
@@ -105,7 +105,7 @@ export class TestDetailsModalComponent implements OnInit {
   search(form: NgForm) {
     this.loader.publish('show');
     this.textFilter = form.value.textFilter;
-    this.service.getExTestByTestId(this.pageNum, this.pageSize, this.textFilter, this.myModalTest.Id).subscribe(value => {
+    this.service.getExTestByTestId(this.pageNum, this.pageSize, this.textFilter, this.myModalTest.Id).then(value => {
       this.exTests = value as ExTest[];
     });
     this.loader.publish('hide');

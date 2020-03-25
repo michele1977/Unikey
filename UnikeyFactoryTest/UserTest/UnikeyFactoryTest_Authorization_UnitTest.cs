@@ -51,7 +51,7 @@ namespace UserTest
             var jwtHandler = new JwtSecurityTokenHandler();
             var jwtSecurityToken = jwtHandler.ReadJwtToken(jwt);
 
-            var result = LoginAuthorizeAttribute.CheckClaims(jwtSecurityToken) &&
+            var result = RefreshAuthorizeAttribute.CheckClaims(jwtSecurityToken) &&
                           LoginAuthorizeAttribute.CheckJwtStructure(jwt) &&
                           LoginAuthorizeAttribute.CheckSignature(jwtSecurityToken);
 

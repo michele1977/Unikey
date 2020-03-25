@@ -133,9 +133,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
                     testDtoList.Add(testDto);
                 }
                 testDtoList[0].NumberOfTest = await _service.CountTests(filter);
-
-
-
+                
                 return Ok(testDtoList);
             }
             catch (Exception e)

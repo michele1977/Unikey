@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {TestList} from '../models/test-list';
-import {Test} from '../models/test';
+import {HttpWrapperService} from './http-wrapper.service';
 
 const reqUrl = 'http://localhost/UnikeyFactoryTest.WebAPI/api/';
 
@@ -11,9 +11,9 @@ const reqUrl = 'http://localhost/UnikeyFactoryTest.WebAPI/api/';
 
 
 export class TestListService {
-  constructor( private http: HttpClient) { }
+  constructor(private http: HttpClient, private httpWrapper: HttpWrapperService) { }
 
   getTests(numPage: number, pageSize: number, filter: string) {
-    return this.http.get<Test[]>(reqUrl + `Test?pageNum=` + numPage + '&pageSize=' + pageSize + '&filter=' + filter);
+    return this.httpWrapper.invokeGetUrl(reqUrl + `Test?pageNum=` + numPage + '&pageSize=' + pageSize + '&filter=' + filter);
   }
 }

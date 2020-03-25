@@ -40,7 +40,7 @@ export class TestListComponent {
               private modalService: NgbModal, private loader: LoaderService,
               @Inject(DOCUMENT) private document: Document, @Inject(WINDOW) private window) {
     loader.publish('show');
-    this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+    this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
       this.numberOfTest = data[0].NumberOfTest;
       this.tests = data;
       loader.publish('hide');
@@ -60,7 +60,7 @@ export class TestListComponent {
   search(form) {
     this.textFilter = form.value.textFilter;
     this.loader.publish('show');
-    this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).subscribe(data => {
+    this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
       this.numberOfTest = data[0].NumberOfTest;
       this.tests = data;
       this.loader.publish('hide');
@@ -97,7 +97,7 @@ export class TestListComponent {
         this.loader.publish('show');
         let nextPage = this.pageNum.valueOf();
         nextPage++;
-        this.testService.getTests(nextPage, this.pageSize, this.textFilter).subscribe(data => {
+        this.testService.getTests(nextPage, this.pageSize, this.textFilter).then(data => {
           data.forEach(value => {
             this.tests.push(value);
           });
