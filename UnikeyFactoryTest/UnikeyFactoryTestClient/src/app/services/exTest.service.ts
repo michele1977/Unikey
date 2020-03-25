@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {ExTest} from '../models/ex-test';
 import { LOCALHOST_URL } from '../constants/api.const';
 import {TestSubject} from '../models/testSubject';
 import {HttpWrapperService} from './http-wrapper.service';
+import {HttpClient} from '@angular/common/http';
 
 const reqUrl = LOCALHOST_URL + 'ExTest/';
 
@@ -11,7 +11,7 @@ const reqUrl = LOCALHOST_URL + 'ExTest/';
   providedIn: 'root'
 })
 export class ExTestService {
-  constructor(private httpWrapper: HttpWrapperService) { }
+  constructor(private httpWrapper: HttpWrapperService, private http: HttpClient) { }
 
   getExTestById(id: number) {
     // return this.http.get<ExTest>(reqUrl + 'Get/' + id);
