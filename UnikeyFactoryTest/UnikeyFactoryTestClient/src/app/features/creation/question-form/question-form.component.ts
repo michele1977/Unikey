@@ -73,7 +73,7 @@ export class QuestionFormComponent implements OnInit {
 
   onChange(form) {
     this.formArray = this.orderForm.controls.items as FormArray;
-    this.checked = true;
+    this.checked = false;
     this.orderForm.controls.items.value.forEach((value, index) => {
       if (this.formArray.value[index].isCorrect && form.valid) {
         this.checked = false;

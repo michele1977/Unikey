@@ -9,13 +9,13 @@
     <h4 class="display-4 lead">Ciao {{exTest.TestSubject}}, grazie per aver ultimato il test!</h4>
     <hr>
     <h4>Hai iniziato il tuo test alle: {{exTest.Date | date:"HH:mm:ss"}}</h4>
-    <h4>Tempo di esecuzione: {{timer() | date: "HH:mm:ss"}}</h4>
+    <h4>Tempo di esecuzione: {{timer() | date: "MM"}} min</h4>
     <h4>Complimenti il tuo risultato è: </h4>
     <circle-progress [percent]="percentage()"
                      [radius]="100"
                      [outerStrokeWidth]="16"
                      [innerStrokeWidth]="8"
-                     [outerStrokeColor]="'#78C000'"
+                     [outerStrokeColor]="formatColors(percentage())"
                      [innerStrokeColor]="'#C7E596'"
                      [animation]="true"
                      [animationDuration]="300"

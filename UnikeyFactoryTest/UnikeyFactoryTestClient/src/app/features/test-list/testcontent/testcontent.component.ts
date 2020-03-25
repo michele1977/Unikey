@@ -32,7 +32,6 @@ isThereAnError: boolean;
 text: string;
 public isButtonVisible = false;
 
-
   constructor(
     private service: TestService,
     private router: Router,
@@ -122,7 +121,7 @@ public isButtonVisible = false;
         Index++;
         for (const answer of question.Answers) {
            s += '□ ' + answer.Text;
-           if (answer.IsCorrect) {
+           if (answer.IsCorrect === 1) {
             s += ' V';
            }
            s += '\n';
