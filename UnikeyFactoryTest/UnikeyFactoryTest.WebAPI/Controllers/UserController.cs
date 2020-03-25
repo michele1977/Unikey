@@ -1,17 +1,18 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Ninject;
+using NLog;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Results;
-using Microsoft.AspNet.Identity;
-using Ninject;
-using NLog;
 using UnikeyFactoryTest.Domain;
-using UnikeyFactoryTest.WebAPI.CustomAttributes;
+using UnikeyFactoryTest.WebAPI.Models.DTO;
 using UnikeyFactoryTest.WebAPI.Tools;
 using UnikeyFactoryTest.WebAPI_new.ResponseMessages;
 
@@ -20,29 +21,33 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
     [EnableCors("*", "*", "*")]
     public class UserController : ApiController
     {
-        private readonly IKernel _kernel;
+        //private readonly IKernel _kernel;
         private readonly ILogger _logger;
-        private readonly UserManager<UserBusiness, int> _service;
+        //private readonly UserManager<UserBusiness, int> _service;
+        private readonly SignInManager<UserBusiness, int> _signigni;
 
         public UserController(IKernel kernel, ILogger logger)
         {
-            _kernel = kernel;
+            //_kernel = kernel;
             _logger = logger;
-            _service = _kernel.Get<UserManager<UserBusiness, int>>();
+            //_service = _kernel.Get<UserManager<UserBusiness, int>>();
+            _signigni = HttpContext.Current.GetOwinContext().Get<SignInManager<UserBusiness, int>>();
         }
 
         [HttpPost]
-        public async Task<HttpResponseMessage> Subscribe([FromBody] UserBusiness user)
+        public async Task<HttpResponseMessage> Subscribe(UserBusiness user)
         {
             try
             {
-               var result = await _service.CreateAsync(user);
+                //var result = await _service.CreateAsync(user);
+
+                var result = await _signigni.UserManager.CreateAsync(user);
 
                 if (result.Errors.Any())
                 {
-                    result.Errors.ToList().ForEach(e => ModelState.AddModelError(e,e));
+                    result.Errors.ToList().ForEach(e => ModelState.AddModelError(e, e));
 
-                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                    return Request.CreateErrorResponse(HttpStatusCode.PreconditionFailed,
                         ModelState);
                 }
             }
@@ -74,13 +79,15 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
         {
             try
             {
-                var user = await _service.FindByNameAsync(userBusiness.UserName);
+                //var user = await _service.FindByNameAsync(userBusiness.UserName);
 
-                if (user is null)
-                    throw new ArgumentNullException();
+                //if (user is null)
+                //    throw new ArgumentNullException();
 
-                if(!await _service.CheckPasswordAsync(user, userBusiness.Password))
-                    throw new Exception("Invalid Password");
+                var status = await _signigni.PasswordSignInAsync(userBusiness.UserName, userBusiness.Password, false, false);
+                
+                if (status == SignInStatus.Failure)
+                    throw new Exception("Invalid Username and/or Password");
             }
             catch (ArgumentNullException e)
             {
@@ -97,11 +104,16 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             }
 
             var jwt = JwtFactory.GenerateToken(userBusiness);
-
             return Request.CreateResponse(HttpStatusCode.OK, jwt);
         }
 
-        [LoginAuthorize]
+        [HttpPost]
+        public IHttpActionResult Refresh(JwtDto token)
+        {
+            var newJwt = JwtFactory.RefreshToken(token.Token);
+            return Ok(newJwt);
+        }
+
         [HttpGet]
         public JsonResult<string> TestAction()
         {

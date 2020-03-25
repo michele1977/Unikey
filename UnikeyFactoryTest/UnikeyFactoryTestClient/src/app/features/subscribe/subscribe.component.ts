@@ -37,7 +37,7 @@ export class SubscribeComponent {
     this.loader.publish('show');
     this.errorsList = null;
     this.service.register(user)
-      .subscribe(
+      .then(
         () => {
 
           this.loader.publish('show');
@@ -45,7 +45,7 @@ export class SubscribeComponent {
           this.loader.publish('hide');
           },
           (error: HttpErrorResponse) => {
-
+            this.loader.publish('hide');
             this.error = error;
             this.errorsList = [];
             const modelstate = error.error.ModelState;
@@ -55,7 +55,6 @@ export class SubscribeComponent {
                 this.errorsList.push(val);
               }
             }
-          }
-        );
+          });
   }
 }

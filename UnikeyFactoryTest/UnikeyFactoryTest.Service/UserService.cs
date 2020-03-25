@@ -75,9 +75,9 @@ namespace UnikeyFactoryTest.Service
             return Store.FindByIdAsync(userId);
         }
 
-        public override Task<bool> CheckPasswordAsync(UserBusiness user, string password)
-        {
-            return Task.FromResult(PasswordHasher.VerifyHashedPassword(user.Password, password) == PasswordVerificationResult.Success);
-        }
+        //public override Task<bool> CheckPasswordAsync(UserBusiness user, string password)
+        //{
+        //    return Task.FromResult(PasswordHasher.VerifyHashedPassword(user.Password, password) == PasswordVerificationResult.Success);
+        //}
     }
 }

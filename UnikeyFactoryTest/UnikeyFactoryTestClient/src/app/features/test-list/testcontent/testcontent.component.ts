@@ -44,7 +44,7 @@ public isButtonVisible = false;
       this.route.paramMap.pipe(
         switchMap((params: ParamMap) =>
       this.service.getTest(parseInt(params.get('id'), 10)))
-    ).subscribe(data => {
+    ).subscribe((data: Test) => {
       this.test = data;
       this.tempTest = JSON.parse(JSON.stringify(this.test));
       loader.publish('hide');
@@ -92,10 +92,13 @@ public isButtonVisible = false;
 
   saveChanges(test: Test) {
     this.loader.publish('show');
-    this.service.updateTest(test).subscribe(data => {this.tempTest = JSON.parse(JSON.stringify(this.test));
-                                                     this.areThereModifies = false;
-                                                     this.loader.publish('hide');},
-      error => this.isThereAnError = true);
+    this.service.updateTest(test).then(
+      () => {
+        this.tempTest = JSON.parse(JSON.stringify(this.test));
+        this.areThereModifies = false;
+        this.loader.publish('hide');
+        },
+      () => this.isThereAnError = true);
     this.loader.publish('hide');
   }
 

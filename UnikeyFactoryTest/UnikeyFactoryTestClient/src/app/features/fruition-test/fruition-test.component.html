@@ -1,17 +1,17 @@
 <div class="container body-content">
   <img src="assets/img/UnikeyLogo.png" class="logo"  alt="Unikey"/>
   <div class="container" style="width:100%;">
-    <h2 class="Title">Assessment of {{exTest.TestSubject}}</h2>
+    <h2 class="Title">Assessment of {{exTest?.TestSubject}}</h2>
     <div class="QuestionContainer" style="position:relative;padding-top:17px">
       <label id="Question">
-        {{exTest.AdministratedQuestions[i].Text}}
+        {{exTest?.AdministratedQuestions[i].Text}}
       </label>
       <hr />
       <div class="AnswerContainer">
-        <div *ngFor="let answer of exTest.AdministratedQuestions[i].AdministratedAnswers; let index = index" class="answer" style="margin-bottom:17px">
+        <div *ngFor="let answer of exTest?.AdministratedQuestions[i].AdministratedAnswers; let index = index" class="answer" style="margin-bottom:17px">
           <div class="form-check" style="text-align: left">
             <input id="checkbox" type="checkbox" (click)="change(index)"
-                                                 [checked]="exTest.AdministratedQuestions[i].AdministratedAnswers[index].isSelected"
+                                                 [checked]="exTest?.AdministratedQuestions[i].AdministratedAnswers[index].isSelected"
                                                  style="margin-right: 10px">
             <label for="checkbox">{{answer.Text}}</label>
           </div>

@@ -15,7 +15,7 @@
                             <div class="input-group-append">
                                 <span class="input-group-text">F</span>
                             </div>
-                            <input type="text" name="firstName" [class]="firstNameRef.errors && (firstNameRef.dirty || firstNameRef.touched) ? 
+                            <input type="text" name="firstName" [class]="firstNameRef.errors && (firstNameRef.dirty || firstNameRef.touched) ?
                         'form-control input_user inputError' : 'form-control input_user'" value=""
                                 placeholder="First name" #firstNameRef="ngModel" required pattern="\S{1,}" ngModel>
                         </div>
@@ -29,7 +29,7 @@
                             <div class="input-group-append">
                                 <span class="input-group-text">L</span>
                             </div>
-                            <input type="text" name="lastNameRef" [class]="lastNameRef.errors && (lastNameRef.dirty || lastNameRef.touched) ? 
+                            <input type="text" name="lastName" [class]="lastNameRef.errors && (lastNameRef.dirty || lastNameRef.touched) ?
                         'form-control input_user inputError' : 'form-control input_user'" value=""
                                 placeholder="First name" #lastNameRef="ngModel" required pattern="\S{1,}" ngModel>
                         </div>
