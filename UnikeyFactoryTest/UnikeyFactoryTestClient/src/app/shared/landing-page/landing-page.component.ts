@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {SideBarService} from '../../services/side-bar.service';
 
 @Component({
@@ -6,7 +6,7 @@ import {SideBarService} from '../../services/side-bar.service';
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.css']
 })
-export class LandingPageComponent implements OnInit, OnDestroy{
+export class LandingPageComponent implements OnInit, OnDestroy {
   isVisible = true;
 
   setVisible() {

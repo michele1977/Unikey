@@ -20,4 +20,5 @@ export class ExTestService {
       reqUrl + 'GetByTestId?pageNum=' + pageNum + '&pageSize=' + pageSize + '&filter=' + textFilter + '&id=' + id
     );
   }
+
 }
