@@ -68,8 +68,8 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
             try
             {
                 var testBusinessList = await _service.GetAllFiltered(pageNum, pageSize, filter);
-                var exTestDtoList = testBusinessList.Select(t => new ExTestDto(_service, t)).ToList();
-                exTestDtoList[0].TotalNumberOfExTests = await _service.CountExTests(filter);
+                var exTestDtoList = testBusinessList.Select(t => new AdministratedTestDto(t)).ToList();
+                exTestDtoList[0].NumberOfExTests = await _service.CountExTests(filter);
 
                 return Ok(exTestDtoList);
             }
