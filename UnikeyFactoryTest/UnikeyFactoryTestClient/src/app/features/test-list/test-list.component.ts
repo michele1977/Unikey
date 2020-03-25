@@ -12,6 +12,7 @@ import {LoaderService} from '../../services/loader.service';
 import {EmailModalComponent} from '../../shared/email-modal/email-modal.component';
 import {DOCUMENT} from '@angular/common';
 import {WINDOW} from '../../services/window-ref.service';
+import {TestService} from '../../services/test.service';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class TestListComponent {
   numberOfTest: number;
   modalOptions: NgbModalOptions;
   constructor(private router: Router, public icons: IconsService, private testService: TestListService,
-              private modalService: NgbModal, private loader: LoaderService,
+              private modalService: NgbModal, private loader: LoaderService, private service: TestService,
               @Inject(DOCUMENT) private document: Document, @Inject(WINDOW) private window) {
     loader.publish('show');
     this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
@@ -76,7 +77,14 @@ export class TestListComponent {
       this.router.navigateByUrl('testcontent/' + id).then();
   }
 
-  deleteTest() {}
+  deleteTest(test: Test) {
+    this.service.deleteTest(test.Id).then(() => {
+      const index = this.tests.findIndex((d) => d.Id === test.Id);
+      this.tests.splice(index, 1);
+    }, error => {
+      alert('Ooops something went wrong');
+    });
+  }
 
   testDetails(test: Test) {
     const modalRef = this.modalService.open(TestDetailsModalComponent);
