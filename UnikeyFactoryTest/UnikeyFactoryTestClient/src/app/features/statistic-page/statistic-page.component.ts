@@ -25,8 +25,7 @@ export class StatisticPageComponent implements OnInit{
 
   ngOnInit() {
     console.log(this.exTestId);
-    this.service.getExTestById(this.exTestId).subscribe(data => {
-      console.log(data);
+    this.service.getExTestById(this.exTestId).then(data => {
       this.exTest = data;
     });
   }
