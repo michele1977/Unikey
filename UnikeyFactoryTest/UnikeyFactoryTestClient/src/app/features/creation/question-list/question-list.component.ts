@@ -28,5 +28,6 @@ export class QuestionListComponent {
   showQuestionForm() {
     this.setVisibility = !this.setVisibility;
     this.showForm.emit(this.setVisibility);
+    this.setVisibility = !this.setVisibility;
   }
 }
