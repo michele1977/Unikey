@@ -35,4 +35,8 @@ export class TestService {
   downloadPdf(testId: number): Observable<Blob> {
     return this.http.get(reqUrl + 'GetPdf?testId=' + testId, {responseType: 'blob'});
   }
+
+  deleteTest(id: number): Promise<Test> {
+    return this.httpWrapper.invokeDeleteUrl(reqUrl + 'Delete/' + id);
+  }
 }
