@@ -1,11 +1,11 @@
-<div class="wrapper" *ngIf="nav.visible">
+<div class="wrapper container" *ngIf="nav.visible" align="center" >
   <!-- Sidebar -->
   <a class="fa fa-windows fa-xl" (click)="isButtonVisible = true"></a>
   <nav id="sidebar" *ngIf="isButtonVisible">
-    <div class="sidebar-header">
+    <div class="sidebar-header col" >
       <img src="../../../assets/img/Unikey.png" height="60" width="60" alt="" routerLink="/testList"/>
     </div>
-    <ul class="list-unstyled components">
+    <ul class="list-unstyled components ">
       <li>
         <a class="fa fa-archive fa-lg" routerLink="/testList"></a>
       </li>
@@ -19,5 +19,18 @@
         <a class="fa fa-arrow-left" (click)="Toggle()"></a>
       </li>
     </ul>
+    <div *ngIf="isLogoutVisible" class="item">
+      <hr>
+      <label style=" align-content : center;
+            font-family: Calibri, serif;
+            font-weight: bold;
+            font-size: medium"
+            title="Logging as {{userName}}">Hello{{user}}!</label>
+
+      <fa-icon class="btn btn-primary"
+               [icon]="icons.faLogout"
+               (click)="logout()"
+               title="Logout"></fa-icon>
+    </div>
   </nav>
 </div>
