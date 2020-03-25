@@ -133,7 +133,6 @@ public isButtonVisible = false;
      const selBox = document.createElement('textarea');
      selBox.value = 'Title: ' + test.Title + '\n' + 'Date of creation: ' + test.Date + '\n' + s;
      document.body.appendChild(selBox);
-     selBox.focus();
      selBox.select();
      document.execCommand('copy');
      document.body.removeChild(selBox);
