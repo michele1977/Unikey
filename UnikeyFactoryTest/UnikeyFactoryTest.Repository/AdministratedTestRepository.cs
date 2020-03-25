@@ -31,6 +31,7 @@ namespace UnikeyFactoryTest.Repository
         {
             try
             {
+                adTest.Score = GetScore(adTest);
                 Mapper = Kernel.Get<IMapper>("Heavy");
                 var newAdTestDb = Mapper.Map<AdministratedTestBusiness, AdministratedTest>(adTest);
                 _ctx.AdministratedTests.Add(newAdTestDb);

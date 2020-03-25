@@ -14,17 +14,14 @@ import {StatisticPageComponent} from './features/statistic-page/statistic-page.c
 import {AuthenticationService} from './services/authentication.service';
 
 const routes: Routes = [
-  {path: 'fruitiontest', component: FruitionTestComponent},
-  {path: 'seeExTest/:id', component: SeeExTestComponent, canActivate: [AuthenticationService]},
-  {path: 'testcontent/:id', component: TestcontentComponent, canActivate: [AuthenticationService]},
-  {path: 'create', component: CreationComponent, canActivate: [AuthenticationService]},
-  {path: 'testList', component: TestListComponent, canActivate: [AuthenticationService]},
-  {path: 'extestList', component: ExTestListComponent, canActivate: [AuthenticationService]},
+  {path: 'seeExTest/:id', component: SeeExTestComponent},
+  {path: 'testcontent/:id', component: TestcontentComponent},
+  {path: 'create', component: CreationComponent},
+  {path: 'testList', component: TestListComponent},
+  {path: 'extestList', component: ExTestListComponent},
   {path: 'error', component: ErrorComponent},
   {path: 'beginTest', component: FruitionLandingPageComponent},
-  {path: 'statistic/:id', component: StatisticPageComponent},
-  {path: '', component: LandingPageComponent},
-  {path: '**', component: ErrorComponent},
+  {path: '', component: LandingPageComponent}
 ];
 
 @NgModule({

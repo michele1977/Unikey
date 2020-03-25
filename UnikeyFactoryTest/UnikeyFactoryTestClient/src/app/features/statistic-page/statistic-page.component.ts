@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ExTest} from '../../models/ex-test';
 import {ExTestService} from '../../services/exTest.service';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
@@ -10,29 +10,27 @@ import {switchMap} from 'rxjs/operators';
   templateUrl: './statistic-page.component.html',
   styleUrls: ['./statistic-page.component.css']
 })
-export class StatisticPageComponent {
+export class StatisticPageComponent implements OnInit{
+
+  @Input() exTestId: number;
+
   exTest = new ExTest();
   time = new Date();
   date = this.time.getTime();
 
   constructor(
     private service: ExTestService,
-    private router: Router,
-    public icons: IconsService,
-    private route: ActivatedRoute,
-  ) {
-    this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.service.getExTestById(parseInt(params.get('id'), 10)))
-    ).subscribe(data => {
-        console.log(data);
-        this.exTest = data as ExTest;
-      },
-      error => {
-        console.error(error);
-        this.router.navigateByUrl('error');
-      });
+    public icons: IconsService
+  ) { }
+
+  ngOnInit() {
+    console.log(this.exTestId);
+    this.service.getExTestById(this.exTestId).subscribe(data => {
+      console.log(data);
+      this.exTest = data;
+    });
   }
+
 
   percentage() {
     return (this.exTest.Score / this.exTest.MaxScore) * 100;

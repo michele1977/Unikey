@@ -1,1 +1,3 @@
-  <app-begin-test *ngIf="showBeginTestForm" (subjectEvent)="toggleFirstQuestion($event)"></app-begin-test>
+<app-begin-test *ngIf="showBeginTestForm" (subjectEvent)="toggleFirstQuestion($event)"></app-begin-test>
+<app-fruition-test *ngIf="showFruitionTestForm" [exTest]="this.exTest" (saveTest)="saveExTest($event)"></app-fruition-test>
+<app-statistic-page *ngIf="showStatisticPage" [exTestId]="this.exTestId"></app-statistic-page>
