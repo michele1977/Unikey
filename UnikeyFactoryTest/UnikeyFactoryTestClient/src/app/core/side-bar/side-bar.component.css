@@ -13,6 +13,7 @@ p {
 }
 #sidebar ul.components {
   padding: 10px 0;
+  border-bottom: 1px solid #47748b;
 }
 #sidebar ul p {
   color: #fff;
@@ -55,11 +56,5 @@ a, a:hover, a:focus {
   transition: all 0.3s;
 }
 
-.container{
-position: relative;
-}
 
-.item{
-  position: absolute;
-  bottom: 5px;
-}
+
