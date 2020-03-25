@@ -33,7 +33,6 @@ import { FruitionTestComponent } from './features/fruition-test/fruition-test.co
 import { EndTestModalComponent } from './modals/end-test-modal/end-test-modal.component';
 import {SideBarModule} from './core/side-bar/side-bar.module';
 import {SideBarService} from './services/side-bar.service';
-import {TopBarModule} from './core/top-bar/top-bar-module.module';
 import {CircleProgressOptions, NgCircleProgressModule} from 'ng-circle-progress';
 import {CommonModule} from '@angular/common';
 import {StatisticPageComponent} from './features/statistic-page/statistic-page.component';

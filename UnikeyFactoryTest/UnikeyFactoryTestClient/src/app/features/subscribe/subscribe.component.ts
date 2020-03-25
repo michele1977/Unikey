@@ -23,7 +23,7 @@ export class SubscribeComponent {
 
   @Output() switch: EventEmitter<any> = new EventEmitter<any>();
   constructor(private service: SubscribeService, private router: Router, private loader: LoaderService) { }
-  
+
   changeForm() {
     this.switch.emit();
   }

@@ -35,7 +35,7 @@ export class StatisticPageComponent {
   }
 
   percentage() {
-    return (this.exTest.Score / this.exTest.MaxScore) * 100;
+    return (this.exTest.Score * 100) / this.exTest.MaxScore;
   }
 
   timer() {
@@ -45,15 +45,26 @@ export class StatisticPageComponent {
     return (datenownumber - datenumber);
   }
 
-  formatSubtitle = (percentage: number): string  => {
+  formatColors = (percentage: number): string => {
+    if (percentage >= 80) {
+      return '#78C000';
+    } else if (percentage >= 50) {
+      return '#d6e502';
+    } else if (percentage <= 20) {
+      return '#e53a00';
+    }
+  }
+
+  formatSubtitle = (percentage: number): string => {
     if (percentage >= 80) {
       return 'Congratulationi: ';
     } else if (percentage >= 50) {
       return 'Bravo: ';
     } else if (percentage <= 20) {
-      return 'Accidenti!';
+      return 'Accidenti: ';
     } else {
       return 'Not started';
     }
+
   }
 }
