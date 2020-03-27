@@ -1,0 +1,20 @@
+.title {
+  float: left;
+  margin-right: 3%;
+}
+.create-test-a{
+  float: left;
+}
+
+.actions:hover{
+  color: darkblue;
+  cursor: pointer;
+
+}
+
+.actions{
+  color: #0069D9;
+  font-size: 1.2em;
+}
+
+

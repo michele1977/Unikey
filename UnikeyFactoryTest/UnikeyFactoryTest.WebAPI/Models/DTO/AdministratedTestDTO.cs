@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.UI.WebControls;
 using UnikeyFactoryTest.Domain;
 
 namespace UnikeyFactoryTest.WebAPI.Models.DTO
@@ -19,6 +20,7 @@ namespace UnikeyFactoryTest.WebAPI.Models.DTO
                 administratedTest.AdministratedQuestions.Select(q => new AdministratedQuestionDto(q)).ToList();
             Score = administratedTest.Score;
             MaxScore = administratedTest.MaxScore;
+            Title = administratedTest.Title;
         }
 
         public int Id { get; set; }
@@ -29,6 +31,7 @@ namespace UnikeyFactoryTest.WebAPI.Models.DTO
         public DateTime Date { get; set; }
         public int NumberOfExTests { get; set; }
         public int MaxScore { get; set; }
+        public string Title { get; set; }
 
         public ICollection<AdministratedQuestionDto> AdministratedQuestions { get; set; }
     }

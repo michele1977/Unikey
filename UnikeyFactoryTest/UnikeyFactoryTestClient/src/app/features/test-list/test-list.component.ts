@@ -13,20 +13,13 @@ import {EmailModalComponent} from '../../shared/email-modal/email-modal.componen
 import {DOCUMENT} from '@angular/common';
 import {WINDOW} from '../../services/window-ref.service';
 import {TestService} from '../../services/test.service';
+import {ExTestListService} from '../../services/ex-test-list.service';
 
 
 @Component({
   selector: 'app-test-list',
   templateUrl: './test-list.component.html',
-  styles: [`
-    .title {
-      float: left;
-      margin-right: 3%;
-    }
-    .create-test-a{
-      float: left;
-    }
-  `]
+  styleUrls: ['./test-list.component.css'],
 })
 export class TestListComponent {
 
@@ -37,9 +30,11 @@ export class TestListComponent {
   tests: Test[];
   numberOfTest: number;
   modalOptions: NgbModalOptions;
+  isEmpty = true;
+
   constructor(private router: Router, public icons: IconsService, private testService: TestListService,
               private modalService: NgbModal, private loader: LoaderService, private service: TestService,
-              @Inject(DOCUMENT) private document: Document, @Inject(WINDOW) private window) {
+              @Inject(DOCUMENT) private document: Document, @Inject(WINDOW) private window, private exTestService: ExTestListService) {
     loader.publish('show');
     this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
       this.numberOfTest = data[0].NumberOfTest;
@@ -61,7 +56,8 @@ export class TestListComponent {
   search(form) {
     this.textFilter = form.value.textFilter;
     this.loader.publish('show');
-    this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
+    this.testService.getTests(this.pageNum, this.pageSize, this.textFilter)
+      .then(data => {
       this.numberOfTest = data[0].NumberOfTest;
       this.tests = data;
       this.loader.publish('hide');
@@ -120,7 +116,7 @@ export class TestListComponent {
     }
   }
 
-  CopytoClipboard(url: string) {
+  copytoClipboard(url: string) {
     console.log('linkcopiato');
     const box = document.createElement('textarea');
     box.value = url;

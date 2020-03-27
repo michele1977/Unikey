@@ -1,9 +1,8 @@
 <div class="wrapper container" *ngIf="nav.visible" align="center" >
   <!-- Sidebar -->
-  <a class="fa fa-windows fa-xl" (click)="isButtonVisible = true"></a>
   <nav id="sidebar" *ngIf="isButtonVisible">
     <div class="sidebar-header col" >
-      <img src="../../../assets/img/Unikey.png" height="60" width="60" alt="" routerLink="/testList"/>
+      <img src="../../../assets/img/Unikey.png" height="60" width="60" alt="" style="cursor: pointer" routerLink="/testList"/>
     </div>
     <ul class="list-unstyled components ">
       <li>
@@ -15,9 +14,6 @@
       <li>
         <a class="fa fa-plus" routerLink="/create"></a>
       </li>
-      <li>
-        <a class="fa fa-arrow-left" (click)="Toggle()"></a>
-      </li>
     </ul>
     <div *ngIf="isLogoutVisible" class="item">
       <hr>
@@ -27,7 +23,7 @@
             font-size: medium"
              title="Logging as {{userName}}">Hello{{user}}!</label>
 
-      <fa-icon class="btn btn-primary"
+      <fa-icon class="btn btn-primary logout"
                [icon]="icons.faLogout"
                (click)="logout()"
                title="Logout"></fa-icon>

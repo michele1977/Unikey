@@ -63,3 +63,8 @@ a, a:hover, a:focus {
   position: absolute;
   bottom: 5px;
 }
+
+.logout:hover{
+  background-color: white;
+  color: #0069d9;
+}

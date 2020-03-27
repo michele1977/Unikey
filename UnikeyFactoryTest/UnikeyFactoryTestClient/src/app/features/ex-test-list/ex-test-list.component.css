@@ -4,6 +4,12 @@
   .title {
     float: left;
   }
-  .pointer {
+  .pointer:hover {
     cursor: pointer;
+    color: darkblue;
+  }
+
+  .pointer{
+    color: #0069D9;
+    font-size: 1.2em;
   }

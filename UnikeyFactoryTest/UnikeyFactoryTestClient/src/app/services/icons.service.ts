@@ -10,6 +10,7 @@ import {faAngleDoubleRight} from '@fortawesome/free-solid-svg-icons/faAngleDoubl
 import {faPencilAlt} from '@fortawesome/free-solid-svg-icons/faPencilAlt';
 import {faWindowClose} from '@fortawesome/free-solid-svg-icons/faWindowClose';
 import {faFilePdf} from '@fortawesome/free-solid-svg-icons/faFilePdf';
+import {faCopy} from '@fortawesome/free-solid-svg-icons';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,7 @@ export class IconsService {
   faSignInAlt = faSignInAlt;
   faCheck = faCheck;
   faWindowClose = faWindowClose;
-
+  faCopy = faCopy;
   faLogout = faSignOutAlt;
   faFilePdf = faFilePdf;
   constructor() { }

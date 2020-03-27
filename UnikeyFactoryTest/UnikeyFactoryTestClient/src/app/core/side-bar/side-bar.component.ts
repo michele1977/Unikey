@@ -17,10 +17,6 @@ export class SideBarComponent implements DoCheck {
 
   constructor(public nav: SideBarService, private router: Router, public icons: IconsService) {}
     public isButtonVisible = true;
-    Toggle() {
-     this.isButtonVisible = false;
-    }
-
 
   logout() {
     localStorage.removeItem('token');

@@ -22,24 +22,37 @@
 <table class="table">
   <tr>
     <th class="text-center">Title</th>
-    <th class="text-center">URL</th>
-    <th class="text-center">Number of tests</th>
-    <th class="text-center">Number of tests opened</th>
+    <th class="text-center">Date</th>
+    <th class="text-center" *ngIf="isEmpty">Number of tests</th>
+    <th class="text-center" *ngIf="isEmpty">Number of tests opened</th>
     <th class="text-center"></th>
     <th class="text-center">Actions</th>
   </tr>
-  <tr *ngFor="let test of tests | filter:textFilter">
+  <tr class="trData" *ngFor="let test of tests | filter:textFilter" >
     <td class="text-center">{{test.Title}}</td>
-    <td class="text-center" (click)="CopytoClipboard(test.URL.toString())" title="Click to copy link">{{test.URL.toString()}}</td>
+    <td class="text-center">{{test.Date | date: 'dd/MM/yy H:mm'}}</td>
     <td class="text-center">{{test.NumberOfExTest}}</td>
-    <td class="text-center">{{test.OpenedExTestNumber}}</td>
+    <td class="text-center" (click)="searchExTestById(test.Title)">{{test.OpenedExTestNumber}}</td>
     <td class="text-center"></td>
-    <td class="text-center" style="width: 20%">
-      <div>
-        <fa-icon class="actions" [icon]="icons.faInfo" (click)="showContent(test?.Id)" title="Show Test"></fa-icon> |
-        <fa-icon class="actions" [icon]="icons.faTrash" (click)="deleteTest(test)" title="Delete Test"></fa-icon> |
-        <fa-icon class="actions" [icon]="icons.faList" (click)="testDetails(test)" title="See ExTests"></fa-icon> |
-        <fa-icon class="actions" [icon]="icons.faMailForward" (click)="showEmailModalMethod(test.Id)" title="Send Mail"></fa-icon>
+
+    <!--Icons-->
+    <td class="text-center tdIcon" style="width: 20%" >
+      <div class="row">
+
+        <div class="col-sm">
+          <div> <fa-icon class="actions" [icon]="icons.faInfo" (click)="showContent(test?.Id)" title="Show Test"></fa-icon> </div>
+          <div> <fa-icon class="actions" [icon]="icons.faTrash" (click)="deleteTest(test)" title="Delete Test"></fa-icon> </div>
+        </div>
+
+        <div class="col-sm">
+          <div> <fa-icon class="actions" [icon]="icons.faCopy" (click)="copytoClipboard(test.URL)" title="Copy Link" ></fa-icon> </div>
+          <div> <fa-icon class="actions" [icon]="icons.faMailForward" (click)="showEmailModalMethod(test.Id)" title="Send Mail"></fa-icon> </div>
+        </div>
+
+        <div class="col-sm">
+          <div> <fa-icon class="actions" [icon]="icons.faList" (click)="testDetails(test)" title="See ExTests" style="font-size: 1.8em"></fa-icon></div>
+        </div>
+
       </div>
     </td>
   </tr>
