@@ -10,11 +10,12 @@ import {LoaderService} from '../../services/loader.service';
   selector: 'app-creation',
   template: `
     <form #form="ngForm">
-      <nav class="navbar navbar-expand-lg navbar-light" style="border-radius: 15px 15px; background-color: #2F00FC;">
-        <a class="navbar-brand">
-          <h1 style="color: white">Create Test</h1>
-        </a>
-      </nav>
+      <div class="jumbotron jumbotron-fluid" style="height:80px; text-align: center; padding: 0px">
+        <div class="container align-content-center">
+          <h1 class="display-4" style="color: black; align-self: auto">Create Test</h1>
+        </div>
+
+      </div>
       <hr>
       <div class="form-group create-div">
         <input type="text" name="title" class="form-control" placeholder="Test Name.." [ngModel]="title" required>
@@ -25,7 +26,7 @@ import {LoaderService} from '../../services/loader.service';
         <div class="col-6">
           <app-question-list [test]="test" (showForm)='visibility($event)' [enable]="setVisibility"></app-question-list>
         </div>
-        <div *ngIf="setVisibility" class="col-6">
+        <div *ngIf="setVisibility" class="col-6 ">
           <app-question-form (questionInsert)="addQuestion($event)"></app-question-form>
         </div>
       </div>

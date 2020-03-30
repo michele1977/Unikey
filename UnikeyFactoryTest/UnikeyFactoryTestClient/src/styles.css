@@ -1,10 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
-body {
-  padding-bottom: 20px; padding-top: 20px; padding-right: 20px; padding-left: 80px;
-}
-
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto,
+  "Helvetica Neue",
+  sans-serif;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-left: 80px;
+}
 .pointer {
   cursor: pointer;
+}
+.weather__card {
+  width: 100%;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  box-shadow: 0 0 2rem rgba(0, 0, 255, 0.1);
+  justify-items: center;
+  height: 30rem;
+  cursor: crosshair;
+  background-color: white;
+  padding-left: -30px;
+  border-radius: 1.75rem;
+  animation: 1.25s ease-in-out 0ms 1 fadein;
 }

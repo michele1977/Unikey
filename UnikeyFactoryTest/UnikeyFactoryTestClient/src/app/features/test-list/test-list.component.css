@@ -1,11 +1,13 @@
 .title {
   float: left;
   margin-right: 3%;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  width: 100%;
 }
 .create-test-a{
   float: left;
 }
-
 .actions:hover{
   color: darkblue;
   cursor: pointer;
@@ -15,6 +17,20 @@
 .actions{
   color: #0069D9;
   font-size: 1.2em;
+}
+#saveTestNotify {
+  position: fixed;
+  z-index: 101;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #fde073;
+  text-align: center;
+  line-height: 2.5;
+  overflow: hidden;
+  -webkit-box-shadow: 0 0 5px black;
+  -moz-box-shadow:    0 0 5px black;
+  box-shadow:         0 0 5px black;
 }
 
 
