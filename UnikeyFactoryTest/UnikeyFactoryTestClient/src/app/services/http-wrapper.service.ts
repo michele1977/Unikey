@@ -65,7 +65,7 @@ export class HttpWrapperService {
                   this.refreshService.router.navigateByUrl('').then();
                   break;
                 case 500:
-                  this.refreshService.router.navigateByUrl('/error').then();
+                  this.refreshService.router.navigateByUrl('/notfound').then();
                   break;
                 default:
                   reject(error);

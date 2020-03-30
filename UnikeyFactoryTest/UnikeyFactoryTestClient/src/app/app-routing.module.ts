@@ -8,10 +8,7 @@ import {ErrorComponent} from './shared/error/error.component';
 import {SeeExTestComponent} from './features/see-ex-test/see-ex-test.component';
 import { ExTestListComponent } from './features/ex-test-list/ex-test-list.component';
 import { FruitionLandingPageComponent } from './shared/fruition-landing-page/fruition-landing-page.component';
-import {FruitionTestComponent} from './features/fruition-test/fruition-test.component';
-
-import {StatisticPageComponent} from './features/statistic-page/statistic-page.component';
-import {AuthenticationService} from './services/authentication.service';
+import {NotfoundComponent} from './shared/notfound/notfound.component';
 
 const routes: Routes = [
   {path: 'seeExTest/:id', component: SeeExTestComponent},
@@ -20,6 +17,7 @@ const routes: Routes = [
   {path: 'testList', component: TestListComponent},
   {path: 'extestList', component: ExTestListComponent},
   {path: 'error', component: ErrorComponent},
+  {path: 'notfound', component: NotfoundComponent},
   {path: 'beginTest', component: FruitionLandingPageComponent},
   {path: '', component: LandingPageComponent}
 ];

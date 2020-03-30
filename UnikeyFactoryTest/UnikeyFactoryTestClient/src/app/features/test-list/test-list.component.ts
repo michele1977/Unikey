@@ -1,13 +1,10 @@
 import {Component, HostListener, Inject} from '@angular/core';
 import {Router} from '@angular/router';
 import {Test} from '../../models/test';
-import * as moment from 'moment';
 import {IconsService} from '../../services/icons.service';
 import {TestListService} from '../../services/test-list.service';
-import {TestList} from '../../models/test-list';
 import {TestDetailsModalComponent} from '../../modals/test-details-modal/test-details-modal.component';
 import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
-import {ExTest} from '../../models/ex-test';
 import {LoaderService} from '../../services/loader.service';
 import {EmailModalComponent} from '../../shared/email-modal/email-modal.component';
 import {DOCUMENT} from '@angular/common';
@@ -88,7 +85,6 @@ export class TestListComponent {
         this.numberOfTest = data[0].NumberOfTest;
         this.tests = data;
        }, error => {
-         console.log('e');
          this.loader.publish('hide');
          this.errorFetch = true;
          this.error = error;
