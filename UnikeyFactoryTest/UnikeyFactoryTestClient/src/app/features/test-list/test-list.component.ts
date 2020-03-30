@@ -1,19 +1,17 @@
 import {Component, HostListener, Inject} from '@angular/core';
 import {Router} from '@angular/router';
 import {Test} from '../../models/test';
-import * as moment from 'moment';
 import {IconsService} from '../../services/icons.service';
 import {TestListService} from '../../services/test-list.service';
-import {TestList} from '../../models/test-list';
 import {TestDetailsModalComponent} from '../../modals/test-details-modal/test-details-modal.component';
 import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
-import {ExTest} from '../../models/ex-test';
 import {LoaderService} from '../../services/loader.service';
 import {EmailModalComponent} from '../../shared/email-modal/email-modal.component';
 import {DOCUMENT} from '@angular/common';
 import {WINDOW} from '../../services/window-ref.service';
 import {TestService} from '../../services/test.service';
 import {ExTestListService} from '../../services/ex-test-list.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 
 @Component({
@@ -22,7 +20,7 @@ import {ExTestListService} from '../../services/ex-test-list.service';
   styleUrls: ['./test-list.component.css'],
 })
 export class TestListComponent {
-
+  areThereModifies = false;
   showDeleteError = false;
   pageNum = 1;
   pageSize = 10;
@@ -30,6 +28,11 @@ export class TestListComponent {
   tests: Test[];
   numberOfTest: number;
   modalOptions: NgbModalOptions;
+  temptest: Test;
+  errorFetch = false;
+  error: HttpErrorResponse;
+  errorsList: string[];
+
   isEmpty = true;
 
   constructor(private router: Router, public icons: IconsService, private testService: TestListService,
@@ -53,33 +56,41 @@ export class TestListComponent {
   loadCreatePage() {
     this.router.navigateByUrl('create');
   }
+
   search(form) {
     this.textFilter = form.value.textFilter;
     this.loader.publish('show');
     this.testService.getTests(this.pageNum, this.pageSize, this.textFilter)
       .then(data => {
-      this.numberOfTest = data[0].NumberOfTest;
-      this.tests = data;
-      this.loader.publish('hide');
-    }, error => {
-      this.loader.publish('hide');
-      alert('Ooops something went wrong');
-    });
+        this.loader.publish('hide');
+        this.numberOfTest = data[0].NumberOfTest;
+        this.tests = data;
+       }, error => {
+         this.loader.publish('hide');
+         this.errorFetch = true;
+         this.error = error;
+         this.errorsList = [];
+         const modelstate = error.error.ModelState;
+         for (const key in modelstate) {
+            if (modelstate.hasOwnProperty(key)) {
+              const val = modelstate[key];
+              this.errorsList.push(val);
+            }
+          }
+       });
+    this.loader.publish('hide');
   }
 
-  closeErrorAlert() {}
+  closeErrorAlert() {
+  }
 
   showContent(id: number) {
-      this.router.navigateByUrl('testcontent/' + id).then();
+    this.router.navigateByUrl('testcontent/' + id).then();
   }
 
   deleteTest(test: Test) {
-    this.service.deleteTest(test.Id).then(() => {
-      const index = this.tests.findIndex((d) => d.Id === test.Id);
-      this.tests.splice(index, 1);
-    }, error => {
-      alert('Ooops something went wrong');
-    });
+    this.temptest = test;
+    this.areThereModifies = true;
   }
 
   testDetails(test: Test) {
@@ -126,6 +137,18 @@ export class TestListComponent {
     document.body.removeChild(box);
     alert('Copied!');
   }
+
+  undo() {
+    this.areThereModifies = false;
+  }
+
+  saveChanges() {
+    this.service.deleteTest(this.temptest.Id).then(() => {
+      const index = this.tests.findIndex((d) => d.Id === this.temptest.Id);
+      this.tests.splice(index, 1);
+      this.areThereModifies = false;
+    }, error => {
+      this.showDeleteError = true;
+    });
+  }
 }
-
-

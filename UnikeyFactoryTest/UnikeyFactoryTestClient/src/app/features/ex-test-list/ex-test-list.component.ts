@@ -1,8 +1,6 @@
-import {Component, HostListener, Inject, OnInit} from '@angular/core';
+import {Component, HostListener, Inject} from '@angular/core';
 import { IconsService } from 'src/app/services/icons.service';
-import { ExTestList } from 'src/app/models/ex-test-list';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ExTestListService } from 'src/app/services/ex-test-list.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import {DOCUMENT} from '@angular/common';
@@ -47,8 +45,10 @@ export class ExTestListComponent {
       this.loader.publish('hide');
       this.numberOfTests = data[0].NumberOfExTests;
       this.tests = data;
-    }, () => {this.router.navigateByUrl('error');
-              this.loader.publish('hide'); });
+    }, error => {
+      this.loader.publish('hide');
+    });
+    this.loader.publish('hide');
   }
 
   seeExTest(id: number) {

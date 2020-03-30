@@ -9,6 +9,7 @@
       <div class="btn btn-group">
         <input type="search" [ngModel]="textFilter" name="textFilter" class="form-control">
         <span class="glyphicon glyphicon-remove-circle"></span>
+        <div *ngIf="errorFetch" style="color:red;" class="alert alert-danger">Nessun test trovato</div>
         <button type="submit" class="btn btn-primary" (click)="search(form)">Search</button>
       </div>
     </form>
@@ -28,11 +29,16 @@
     <th class="text-center"></th>
     <th class="text-center">Actions</th>
   </tr>
-  <tr class="trData" *ngFor="let test of tests | filter:textFilter" >
+
+  <tr *ngFor="let test of tests | filter:textFilter">
+    <div *ngIf="this.areThereModifies" id="saveTestNotify">Do you want to save changes?&nbsp;&nbsp;
+      <button class="btn btn-outline-success btn-sm" (click)="saveChanges()">Save</button>&nbsp;&nbsp;
+      <button class="btn btn-outline-danger btn-sm" (click)="undo()">Undo</button>
+    </div>
     <td class="text-center">{{test.Title}}</td>
     <td class="text-center">{{test.Date | date: 'dd/MM/yy H:mm'}}</td>
     <td class="text-center">{{test.NumberOfExTest}}</td>
-    <td class="text-center" (click)="searchExTestById(test.Title)">{{test.OpenedExTestNumber}}</td>
+    <td class="text-center">{{test.OpenedExTestNumber}}</td>
     <td class="text-center"></td>
 
     <!--Icons-->
@@ -57,3 +63,4 @@
     </td>
   </tr>
 </table>
+
