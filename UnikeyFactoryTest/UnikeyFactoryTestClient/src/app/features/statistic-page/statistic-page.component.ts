@@ -10,18 +10,17 @@ import {switchMap} from 'rxjs/operators';
   templateUrl: './statistic-page.component.html',
   styleUrls: ['./statistic-page.component.css']
 })
-export class StatisticPageComponent implements OnInit{
+export class StatisticPageComponent implements OnInit {
+  constructor(
+    private service: ExTestService,
+    public icons: IconsService
+  ) { }
 
   @Input() exTestId: number;
 
   exTest = new ExTest();
   time = new Date();
   date = this.time.getTime();
-
-  constructor(
-    private service: ExTestService,
-    public icons: IconsService
-  ) { }
 
   ngOnInit() {
     console.log(this.exTestId);
@@ -30,35 +29,38 @@ export class StatisticPageComponent implements OnInit{
     });
   }
 
-
-  percentage() {
-    return (this.exTest.Score * 100) / this.exTest.MaxScore;
-  }
-
   timer() {
     const datadaconvertire = this.exTest.Date;
     const datenumber = new Date(datadaconvertire).getTime();
     const datenownumber = new Date(this.date).getTime();
     return (datenownumber - datenumber);
   }
-
-  formatColors = (percentage: number): string => {
-    if (percentage >= 80) {
-      return '#78C000';
-    } else if (percentage >= 50) {
+  percentage() {
+    return (this.exTest.Score * 100) / this.exTest.MaxScore;
+  }
+  formatColors = (percen: number): string => {
+    if (percen >= 80) {
+      return '#3ac000';
+    } else if (percen >= 60) {
       return '#d6e502';
-    } else if (percentage <= 20) {
-      return '#e53a00';
-    }
+    } else if (percen >= 40) {
+      return '#e55e00';
+    } else if (percen >= 20) {
+      return '#e5001a';
+  }
   }
 
   formatSubtitle = (percentage: number): string => {
     if (percentage >= 80) {
       return 'Congratulationi: ';
-    } else if (percentage >= 50) {
+    } else if (percentage >= 60) {
       return 'Bravo: ';
-    } else if (percentage <= 20) {
+    } else if (percentage >= 40) {
+      return 'Bene: ';
+    } else if (percentage >= 20) {
       return 'Accidenti: ';
+    } else if (percentage <= 20) {
+      return 'Peccato: ';
     } else {
       return 'Not started';
     }

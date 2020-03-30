@@ -173,7 +173,7 @@ namespace UnikeyFactoryTest.WebAPI.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, ErrorMessages.InternalServerError);
             }
         }
-
+        [LoginAuthorize]
         public async Task<IHttpActionResult> Delete(int id)
         {
             try

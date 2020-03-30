@@ -6,20 +6,20 @@
 </div>
 <div class="jumbotron jumbotron-fluid" style="text-align: center; align-content: center;">
   <div class="container">
-    <h4 class="display-4 lead">Ciao {{exTest.TestSubject}}, grazie per aver ultimato il test!</h4>
+    <h4 class="display-4 lead">Ciao {{exTest.TestSubject}}, Grazie per aver ultimato il test!</h4>
     <hr>
     <h4>Hai iniziato il tuo test alle: {{exTest.Date | date:"HH:mm:ss"}}</h4>
     <h4>Tempo di esecuzione: {{timer() | date: "MM"}} min</h4>
     <h4>Complimenti il tuo risultato è: </h4>
-    <circle-progress [percent]="percentage()"
+    <circle-progress [percent]="100*(this.exTest.Score/this.exTest.MaxScore)"
                      [radius]="100"
                      [outerStrokeWidth]="16"
                      [innerStrokeWidth]="8"
-                     [outerStrokeColor]="formatColors(percentage())"
+                     [outerStrokeColor]="formatColors(100*(this.exTest.Score/this.exTest.MaxScore))"
                      [innerStrokeColor]="'#C7E596'"
                      [animation]="true"
                      [animationDuration]="300"
-                     [title]="formatSubtitle(percentage()) + percentage()">
+                     [subtitle]="formatSubtitle(percentage())">
     </circle-progress>
   </div>
 </div>
