@@ -58,7 +58,7 @@ namespace UnikeyFactoryTest.Repository
             {
                 throw new Exception($"Test not found");
             }
-            var mapper = _kernel.Get<IMapper>("Heavy");
+            var mapper = _kernel.Get<IMapper>("Medium");
             return mapper.Map<Test, TestBusiness>(myTask);
         }
 

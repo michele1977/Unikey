@@ -1,9 +1,9 @@
 
-<div class="container">
+<div class="wrap-input100">
 
   <form #form="ngForm">
     <div class="form-group">
-      <label for="exampleInputEmail1">Username</label>
+      <label class="label-input100" for="exampleInputEmail1">Username</label>
       <input type="text" class="form-control" name="username" id="exampleInputEmail1"
              aria-describedby="emailHelp" placeholder="Enter username" #userNameRef="ngModel"
              required [minlength]="minLength" [maxLength]="maxLength"
@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="InputPassword">Password</label>
+      <label class="label-input100" for="InputPassword">Password</label>
       <input type="password" class="form-control" name="password" id="InputPassword" placeholder="Enter password"
              #passwordRef="ngModel" required
              [pattern]="passwordPattern"
@@ -22,9 +22,11 @@
         <span class="error">Invalid password</span>
       </div>
     </div>
-    <div style="text-align: right">
-      <button type="submit" class="btn btn-primary" (click)="login(form.value); form.reset()"
-               [disabled]="form.invalid" #loginButton >LogIn</button>
+    <div>
+      <div class="wrap-login100-form-btn">
+          <button type="submit" class="login100-form-btn" (click)="login(form.value); form.reset()"
+                  [disabled]="form.invalid" #loginButton >LogIn</button>
+      </div>
     </div>
     <div *ngIf="isPostBack" style="padding-top: 20px">
       <span class="error">Login failed!</span>

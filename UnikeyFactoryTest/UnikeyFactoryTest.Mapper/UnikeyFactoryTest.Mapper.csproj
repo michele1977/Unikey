@@ -100,14 +100,17 @@
     <Compile Include="AutoMappers\AnswerAutoMapperLight.cs" />
     <Compile Include="AutoMappers\AnswerAutoMapper.cs" />
     <Compile Include="AnswerMapper.cs" />
+    <Compile Include="AutoMappers\AnswerAutoMapperMedium.cs" />
     <Compile Include="AutoMappers\AutoMapperFactory.cs" />
     <Compile Include="AutoMappers\IAutoMapperFactory.cs" />
     <Compile Include="AutoMappers\ModuleMapping.cs" />
     <Compile Include="AutoMappers\ModulesMapping.cs" />
     <Compile Include="AutoMappers\QuestionAutoMapper.cs" />
     <Compile Include="AutoMappers\QuestionAutoMapperLight.cs" />
+    <Compile Include="AutoMappers\QuestionAutoMapperMedium.cs" />
     <Compile Include="AutoMappers\TestAutoMapper.cs" />
     <Compile Include="AutoMappers\TestAutoMapperLight.cs" />
+    <Compile Include="AutoMappers\TestAutoMapperMedium.cs" />
     <Compile Include="AutoMappers\UserAutoMapper.cs" />
     <Compile Include="AutoMappers\UserAutomapperLight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

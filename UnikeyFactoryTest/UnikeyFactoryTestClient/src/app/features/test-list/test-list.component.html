@@ -16,11 +16,12 @@
   </div>
 </div>
 <div class="alert alert-danger" *ngIf="showDeleteError" >
-  <strong>Holy holy maccaroni!</strong> An error occurred while deleting the test
+  <strong>Errore!</strong> An error occurred while deleting the test
   <button type="button" class="close" aria-label="Close" (click)="closeErrorAlert()">&times;</button>
 </div>
 <br>
-<table class="table">
+<br>
+<table class="table-borderless weather__card">
   <tr>
     <th class="text-center">Title</th>
     <th class="text-center">Date</th>
@@ -30,7 +31,7 @@
     <th class="text-center">Actions</th>
   </tr>
 
-  <tr *ngFor="let test of tests | filter:textFilter">
+  <tr *ngFor="let test of tests | filter:textFilter" class="content-wrapper">
     <div *ngIf="this.areThereModifies" id="saveTestNotify">Do you want to save changes?&nbsp;&nbsp;
       <button class="btn btn-outline-success btn-sm" (click)="saveChanges()">Save</button>&nbsp;&nbsp;
       <button class="btn btn-outline-danger btn-sm" (click)="undo()">Undo</button>
@@ -42,7 +43,7 @@
     <td class="text-center"></td>
 
     <!--Icons-->
-    <td class="text-center tdIcon" style="width: 20%" >
+    <td class="text-center tdIcon" style="width: 20%">
       <div class="row">
 
         <div class="col-sm">
@@ -63,4 +64,3 @@
     </td>
   </tr>
 </table>
-

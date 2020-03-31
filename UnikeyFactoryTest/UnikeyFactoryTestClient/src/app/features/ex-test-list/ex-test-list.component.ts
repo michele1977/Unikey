@@ -15,9 +15,10 @@ import {ExTest} from '../../models/ex-test';
 export class ExTestListComponent {
 
   pageNum = 1;
-  pageSize = 15;
+  pageSize = 20;
   textFilter = '';
   tests: ExTest[];
+  title = 'd';
   numberOfTests: number;
 
     constructor(private router: Router,
@@ -29,7 +30,6 @@ export class ExTestListComponent {
                   this.loader.publish('show');
                   this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
                       this.numberOfTests = data[0].NumberOfExTests;
-                      console.log(data[0].NumberOfExTests);
                       this.tests = data;
                       this.loader.publish('hide');
       }, () => {
@@ -62,7 +62,6 @@ export class ExTestListComponent {
     if (pos >= max - 1 && pos <= max) {
       console.log(this.numberOfTests);
       if (this.tests.length < this.numberOfTests) {
-        console.log('ciao');
         this.loader.publish('show');
         this.pageNum += 1;
         this.exTestService.getExTests(this.pageNum, this.pageSize, this.textFilter).then(data => {

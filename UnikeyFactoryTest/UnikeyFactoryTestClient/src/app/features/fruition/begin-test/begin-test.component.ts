@@ -1,5 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, OnDestroy} from '@angular/core';
 import { TestSubject } from 'src/app/models/testSubject';
+import {SideBarService} from '../../../services/side-bar.service';
 
 @Component({
   selector: 'app-begin-test',
@@ -10,9 +11,10 @@ export class BeginTestComponent implements OnInit {
   subject: TestSubject;
   @Output() subjectEvent = new EventEmitter();
 
-  constructor() { }
+  constructor(public nav: SideBarService) { }
 
   ngOnInit(): void {
+    this.nav.hide();
   }
 
   toggleFirstQuestion(subject: TestSubject) {

@@ -82,6 +82,7 @@ export class TestListComponent {
   }
 
   closeErrorAlert() {
+    this.showDeleteError = false;
   }
 
   showContent(id: number) {
@@ -140,6 +141,7 @@ export class TestListComponent {
 
   undo() {
     this.areThereModifies = false;
+    this.showDeleteError = false;
   }
 
   saveChanges() {

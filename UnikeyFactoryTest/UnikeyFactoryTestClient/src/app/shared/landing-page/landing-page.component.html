@@ -1,28 +1,29 @@
-<div class="container" style="width: 100%; max-height: 50%; padding-bottom: 30px">
-  <div class="row" style="max-height: 1000px; padding-top: 30px;">
-    <div class="col-8" style="background-color: white; text-align: center; width: 67%">
+<div class="container" style="width: 100%;">
+  <div class="row" style="width: 100%">
+    <div class="col-8" style="background-color: white; text-align: center; width: 60%">
       <div style="text-align: center;padding-top: 120px">
-          <img src="assets/img/assestmentImage.png" width="100%" style="max-width: 600px"/>
+          <img src="assets/img/assestmentImage.png" width="100%" style="max-width: 700px"/>
       </div>
-
-      <br />
-
       <div style="text-align: center">
         <img src="assets/img/UnikeyLogo.png" width="100%" style="max-width: 100px"/>
       </div>
     </div>
-    <div class="col-4" style="padding-top: 50px;padding-bottom: 50px; background-color: blue; width: 33%;min-width: 33%">
+
+
+    <div class="loginform" >
       <div style="text-align: center">
-        <h2 style="color: aliceblue">Welcome</h2>
-      </div>
+          <h1 class="heading-correct-pronounciation" style="">
+            <em>Welcome</em>
+          </h1>
       <br />
-      <div *ngIf="isVisible" id="signingForm" class="container" style="display: block;width: 100%;padding: 15px;
-      border: 2px solid black; border-radius: 10px; background-color: antiquewhite">
+        <br>
+      <div *ngIf="isVisible" id="signingForm" class="loginformtext">
         <app-login (switch)="setVisible()"></app-login>
       </div>
-      <div *ngIf="!isVisible" id="signingUpForm" class="container" style="display: block;width: 100%;padding: 15px; border: 2px solid black; border-radius: 10px; background-color: antiquewhite">
+      <div *ngIf="!isVisible" id="signingUpForm" class="loginformtext">
         <app-subscribe (switch)="setVisible()"></app-subscribe>
       </div>
     </div>
   </div>
 </div>
+
