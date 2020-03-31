@@ -21,7 +21,9 @@ namespace UnikeyFactoryTest.Service
             Bind<IMapper>().ToMethod(ctx =>
                 new global::AutoMapper.Mapper(ModuleMapping.GetConfiguration(),
                     type => Kernel.GetType())).Named("Heavy");
-
+            Bind<IMapper>().ToMethod(ctx =>
+                new global::AutoMapper.Mapper(ModuleMapping.GetConfiguration(),
+                    type => Kernel.GetType())).Named("Medium");
             Bind<IMapper>().ToMethod(ctx =>
                 new global::AutoMapper.Mapper(ModuleMapping.GetConfigurationLight(),
                     type => Kernel.GetType())).Named("Light");

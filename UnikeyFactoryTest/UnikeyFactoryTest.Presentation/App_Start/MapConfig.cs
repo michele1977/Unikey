@@ -27,6 +27,8 @@ namespace UnikeyFactoryTest.Presentation
 
             kernel.Bind<IMapper>().ToMethod(ctx => new AutoMapper.Mapper(ConfigureLight(), type => kernel.Get(type)))
                 .Named("Light");
+            kernel.Bind<IMapper>().ToMethod(ctx => new AutoMapper.Mapper(ConfigureLight(), type => kernel.Get(type)))
+                .Named("Medium");
             kernel.Bind<IMapper>().ToMethod(ctx => new AutoMapper.Mapper(Configure(), type => kernel.Get(type)))
                 .Named("Heavy");
         }
@@ -58,6 +60,18 @@ namespace UnikeyFactoryTest.Presentation
                     new AdministratedTestAutoMapperLight(),
                     new AdministratedQuestionAutoMapperLight(),
                     new AdministratedAnswerAutoMapperLight()
+                }));
+
+            return mapperConfig;
+        }
+        private static MapperConfiguration ConfigureMedium()
+        {
+            var mapperConfig = new MapperConfiguration(cfg =>
+                cfg.AddProfiles(new List<Profile>
+                {
+                    new AnswerAutoMapperMedium(),
+                    new QuestionAutoMapperMedium(),
+                    new TestAutoMapperMedium()
                 }));
 
             return mapperConfig;

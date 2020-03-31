@@ -27,6 +27,10 @@ namespace UnikeyFactoryTest.Mapper.AutoMappers
         {
             return ConfigureLight();
         }
+        public static MapperConfiguration GetConfigurationMedium()
+        {
+            return ConfigureMedium();
+        }
         private static MapperConfiguration Configure()
         {
             var ModelConfig = new MapperConfiguration(cfg => cfg.AddProfiles(
@@ -54,6 +58,18 @@ namespace UnikeyFactoryTest.Mapper.AutoMappers
                     new AdministratedQuestionAutoMapperLight(),
                     new AdministratedAnswerAutoMapperLight(),
                     new UserAutomapperLight()
+                }));
+
+            return mapperConfig;
+        }
+        private static MapperConfiguration ConfigureMedium()
+        {
+            var mapperConfig = new MapperConfiguration(cfg =>
+                cfg.AddProfiles(new List<Profile>
+                {
+                    new TestAutoMapperMedium(),
+                    new QuestionAutoMapperMedium(),
+                    new AnswerAutoMapperMedium()
                 }));
 
             return mapperConfig;
