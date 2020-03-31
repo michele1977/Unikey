@@ -8,17 +8,20 @@
   padding: 10px;
   padding-bottom: 20px;
   margin-bottom: 20px;
+  position:relative;
+  padding-top:17px;
 }
 
 .AnswerContainer {
-  width: 300px;
+  width: 600px;
   margin: auto;
 }
 
 .answer {
-  background-color: cyan;
   padding: 10px 10px 5px 10px;
   margin-bottom: 10px;
+  font-family: Verdana;
+  box-shadow: 2px 4px 4px 0 rgb(95, 95, 95);
 }
 
 .AnswerLabel {
@@ -37,4 +40,18 @@
   text-align: center;
   width: 170px;
   height: 100px;
+}
+
+.subject{
+  font-family: 'Arial Narrow';
+}
+
+.Question{
+  position:relative;
+  margin: auto;
+  text-align: center;
+  background-color: white;
+  color: black;
+  font-size: xx-large;
+  font-family: Georgia;
 }

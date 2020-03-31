@@ -38,7 +38,7 @@ export class FruitionTestComponent implements OnInit {
     const modalRef = this.modalService.open(EndTestModalComponent);
     modalRef.componentInstance.exTest = this.exTest;
     modalRef.result.then((result) => {
-      if (result == 'yes closed') {
+      if (result === 'yes closed') {
         this.saveTest.emit(this.exTest);
       }
     });
