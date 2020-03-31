@@ -10,9 +10,9 @@ import {LoaderService} from '../../services/loader.service';
   selector: 'app-creation',
   template: `
     <form #form="ngForm">
-      <nav class="navbar navbar-expand-lg navbar-light" style="border-radius: 15px 15px; background-color: #2F00FC;">
-        <a class="navbar-brand">
-          <h1 style="color: white">Create Test</h1>
+      <nav class="" style="border-radius: 15px 15px; text-align: center">
+        <a class="">
+          <h1 style=" color: #2F00FC; font-family: 'Segoe UI Black'">Create Test</h1>
         </a>
       </nav>
       <hr>
