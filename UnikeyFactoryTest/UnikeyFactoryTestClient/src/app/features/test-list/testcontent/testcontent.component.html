@@ -15,15 +15,12 @@
   <div class="col-2" style="text-align: right">
     <fa-icon [icon]="icons.faFilePdf" title="CreatePDF" size="2x" (click)="ShowPopUP()"></fa-icon>
   </div>
-  <!-- Qui logica del copy text -->
-<!-- Qui logica del pdfcreator -->
-<!-- Qui logica del go back -->
 <hr />
 <br />
 </div>
 
 <div id="testContentStats">
-  <label><strong>Number of questions: {{this.test?.Questions?.length}}</strong></label>
+  <label style="padding-right: 100px"><strong>Number of questions: {{this.test?.Questions?.length}}</strong></label>
   <div class="pull-right">
     <i class="fa fa-copy" (click)="copyText(this.test)" title="Copia Test"></i>
     <br>
@@ -31,7 +28,6 @@
     <br>
     <fa-icon id="goBackIcon" [icon]="icons.faSignInAlt" title="Go back" (click)="goBack()"></fa-icon>
   </div>
-
 </div>
 
 <br>
@@ -39,12 +35,13 @@
   <div class="form-group" *ngIf="this.isButtonVisible">
     <app-question-form (questionInsert)="addQuestion($event)"></app-question-form>
   </div>
-  <div *ngFor="let question of this.test?.Questions; let i = index" class="testContentRow">
+  <div *ngFor="let question of this.test?.Questions; let i = index" class="question__card" id="questionh">
     <div>
       <div id="divQuestionForm">
         <strong>Question {{i+1}}</strong>
-        <fa-icon [icon]="icons.faTrash" question="question" (click)="deleteQuestion(i)" id="editIcon" title="Delete"></fa-icon>
-        <fa-icon [icon]="icons.faPencilAlt" (click)="toggle(i)" id="deleteIcon" title="Edit"></fa-icon>
+        <hr>
+        <fa-icon [icon]="icons.faPencilAlt" (click)="toggle(i)" id="deleteIcon" title="Edit" style="padding-right: 20px"></fa-icon>
+        <fa-icon [icon]="icons.faTrash" question="question" (click)="deleteQuestion(i)" id="editIcon" title="Delete" style="padding-left: 10px"></fa-icon>
       </div>
       <hr />
       <div *ngIf="!isEditable[i]">

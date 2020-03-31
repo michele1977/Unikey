@@ -15,7 +15,7 @@ import {ExTest} from '../../models/ex-test';
 export class ExTestListComponent {
 
   pageNum = 1;
-  pageSize = 15;
+  pageSize = 20;
   textFilter = '';
   tests: ExTest[];
   title = 'd';
