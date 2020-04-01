@@ -10,12 +10,11 @@ import {LoaderService} from '../../services/loader.service';
   selector: 'app-creation',
   template: `
     <form #form="ngForm">
-      <div class="jumbotron jumbotron-fluid" style="height:80px; text-align: center; padding: 0px">
-        <div class="container align-content-center">
-          <h1 class="display-4" style="color: black; align-self: auto">Create Test</h1>
-        </div>
-
-      </div>
+      <nav class="" style="border-radius: 15px 15px; text-align: center">
+        <a class="">
+          <h1 style=" color: #2F00FC; font-family: 'Segoe UI Black'">Create Test</h1>
+        </a>
+      </nav>
       <hr>
       <div class="form-group create-div">
         <input type="text" name="title" class="form-control" placeholder="Test Name.." [ngModel]="title" required>

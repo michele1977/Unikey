@@ -9,7 +9,7 @@ p {
 }
 #sidebar .sidebar-header {
   padding: 5px;
-  background: #0069d9;
+  background: #2F00FC;
 }
 #sidebar ul.components {
   padding: 10px 0;
@@ -24,7 +24,7 @@ p {
   display: block;
 }
 #sidebar ul li a:hover {
-  color: #7386D5;
+  color: #2F00FC;
   background: #fff;
 }
 #sidebar ul li.active > a, a[aria-expanded="true"] {
@@ -34,7 +34,7 @@ p {
 ul ul a {
   font-size: 0.9em !important;
   padding-left: 30px !important;
-  background: #6d7fcc;
+  background: #2F00FC;
 }
 a, a:hover, a:focus {
   color: inherit;
@@ -50,7 +50,7 @@ a, a:hover, a:focus {
   top: 0;
   left: 0;
   z-index: 9999;
-  background: #0069d9;
+  background: #2F00FC;
   color: #fff;
   transition: all 0.3s;
 }
@@ -66,5 +66,20 @@ a, a:hover, a:focus {
 
 .logout:hover{
   background-color: white;
-  color: #0069d9;
+  color: #2F00FC;
+}
+
+.logout{
+  background-color: #2F00FC;
+}
+
+#LogoUnikey{
+  height: 60px;
+  width: 60px;
+  alt: 0;
+  cursor: pointer;
+}
+
+#LogoUnikey:hover{
+  color: #2F00FC;
 }
