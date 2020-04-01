@@ -27,15 +27,15 @@
 <br>
 <table class="table-borderless weather__card">
   <tr>
-    <th class="text-center">Title</th>
-    <th class="text-center">Date</th>
-    <th class="text-center" *ngIf="isEmpty">Number of tests</th>
-    <th class="text-center" *ngIf="isEmpty">Number of tests opened</th>
-    <th class="text-center"></th>
-    <th class="text-center">Actions</th>
+    <th class="text-center" style="font-size: 20px">Title</th>
+    <th class="text-center" style="font-size: 20px">Date</th>
+    <th class="text-center" *ngIf="isEmpty" style="font-size: 20px">Number of tests</th>
+    <th class="text-center" *ngIf="isEmpty" style="font-size: 20px">Number of tests opened</th>
+    <th class="text-center" style="font-size: 20px"></th>
+    <th class="text-center" style="font-size: 20px">Actions</th>
   </tr>
 
-  <tr *ngFor="let test of tests | filter:textFilter" class="content-wrapper">
+  <tr *ngFor="let test of tests | filter:textFilter" class="content-wrapper" style="padding-top: 20px">
     <div *ngIf="this.areThereModifies" id="saveTestNotify">Do you want to save changes?&nbsp;&nbsp;
       <button class="btn btn-outline-success btn-sm" (click)="saveChanges()">Save</button>&nbsp;&nbsp;
       <button class="btn btn-outline-danger btn-sm" (click)="undo()">Undo</button>

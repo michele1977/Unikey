@@ -123,7 +123,7 @@ iframe {
   width: 100%;
   padding: 15px;
   border-radius: 15px;
-  background-color: #fff
+  background: linear-gradient(top, white, #cfcfcf);
 
 }
 @media (max-width: 576px) {
@@ -144,11 +144,11 @@ iframe {
   align-items: center;
   background-size: cover;
   width: 33%;min-width: 33%;
-  background-color: #2F00FC;
   margin-top: auto;
   margin-bottom: auto;
   position: relative;
   flex-direction: column;
+  background: linear-gradient(bottom, rgba(0, 88, 176, 0.79), #2F00FC);
   padding: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -206,10 +206,5 @@ iframe {
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
   background-color: #c0392b !important;
 }
-.welcomeMessage {
-  padding-top: 30px;
-  font-family: 'castellar';
-  color: white;
-  text-align: center;
-  font-size: 30px;
-}
+
+

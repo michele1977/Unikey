@@ -17,13 +17,13 @@
   <br>
   <table class="table-borderless weather__card">
     <tr>
-        <th class="text-center">Test Subject</th>
-        <th class="text-center">Test Title</th>
-        <th class="text-center">Date</th>
-        <th class="text-center">Score/Max</th>
-      <th class="text-center">Actions</th>
+        <th class="text-center" style="font-size: 20px">Test Subject</th>
+        <th class="text-center" style="font-size: 20px">Test Title</th>
+        <th class="text-center" style="font-size: 20px">Date</th>
+        <th class="text-center" style="font-size: 20px">Score/Max</th>
+      <th class="text-center" style="font-size: 20px">Actions</th>
     </tr>
-    <tr *ngFor="let test of tests | filter:textFilter">
+    <tr *ngFor="let test of tests | filter:textFilter" style="padding-top: 20px">
     <td class="text-center">{{test.TestSubject}}</td>
     <td class="text-center">{{test.Title}}</td>
       <td class="text-center">{{test.Date | date: 'dd/MM/yy H:mm'}}</td>
