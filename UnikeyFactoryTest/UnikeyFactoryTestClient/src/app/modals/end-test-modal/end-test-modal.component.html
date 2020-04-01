@@ -1,18 +1,17 @@
 <div class="modal-content">
   <div class="modal-header">
     <div class="row" style="margin-left: 3px">
-      <h4 class="modal-title" style="color: blue;margin-right: 2px">Information</h4>
-      <i class="fa fa-info-circle fa-2x" style="color: blue"></i>
+      <h4 class="modal-title" style="color: #0069d9;margin-right: 2px">Information</h4>
+      <i class="fa fa-question-circle fa-2x" style="color: #0069d9"></i>
     </div>
-    <button type="button" class="close" aria-label="Close" style="float: right" (click)="activeModal.dismiss()">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <i type="button" class="fa fa-times-circle" aria-label="Close" style="float: right;color: #0069d9; font-size: 20px" (click)="activeModal.dismiss()">
+    </i>
   </div>
   <div class="modal-body">
     <label>Are you sure you want to end your test?</label>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" style="float: left; font-weight: bold; color: limegreen " (click)="endPage()"  > Yes</button>
-    <button type="button" class="btn btn-outline-dark" style="color: red; font-weight: bold " (click)="activeModal.close('Close click')"  >No</button>
+    <i type="button" class="fa fa-check" style="float: left; color: limegreen;font-size: 20px;padding-right: 5px " (click)="endPage()"> Yes</i>
+    <i type="button" class="fa fa-times" style="color: red;font-size: 20px" (click)="activeModal.close('Close click')">No</i>
   </div>
 </div>

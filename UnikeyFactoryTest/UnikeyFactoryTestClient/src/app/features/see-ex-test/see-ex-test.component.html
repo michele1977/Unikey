@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-6" style="text-align: left">
-    <strong><label style="font-size: 35px">Test {{this.exTest.Title}}</label></strong>
+    <h1 style="line-height: 1.2em; font-family: FontAwesome;">Test: {{this.exTest.Title}}</h1>
   </div>
   <div class="col-6" style="text-align: right;text-justify: auto">
     <i class="fa fa-chevron-left fa-2x" [routerLink]="['../../testList']" title="Go Back"></i>
@@ -14,7 +14,7 @@
 </div>
 
 <div class="container col-8">
-  <div *ngFor="let question of this.exTest.AdministratedQuestions; let i = index" class="testContentRow">
+  <div *ngFor="let question of this.exTest.AdministratedQuestions; let i = index" class="question__card" id="exquestionh">
     <div>
       <div id="divQuestionForm">
         <strong>Domanda {{i+1}}</strong>
