@@ -1,6 +1,8 @@
 <div class="row">
-  <div class="col-6" style="text-align: left">
-    <h1 style="line-height: 1.2em; font-family: FontAwesome;">Test: {{this.exTest.Title}}</h1>
+  <div class="col-6">
+    <div class="pageTitle">
+      <h1 id="pageTitle">Test: {{this.exTest?.Title}}</h1>
+    </div>
   </div>
   <div class="col-6" style="text-align: right;text-justify: auto; padding-top: 30px">
     <fa-icon id="goBackIcon" class="action" style="font-size: 25px;padding-bottom: 2px;color: #0069D9" [icon]="icons.faSignInAlt" title="Go back" [routerLink]="['../../testList']"></fa-icon>

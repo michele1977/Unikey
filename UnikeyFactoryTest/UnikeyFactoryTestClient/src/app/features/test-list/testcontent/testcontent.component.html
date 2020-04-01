@@ -12,10 +12,12 @@
   </button></div>
 </div>
 <div class="row">
-<div class="col-10">
-  <strong><label style="font-size: 25px">Test: {{this.test?.Title}}</label></strong>
-</div>
-  <div class="col-2" style="text-align: right">
+  <div class="col-6">
+    <div class="pageTitle">
+      <h1 id="pageTitle">Test {{this.test?.Title}}</h1>
+    </div>
+  </div>
+  <div class="col-6" style="text-align: right">
     <fa-icon [icon]="icons.faFilePdf" style="color: #0069D9" title="CreatePDF" size="2x" (click)="ShowPopUP()"></fa-icon>
   </div>
 </div>
