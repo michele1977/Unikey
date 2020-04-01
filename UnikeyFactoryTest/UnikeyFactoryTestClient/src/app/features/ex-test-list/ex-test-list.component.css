@@ -15,7 +15,7 @@
   }
 th, td {
   text-align: left;
-  padding: 1px;
+  padding: 10px;
 }
 
 tr:nth-child(even) {
