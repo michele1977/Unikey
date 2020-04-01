@@ -1,8 +1,7 @@
 <div class="container body-content">
   <!--Subject-->
   <div class="subject">
-    <h6>Assessment of:</h6>
-    <h6 style="font-weight: bold;  font-style: italic;">{{exTest?.TestSubject}}</h6>
+    <h6 style="font-weight: bold">Assessment of: </h6><h6 style="font-weight: bold;  font-style: italic;font-size: large">{{exTest?.TestSubject}}</h6>
   </div>
 
   <img src="assets/img/UnikeyLogo.png" class="logo"  alt="Unikey"/>
@@ -18,7 +17,7 @@
           <div class="form-check" style="text-align: left">
             <input id="checkbox" type="checkbox" (click)="change(index)"
                                                  [checked]="exTest?.AdministratedQuestions[i].AdministratedAnswers[index].isSelected"
-                                                 style="margin-right: 10px">
+                                                 style="margin-right: 10px;">
             <label for="checkbox">{{answer.Text}}</label>
           </div>
         </div>

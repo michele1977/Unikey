@@ -24,7 +24,7 @@
     <input type="password" class="form-control" name="retyped" id="RetypedInputPassword" placeholder="Retype password" #retypePasswordRef="ngModel" [ngClass]="{'errorDiv' : retypePasswordRef.errors && (retypePasswordRef.dirty || retypePasswordRef.touched)}" [pattern]="passwordRef.value" required ngModel>
   </div>
     <div class="wrap-login100-form-btn">
-      <button type="submit" class="login100-form-btn"
+      <button type="submit" class="welcomeMessage"
               (click)="subscribe(form.value)" [disabled]="form.invalid" #submitButton >Subscribe</button>
     </div>
 

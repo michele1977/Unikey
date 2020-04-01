@@ -2,31 +2,34 @@
   <div *ngIf="this.areThereModifies" id="saveTestNotify">Do you want to save changes?&nbsp;&nbsp;<button
     class="btn btn-outline-success btn-sm" (click)="saveChanges(this.test)">Save</button>&nbsp;&nbsp;<button
     class="btn btn-outline-danger btn-sm" (click)="undo()">Undo</button></div>
-
+  <div *ngIf="this.copydialog" id="dialognotify">
+    The link is copied!&nbsp;
+    <i class="fa fa-times" (click)="undo()"></i>
+  </div>
 <div *ngIf="this.isThereAnError" id="errorNotify" role="alert">An error occurred while saving the test
   <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="isThereAnError=false">
     <span aria-hidden="true">&times;</span>
   </button></div>
 </div>
 <div class="row">
-<div class="col-10">
-  <strong><label style="font-size: 35px">Test {{this.test?.Title}}</label></strong>
-</div>
-  <div class="col-2" style="text-align: right">
-    <fa-icon [icon]="icons.faFilePdf" title="CreatePDF" size="2x" (click)="ShowPopUP()"></fa-icon>
+  <div class="col-6">
+    <div class="pageTitle">
+      <h1 id="pageTitle">Test {{this.test?.Title}}</h1>
+    </div>
   </div>
-<hr />
-<br />
+  <div class="col-6" style="text-align: right">
+    <fa-icon [icon]="icons.faFilePdf" style="color: #0069D9" title="CreatePDF" size="2x" (click)="ShowPopUP()"></fa-icon>
+  </div>
 </div>
 
 <div id="testContentStats">
   <label style="padding-right: 100px"><strong>Number of questions: {{this.test?.Questions?.length}}</strong></label>
   <div class="pull-right">
-    <i class="fa fa-copy" (click)="copyText(this.test)" title="Copia Test"></i>
+    <i class="fa fa-copy" style="font-size: 25px;padding-bottom: 10px; color: #0069D9" (click)="copyText(this.test)" title="Copia Test"></i>
     <br>
-    <i class="fa fa-plus" (click)="this.isButtonVisible = !this.isButtonVisible" title="Add Question"></i>
+    <i class="fa fa-plus" style="font-size: 25px;padding-bottom: 2px; color: #0069D9" (click)="this.isButtonVisible = !this.isButtonVisible" title="Add Question"></i>
     <br>
-    <fa-icon id="goBackIcon" [icon]="icons.faSignInAlt" title="Go back" (click)="goBack()"></fa-icon>
+    <fa-icon id="goBackIcon" style="font-size: 25px;padding-bottom: 2px; color: #0069D9" [icon]="icons.faSignInAlt" title="Go back" (click)="goBack()"></fa-icon>
   </div>
 </div>
 

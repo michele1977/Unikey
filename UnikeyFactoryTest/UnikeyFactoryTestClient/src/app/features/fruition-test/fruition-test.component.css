@@ -18,9 +18,12 @@
 }
 
 .answer {
+  background: linear-gradient(bottom, #828282, white );
   padding: 10px 10px 5px 10px;
   margin-bottom: 10px;
-  font-family: Verdana;
+  font-family:  Georgia;
+  font-size: large;
+  font-weight: bold;
   box-shadow: 2px 4px 4px 0 rgb(95, 95, 95);
 }
 
@@ -30,6 +33,7 @@
 
 .body-content {
   padding: 15px;
+  background: linear-gradient(bottom, white, #a5a5a5);
 }
 
 .logo {
@@ -50,8 +54,11 @@
   position:relative;
   margin: auto;
   text-align: center;
-  background-color: white;
-  color: black;
+  background: linear-gradient(bottom, whitesmoke, white);
+  border-radius: 10px;
+  color: #cc0006;
   font-size: xx-large;
   font-family: Georgia;
+  box-shadow: 1px 1px 1px 1px rgb(95, 95, 95);
 }
+

@@ -55,7 +55,7 @@
 }
 
 .wrap-login100-form-btn {
-  width: 60%;
+  width: 35%;
   display: block;
   position: relative;
   z-index: 1;
@@ -70,24 +70,28 @@
   -ms-box-shadow: 0 5px 30px 0px rgba(3, 216, 222, 0.2);
 }
 
-.login100-form-btn {
-  font-family: sans-serif;
-  font-size: 16px;
-  color: rgba(28, 28, 28, 0.97);
-  line-height: 1.6;
-  text-transform: uppercase;
-
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 20px;
-  width: 100%;
+.welcomeMessage {
+  box-shadow:inset 0px 1px 0px 0px #ffffff;
+  background: #ededed linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
+  border-radius:11px;
+  border:1px solid #dcdcdc;
+  display:inline-block;
+  cursor:pointer;
+  color: #636363;
+  font-family:Arial;
+  font-size:17px;
+  font-weight:bold;
+  padding:9px 34px;
+  text-decoration:none;
+  text-shadow:0px -1px 0px #ffffff;
 }
-
+.welcomeMessage:hover {
+  background: #dfdfdf linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
+}
+.welcomeMessage:active {
+  position:relative;
+  top:1px;
+}
 
 
 .alert-validate::after {

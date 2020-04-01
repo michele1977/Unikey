@@ -7,6 +7,21 @@
   display: flex;
 }
 
+#dialognotify {
+  position: fixed;
+  z-index: 101;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #fde073;
+  text-align: center;
+  line-height: 2.5;
+  overflow: hidden;
+  -webkit-box-shadow: 0 0 5px black;
+  -moz-box-shadow:    0 0 5px black;
+  box-shadow:         0 0 5px black;
+}
+
 #answersList {
   padding-left: 15px;
 }
@@ -41,7 +56,7 @@
   background: #fde073;
   text-align: center;
   line-height: 2.5;
-  overflow: hidden; 
+  overflow: hidden;
   -webkit-box-shadow: 0 0 5px black;
   -moz-box-shadow:    0 0 5px black;
   box-shadow:         0 0 5px black;
@@ -56,7 +71,7 @@
   background: #ff6161;
   text-align: center;
   line-height: 2.5;
-  overflow: hidden; 
+  overflow: hidden;
   color: white;
   -webkit-box-shadow: 0 0 5px black;
   -moz-box-shadow:    0 0 5px black;
@@ -66,4 +81,29 @@
 #goBackIcon {
   cursor: pointer;
   float: right;
+}
+.pageTitle:before{
+  content: "";
+  position: absolute;
+  top: calc(50% - 6px);
+  left: 0;
+  right: 0;
+  height: 12px;
+  background: #a3b8d8;
+  z-index: -1;
+  opacity: 30%;
+}
+
+.pageTitle h1{
+  background: white;
+  padding: 0 15px;
+  margin-left: 20px;
+}
+
+#pageTitle{
+  background: -webkit-linear-gradient(#9ee4ff, #3404ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Segoe UI Black';
+
 }

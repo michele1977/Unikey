@@ -7,3 +7,25 @@
 .modal-content {
   display: table;
 }
+.welcomeMessage {
+  box-shadow:inset 0px 1px 0px 0px #ffffff;
+  background: #ededed linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
+  border-radius:11px;
+  border:1px solid #dcdcdc;
+  display:inline-block;
+  cursor:pointer;
+  color: #636363;
+  font-family:Arial;
+  font-size:17px;
+  font-weight:bold;
+  padding:9px 34px;
+  text-decoration:none;
+  text-shadow:0px -1px 0px #ffffff;
+}
+.welcomeMessage:hover {
+  background: #dfdfdf linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
+}
+.welcomeMessage:active {
+  position:relative;
+  top:1px;
+}
