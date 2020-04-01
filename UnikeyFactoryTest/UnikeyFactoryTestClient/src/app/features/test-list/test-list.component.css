@@ -42,3 +42,30 @@ th, td {
 tr:nth-child(even) {
   background-color: #f2f2f2;
 }
+
+
+.pageTitle:before{
+  content: "";
+  position: absolute;
+  top: calc(50% - 6px);
+  left: 0;
+  right: 0;
+  height: 12px;
+  background: #a3b8d8;
+  z-index: -1;
+  opacity: 30%;
+}
+
+.pageTitle h1{
+  background: white;
+  padding: 0 15px;
+  margin-left: 20px;
+}
+
+#pageTitle{
+  background: -webkit-linear-gradient(#9ee4ff, #3404ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Segoe UI Black';
+
+}
