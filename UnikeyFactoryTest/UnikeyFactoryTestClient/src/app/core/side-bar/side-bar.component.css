@@ -50,7 +50,7 @@ a, a:hover, a:focus {
   top: 0;
   left: 0;
   z-index: 9999;
-  background: #2F00FC;
+  background: linear-gradient(to bottom, #2f00fc 0%, #3399ff 100%);
   color: #fff;
   transition: all 0.3s;
 }
@@ -66,11 +66,11 @@ a, a:hover, a:focus {
 
 .logout:hover{
   background-color: white;
-  color: #2F00FC;
+  color: #3399ff;
 }
 
 .logout{
-  background-color: #2F00FC;
+  background-color: #3399ff;
 }
 
 #LogoUnikey{

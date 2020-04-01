@@ -1,0 +1,31 @@
+A6D8CB
+
+.create-button{
+  margin: 10px 0px 0px 45%;
+}
+.create-div{
+  width: 50%;
+  margin-left: 25%;
+}
+
+.pageTitle:before{
+  content: "";
+  position: absolute;
+  top: calc(50% - 6px);
+  left: 0;
+  right: 0;
+  height: 12px;
+  background: #A6D8CB;
+  z-index: -1;
+}
+
+.pageTitle span{
+  background: white;
+  padding: 0 15px;
+  margin-left: 20px;
+}
+
+.nav{
+  border-radius: 15px 15px;
+  text-align: center;
+}
