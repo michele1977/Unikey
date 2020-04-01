@@ -1,7 +1,8 @@
 <div class="modal-content">
   <div class="modal-header">
     <h5 class="modal-title" id="mailModalLabel">Send the test through email</h5>
-    <fa-icon (click)="activeModal.close()" class="pointer" [icon]="icons.faWindowClose"></fa-icon>
+    <i type="button" class="fa fa-times" aria-label="Close" style="font-size: 30px; color: #0069d9" (click)="activeModal.close()">
+    </i>
   </div>
   <div class="modal-body">
     <form #form="ngForm">

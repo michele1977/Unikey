@@ -199,6 +199,13 @@ iframe {
   outline: 0px !important;
 }
 
+.welcomeMessagee {
+  color: #636363;
+  font-family:copperhead;
+  font-size:30px;
+  font-weight:bold;
+}
+
 .inputError {
   border: 2px solid red;
   border-radius: 4px;

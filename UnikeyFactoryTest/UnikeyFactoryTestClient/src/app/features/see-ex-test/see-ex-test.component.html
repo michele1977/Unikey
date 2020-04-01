@@ -2,8 +2,8 @@
   <div class="col-6" style="text-align: left">
     <h1 style="line-height: 1.2em; font-family: FontAwesome;">Test: {{this.exTest.Title}}</h1>
   </div>
-  <div class="col-6" style="text-align: right;text-justify: auto">
-    <i class="fa fa-chevron-left fa-2x" [routerLink]="['../../testList']" title="Go Back"></i>
+  <div class="col-6" style="text-align: right;text-justify: auto; padding-top: 30px">
+    <fa-icon id="goBackIcon" class="action" style="font-size: 25px;padding-bottom: 2px;color: #0069D9" [icon]="icons.faSignInAlt" title="Go back" [routerLink]="['../../testList']"></fa-icon>
   </div>
 </div>
 <hr />
@@ -21,7 +21,7 @@
       </div>
       <hr />
       <p>{{question.Text}}</p>
-      <br>
+      <hr>
       <div id="answersList">
         <li type="a" *ngFor="let answer of question.AdministratedAnswers">
           <label *ngIf="answer.isSelected == false && answer.isCorrect == 2">{{answer.Text}}</label>
