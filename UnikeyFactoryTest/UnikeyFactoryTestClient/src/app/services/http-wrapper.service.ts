@@ -31,9 +31,6 @@ export class HttpWrapperService {
                 case 401:
                   this.refreshService.router.navigateByUrl('').then();
                   break;
-                case 500:
-                  this.refreshService.router.navigateByUrl('/error').then();
-                  break;
                 default:
                   reject(error);
               }

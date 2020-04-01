@@ -14,11 +14,11 @@
   </div>
   <div class="modal-body">
     <div class="text-center">
-      <fa-icon *ngIf="!isFirstPage" [icon]="icons.faAngleDoubleLeft" title="First" (click)="firstPage()"></fa-icon>
-      <fa-icon *ngIf="!isFirstPage" [icon]="icons.faArrowLeft" title="Previous" (click)="previousPage()"></fa-icon>
+      <fa-icon style="padding: 4px" *ngIf="!isFirstPage" [icon]="icons.faAngleDoubleLeft" title="First" (click)="firstPage()"></fa-icon>
+      <fa-icon style="padding: 4px" *ngIf="!isFirstPage" [icon]="icons.faArrowLeft" title="Previous" (click)="previousPage()"></fa-icon>
       <strong><label>{{this.pageNum}} of {{this.pages}}</label></strong>
-      <fa-icon *ngIf="!isLastPage" [icon]="icons.faArrowRight" title="Next" (click)="nextPage()"></fa-icon>
-      <fa-icon *ngIf="!isLastPage" [icon]="icons.faAngleDoubleRight" title="Last" (click)="lastPage()"></fa-icon>
+      <fa-icon style="padding: 4px" *ngIf="!isLastPage" [icon]="icons.faArrowRight" title="Next" (click)="nextPage()"></fa-icon>
+      <fa-icon style="padding: 4px" *ngIf="!isLastPage" [icon]="icons.faAngleDoubleRight" title="Last" (click)="lastPage()"></fa-icon>
     </div>
     <table class="table">
       <tr class="thead-dark">

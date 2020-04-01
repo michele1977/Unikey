@@ -107,7 +107,33 @@ iframe {
 }
 
 .loginform {
-  min-height: 100vh;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  width: 33%;min-width: 33%;
+  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
+  background-color: #2F00FC;
+}
+.loginformtext{
+  display: block;
+  width: 100%;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: #fff
+
+}
+@media (max-width: 576px) {
+  .wrap-login100 {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+.user_card {
+  min-height: 96vh;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -116,23 +142,74 @@ iframe {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-
-  background-repeat: no-repeat;
-  background-position: center;
   background-size: cover;
-  padding-top: 50px;padding-bottom: 50px; background-color: #0069d9; width: 33%;min-width: 33%
+  width: 33%;min-width: 33%;
+  background-color: #2F00FC;
+  margin-top: auto;
+  margin-bottom: auto;
+  position: relative;
+  flex-direction: column;
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
 
 }
-.loginformtext{
-  display: block;
-  width: 100%;
-  padding: 15px;
-  border-radius: 15px;
-  background-color: #fff
+.brand_logo_container {
+  position: absolute;
+  height: 170px;
+  width: 170px;
+  top: -25px;
+  border-radius: 80%;
+  background: white;
+  padding: 10px;
+  text-align: center;
 }
-@media (max-width: 576px) {
-  .wrap-login100 {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
+.brand_logo {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+.form_container {
+  margin-top: 100px;
+}
+.login_btn {
+  width: 100%;
+  background: #c0392b !important;
+  color: white !important;
+}
+.login_btn:focus {
+  box-shadow: none !important;
+  outline: 0px !important;
+}
+.login_container {
+  padding: 0 2rem;
+}
+.input-group-text {
+  background: #c0392b !important;
+  color: white !important;
+  border: 0 !important;
+  border-radius: 0.25rem 0 0 0.25rem !important;
+}
+.input_user,
+.input_pass:focus {
+  box-shadow: none !important;
+  outline: 0px !important;
+}
+
+.inputError {
+  border: 2px solid red;
+  border-radius: 4px;
+}
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+  background-color: #c0392b !important;
+}
+.welcomeMessage {
+  padding-top: 30px;
+  font-family: 'castellar';
+  color: white;
+  text-align: center;
+  font-size: 30px;
 }
