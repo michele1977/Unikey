@@ -16,6 +16,7 @@ import {Question} from '../../../models/question';
 })
 export class TestcontentComponent {
   @Input() questionInsert: EventEmitter<Question> = new EventEmitter<Question>();
+
   test: Test;
 tempTest: Test;
 question: Question = {
@@ -31,6 +32,7 @@ isEditable: boolean[] = [];
 isThereAnError: boolean;
 text: string;
 public isButtonVisible = false;
+  copydialog: boolean;
 
   constructor(
     private service: TestService,
@@ -88,6 +90,7 @@ public isButtonVisible = false;
     console.log(this.tempTest);
     this.test = this.tempTest;
     this.areThereModifies = false;
+    this.copydialog = false;
   }
 
   saveChanges(test: Test) {
@@ -136,7 +139,6 @@ public isButtonVisible = false;
      selBox.select();
      document.execCommand('copy');
      document.body.removeChild(selBox);
-     alert('Copied!');
-
+     this.copydialog = true;
   }
 }

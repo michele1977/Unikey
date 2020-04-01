@@ -34,6 +34,7 @@ export class TestListComponent {
   errorsList: string[];
 
   isEmpty = true;
+  copydialog: boolean;
 
   constructor(private router: Router, public icons: IconsService, private testService: TestListService,
               private modalService: NgbModal, private loader: LoaderService, private service: TestService,
@@ -136,12 +137,13 @@ export class TestListComponent {
     box.select();
     document.execCommand('copy');
     document.body.removeChild(box);
-    alert('Copied!');
+    this.copydialog = true;
   }
 
   undo() {
     this.areThereModifies = false;
     this.showDeleteError = false;
+    this.copydialog = false;
   }
 
   saveChanges() {

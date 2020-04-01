@@ -19,6 +19,10 @@
   <strong>Errore!</strong> An error occurred while deleting the test
   <button type="button" class="close" aria-label="Close" (click)="closeErrorAlert()">&times;</button>
 </div>
+<div *ngIf="this.copydialog" id="dialognotify">
+  The link is copied!&nbsp;
+  <i class="fa fa-times" (click)="undo()"></i>
+</div>
 <br>
 <br>
 <table class="table-borderless weather__card">
