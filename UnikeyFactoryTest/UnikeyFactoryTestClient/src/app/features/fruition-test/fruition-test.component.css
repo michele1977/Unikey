@@ -1,64 +1,121 @@
-.QuestionContainer {
-  background-color: darkcyan;
-  border-radius: 8px;
-  border: black 1.5px solid;
-  width: 500px;
+:root {
+  background-color: #ecf5ff;
+  font-size: 62.5%;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 5.4rem;
+  color: #56a5eb;
+  margin-bottom: 5rem;
+}
+
+h1 > span {
+  font-size: 2.4rem;
+  font-weight: 500;
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-weight: 300;
+}
+h3 {
+  font-size: 2.8rem;
+  font-weight: 500;
+}
+
+/* BUTTONS */
+.btn {
+  padding: 0.5rem 0;
+  width: 10rem;
   text-align: center;
-  margin: auto;
-  padding: 10px;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
-  position:relative;
-  padding-top:17px;
+  border: 0.1rem solid #56a5eb;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  color: #56a5eb;
+  background-color: white;
 }
 
-.AnswerContainer {
-  width: 600px;
-  margin: auto;
+.btn:hover {
+  cursor: pointer;
+  box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 185, 235, 0.5);
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
 }
 
-.answer {
-  background: linear-gradient(bottom, #828282, white );
-  padding: 10px 10px 5px 10px;
-  margin-bottom: 10px;
-  font-family:  Georgia;
-  font-size: large;
-  font-weight: bold;
-  box-shadow: 2px 4px 4px 0 rgb(95, 95, 95);
+.btn[disabled]:hover {
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
 }
 
-.AnswerLabel {
-  width: 90%;
+/* FORMS */
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.body-content {
-  padding: 15px;
-  background: linear-gradient(bottom, white, #a5a5a5);
+input {
+  margin: 1.4rem;
+  width: 2rem;
+  height: 20px;
+  font-size: 1.8rem;
 }
-
-.logo {
-  border-radius: 5px;
-  margin-bottom: 30px;
-  padding: 10px;
-  margin-left: 43%;
-  text-align: center;
-  width: 170px;
-  height: 100px;
-}
-
-.subject{
-  font-family: 'Arial Narrow';
-}
-
-.Question{
-  position:relative;
-  margin: auto;
-  text-align: center;
-  background: linear-gradient(bottom, whitesmoke, white);
+input:checked {
+  background-color: #365da7;
   border-radius: 10px;
-  color: #cc0006;
-  font-size: xx-large;
-  font-family: Georgia;
-  box-shadow: 1px 1px 1px 1px rgb(95, 95, 95);
+  border-bottom-color: #56a5eb;
+  box-shadow: 0 0.1rem 1.4rem 0 rgba(159, 0, 6, 0.09);
+
+}
+input::placeholder {
+  color: #aaa;
+}
+.choice-container {
+  alignment: center;
+  overflow-wrap: break-word;
+  display: flex;
+  font-size: 0.9rem;
+  border: 0.1rem solid rgba(86, 165, 235, 0.25);
+  background-color: white;
+  margin: auto;
+  width: 50%;
+}
+
+.choice-container:hover {
+  cursor: pointer;
+  box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 185, 235, 0.5);
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
+}
+
+.choice-prefix {
+  padding: 50px;
+  background-color: #56a5eb;
+  color: white;
+  overflow-wrap: break-word;
+}
+
+.choice-text {
+  padding: 1.5rem;
+  overflow-wrap: break-word;
+  width: inherit;
 }
 

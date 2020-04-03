@@ -8,20 +8,29 @@
 }
 
 #dialognotify {
+  -webkit-box-shadow: 0 0 5px black;
+  -moz-box-shadow:    0 0 5px black;
   position: fixed;
   z-index: 101;
   top: 0;
   left: 0;
   right: 0;
-  background: #fde073;
+  background: #f8f9fa;
   text-align: center;
-  line-height: 2.5;
+  line-height: 3.5;
   overflow: hidden;
-  -webkit-box-shadow: 0 0 5px black;
-  -moz-box-shadow:    0 0 5px black;
-  box-shadow:         0 0 5px black;
+  box-shadow: 0 0 5px black;
 }
-
+i:hover {
+  cursor: pointer;
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
+}
+.moved:hover {
+  cursor: pointer;
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
+}
 #answersList {
   padding-left: 15px;
 }
@@ -48,18 +57,18 @@
 }
 
 #saveTestNotify {
+  -webkit-box-shadow: 0 0 5px black;
+  -moz-box-shadow:    0 0 5px black;
   position: fixed;
   z-index: 101;
   top: 0;
   left: 0;
   right: 0;
-  background: #fde073;
+  background: #f8f9fa;
   text-align: center;
-  line-height: 2.5;
+  line-height: 3.5;
   overflow: hidden;
-  -webkit-box-shadow: 0 0 5px black;
-  -moz-box-shadow:    0 0 5px black;
-  box-shadow:         0 0 5px black;
+  box-shadow: 0 0 5px black;
 }
 
 #errorNotify {
@@ -106,4 +115,20 @@
   -webkit-text-fill-color: transparent;
   font-family: 'Segoe UI Black';
 
+}
+.btn {
+  padding: 0.1rem 0;
+  width: 3rem;
+  text-align: center;
+  border: 0.1rem solid #56a5eb;
+  text-decoration: none;
+  color: #56a5eb;
+  background-color: white;
+}
+
+.btn:hover {
+  cursor: pointer;
+  box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 185, 235, 0.5);
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
 }

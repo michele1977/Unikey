@@ -50,6 +50,7 @@
 th, td {
   text-align: left;
   padding: 10px;
+  overflow-wrap: break-spaces;
 }
 
 tr:nth-child(even) {

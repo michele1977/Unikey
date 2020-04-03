@@ -6,6 +6,7 @@
 }
 .modal-content {
   display: table;
+  overflow-wrap: break-word;
 }
 .welcomeMessage {
   box-shadow:inset 0px 1px 0px 0px #ffffff;

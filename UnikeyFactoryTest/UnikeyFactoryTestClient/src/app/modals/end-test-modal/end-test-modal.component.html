@@ -2,16 +2,16 @@
   <div class="modal-header">
     <div class="row" style="margin-left: 3px">
       <h4 class="modal-title" style="color: #211b19;margin-right: 2px">Careful</h4>
-      <i class="fa fa-bell" style="color: #0069d9"></i>
+      <i class="fa fa-bell" style="color: #0069d9; border-radius: 22px; font-size: 30px"></i>
     </div>
-    <i type="button" class="fa fa-times-circle" aria-label="Close" style="float: right;color: #0069d9; font-size: 30px" (click)="activeModal.dismiss()">
+    <i type="button" class="fa fa-times-circle" aria-label="Close" style="float: right;color: #0069d9; font-size: 30px;border-radius: 22px" (click)="activeModal.dismiss()">
     </i>
   </div>
   <div class="modal-body">
     <label>Are you sure you want to end your test?</label>
   </div>
   <div class="modal-footer">
-    <i type="button" class="fa fa-check" style="float: left; color: limegreen;font-size: 20px;padding-right: 5px " (click)="endPage()"> Yes</i>
-    <i type="button" class="fa fa-times" style="color: red;font-size: 20px" (click)="activeModal.close('Close click')">No</i>
+    <button type="button" class="btn" style="padding-right: 5px" (click)="endPage()"> Yes</button>
+    <button type="button" class="btn" (click)="activeModal.close('Close click')">No</button>
   </div>
 </div>

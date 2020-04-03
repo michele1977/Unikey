@@ -1,39 +1,51 @@
-<div class="container body-content">
-  <!--Subject-->
-  <div class="subject">
-    <h6 style="font-weight: bold">Assessment of: </h6><h6 style="font-weight: bold;  font-style: italic;font-size: large">{{exTest?.TestSubject}}</h6>
-  </div>
-
-  <img src="assets/img/UnikeyLogo.png" class="logo"  alt="Unikey"/>
-  <div class="container" style="width:100%;">
-
-    <hr>
-    <div class="Question">
-     {{exTest?.AdministratedQuestions[i].Text}}
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <h6>Assessment of: </h6>
+      <h5 style="font-weight: bold;  font-style: italic;font-size: large">{{exTest.TestSubject}}</h5>
+      <br>
+      <h6>Score of test: {{exTest.MaxScore}}</h6>
+      <br>
+      <h6>Question N: {{i + 1}}</h6>
     </div>
-    <hr>
-      <div class="AnswerContainer">
-        <div *ngFor="let answer of exTest?.AdministratedQuestions[i].AdministratedAnswers; let index = index" class="answer" style="margin-bottom:17px">
-          <div class="form-check" style="text-align: left">
-            <input id="checkbox" type="checkbox" (click)="change(index)"
-                                                 [checked]="exTest?.AdministratedQuestions[i].AdministratedAnswers[index].isSelected"
-                                                 style="margin-right: 10px;">
-            <label for="checkbox">{{answer.Text}}</label>
-          </div>
-        </div>
-      </div>
-    <hr />
-    <div class="container">
-      <div class="row">
-        <div class="col-4" style="text-align:right">
-          <button *ngIf="isFirst === false" class="btn btn-primary" (click)="previous()">Prev</button>
-        </div>
-        <div class="col-4"></div>
-        <div class="col-4">
-          <button *ngIf="isLast === false" class="btn btn-primary" (click)="next()">Next</button>
-          <button *ngIf="isLast === true" class="btn btn-success" (click)="end()">End</button>
-        </div>
-      </div>
+    <div class="col-6" >
+
+    </div>
+    <div class="col-3" style="text-align: center">
+      <img src="assets/img/UnikeyLogo.png" class="logo" alt="Unikey"/>
     </div>
   </div>
 </div>
+<br>
+<div class="container">
+  <br>
+  <h2 style="text-align: center; overflow-wrap: break-word">{{exTest?.AdministratedQuestions[i].Text}}</h2>
+  <hr>
+  <br>
+  <div>
+    <div *ngFor="let answer of exTest?.AdministratedQuestions[i].AdministratedAnswers; let index = index" style="margin-bottom:17px">
+    <div class="choice-container">
+      <div class="form-check">
+        <input id="checkbox" class="choice-prefix" type="checkbox" (click)="change(index)"
+               [checked]="exTest?.AdministratedQuestions[i].AdministratedAnswers[index].isSelected">
+        <label for="checkbox" class="choice-text">{{answer.Text}}</label>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-4" style="text-align:right;padding-right: 10px">
+      <button  *ngIf="isFirst === false" class="btn btn-primary" (click)="previous()">Prev</button>
+    </div>
+    <div class="col-4">
+      <button  *ngIf="isLast === false" class="btn btn-primary" (click)="next()">Next</button>
+    </div>
+    <div class="col-4">
+      <button  *ngIf="isLast === true" class="btn btn-success" (click)="end()">End</button>
+    </div>
+  </div>
+</div>
+

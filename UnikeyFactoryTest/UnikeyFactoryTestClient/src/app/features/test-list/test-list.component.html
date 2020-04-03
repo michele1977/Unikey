@@ -8,8 +8,8 @@
     <form #form="ngForm">
       <div class="btn btn-group">
         <input type="search" [ngModel]="textFilter" name="textFilter" class="form-control">
-        <span class="glyphicon glyphicon-remove-circle"></span>
-        <div *ngIf="errorFetch" style="color:red;" class="alert alert-danger">Nessun test trovato</div>
+<!--        <span class="glyphicon glyphicon-remove-circle"></span>-->
+<!--        <div *ngIf="errorFetch" style="color:red;" class="alert alert-danger">Nessun test trovato</div>-->
         <button type="submit" class="btn btn-primary" (click)="search(form)">Search</button>
       </div>
     </form>
