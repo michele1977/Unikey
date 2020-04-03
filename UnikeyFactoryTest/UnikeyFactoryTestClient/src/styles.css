@@ -26,10 +26,10 @@ body {
   animation: 1.25s ease-in-out 0ms 1 fadein;
 }
 .question__card:hover{
-  transform: scale(0.99, 0.99);
+  transform: scale(1.01, 1.01);
   box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.25),
   -1px -1px 1px 1px rgba(0,0,0,0.22);
-  background-color: #1668c6;
+  background-color: #1675d3;
 }
 .question__card {
   width: 80%;

@@ -87,3 +87,12 @@
   font-family: 'Segoe UI Black';
 
 }
+#goBackIcon:hover {
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
+}
+.moved:hover {
+  cursor: pointer;
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
+}

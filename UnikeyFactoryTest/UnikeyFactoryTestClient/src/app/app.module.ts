@@ -60,7 +60,7 @@ import { TryComponent } from './core/try/try.component';
     CreatePDFModalComponent,
     StatisticPageComponent,
     NotfoundComponent,
-    TryComponent
+    TryComponent,
   ],
 
   imports: [

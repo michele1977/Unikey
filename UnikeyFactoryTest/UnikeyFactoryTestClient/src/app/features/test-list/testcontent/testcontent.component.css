@@ -1,6 +1,11 @@
 #testContentStats {
   margin: auto;
   text-align: center;
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  color: #09000c;
+  line-height: 1.2;
 }
 
 #divQuestionForm {
@@ -90,6 +95,10 @@ i:hover {
 #goBackIcon {
   cursor: pointer;
   float: right;
+}
+#goBackIcon:hover {
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
 }
 .pageTitle:before{
   content: "";

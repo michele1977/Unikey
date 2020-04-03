@@ -1,0 +1,24 @@
+.btn:hover {
+  cursor: pointer;
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
+}
+
+.btn {
+  border: 0.1rem solid #56a5eb;
+  text-decoration: none;
+  color: #56a5eb;
+  background-color: white;
+}
+.btnsave {
+  border: 0.1rem solid #56a5eb;
+  text-decoration: none;
+  color: #56a5eb;
+  background-color: white;
+}
+.btnsave:hover {
+  border: 0.1rem solid #0beb00;
+  cursor: pointer;
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
+}

@@ -8,15 +8,17 @@
 .create-test-a{
   float: left;
 }
-.actions:hover{
+.actions:hover {
   color: darkblue;
   cursor: pointer;
-
+  transform: translateX(1mm);
+  transition: transform 150ms;
 }
 
 .actions{
   color: #0069D9;
-  font-size: 1.2em;
+  font-size: 20px;
+  padding-bottom: 2px;
 }
 #saveTestNotify {
   position: fixed;
@@ -33,30 +35,37 @@
   box-shadow:         0 0 5px black;
 }
 #dialognotify {
+  -webkit-box-shadow: 0 0 5px black;
+  -moz-box-shadow:    0 0 5px black;
   position: fixed;
   z-index: 101;
   top: 0;
   left: 0;
   right: 0;
-  background: #fde073;
+  background: #f8f9fa;
   text-align: center;
-  line-height: 2.5;
+  line-height: 3.5;
   overflow: hidden;
-  -webkit-box-shadow: 0 0 5px black;
-  -moz-box-shadow:    0 0 5px black;
-  box-shadow:         0 0 5px black;
+  box-shadow: 0 0 5px black;
 }
-
+i:hover {
+  cursor: pointer;
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
+}
 th, td {
   text-align: left;
   padding: 10px;
   overflow-wrap: break-spaces;
 }
-
+tr:first-child:hover {
+  cursor: pointer;
+  transform: translateY(-0.01rem);
+  transition: transform 150ms;
+}
 tr:nth-child(even) {
   background-color: #f2f2f2;
 }
-
 
 .pageTitle:before{
   content: "";
@@ -82,4 +91,9 @@ tr:nth-child(even) {
   -webkit-text-fill-color: transparent;
   font-family: 'Segoe UI Black';
 
+}
+.btn:hover {
+  transform: translateY(-0.01rem);
+  transition: transform 150ms;
+  box-shadow: #211b19;
 }

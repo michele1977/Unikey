@@ -30,3 +30,50 @@
   position:relative;
   top:1px;
 }
+i:hover{
+  cursor: pointer;
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
+}
+.actions:hover {
+  color: darkblue;
+  cursor: pointer;
+  box-shadow: #211b19;
+}
+
+.actions{
+  color: #0069D9;
+  font-size: 1.2em;
+}
+.btnn {
+  padding: 0.1rem 0;
+  width: 6rem;
+  height: 40px;
+  text-align: center;
+  border: 0.1rem solid #56a5eb;
+  text-decoration: none;
+  color: #56a5eb;
+  background-color: white;
+}
+
+.btnn:hover {
+  cursor: pointer;
+  box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 185, 235, 0.5);
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
+}
+.icon:hover {
+  color: darkblue;
+  cursor: pointer;
+  transform: translateX(1mm);
+  transition: transform 150ms;
+}
+
+.icon{
+  color: #0069D9;
+  font-size: 20px;
+  padding-bottom: 2px;
+}
+th{
+  background-color: #0069D9 !important;
+}

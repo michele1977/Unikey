@@ -14,13 +14,13 @@
                 </div>
                 <input formControlName="Text" type="text" class="form-control" placeholder="Answer">
                 <input formControlName="Score" style="max-width: 20%" class="form-control">
-                <button *ngIf="this.answers.length > 2" (click)="delete(i)" class="btn btn-danger btn-sm">x</button>
+                <button *ngIf="this.answers.length > 2" (click)="delete(i)" class="btn btn-danger btn-sm">X</button>
             </div>
         </div>
     </div>
     <br>
     <div>
-        <button class="btn btn-success btn-sm" (click)="edit(questionForm.value, questionIndex)">Save</button>
+        <button class="btnsave btn-success btn-sm" (click)="edit(questionForm.value, questionIndex)">Save</button>
         <button class="btn btn-primary btn-sm" style="float:right;" (click)="addEmptyAnswer()">+</button>
     </div>
 </form>

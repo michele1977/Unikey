@@ -1,11 +1,12 @@
 <div class="container">
   <div class="row question-row">
-    <div class="col-6">
+    <div class="col-3">
       <h2>Questions</h2>
     </div>
-    <div class="col-6 div-set-visibility">
-      <button type="submit" class="btn btn-outline-success" [disabled]="enable" (click) = "showQuestionForm()" title="Add Question"><i class="fa fa-plus"></i></button>
+    <div class="col-3 div-set-visibility">
+      <button type="submit" class="btn" [disabled]="enable" (click) = "showQuestionForm()" title="Add Question"><i class="fa fa-plus"></i></button>
     </div>
+    <div class="col-3"></div>
   </div>
   <div *ngIf="test.Questions?.length > 0" class="drag-drop-list" (cdkDropListDropped)="onDrop($event)" cdkDropList>
     <div class="drag-drop-box" *ngFor="let question of test.Questions" cdkDrag>
