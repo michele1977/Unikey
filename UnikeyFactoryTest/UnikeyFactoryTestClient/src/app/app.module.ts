@@ -37,6 +37,7 @@ import {CircleProgressOptions, NgCircleProgressModule} from 'ng-circle-progress'
 import {CommonModule} from '@angular/common';
 import {StatisticPageComponent} from './features/statistic-page/statistic-page.component';
 import { NotfoundComponent } from './shared/notfound/notfound.component';
+import { TryComponent } from './core/try/try.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { NotfoundComponent } from './shared/notfound/notfound.component';
     EmailModalComponent,
     CreatePDFModalComponent,
     StatisticPageComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    TryComponent
   ],
 
   imports: [
