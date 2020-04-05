@@ -17,7 +17,11 @@ th, td {
   text-align: left;
   padding: 10px;
 }
-
+tr:first-child:hover {
+  cursor: pointer;
+  transform: translateY(-0.01rem);
+  transition: transform 150ms;
+}
 tr:nth-child(even) {
   background-color: #f2f2f2;
 }
