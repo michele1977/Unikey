@@ -2,9 +2,20 @@
   <div *ngIf="this.areThereModifies" id="saveTestNotify">Do you want to save changes?&nbsp;&nbsp;<button
     class="btn btn-outline-success btn-sm" (click)="saveChanges(this.test)">Save</button>&nbsp;&nbsp;<button
     class="btn btn-outline-danger btn-sm" (click)="undo()">Undo</button></div>
-  <div *ngIf="this.copydialog" id="dialognotify">
-    The link is copied!&nbsp;
-    <i class="fa fa-times moved" (click)="undo()"></i>
+  <div class="modal fade top" id="modalCookie1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true" data-backdrop="true">
+    <div class="modal-dialog modal-frame modal-top modal-notify modal-info" role="document">
+      <div class="modal-content" style="border-radius: 10px">
+        <div class="modal-body">
+          <div class="row d-flex justify-content-center align-items-center">
+
+            <p class="pt-3 pr-2" style="padding: 10px">The test is copied in your clipboard, ctrl+v for paste it!</p>
+
+            <button class="btnn" data-dismiss="modal">Ok, thanks</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 <div *ngIf="this.isThereAnError" id="errorNotify" role="alert">An error occurred while saving the test
   <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="isThereAnError=false">
@@ -25,7 +36,9 @@
 <div id="testContentStats">
   <label><strong>Number of questions: {{this.test?.Questions?.length}}</strong></label>
   <div class="pull-right">
-    <i class="fa fa-copy" style="font-size: 25px;padding-bottom: 10px; color: #0069D9" (click)="copyText(this.test)" title="Copia Test"></i>
+    <i class="fa fa-copy" style="font-size: 25px;padding-bottom: 10px; color: #0069D9" (click)="copyText(this.test)" title="Copia Test" data-toggle="modal" data-target="#modalCookie1"></i>
+    <br>
+    <i class="fa fa-pencil" style="font-size: 25px;padding-bottom: 10px; color: #0069D9" (click)="modifyTest()" title="Modify Test"></i>
     <br>
     <i class="fa fa-plus" style="font-size: 25px;padding-bottom: 2px; color: #0069D9" (click)="this.isButtonVisible = !this.isButtonVisible" title="Add Question"></i>
     <br>
@@ -35,10 +48,21 @@
 
 <br>
 <div class="container col-8" *ngIf="test">
+  <div style="text-align: right;
+    font-style: oblique;">
+    <label for="options">View Options: </label>
+    <select id="options" #selectList (change)="findValue(selectList.value)">
+      <option value="Position">Position</option>
+      <option value="Text">Text</option>
+      <option value="Score">Score</option>
+      <option value="Answer.length">Number of Answers</option>
+    </select>
+  </div>
+
   <div class="form-group" *ngIf="this.isButtonVisible">
     <app-question-form (questionInsert)="addQuestion($event)"></app-question-form>
   </div>
-  <div *ngFor="let question of this.test?.Questions; let i = index" class="question__card" id="questionh">
+  <div *ngFor="let question of this.test?.Questions | orderBy: order : reverse: true; let i = index" class="question__card" id="questionh">
     <div>
       <div id="divQuestionForm">
         <strong>Question {{i+1}}</strong>

@@ -2,6 +2,9 @@ import {Component, DoCheck} from '@angular/core';
 import {SideBarService} from '../../services/side-bar.service';
 import {Router} from '@angular/router';
 import {IconsService} from '../../services/icons.service';
+import {ModifyTestModalComponent} from '../../modals/modify-test-modal/modify-test-modal.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {UserModalComponent} from '../../modals/user-modal/user-modal.component';
 
 
 @Component({
@@ -15,7 +18,10 @@ export class SideBarComponent implements DoCheck {
   user: string;
   userName: string;
 
-  constructor(public nav: SideBarService, private router: Router, public icons: IconsService) {}
+  constructor(public nav: SideBarService,
+              private router: Router,
+              public icons: IconsService,
+              public modal: NgbModal) {}
     public isButtonVisible = true;
 
   logout() {
@@ -38,5 +44,9 @@ export class SideBarComponent implements DoCheck {
       this.userName = name;
       this.isLogoutVisible = true;
     }
+  }
+  accountView() {
+    const modal = this.modal.open(UserModalComponent);
+    modal.componentInstance.inputUser = this.userName;
   }
 }

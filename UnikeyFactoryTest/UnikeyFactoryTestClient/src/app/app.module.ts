@@ -38,7 +38,9 @@ import {CommonModule} from '@angular/common';
 import {StatisticPageComponent} from './features/statistic-page/statistic-page.component';
 import { NotfoundComponent } from './shared/notfound/notfound.component';
 import { TryComponent } from './core/try/try.component';
-
+import { OrderModule } from 'ngx-order-pipe';
+import { ModifyTestModalComponent } from './modals/modify-test-modal/modify-test-modal.component';
+import { UserModalComponent } from './modals/user-modal/user-modal.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +63,8 @@ import { TryComponent } from './core/try/try.component';
     StatisticPageComponent,
     NotfoundComponent,
     TryComponent,
+    ModifyTestModalComponent,
+    UserModalComponent
   ],
 
   imports: [
@@ -79,7 +83,8 @@ import { TryComponent } from './core/try/try.component';
     MatDialogModule,
     MatButtonModule,
     SideBarModule,
-    NgCircleProgressModule
+    NgCircleProgressModule,
+    OrderModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },

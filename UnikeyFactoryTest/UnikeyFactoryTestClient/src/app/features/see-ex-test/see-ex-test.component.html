@@ -16,7 +16,19 @@
 </div>
 
 <div class="container col-8">
-  <div *ngFor="let question of this.exTest.AdministratedQuestions; let i = index" class="question__card" id="questionh">
+  <br>
+  <div style="text-align: right;
+    font-style: oblique;">
+    <label for="options">View Options: </label>
+    <select id="options" #selectList (change)="findValue(selectList.value)">
+      <option value="Position">Position</option>
+      <option value="Text" ng-selected="Text">Text</option>
+      <option value="AdministratedAnswers.isCorrect">Correct Answers</option>
+      <option value="AdministratedAnswers.Score">Score</option>
+      <option value="AdministratedAnswers.length">Number of Answers</option>
+    </select>
+  </div>
+  <div *ngFor="let question of this.exTest.AdministratedQuestions | orderBy: order : reverse: true; let i = index" class="question__card" id="questionh">
     <div>
       <div id="divQuestionForm">
         <strong>Domanda {{i+1}}</strong>

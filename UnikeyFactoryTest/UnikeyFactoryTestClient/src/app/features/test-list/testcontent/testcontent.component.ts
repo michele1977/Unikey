@@ -8,6 +8,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CreatePDFModalComponent} from '../../../modals/create-pdf-modal/create-pdf-modal.component';
 import {switchMap} from 'rxjs/operators';
 import {Question} from '../../../models/question';
+import {ModifyTestModalComponent} from '../../../modals/modify-test-modal/modify-test-modal.component';
 
 @Component({
   selector: 'app-testcontent',
@@ -33,6 +34,8 @@ isThereAnError: boolean;
 text: string;
 public isButtonVisible = false;
   copydialog: boolean;
+  order = '';
+  reverse = false;
 
   constructor(
     private service: TestService,
@@ -58,7 +61,13 @@ public isButtonVisible = false;
     toggle(i: number) {
       this.isEditable[i] = !this.isEditable[i];
     }
-
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+    this.order = value;
+    console.log(value);
+  }
   getMaxScore(): number {
     let res = 0;
     for (const question of this.test.Questions) {
@@ -139,6 +148,14 @@ public isButtonVisible = false;
      selBox.select();
      document.execCommand('copy');
      document.body.removeChild(selBox);
-     this.copydialog = true;
+  }
+
+  findValue(value: string) {
+    this.setOrder(value);
+  }
+
+  modifyTest() {
+    const modal = this.modalService.open(ModifyTestModalComponent);
+    modal.componentInstance.inputTest = this.test;
   }
 }

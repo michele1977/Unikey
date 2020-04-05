@@ -21,12 +21,15 @@
     </div>
     <table class="table">
       <tr class="thead-dark">
-        <th class="text-center">TestSubject</th>
-        <th class="text-center">Score/MaxScore</th>
-        <th class="text-center">State</th>
+        <th class="text-center;" [class.active]="order === 'TestSubject'"
+            (click)="setOrder('TestSubject')">TestSubject <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+        <th class="text-center" [class.active]="order === 'Score'"
+            (click)="setOrder('Score')">Score/MaxScore <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+        <th class="text-center" [class.active]="order === 'AdministratedTestState'"
+            (click)="setOrder('AdministratedTestState')">State<span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
         <th class="text-center">Actions</th>
       </tr>
-      <tr *ngFor="let exTest of exTests; let i = index">
+      <tr *ngFor="let exTest of exTests | orderBy: order:reverse:true; let i = index">
         <td class="text-center">{{exTest.TestSubject}}</td>
         <td class="text-center">{{exTest.Score}}/{{exTest.MaxScore}}</td>
         <td class="text-center">{{exTest.State == 1 || exTest.State == 2 ? 'Opened' : 'Closed'}}</td>

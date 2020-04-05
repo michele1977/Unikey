@@ -1,4 +1,4 @@
-import {Component, HostListener, Inject} from '@angular/core';
+import {Component, HostListener, Inject, OnChanges, SimpleChanges} from '@angular/core';
 import {Router} from '@angular/router';
 import {Test} from '../../models/test';
 import {IconsService} from '../../services/icons.service';
@@ -12,6 +12,7 @@ import {WINDOW} from '../../services/window-ref.service';
 import {TestService} from '../../services/test.service';
 import {ExTestListService} from '../../services/ex-test-list.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {OrderPipe} from 'ngx-order-pipe';
 
 
 @Component({
@@ -20,25 +21,14 @@ import {HttpErrorResponse} from '@angular/common/http';
   styleUrls: ['./test-list.component.css'],
 })
 export class TestListComponent {
-  areThereModifies = false;
-  showDeleteError = false;
-  pageNum = 1;
-  pageSize = 10;
-  textFilter = '';
-  tests: Test[];
-  numberOfTest: number;
-  modalOptions: NgbModalOptions;
-  temptest: Test;
-  errorFetch = false;
-  error: HttpErrorResponse;
-  errorsList: string[];
-
-  isEmpty = true;
-  copydialog: boolean;
+  order = '';
+  reverse = false;
 
   constructor(private router: Router, public icons: IconsService, private testService: TestListService,
               private modalService: NgbModal, private loader: LoaderService, private service: TestService,
-              @Inject(DOCUMENT) private document: Document, @Inject(WINDOW) private window, private exTestService: ExTestListService) {
+              @Inject(DOCUMENT) private document: Document, @Inject(WINDOW) private window,
+              private exTestService: ExTestListService, private orderPipe: OrderPipe) {
+
     loader.publish('show');
     this.testService.getTests(this.pageNum, this.pageSize, this.textFilter).then(data => {
       this.numberOfTest = data[0].NumberOfTest;
@@ -53,9 +43,31 @@ export class TestListComponent {
       backdropClass: 'customBackdrop'
     };
   }
+  areThereModifies = false;
+  showDeleteError = false;
+  pageNum = 1;
+  pageSize = 10;
+  textFilter = '';
+  tests: Test[];
+  numberOfTest: number;
+  modalOptions: NgbModalOptions;
+  temptest: Test;
+  errorFetch = false;
+  error: HttpErrorResponse;
+  errorsList: string[];
+  isEmpty = true;
+  copydialog: boolean;
 
   loadCreatePage() {
     this.router.navigateByUrl('create');
+  }
+
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+    this.order = value;
+    console.log(value);
   }
 
   search(form) {
@@ -92,7 +104,6 @@ export class TestListComponent {
 
   deleteTest(test: Test) {
     this.temptest = test;
-    this.areThereModifies = true;
   }
 
   testDetails(test: Test) {
@@ -137,7 +148,6 @@ export class TestListComponent {
     box.select();
     document.execCommand('copy');
     document.body.removeChild(box);
-    this.copydialog = true;
   }
 
   undo() {
@@ -155,4 +165,6 @@ export class TestListComponent {
       this.showDeleteError = true;
     });
   }
+
 }
+

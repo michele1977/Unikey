@@ -8,8 +8,6 @@
     <form #form="ngForm">
       <div class="btn btn-group">
         <input type="search" [ngModel]="textFilter" name="textFilter" class="form-control">
-<!--        <span class="glyphicon glyphicon-remove-circle"></span>-->
-<!--        <div *ngIf="errorFetch" style="color:red;" class="alert alert-danger">Nessun test trovato</div>-->
         <button type="submit" class="btn btn-primary" (click)="search(form)">Search</button>
       </div>
     </form>
@@ -19,27 +17,59 @@
   <strong>Errore!</strong> An error occurred while deleting the test
   <button type="button" class="close" aria-label="Close" (click)="closeErrorAlert()">&times;</button>
 </div>
-<div *ngIf="this.copydialog" id="dialognotify">
-  The link is copied!&nbsp;
-  <i class="fa fa-times" style="font-size: large" (click)="undo()"></i>
+<div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+    <div class="modal-content text-center" style="border-radius: 10px">
+      <div class="modal-header d-flex justify-content-center">
+        <p class="heading" style="font-weight: bold">Do you want to save changes?</p>
+      </div>
+      <div class="modal-body">
+        <i class="fa fa-times-circle" style="color: red; font-size: 80px"></i>
+      </div>
+      <div class="modal-footer flex-center">
+        <a href="" class="btnn" (click)="saveChanges()" data-dismiss="modal">Yes</a>
+        <a type="button" class="btnn" data-dismiss="modal" (click)="undo()">No</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade top" id="modalCookie1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-backdrop="true">
+  <div class="modal-dialog modal-frame modal-top modal-notify modal-info" role="document">
+    <div class="modal-content" style="border-radius: 10px">
+      <div class="modal-body">
+        <div class="row d-flex justify-content-center align-items-center">
+
+          <p class="pt-3 pr-2" style="padding: 10px">The link is copied!</p>
+
+          <button class="btnn" data-dismiss="modal">Ok, thanks</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <br>
 <br>
 <table class="table-borderless weather__card">
   <tr>
-    <th class="text-center" style="font-size: 20px">Title</th>
-    <th class="text-center" style="font-size: 20px">Date</th>
-    <th class="text-center" *ngIf="isEmpty" style="font-size: 20px">Number of tests</th>
-    <th class="text-center" *ngIf="isEmpty" style="font-size: 20px">Number of tests opened</th>
+    <th class="text-center" style="font-size: 20px" [class.active]="order === 'Title'"
+        (click)="setOrder('Title')"> Title <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+    <th class="text-center" style="font-size: 20px" [class.active]="order === 'Date'"
+        (click)="setOrder('Date')">Date <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+    <th class="text-center" *ngIf="isEmpty" style="font-size: 20px" [class.active]="order === 'NumberOfExTest'"
+        (click)="setOrder('NumberOfExTest')">Number of tests <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+    <th class="text-center" *ngIf="isEmpty" style="font-size: 20px" [class.active]="order === 'OpenedExTestNumber'"
+        (click)="setOrder('OpenedExTestNumber')">Number of tests opened <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
     <th class="text-center" style="font-size: 20px"></th>
     <th class="text-center" style="font-size: 20px">Actions</th>
   </tr>
-
-  <tr *ngFor="let test of tests | filter:textFilter" class="content-wrapper" style="padding-top: 20px">
+  <tr *ngFor="let test of tests | filter:textFilter | orderBy: order: reverse: true" class="content-wrapper" style="padding-top: 20px">
     <div *ngIf="this.areThereModifies" id="saveTestNotify">Do you want to save changes?&nbsp;&nbsp;
       <button class="btn btn-outline-success btn-sm" (click)="saveChanges()">Save</button>&nbsp;&nbsp;
       <button class="btn btn-outline-danger btn-sm" (click)="undo()">Undo</button>
     </div>
+
     <td class="text-center">{{test.Title}}</td>
     <td class="text-center">{{test.Date | date: 'dd/MM/yy H:mm'}}</td>
     <td class="text-center">{{test.NumberOfExTest}}</td>
@@ -52,11 +82,11 @@
 
         <div class="col-sm">
           <div> <fa-icon class="actions" [icon]="icons.faInfo" (click)="showContent(test?.Id)" title="Show Test"></fa-icon> </div>
-          <div> <fa-icon class="actions" [icon]="icons.faTrash" (click)="deleteTest(test)" title="Delete Test"></fa-icon> </div>
+          <div> <fa-icon class="actions" [icon]="icons.faTrash" (click)="deleteTest(test)" title="Delete Test" data-toggle="modal" data-target="#modalConfirmDelete"></fa-icon> </div>
         </div>
 
         <div class="col-sm">
-          <div> <fa-icon class="actions" [icon]="icons.faCopy" (click)="copytoClipboard(test.URL)" title="Copy Link" ></fa-icon> </div>
+          <div> <fa-icon class="actions" [icon]="icons.faCopy" (click)="copytoClipboard(test.URL)" title="Copy Link" data-toggle="modal" data-target="#modalCookie1"></fa-icon> </div>
           <div> <fa-icon class="actions" [icon]="icons.faMailForward" (click)="showEmailModalMethod(test.Id)" title="Send Mail"></fa-icon> </div>
         </div>
 

@@ -17,13 +17,17 @@
   <br>
   <table class="table-borderless weather__card">
     <tr>
-        <th class="text-center" style="font-size: 20px">Test Subject</th>
-        <th class="text-center" style="font-size: 20px">Test Title</th>
-        <th class="text-center" style="font-size: 20px">Date</th>
-        <th class="text-center" style="font-size: 20px">Score/Max</th>
-      <th class="text-center" style="font-size: 20px">Actions</th>
+      <th class="text-center" style="font-size: 20px" [class.active]="order === 'TestSubject'"
+          (click)="setOrder('TestSubject')"> Subject <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+        <th class="text-center" style="font-size: 20px" [class.active]="order === 'Title'"
+            (click)="setOrder('Title')">Test Title <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+        <th class="text-center" style="font-size: 20px" [class.active]="order === 'Date'"
+            (click)="setOrder('Date')" >Date <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+        <th class="text-center" style="font-size: 20px" [class.active]="order === 'MaxScore'"
+            (click)="setOrder('MaxScore')">Score/Max <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+      <th class="text-center" style="font-size: 20px" >Actions</th>
     </tr>
-    <tr *ngFor="let test of tests | filter:textFilter" style="padding-top: 20px">
+    <tr *ngFor="let test of tests | filter:textFilter | orderBy: order: reverse: true" style="padding-top: 20px">
     <td class="text-center">{{test.TestSubject}}</td>
     <td class="text-center">{{test.Title}}</td>
       <td class="text-center">{{test.Date | date: 'dd/MM/yy H:mm'}}</td>
