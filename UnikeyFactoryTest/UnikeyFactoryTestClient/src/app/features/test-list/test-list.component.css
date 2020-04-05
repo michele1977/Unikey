@@ -8,15 +8,17 @@
 .create-test-a{
   float: left;
 }
-.actions:hover{
+.actions:hover {
   color: darkblue;
   cursor: pointer;
-
+  transform: translateX(1mm);
+  transition: transform 150ms;
 }
 
 .actions{
   color: #0069D9;
-  font-size: 1.2em;
+  font-size: 20px;
+  padding-bottom: 2px;
 }
 #saveTestNotify {
   position: fixed;
@@ -32,30 +34,24 @@
   -moz-box-shadow:    0 0 5px black;
   box-shadow:         0 0 5px black;
 }
-#dialognotify {
-  position: fixed;
-  z-index: 101;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: #fde073;
-  text-align: center;
-  line-height: 2.5;
-  overflow: hidden;
-  -webkit-box-shadow: 0 0 5px black;
-  -moz-box-shadow:    0 0 5px black;
-  box-shadow:         0 0 5px black;
+i:hover {
+  cursor: pointer;
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
 }
-
 th, td {
   text-align: left;
   padding: 10px;
+  overflow-wrap: break-spaces;
 }
-
+tr:first-child:hover {
+   cursor: pointer;
+   transform: translateY(-0.01rem);
+   transition: transform 150ms;
+ }
 tr:nth-child(even) {
   background-color: #f2f2f2;
 }
-
 
 .pageTitle:before{
   content: "";
@@ -81,4 +77,32 @@ tr:nth-child(even) {
   -webkit-text-fill-color: transparent;
   font-family: 'Segoe UI Black';
 
+}
+.btn:hover {
+  transform: translateY(-0.01rem);
+  transition: transform 150ms;
+  box-shadow: #211b19;
+}
+.btnn {
+  padding: 0.5rem 0;
+  width: 5rem;
+  text-align: center;
+  border: 0.1rem solid #56a5eb;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  color: #56a5eb;
+  background-color: white;
+}
+
+.btnn:hover {
+  cursor: pointer;
+  box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 185, 235, 0.5);
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
+}
+
+.btnn[disabled]:hover {
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
 }

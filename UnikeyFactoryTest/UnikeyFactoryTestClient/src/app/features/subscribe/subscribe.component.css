@@ -7,22 +7,22 @@
   border: 3px solid rgba(255, 0, 0, .6);
 }
 .welcomeMessage {
-  box-shadow:inset 0px 1px 0px 0px #ffffff;
-  background: #ededed linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
+  background: white;
   border-radius:11px;
-  border:1px solid #dcdcdc;
+  border: 0.1rem solid #56a5eb;
   display:inline-block;
   cursor:pointer;
-  color: #636363;
-  font-family:Arial;
-  font-size:17px;
+  color: #434343;
+  font-family: Arial, sans-serif;
   font-weight:bold;
   padding:9px 34px;
-  text-decoration:none;
-  text-shadow:0px -1px 0px #ffffff;
+  text-decoration: none;
+  text-shadow:0 -1px 0 #ffffff;
 }
 .welcomeMessage:hover {
-  background: #dfdfdf linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
+  cursor: pointer;
+  box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 185, 235, 0.5);
+  transition: transform 150ms;
 }
 .welcomeMessage:active {
   position:relative;

@@ -12,8 +12,9 @@ import { LoaderService } from 'src/app/services/loader.service';
   templateUrl: './see-ex-test.component.html',
   styleUrls: ['./see-ex-test.component.css']
 })
-export class SeeExTestComponent implements OnInit {
-
+export class SeeExTestComponent {
+  order = '';
+  reverse = false;
   exTest = new ExTest();
 
   constructor(
@@ -39,8 +40,15 @@ export class SeeExTestComponent implements OnInit {
         this.router.navigateByUrl('error');
       });
   }
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+    this.order = value;
+    console.log(value);
+  }
 
-
-  ngOnInit(): void { }
-
+  findValue(value: string) {
+    this.setOrder(value);
+  }
 }

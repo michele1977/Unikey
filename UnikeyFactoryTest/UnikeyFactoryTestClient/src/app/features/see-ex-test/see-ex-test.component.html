@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="col-6" style="text-align: right;text-justify: auto; padding-top: 30px">
-    <fa-icon id="goBackIcon" class="action" style="font-size: 25px;padding-bottom: 2px;color: #0069D9" [icon]="icons.faSignInAlt" title="Go back" [routerLink]="['../../testList']"></fa-icon>
+    <fa-icon id="goBackIcon" style="font-size: 25px;padding-bottom: 2px; color: #0069D9" [icon]="icons.faSignInAlt" class="moved" title="Go back" [routerLink]="['../../testList']"></fa-icon>
   </div>
 </div>
 <hr />
@@ -16,7 +16,19 @@
 </div>
 
 <div class="container col-8">
-  <div *ngFor="let question of this.exTest.AdministratedQuestions; let i = index" class="question__card" id="exquestionh">
+  <br>
+  <div style="text-align: right;
+    font-style: oblique;">
+    <label for="options">View Options: </label>
+    <select id="options" #selectList (change)="findValue(selectList.value)">
+      <option value="Position">Position</option>
+      <option value="Text" ng-selected="Text">Text</option>
+      <option value="AdministratedAnswers.isCorrect">Correct Answers</option>
+      <option value="AdministratedAnswers.Score">Score</option>
+      <option value="AdministratedAnswers.length">Number of Answers</option>
+    </select>
+  </div>
+  <div *ngFor="let question of this.exTest.AdministratedQuestions | orderBy: order : reverse: true; let i = index" class="question__card" id="questionh">
     <div>
       <div id="divQuestionForm">
         <strong>Domanda {{i+1}}</strong>

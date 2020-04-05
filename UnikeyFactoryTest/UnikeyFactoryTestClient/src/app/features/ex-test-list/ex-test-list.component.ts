@@ -13,7 +13,8 @@ import {ExTest} from '../../models/ex-test';
   styleUrls: ['./ex-test-list.component.css']
 })
 export class ExTestListComponent {
-
+  order = '';
+  reverse = false;
   pageNum = 1;
   pageSize = 20;
   textFilter = '';
@@ -53,6 +54,14 @@ export class ExTestListComponent {
 
   seeExTest(id: number) {
     this.router.navigateByUrl('seeExTest/' + id);
+  }
+
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+    this.order = value;
+    console.log(value);
   }
 
   @HostListener('window:scroll', [])

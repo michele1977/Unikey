@@ -37,7 +37,10 @@ import {CircleProgressOptions, NgCircleProgressModule} from 'ng-circle-progress'
 import {CommonModule} from '@angular/common';
 import {StatisticPageComponent} from './features/statistic-page/statistic-page.component';
 import { NotfoundComponent } from './shared/notfound/notfound.component';
-
+import { TryComponent } from './core/try/try.component';
+import { OrderModule } from 'ngx-order-pipe';
+import { ModifyTestModalComponent } from './modals/modify-test-modal/modify-test-modal.component';
+import { UserModalComponent } from './modals/user-modal/user-modal.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +61,10 @@ import { NotfoundComponent } from './shared/notfound/notfound.component';
     EmailModalComponent,
     CreatePDFModalComponent,
     StatisticPageComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    TryComponent,
+    ModifyTestModalComponent,
+    UserModalComponent
   ],
 
   imports: [
@@ -77,7 +83,8 @@ import { NotfoundComponent } from './shared/notfound/notfound.component';
     MatDialogModule,
     MatButtonModule,
     SideBarModule,
-    NgCircleProgressModule
+    NgCircleProgressModule,
+    OrderModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },

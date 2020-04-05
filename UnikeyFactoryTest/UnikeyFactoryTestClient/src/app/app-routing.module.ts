@@ -9,6 +9,7 @@ import {SeeExTestComponent} from './features/see-ex-test/see-ex-test.component';
 import { ExTestListComponent } from './features/ex-test-list/ex-test-list.component';
 import { FruitionLandingPageComponent } from './shared/fruition-landing-page/fruition-landing-page.component';
 import {NotfoundComponent} from './shared/notfound/notfound.component';
+import {TryComponent} from './core/try/try.component';
 
 const routes: Routes = [
   {path: 'seeExTest/:id', component: SeeExTestComponent},
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'error', component: ErrorComponent},
   {path: 'notfound', component: NotfoundComponent},
   {path: 'beginTest', component: FruitionLandingPageComponent},
+  {path: 'try', component: TryComponent},
   {path: '', component: LandingPageComponent}
 ];
 

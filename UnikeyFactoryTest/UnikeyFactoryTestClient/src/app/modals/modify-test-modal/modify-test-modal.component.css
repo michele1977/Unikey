@@ -1,6 +1,6 @@
 .btn {
   padding: 0.5rem 0;
-  width: 10rem;
+  width: 4rem;
   text-align: center;
   border: 0.1rem solid #56a5eb;
   margin-bottom: 1rem;
@@ -21,7 +21,8 @@
   box-shadow: none;
   transform: none;
 }
-i:hover{
+
+i:hover {
   cursor: pointer;
   transform: translateY(-0.1rem);
   transition: transform 150ms;

@@ -1,0 +1,23 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <div class="row" style="margin-left: 3px">
+      <h4 class="modal-title" style="color: #0069d9;margin-right: 2px">Do you want to change test's title?</h4>
+      <i class="fa fa-question-circle fa-2x" style="color: #0069d9"></i>
+    </div>
+    <i type="button" class="fa fa-times-circle" aria-label="Close" style="float: right;color: #0069d9; font-size: 20px" (click)="activeModal.dismiss('Cross click')">
+    </i>
+  </div>
+  <div class="modal-body">
+    <form #form="ngForm">
+      <div class="form-group create-div">
+        <label>
+          <input type="text" name="title" class="form-control" placeholder="{{inputTest.Title}}" [ngModel]="title" required>
+        </label>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn" (click)="modify(form)">Save</button>
+    <button type="button" class="btn" (click)="activeModal.close('Close click')">Close</button>
+  </div>
+</div>

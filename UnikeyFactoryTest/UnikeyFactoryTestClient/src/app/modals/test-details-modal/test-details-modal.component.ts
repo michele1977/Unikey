@@ -3,11 +3,8 @@ import {Test} from '../../models/test';
 import {ExTestService} from '../../services/exTest.service';
 import {ExTest} from '../../models/ex-test';
 import {IconsService} from '../../services/icons.service';
-import * as moment from 'moment';
 import {NgForm} from '@angular/forms';
-import {TestList} from '../../models/test-list';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {isUndefined} from 'util';
 import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
@@ -27,6 +24,8 @@ export class TestDetailsModalComponent implements OnInit {
   isLastPage = true;
   pages: number;
   isEmpty = true;
+  order = '';
+  reverse = false;
 
   constructor(public activeModal: NgbActiveModal,
               private service: ExTestService,
@@ -109,5 +108,12 @@ export class TestDetailsModalComponent implements OnInit {
       this.exTests = value as ExTest[];
     });
     this.loader.publish('hide');
+  }
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+    this.order = value;
+    console.log(value);
   }
 }
